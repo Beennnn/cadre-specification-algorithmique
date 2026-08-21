@@ -36,7 +36,7 @@ markdown, dans le dépôt Git, écrit dans un pseudo-langage contraint.
 
 1. Le **vocabulaire** du domaine (glossaire), utilisé partout de la même façon.
 2. Le **contrat** : les entrées exigées et les sorties garanties, typées avec unité,
-   devise, fuseau, précision et domaine de validité (§3.1).
+   référentiel, précision et domaine de validité (§3.1).
 3. Les **règles** numérotées (`RG-010`, `RG-020`…), chacune écrite en pseudo-langage,
    chacune traçable jusqu'au code et jusqu'aux tests.
 4. Les **paramètres** (seuils, taux, barèmes) séparés des règles, avec leur
@@ -197,7 +197,7 @@ La règle de partage tient en une phrase :
 |---|---|
 | Ce qui est calculé, et à partir de quoi | Le langage, le framework, la bibliothèque |
 | L'ordre des opérations quand il change le résultat | L'ordre des opérations quand il ne le change pas |
-| Les arrondis, la précision, les unités, les devises | Le type numérique concret retenu |
+| Les arrondis, la précision, les unités, les échelles | Le type numérique concret retenu |
 | Le comportement en cas de donnée absente ou invalide | Le mécanisme de validation, la gestion des exceptions |
 | Le départage des ex æquo | L'algorithme de tri utilisé |
 | Les seuils, plafonds, planchers, barèmes | Le stockage des paramètres |
@@ -227,7 +227,7 @@ spécification doit les traiter explicitement, toujours :
    bascule ? Quelle date fait foi : la date de l'événement, celle de sa saisie, ou
    celle du calcul ? Et lors d'un rejeu, on utilise les règles d'aujourd'hui ou celles
    en vigueur à la date de l'événement ?
-6. **Les unités et devises.** Et le taux de conversion : quel taux, à quelle date, de
+6. **Les unités et les échelles.** Et le facteur de conversion : lequel, à quelle date, de
    quelle source, arrondi comment ?
 7. **Les bornes.** Un seuil est-il atteint à `≥` ou à `>` ? Un plafond écrête-t-il ou
    rejette-t-il ? Une boucle a-t-elle un nombre maximal d'itérations, et que se
@@ -352,7 +352,7 @@ poids             : Poids(kg, 3 décimales, ≥ 0)
 taux_remise       : Taux(0,0000 .. 1,0000, 4 décimales)
 date_commande     : Horodatage(fuseau Europe/Paris)
 date_effet        : Date(calendrier grégorien)
-quantite_commandee          : Entier(≥ 1)
+quantite_commandee : Entier(≥ 1)
 reference_produit : Identifiant(texte, 3 à 20 caractères, unique)
 zone_livraison    : Énuméré { FRANCE_METRO, UE, HORS_UE }
 ```
@@ -408,16 +408,16 @@ Ce que cela rapporte, et c'est plus que de la propreté :
 
 #### Une grandeur n'est jamais un nombre nu
 
-Dans les règles, une grandeur est une **quantite_commandee** : une valeur **et** son unité,
+Dans les règles, une grandeur est une **quantité** : une valeur **et** son unité,
 indissociables. Il en découle une petite algèbre, qui se vérifie sans rien connaître au
 métier :
 
 | Opération | Ce qui est permis |
 |---|---|
-| Addition, soustraction, comparaison | **uniquement entre quantite_commandees de même dimension** |
+| Addition, soustraction, comparaison | **uniquement entre quantités de même dimension** |
 | Multiplication, division | toujours permises — elles **produisent une nouvelle dimension** |
 | Élévation à une puissance | permise ; la dimension est élevée à la même puissance |
-| Fonction transcendante (exponentielle, logarithme, trigonométrie) | **uniquement sur une quantite_commandee sans dimension** |
+| Fonction transcendante (exponentielle, logarithme, trigonométrie) | **uniquement sur une quantité sans dimension** |
 
 La dernière ligne est celle qui attrape le plus d'erreurs : `exp(−k × t)` n'a de sens que
 si `k × t` est sans dimension, donc si `k` est l'inverse d'un temps. Écrire un coefficient
@@ -437,12 +437,12 @@ vitesse_praticable : Flottant(m·s⁻¹ ▸ km/h, 6 chiffres significatifs, > 0)
                      accepte { m/s, km/h, mph }
 ```
 
-Ce que cela engage : la fonction reçoit une **quantite_commandee** — une valeur accompagnée de son
+Ce que cela engage : la fonction reçoit une **quantité** — une valeur accompagnée de son
 unité — et la convertit vers l'unité pivot **à l'entrée**, une fois. Elle produit
 symétriquement ses sorties dans l'unité d'usage demandée. Refuser une unité non déclarée
 est un cas d'erreur métier, pas une exception technique.
 
-> **Ce que la spécification ne dit pas** : comment les quantite_commandees sont représentées, si la
+> **Ce que la spécification ne dit pas** : comment les quantités sont représentées, si la
 > conversion est faite par une bibliothèque ou à la main, si le typage du langage porte
 > l'unité. Elle dit **quelles unités doivent être acceptées**, et que la conversion a lieu
 > une seule fois, au bord.
@@ -671,7 +671,7 @@ encoder ce que rien ne vérifie peut être utile.**
 >
 > **Mais le suffixe d'unité résout un problème que nous avons résolu autrement, et mieux.**
 > Là où un nom ne peut que *signaler* l'unité, notre notation la **déclare** (§2.3),
-> l'algèbre des quantite_commandees interdit d'additionner deux dimensions différentes, et la
+> l'algèbre des quantités interdit d'additionner deux dimensions différentes, et la
 > conversion est confinée à la frontière. Ajouter le suffixe reviendrait à porter la même
 > information à deux endroits — dont l'un se périmerait le jour où l'unité pivot change.
 
@@ -841,8 +841,8 @@ texte reste lisible. Le [registre](outils/) global — `registre.json` — est *
 partir des annexes, jamais tenu à la main : un registre entretenu manuellement diverge.
 
 ```bash
-python3 outils/identites.py --attribuer      # complète les identités manquantes
-python3 outils/identites.py --registre       # produit registre.json
+java outils/Identites.java --attribuer      # complète les identités manquantes
+java outils/Identites.java --registre       # produit registre.json
 ```
 
 **Ce que cela change concrètement, et c'est considérable :**
@@ -975,7 +975,7 @@ Voici le rôle de chaque section — et pourquoi aucune n'est facultative.
 | 2 | **Objectif et contexte** — en cinq lignes, ce que ça calcule et pour qui | Permettre à un lecteur de décider en 30 secondes si ça le concerne | Personne ne lit |
 | 3 | **Périmètre / hors périmètre** — explicitement les deux | Fixer la frontière du contrat | Le développeur découvre en fin de course que « bien sûr, il fallait aussi gérer les avoirs » |
 | 4 | **Glossaire** — chaque terme du domaine, défini une fois | Donner un vocabulaire unique au métier, au code et aux tests | Trois mots pour la même chose, un mot pour trois choses |
-| 5 | **Entrées / Sorties** — typées, avec unités et domaines | Poser le contrat de la fonction | Ambiguïtés d'unité, de devise, de fuseau |
+| 5 | **Entrées / Sorties** — typées, avec unités et domaines | Poser le contrat de la fonction | Ambiguïtés d'unité, d'échelle, de référentiel |
 | 6 | **Paramètres** — les valeurs, séparées des règles, avec qui peut les changer et leur date d'effet | Distinguer ce qui change souvent de ce qui change rarement | Un changement de taux devient une livraison logicielle |
 | 7 | **Règles** — numérotées, en pseudo-langage | Le cœur | — |
 | 8 | **Invariants et propriétés** | Ce qui doit rester vrai quelles que soient les entrées | On ne détecte pas les régressions sur les cas non testés |
@@ -1063,7 +1063,7 @@ débats « c'est ton défaut / c'est le mien » par une lecture de deux lignes.
 **Deux exigences de forme, non négociables :**
 
 - **Un contrat sans unité ne vaut rien.** `montant : nombre` n'apporte rien que le code ne
-  disait déjà. Toute la valeur est dans l'unité, la devise, le fuseau, la précision et le
+  disait déjà. Toute la valeur est dans l'unité, l'échelle, le référentiel, la précision et le
   domaine — c'est-à-dire dans ce que le typage d'un langage ne dit pas.
 - **Les règles emploient les identifiants du contrat, à l'identique** (§2.3). Si le contrat
   déclare `prix_catalogue_ht` et que la règle parle du « prix catalogue », le lien n'est
@@ -1136,7 +1136,7 @@ Chaque boîte est une **étape** `ET-xx`. Elle déclare exactement trois choses 
    non une fonction.
 
 ```bash
-python3 outils/verifier.py --chaine <spécification>
+java outils/Verifier.java --chaine <spécification>
 ```
 
 produit d'un seul coup : la table « qui crée / qui utilise » de chaque grandeur, les
@@ -1156,7 +1156,7 @@ pas, parce que lui n'est pas vérifiable.
 Sur la section 6, une précision qui a des conséquences architecturales lourdes :
 
 > **Un paramètre n'est pas une règle.** Une règle dit « on applique une remise de
-> quantite_commandee au-delà d'un certain seuil ». Un paramètre dit « ce seuil vaut 3 unités
+> quantité au-delà d'un certain seuil ». Un paramètre dit « ce seuil vaut 3 unités
 > depuis le 1er janvier ». Les deux ne changent ni à la même fréquence, ni par les
 > mêmes personnes, ni selon le même circuit d'approbation. Les mélanger, c'est
 > transformer chaque décision commerciale en projet informatique.
@@ -1619,7 +1619,7 @@ revient.
 | **Le « etc. »** | « les autres cas se traitent de la même façon », « on gère les cas particuliers » | Le développeur devra deviner — et il devinera |
 | **La valeur magique** | `0,85` sans nom, sans source, sans personne habilitée à la changer | Personne ne saura jamais s'il faut la changer, ni qui a le droit de le faire |
 | **Le `SI` sans `SINON`** | Une condition sans branche complémentaire | Le comportement dans le cas non traité est décidé par le compilateur |
-| **La grandeur nue** | Un montant sans devise, une date sans fuseau, un poids sans unité | Cause classique d'écarts, découverts tard et cher |
+| **La grandeur nue** | Une température sans son échelle (`20` en °C ou en K ?), un angle sans son unité (degrés ou radians ?), une altitude sans son référentiel | Cause classique d'écarts, découverts tard et cher |
 | **La performance en prose** | « il faut que ce soit rapide », « éviter les traitements lourds » | Non vérifiable, non actionnable → à remplacer par un chiffre dans la fiche de contraintes |
 | **La spécification qui impose la technique** | « stocker dans une table », « utiliser un cache » | Le métier sort de son mandat et empêche des solutions meilleures |
 | **L'oracle circulaire** | Un résultat a été accepté **parce qu'un programme l'a produit**, sans examen — « c'est ce que ça sort aujourd'hui, on part de là » | Le test ne mesure plus que la cohérence du programme avec lui-même. La faute est dans l'absence de jugement, pas dans la provenance |
@@ -1646,7 +1646,7 @@ et non l'habitude du développeur.
 | | [SPEC-PRX-001](exemples/SPEC-PRX-001-montant-a-payer.md) — gestion | [SPEC-THM-001](exemples/SPEC-THM-001-refroidissement.md) — scientifique |
 |---|---|---|
 | Le calcul | Le montant à payer d'une commande | La température d'une boisson qui refroidit |
-| Grandeurs | Montants, taux, quantite_commandees | Températures, durées, masses |
+| Grandeurs | Montants, taux, quantités | Températures, durées, masses |
 | Exigence d'exactitude | **Exacte au centime** | **Tolérance relative** |
 | Type numérique qui en découle | **Décimal exact obligatoire** | **Double précision binaire suffisante** |
 | Critère d'acceptation | Égalité stricte | Reproductibilité 10⁻⁹, justesse 10⁻⁶, validité ± 2 °C (§2.8) |
@@ -1780,7 +1780,7 @@ IDENTIFIANTS
   + un UUID par objet, attribué une fois, jamais réattribué
 
 LES 8 QUESTIONS À SE POSER AVANT DE DIRE « C'EST FINI »
-  1. Chaque grandeur a-t-elle son unité, sa devise, son fuseau ?
+  1. Chaque grandeur porte-t-elle ce qui la rend interprétable — unité, échelle, référentiel ?
   2. Chaque SI a-t-il son SINON ? Chaque table est-elle complète ?
   3. Où arrondit-on, à combien, dans quel sens, et où va le résidu ?
   4. Que fait-on des ex æquo ?

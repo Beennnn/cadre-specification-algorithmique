@@ -187,7 +187,7 @@ Elles n'attrapent pas la même chose, et l'une ne remplace pas l'autre.
 
 | | Ce qu'elle attrape | Son verdict |
 |---|---|---|
-| **Le script** — [`verifier.py`](outils/verifier.py) | ce qui se **compte** : entrées orphelines, paramètres morts, règles non couvertes, identifiants dupliqués, versions incohérentes | **certain**, en quelques secondes, sans faux positif |
+| **Le script** — [`Verifier.java`](outils/Verifier.java) | ce qui se **compte** : entrées orphelines, paramètres morts, règles non couvertes, identifiants dupliqués, versions incohérentes | **certain**, en quelques secondes, sans faux positif |
 | **L'IA** | ce qui se **lit** : une règle floue, une contrainte d'implémentation glissée dans le texte, un « etc. » qui repousse une décision, un vocabulaire qui dérive | **à vérifier** — chaque constat doit citer un passage exact |
 
 Le script vient en premier parce qu'il est gratuit et sûr. L'IA vient ensuite, sur un
@@ -260,24 +260,28 @@ Il lit les spécifications du dépôt et rend deux services : il **contrôle**, 
 **Il donne à voir** — des vues qu'aucune lecture ne fournit :
 
 ```bash
-python3 outils/verifier.py                    # tous les contrôles, sur tout le dépôt
+java outils/Verifier.java                    # tous les contrôles, sur tout le dépôt
 java    outils/Verifier.java                  # la même chose en Java, fichier unique
-python3 outils/verifier.py --chaine <spec>    # qui crée / qui utilise chaque grandeur,
+java outils/Verifier.java --chaine <spec>    # qui crée / qui utilise chaque grandeur,
                                               # fils d'exécution, chemin critique, vue groupée
-python3 outils/verifier.py --tracer <nom>     # où passe cette grandeur, dans tout le corpus
-python3 outils/identites.py --registre        # le registre des identités durables
+java outils/Verifier.java --tracer <nom>     # où passe cette grandeur, dans tout le corpus
+java outils/Identites.java --registre        # le registre des identités durables
 ```
 
 Sans dépendance, code de retour `1` sur échec — utilisable en intégration continue tel
 quel.
 
-**Deux implémentations, et c'est délibéré.** Le catalogue de règles est l'actif ; le
-vérificateur n'en est qu'une réalisation. La version Python se lit et s'exécute sans rien
-installer ; la version Java, en **fichier unique** (`java outils/Verifier.java`, sans
-construction ni dépendance), convient à un contexte industriel Java. Les deux doivent
-s'accorder au caractère près sur le [corpus de défauts connus](outils/jeu-d-essai/) —
-c'est le test de la double implémentation appliqué à l'outillage lui-même, et **il a déjà
-trouvé un défaut dans chacune des deux**.
+**Le catalogue est l'actif ; le vérificateur n'en est qu'une réalisation.** Elle est en
+Java, en **fichier unique** — `java outils/Verifier.java`, sans construction ni
+dépendance : un outil dont on attend de la fiabilité se maintient dans le langage de
+l'organisation, avec ses conventions et ses relecteurs.
+
+Le dépôt a porté un temps deux implémentations, en Python et en Java, confrontées sur le
+[corpus de défauts connus](outils/jeu-d-essai/). Elles divergeaient sur six points, et
+**chacune avait tort quelque part** — c'est très exactement ce que le test de la double
+implémentation est censé produire. Python a ensuite été retiré, après validation du
+portage contre ce même corpus ; le verdict figé lui survit comme **oracle de
+non-régression**.
 
 ### Pourquoi c'est possible : le formalisme
 

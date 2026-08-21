@@ -47,7 +47,7 @@ trancher plus tard, sans mandat.
 
 ```bash
 # la passe outillée d'abord, l'IA ensuite : voir guide 5
-python3 outils/verifier.py <la spécification>
+java outils/Verifier.java <la spécification>
 ```
 
 Puis la consigne prête à l'emploi : [`outils/PROMPT-RELECTURE-IA.md`](../outils/PROMPT-RELECTURE-IA.md).

@@ -13,7 +13,7 @@ Une bonne définition :
   1. tient en une phrase
   2. n'emploie pas le mot défini
   3. dit ce que la chose EST, pas ce qu'elle fait
-  4. porte l'unité, la devise, le fuseau s'il s'agit d'une grandeur
+  4. porte l'unité, l'échelle et le référentiel s'il s'agit d'une grandeur
   5. dit ce que ce n'est PAS quand une confusion est fréquente
   6. cite sa source si le terme est réglementaire ou contractuel
 

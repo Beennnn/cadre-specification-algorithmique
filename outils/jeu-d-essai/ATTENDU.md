@@ -3,9 +3,9 @@
 *Toute implémentation du catalogue doit trouver exactement ces constats sur
 [SPEC-FAUX-001](SPEC-FAUX-001-corpus-de-defauts.md) — ni plus, ni moins.*
 
-C'est le **jeu de données de référence du vérificateur lui-même** : c'est lui qui permet de
-vérifier qu'une seconde implémentation — en Java, ou dans un autre langage — contrôle bien
-la même chose que la première.
+C'est le **jeu de données de référence du vérificateur lui-même**, et il sert deux fois :
+comme **oracle de non-régression** de l'implémentation en place, et comme critère de
+conformité de toute réimplémentation — dans un autre langage, ou après une refonte.
 
 **Verdict attendu : 28 échecs, 3 avertissements.**
 
@@ -49,11 +49,12 @@ contrôle, et le noter ici évite qu'on le prenne un jour pour une régression.
 ## Comment s'en servir
 
 ```bash
-python3 outils/verifier.py outils/jeu-d-essai/SPEC-FAUX-001-corpus-de-defauts.md > /tmp/py.txt
-java    outils/Verifier.java outils/jeu-d-essai/SPEC-FAUX-001-corpus-de-defauts.md > /tmp/java.txt
-diff /tmp/py.txt /tmp/java.txt && echo "les deux implémentations s'accordent"
+java outils/Verifier.java outils/jeu-d-essai/SPEC-FAUX-001-corpus-de-defauts.md > /tmp/obtenu.txt
+diff /tmp/attendu.txt /tmp/obtenu.txt && echo "verdict conforme"
 ```
 
-Une divergence ne dit pas laquelle a tort : elle dit que **le catalogue est ambigu** sur ce
-point, ou qu'une des deux ne l'a pas lu de la même façon. Dans les deux cas, c'est le
-catalogue qu'on précise — jamais l'une des implémentations qu'on aligne sur l'autre.
+Un écart avec le verdict figé est **toujours** à instruire, jamais à absorber : soit le
+contrôle a régressé, soit le corpus a changé sans que le verdict suive. Et si deux
+implémentations sont un jour confrontées, une divergence ne dit pas laquelle a tort : elle
+dit que **le catalogue est ambigu** sur ce point. Dans tous les cas, c'est le catalogue
+qu'on précise — jamais le verdict qu'on aligne sur ce que produit l'outil.

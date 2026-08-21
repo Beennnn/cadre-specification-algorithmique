@@ -73,9 +73,9 @@ Voir `CADRE.md` §2.3 et §2.4.
 ## Après toute modification
 
 ```bash
-python3 outils/identites.py --attribuer   # UUID des nouveaux objets
-python3 outils/identites.py --registre    # regénère registre.json
-python3 outils/verifier.py                # doit finir à 0 échec
+java outils/Identites.java --attribuer   # UUID des nouveaux objets
+java outils/Identites.java --registre    # regénère registre.json
+java outils/Verifier.java                # doit finir à 0 échec
 java    outils/Verifier.java              # seconde implémentation : même verdict exigé
 ```
 
@@ -120,33 +120,15 @@ exemples/
 **Toujours** lancer le vérificateur. Code de retour 1 s'il reste un échec :
 
 ```bash
-python3 outils/verifier.py
+java outils/Verifier.java
 ```
 
 Il met en œuvre les règles `C-xx` de `outils/REGLES-DE-CONTROLE.md`. Un **ÉCHEC** est un
 défaut certain et bloque ; un **AVERTIR** se tranche à la main et ne se fait jamais taire
 en modifiant le script.
 
-<details><summary>Contrôle des liens seuls (inclus dans verifier.py)</summary>
-
-```bash
-# liens relatifs cassés
-python3 - <<'EOF'
-import re,os
-for root,d,files in os.walk('.'):
-    if '.git' in root: continue
-    for f in files:
-        if not f.endswith('.md'): continue
-        p=os.path.join(root,f)
-        for m in re.finditer(r'\]\(([^)#][^)]*)\)', open(p,encoding='utf-8').read()):
-            t=m.group(1).split('#')[0]
-            if t.startswith('http') or not t: continue
-            if not os.path.exists(os.path.normpath(os.path.join(root,t))):
-                print("CASSÉ", p, "->", t)
-EOF
-```
-
-</details>
+Le contrôle des liens relatifs cassés est inclus dans le vérificateur :
+aucun outil séparé à lancer.
 
 ## Git
 

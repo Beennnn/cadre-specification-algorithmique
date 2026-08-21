@@ -3,17 +3,17 @@
 | Fichier | À quoi ça sert |
 |---|---|
 | **[REGLES-DE-CONTROLE.md](REGLES-DE-CONTROLE.md)** | Le catalogue des règles de contrôle `C-01` à `C-23` (mécaniques) et `H-01` à `H-06` (humaines). Écrit une fois, lu par un humain, exécuté par le script, donné en consigne à une IA |
-| **[verifier.py](verifier.py)** | Met en œuvre les règles `C-xx` mécanisables. Aucune dépendance : Python 3 seul |
-| **[Verifier.java](Verifier.java)** | **La même chose en Java** — fichier unique, aucune dépendance, aucune construction : `java outils/Verifier.java`. Pour un contexte industriel Java |
-| **[jeu-d-essai/](jeu-d-essai/)** | Le corpus de défauts connus et le verdict attendu — c'est lui qui permet de vérifier que deux implémentations contrôlent bien la même chose |
+| **[Verifier.java](Verifier.java)** | Met en œuvre les règles `C-xx` mécanisables. Fichier unique, aucune dépendance, aucune construction : `java outils/Verifier.java` |
+| **[Identites.java](Identites.java)** | Attribue et maintient les identités durables (UUID), et produit `registre.json`. Même forme : `java outils/Identites.java --registre` |
+| **[jeu-d-essai/](jeu-d-essai/)** | Le corpus de défauts connus et le verdict attendu — l'oracle de non-régression du vérificateur lui-même |
 | **[PROMPT-RELECTURE-IA.md](PROMPT-RELECTURE-IA.md)** | La consigne prête à l'emploi pour une pré-relecture par un modèle |
 
 ## Utilisation
 
 ```bash
-python3 outils/verifier.py                                   # tout le dépôt
-python3 outils/verifier.py exemples/fil-rouge/5-SPEC-*.md     # une spécification
-python3 outils/verifier.py --tracer montant_net_ligne         # parcours d'une grandeur
+java outils/Verifier.java                                   # tout le dépôt
+java outils/Verifier.java exemples/fil-rouge/5-SPEC-*.md     # une spécification
+java outils/Verifier.java --tracer montant_net_ligne         # parcours d'une grandeur
 ```
 
 Le mode `--tracer` répond à « **où passe cette grandeur ?** » : dans quels documents elle
@@ -57,27 +57,26 @@ le plus.**
 C'est exactement le partage décrit au [guide 5](../guides/5-VALIDER.md) : le script
 d'abord, l'IA ensuite, les humains en dernier — chacun sur ce qu'il sait faire.
 
-## Pourquoi ces outils sont en Python — et pourquoi une version Java est légitime
+## Pourquoi ces outils sont en Java
 
-La question se pose dès qu'on sort du dépôt de méthode : **en contexte industriel Java, on
-préférera du Java.** C'est justifié, et la réponse tient dans une distinction que la méthode
-elle-même enseigne.
+L'outillage a d'abord existé en Python, puis a été porté en Java et Python a été retiré.
+L'arbitrage rendu : **un outil dont on attend de la fiabilité se maintient dans le langage
+de l'organisation.** Il tient dans une distinction que la méthode elle-même enseigne.
 
 > **Le catalogue de règles est l'actif. Le vérificateur n'en est qu'une implémentation.**
 
 [`REGLES-DE-CONTROLE.md`](REGLES-DE-CONTROLE.md) joue exactement le rôle d'une
-spécification : il énonce **ce qui doit être vérifié**, sans dire comment. `verifier.py` en
-est une réalisation possible ; une réalisation en Java en serait une autre, tout aussi
-conforme. C'est le [test de la double implémentation](../CADRE.md) appliqué à l'outillage
-lui-même.
+spécification : il énonce **ce qui doit être vérifié**, sans dire comment. `Verifier.java`
+en est une réalisation possible ; une autre, dans un autre langage, serait tout aussi
+conforme — à condition de retrouver le même verdict sur le même corpus.
 
-**Deux artefacts, deux finalités différentes :**
+**Ce que le choix de Java règle :**
 
-| | **Le vérificateur de démonstration** — ici | **Le vérificateur industriel** — chez vous |
-|---|---|---|
-| Sa vertu | se lire et **s'exécuter sans rien installer** : `python3 outils/verifier.py`, aucune dépendance, aucun build | être **maintenu comme le reste du code de l'organisation** : mêmes conventions, même revue, même chaîne de construction |
-| Son public | quiconque découvre la méthode et veut la voir tourner en trente secondes | les équipes, en intégration continue |
-| Le bon langage | un langage de script, parce qu'il n'y a rien à installer et que le texte s'y manipule bien | **celui de l'organisation** — en contexte Java, du Java, packagé et testé comme le reste |
+| | |
+|---|---|
+| **Fiabilité** | l'outil est maintenu comme le reste du code de l'organisation : mêmes conventions, même revue, même chaîne de construction, mêmes relecteurs |
+| **Rien à installer** | l'argument qui plaidait pour un langage de script a disparu : depuis Java 11, un fichier source se lance directement — `java outils/Verifier.java`, sans build ni dépendance |
+| **Une seule implémentation** | deux outils à maintenir pour un seul catalogue, c'était deux fois la surface de bug pour un bénéfice ponctuel. Ce que la double implémentation apportait est désormais tenu par le [jeu d'essai](jeu-d-essai/) |
 
 > **Attention à ne pas confondre avec l'arbitrage sur les identifiants** ([CADRE
 > §2.4](../CADRE.md)). Là, on refuse la convention d'un langage parce que **la
@@ -94,17 +93,23 @@ Trois choses suffisent, et elles existent déjà :
 2. **Un corpus de référence** — les documents de ce dépôt, dont on connaît le verdict :
    `0 échec, 0 avertissement`. Toute réimplémentation doit retrouver ce verdict.
 3. **Un corpus de défauts connus** — [`jeu-d-essai/`](jeu-d-essai/), un document
-   volontairement fautif dont le verdict attendu est figé : **19 échecs, 3 avertissements**.
+   volontairement fautif dont le verdict attendu est figé : **28 échecs, 3 avertissements**.
 
-> **Ce corpus a déjà servi.** Confrontées dessus, les deux implémentations divergeaient sur
-> trois points — et chacune avait tort sur l'un d'eux : Python signalait le même identifiant
-> dupliqué une fois par occurrence, Java lisait la mauvaise colonne de l'historique, et
-> `C-24` manquait entièrement à Java. **C'est très exactement ce que le test de la double
-> implémentation est censé produire.**
+> **Ce corpus a déjà servi, et c'est pour cela qu'on le garde.** Le dépôt a porté un temps
+> deux implémentations du même catalogue, en Python et en Java. Confrontées sur ce corpus,
+> elles divergeaient sur six points — et **chacune avait tort quelque part** : Python
+> signalait le même identifiant dupliqué une fois par occurrence ; Java lisait la mauvaise
+> colonne de l'historique et la mauvaise cellule de statut d'une question fermée ; `C-24`
+> et `C-26` manquaient entièrement à Java. C'est très exactement ce que le test de la
+> double implémentation est censé produire.
+>
+> Python a ensuite été retiré. Le verdict figé lui survit : il est devenu **l'oracle de
+> non-régression** de l'implémentation restante. C'est la même donnée de référence qui a
+> servi à valider le portage, ligne à ligne, avant la suppression.
 
-Les deux implémentations doivent alors **s'accorder sur le même corpus**. C'est la seule
-façon de savoir qu'elles vérifient bien la même chose — et c'est très exactement ce que la
-méthode demande de tout composant.
+Une réimplémentation doit **retrouver ce verdict**. C'est la seule façon de savoir qu'elle
+vérifie bien la même chose — et c'est très exactement ce que la méthode demande de tout
+composant.
 
 ## Faire évoluer
 

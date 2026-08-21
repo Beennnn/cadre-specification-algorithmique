@@ -135,7 +135,9 @@ public class Verifier {
     }
 
     // --- chaîne de traitement -----------------------------------------------
-    record Etape(String id, List<String> consomme, List<String> produit) {}
+    record Etape(String id, String nom, List<String> consomme, List<String> produit) {}
+
+    record Groupe(String id, String nom, List<String> membres, String role) {}
 
     static List<Etape> lireChaine(String texte) {
         List<Etape> r = new ArrayList<>();
@@ -143,12 +145,43 @@ public class Verifier {
                 "^\\|\\s*`(ET-\\d+)`\\s*([^|]*)\\|([^|]*)\\|([^|]*)\\|([^|]*)\\|",
                 Pattern.MULTILINE).matcher(texte);
         while (m.find())
-            r.add(new Etape(m.group(1), jetons(m.group(3)), jetons(m.group(4))));
+            r.add(new Etape(m.group(1), m.group(2).trim(),
+                    jetons(m.group(3)), jetons(m.group(4))));
+        return r;
+    }
+
+    static List<Groupe> lireGroupes(String texte) {
+        List<Groupe> r = new ArrayList<>();
+        Matcher m = Pattern.compile("^\\|\\s*`(GR-\\d+)`\\s*([^|]*)\\|([^|]*)\\|([^|]*)\\|",
+                Pattern.MULTILINE).matcher(texte);
+        while (m.find())
+            r.add(new Groupe(m.group(1), m.group(2).trim(),
+                    trouverTout("(ET-\\d+)", m.group(3), 0), m.group(4).trim()));
         return r;
     }
 
     static List<String> jetons(String cellule) {
         return trouverTout("`([^`]+)`", cellule, 0);
+    }
+
+    /** Ce qu'un ensemble d'étapes consomme et produit vis-à-vis de l'extérieur. */
+    static List<List<String>> frontiere(List<String> membres, List<Etape> etapes) {
+        List<Etape> dedans = etapes.stream().filter(e -> membres.contains(e.id())).toList();
+        Set<String> produitInterne = new LinkedHashSet<>();
+        Set<String> consommeInterne = new LinkedHashSet<>();
+        for (Etape e : dedans) {
+            produitInterne.addAll(e.produit());
+            consommeInterne.addAll(e.consomme());
+        }
+        List<String> consomme = consommeInterne.stream()
+                .filter(g -> !produitInterne.contains(g)).sorted().toList();
+        Set<String> externe = new LinkedHashSet<>();
+        for (Etape e : etapes)
+            if (!membres.contains(e.id())) externe.addAll(e.consomme());
+        List<String> produit = produitInterne.stream()
+                .filter(g -> externe.contains(g) || !consommeInterne.contains(g))
+                .sorted().toList();
+        return List.of(consomme, produit);
     }
 
     // --- contrôles -----------------------------------------------------------
@@ -446,12 +479,193 @@ public class Verifier {
 
     static String tronquer(String s, int n) { return s.length() <= n ? s : s.substring(0, n); }
 
+    // --- vue de la chaîne : qui crée, qui utilise, ce qui est parallélisable ---
+    static int chaine(Path chemin) throws IOException {
+        String texte = Files.readString(chemin);
+        List<Etape> etapes = lireChaine(texte);
+        List<Groupe> groupes = lireGroupes(texte);
+        if (etapes.isEmpty()) {
+            System.out.println("Aucune chaîne de traitement déclarée dans ce document.");
+            return 2;
+        }
+        Map<String, String> sec = sections(texte);
+        Set<String> connus = new LinkedHashSet<>(champs(sec.getOrDefault("entrees", "")));
+        connus.addAll(trouverTout("^\\|\\s*`(P-\\d+)`", sec.getOrDefault("parametres", ""),
+                Pattern.MULTILINE));
+        Set<String> sorties = champs(sec.getOrDefault("sorties", ""));
+
+        System.out.printf("Chaîne de %s — %d étape(s), %d groupe(s)%n%n",
+                chemin.getFileName(), etapes.size(), groupes.size());
+
+        // qui crée, qui utilise
+        Map<String, List<String>> cree = new LinkedHashMap<>();
+        Map<String, List<String>> utilise = new LinkedHashMap<>();
+        for (Etape e : etapes) {
+            for (String g : e.produit())
+                cree.computeIfAbsent(g, k -> new ArrayList<>()).add(e.id());
+            for (String g : e.consomme())
+                utilise.computeIfAbsent(g, k -> new ArrayList<>()).add(e.id());
+        }
+        System.out.printf("%-30s %-14s %s%n", "GRANDEUR", "CRÉÉE PAR", "UTILISÉE PAR");
+        Set<String> toutes = new TreeSet<>(cree.keySet());
+        toutes.addAll(utilise.keySet());
+        for (String g : toutes) {
+            String origine = cree.containsKey(g) ? String.join(", ", cree.get(g))
+                    : (connus.contains(g) ? "contrat" : "?");
+            String aval = utilise.containsKey(g) ? String.join(", ", utilise.get(g))
+                    : (sorties.contains(g) ? "sortie" : "—");
+            System.out.printf("%-30s %-14s %s%n",
+                    g.length() > 30 ? g.substring(0, 30) : g, origine, aval);
+        }
+
+        // C-35 / C-36
+        System.out.println();
+        Set<String> disponibles = new LinkedHashSet<>(connus);
+        for (Etape e : etapes) {
+            for (String g : e.consomme())
+                if (!disponibles.contains(g))
+                    System.out.println("ÉCHEC C-35  " + e.id() + " consomme « " + g
+                            + " » qui n'est ni entrée, ni paramètre, ni produit d'une étape antérieure");
+            disponibles.addAll(e.produit());
+        }
+        cree.forEach((g, origines) -> {
+            if (!utilise.containsKey(g) && !sorties.contains(g))
+                System.out.println("ÉCHEC C-36  « " + g + " » produit par "
+                        + String.join(", ", origines) + " n'est ni consommé ni déclaré en sortie");
+        });
+
+        // fils d'exécution : niveaux topologiques
+        Map<String, String> producteur = new LinkedHashMap<>();
+        for (Etape e : etapes)
+            for (String g : e.produit()) producteur.put(g, e.id());
+        Map<String, Integer> niveau = new LinkedHashMap<>();
+        for (Etape e : etapes) {
+            int amont = 0;
+            for (String g : e.consomme())
+                if (producteur.containsKey(g))
+                    amont = Math.max(amont, niveau.getOrDefault(producteur.get(g), 0));
+            niveau.put(e.id(), 1 + amont);
+        }
+        Map<Integer, List<String>> vagues = new LinkedHashMap<>();
+        niveau.forEach((id, n) -> vagues.computeIfAbsent(n, k -> new ArrayList<>()).add(id));
+        System.out.printf("%nFils d'exécution — %d niveau(x)%n%n", vagues.size());
+        for (Integer n : new TreeSet<>(vagues.keySet())) {
+            List<String> etiquettes = new ArrayList<>(vagues.get(n));
+            Collections.sort(etiquettes);
+            System.out.println("  niveau " + n + " : " + String.join(", ", etiquettes)
+                    + (etiquettes.size() > 1 ? "  ← indépendantes, parallélisables" : ""));
+        }
+
+        // chemin critique : on remonte par l'amont le plus tardif
+        Map<String, String> precedent = new LinkedHashMap<>();
+        for (Etape e : etapes) {
+            int meilleurN = -1;
+            String meilleur = null;
+            for (String g : e.consomme()) {
+                String p = producteur.get(g);
+                if (p == null) continue;
+                int n = niveau.getOrDefault(p, 0);
+                // ordre des couples (niveau, identifiant), comme le max de Python
+                if (n > meilleurN || (n == meilleurN && p.compareTo(meilleur) > 0)) {
+                    meilleurN = n;
+                    meilleur = p;
+                }
+            }
+            if (meilleur != null) precedent.put(e.id(), meilleur);
+        }
+        String fin = null;
+        for (var e : niveau.entrySet())  // max de Python : le PREMIER maximum rencontré
+            if (fin == null || e.getValue() > niveau.get(fin)) fin = e.getKey();
+        List<String> critique = new ArrayList<>(List.of(fin));
+        String courant = fin;
+        while (precedent.containsKey(courant)) {
+            courant = precedent.get(courant);
+            critique.add(courant);
+        }
+        Collections.reverse(critique);
+        System.out.printf("%n  chemin critique : %s  (%d étapes)%n",
+                String.join(" → ", critique), critique.size());
+        System.out.println();
+        System.out.println("  La spécification dit ce qui est INDÉPENDANT, pas ce qu'il faut");
+        System.out.println("  paralléliser. La contrainte de déterminisme (§11) peut l'interdire.");
+
+        // vue groupée
+        if (!groupes.isEmpty()) {
+            System.out.printf("%nVue de niveau supérieur%n%n");
+            System.out.println("```mermaid\nflowchart LR");
+            for (Groupe gr : groupes) {
+                List<List<String>> f = frontiere(gr.membres(), etapes);
+                System.out.printf("    %s[\"%s %s<br/><small>%s</small>\"]%n",
+                        gr.id().replace("-", ""), gr.id(), gr.nom(), gr.role());
+                System.out.println("    %% consomme : " + String.join(", ", f.get(0)));
+                System.out.println("    %% produit  : " + String.join(", ", f.get(1)));
+            }
+            for (Groupe a : groupes) {
+                List<String> pa = frontiere(a.membres(), etapes).get(1);
+                for (Groupe b : groupes) {
+                    if (a == b) continue;
+                    List<String> cb = frontiere(b.membres(), etapes).get(0);
+                    List<String> liens = pa.stream().filter(cb::contains).sorted().toList();
+                    if (!liens.isEmpty())
+                        System.out.printf("    %s -->|%s| %s%n", a.id().replace("-", ""),
+                                String.join(", ", liens), b.id().replace("-", ""));
+                }
+            }
+            System.out.println("```");
+        }
+        return 0;
+    }
+
+    // --- parcours d'une grandeur : où elle est déclarée, produite, consommée ---
+    static int tracer(String nom, List<Path> fichiers) throws IOException {
+        Pattern motif = Pattern.compile("\\b" + Pattern.quote(nom) + "\\b");
+        System.out.printf("Parcours de « %s »%n%n", nom);
+        boolean trouve = false;
+        for (Path chemin : fichiers) {
+            String texte = Files.readString(chemin);
+            if (!motif.matcher(texte).find()) continue;
+            Map<String, String> sec = sections(texte);
+            List<String> roles = new ArrayList<>();
+            if (champs(sec.getOrDefault("entrees", "")).contains(nom)) roles.add("ENTRÉE");
+            if (champs(sec.getOrDefault("sorties", "")).contains(nom)) roles.add("SORTIE");
+            Set<String> regles = new TreeSet<>(trouverTout(
+                    "###\\s+(RG-\\d+)[^\\n]*\\n(?:(?!###)[\\s\\S])*?" + Pattern.quote(nom),
+                    sec.getOrDefault("regles", ""), Pattern.DOTALL));
+            if (!regles.isEmpty()) roles.add("employée par " + String.join(", ", regles));
+            if (roles.isEmpty()) roles.add("citée");
+            trouve = true;
+            System.out.printf("  %-46s %s%n", racine.relativize(chemin),
+                    String.join(" · ", roles));
+        }
+        if (!trouve) System.out.println("  (aucune occurrence)");
+        return 0;
+    }
+
     public static void main(String[] args) throws IOException {
         System.setOut(new java.io.PrintStream(new java.io.FileOutputStream(
                 java.io.FileDescriptor.out), true, java.nio.charset.StandardCharsets.UTF_8));
         racine = Paths.get(Verifier.class.getProtectionDomain().getCodeSource()
                 .getLocation().getPath()).getParent();
         if (!Files.exists(racine.resolve("CADRE.md"))) racine = Paths.get("").toAbsolutePath();
+
+        if (args.length > 0 && args[0].equals("--chaine")) {
+            if (args.length < 2) {
+                System.out.println("usage : Verifier.java --chaine <fichier>");
+                System.exit(2);
+            }
+            System.exit(chaine(Paths.get(args[1]).toAbsolutePath()));
+        }
+        if (args.length > 0 && args[0].equals("--tracer")) {
+            if (args.length < 2) {
+                System.out.println("usage : Verifier.java --tracer <nom de grandeur>");
+                System.exit(2);
+            }
+            try (Stream<Path> s = Files.walk(racine)) {
+                System.exit(tracer(args[1], s.filter(x -> x.toString().endsWith(".md"))
+                        .filter(x -> !x.toString().contains(".git")).sorted().toList()));
+            }
+        }
+
         List<Path> fichiers;
         if (args.length > 0) {
             fichiers = Arrays.stream(args).map(a -> Paths.get(a).toAbsolutePath()).toList();

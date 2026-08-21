@@ -84,7 +84,7 @@ MODE D'EMPLOI
      consomme, ce qu'elle produit (des noms NOUVEAUX, par immutabilité) et les
      règles qui la réalisent. Contrôlé par C-35 et C-36.
      Regrouper en `GR-xx` pour une vue de plus haut niveau.
-     python3 outils/verifier.py --chaine <ce fichier> -->
+     java outils/Verifier.java --chaine <ce fichier> -->
 
 | Étape | Consomme | Produit | Règles |
 |---|---|---|---|

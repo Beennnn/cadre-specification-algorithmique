@@ -128,7 +128,7 @@ Le registre des identités étant versionné, sa comparaison entre deux versions
 directement la matière de la notice :
 
 ```bash
-python3 outils/identites.py --registre && git diff registre.json
+java outils/Identites.java --registre && git diff registre.json
 ```
 
 | Ce que montre la comparaison | Ce qu'on en déduit |

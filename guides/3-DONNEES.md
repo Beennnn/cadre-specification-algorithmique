@@ -138,7 +138,7 @@ possible : **une grandeur porte le même nom partout où elle passe**, et ce nom
 jamais qu'une seule valeur.
 
 ```bash
-python3 outils/verifier.py --tracer montant_net_ligne
+java outils/Verifier.java --tracer montant_net_ligne
 ```
 ```
 Parcours de « montant_net_ligne »
@@ -168,7 +168,7 @@ fonction la produit, lesquelles la consomment, et à quel endroit précis.
 | Outil | Ce qu'il fait |
 |---|---|
 | [`templates/MODELE-FICHE-DONNEE.md`](../templates/MODELE-FICHE-DONNEE.md) | le squelette d'une fiche `D-xxx` |
-| [`outils/verifier.py`](../outils/) | contrôles `C-01` à `C-04` : entrées et sorties orphelines, paramètres non déclarés ou inutilisés. Et `--tracer <nom>` : le parcours d'une grandeur |
+| [`outils/Verifier.java`](../outils/) | contrôles `C-01` à `C-04` : entrées et sorties orphelines, paramètres non déclarés ou inutilisés. Et `--tracer <nom>` : le parcours d'une grandeur |
 | [`outils/REGLES-DE-CONTROLE.md`](../outils/REGLES-DE-CONTROLE.md) | les règles écrites une fois, exécutables par un script **ou** par une IA relectrice |
 
 ## Anti-patterns

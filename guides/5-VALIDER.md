@@ -54,7 +54,7 @@ Il se déroule en **deux passes**, qui n'attrapent pas la même chose :
 
 | | Ce qu'elle attrape | Son verdict |
 |---|---|---|
-| **1ʳᵉ passe — le script** [`verifier.py`](../outils/verifier.py) | ce qui se **compte** : entrées orphelines, paramètres morts, règles non couvertes, identifiants dupliqués, versions incohérentes | **certain**, en quelques secondes, sans faux positif |
+| **1ʳᵉ passe — le script** [`Verifier.java`](../outils/Verifier.java) | ce qui se **compte** : entrées orphelines, paramètres morts, règles non couvertes, identifiants dupliqués, versions incohérentes | **certain**, en quelques secondes, sans faux positif |
 | **2ᵉ passe — l'IA** | ce qui se **lit** : une règle floue, une contrainte d'implémentation glissée dans le texte, un « etc. » qui repousse une décision, un vocabulaire qui dérive | **à vérifier** — chaque constat doit citer un passage exact |
 
 Le script vient en premier parce qu'il est gratuit et sûr ; l'IA ensuite, sur un document
@@ -77,7 +77,7 @@ Ce qu'elles attrapent, réparti en quatre familles :
 | `C-03` | une grandeur **employée que rien ne déclare** — le fantôme qui circule. L'inverse de `C-01` : là une donnée est fournie pour rien, ici une donnée sort de nulle part |
 | `C-04` | un paramètre `P-xx` déclaré et **jamais employé** |
 | `C-05` | une **valeur littérale** au milieu d'une règle : soit c'est un paramètre, soit c'est une valeur magique |
-| `C-06` | une grandeur **sans unité**, sans devise ou sans domaine |
+| `C-06` | une grandeur **sans unité**, sans échelle ou sans domaine |
 | `C-07` | une donnée qui **change d'unité** entre sa déclaration et son emploi |
 
 **Complétude logique** — `C-08` à `C-13` : un `SI` sans `SINON`, une table de décision
@@ -93,7 +93,7 @@ un impact déclaré sur les résultats sans incrément majeur, une question ouve
 décideur, un statut « Acceptée » avec une question bloquante.
 
 ```bash
-python3 outils/verifier.py exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md
+java outils/Verifier.java exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md
 ```
 
 ## Étage 2 — la relecture qualité

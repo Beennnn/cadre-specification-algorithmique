@@ -6,7 +6,7 @@
 **Avant d'ouvrir cette liste**, l'étage 1 de la validation doit être vert :
 
 ```bash
-python3 outils/verifier.py <la spécification>
+java outils/Verifier.java <la spécification>
 ```
 
 Les contrôles mécaniques `C-01` à `C-23` attrapent les entrées et paramètres **morts** (déclarés sans
@@ -41,7 +41,7 @@ qu'à ce qu'eux ne savent pas voir — voir [guide 5](../guides/5-VALIDER.md).
       dégradation ?
 - [ ] **Temps** — fuseau, calendrier, heure de bascule, date qui fait foi ; et lors d'un
       rejeu, règles d'aujourd'hui ou de l'époque ?
-- [ ] **Unités et devises** — toute grandeur porte la sienne ; les conversions ont une
+- [ ] **Unités et échelles** — toute grandeur porte les siennes ; les conversions ont une
       source, une date et un arrondi.
 - [ ] **Bornes** — `≥` ou `>` ? un plafond écrête-t-il ou rejette-t-il ? une itération
       a-t-elle un maximum, et que se passe-t-il si on l'atteint ?

@@ -169,7 +169,7 @@ sorties :
 ```
 
 > **Un contrat sans unité ne vaut rien.** `montant : nombre` n'apporte aucune information
-> que le code ne donnait déjà. Toute la valeur est dans l'unité, la devise, le fuseau, la
+> que le code ne donnait déjà. Toute la valeur est dans l'unité, l'échelle, le référentiel, la
 > précision et le domaine — c'est-à-dire dans ce que le typage du langage ne dit pas.
 
 ## Les dépendances

@@ -1,10 +1,10 @@
 # Règles de contrôle d'une spécification
 
 *Écrites une fois, pour trois lecteurs : un relecteur humain qui les applique, un script
-qui les exécute ([`verifier.py`](verifier.py)), une IA à qui on les donne en consigne
+qui les exécute ([`Verifier.java`](Verifier.java)), une IA à qui on les donne en consigne
 ([`PROMPT-RELECTURE-IA.md`](PROMPT-RELECTURE-IA.md)).*
 
-**Ce qui est mécanisé.** `verifier.py` et `Verifier.java` mettent en œuvre `C-01` à
+**Ce qui est mécanisé.** `Verifier.java` met en œuvre `C-01` à
 `C-04`, `C-08`, `C-10`, `C-11`, `C-13` à `C-15`, `C-17`, `C-19` à `C-21`, `C-23`, `C-24`,
 `C-26`, `C-28`, `C-29`, `C-35`, `C-36`, `C-38`, `C-39` — soit **23 des 39**. Les seize
 restants (`C-05` à `C-07`, `C-09`, `C-12`, `C-16`, `C-18`, `C-22`, `C-25`, `C-27`, `C-30`
@@ -151,6 +151,6 @@ incident réel**, jamais par précaution. Une règle ajoutée doit préciser :
 1. son identifiant, dans la bonne famille ;
 2. sa formulation, en une phrase, sans ambiguïté ;
 3. **ce qu'un échec révèle** — sans quoi personne ne saura quoi faire du verdict ;
-4. si elle est mécanisable, et si oui, son implémentation dans `verifier.py`.
+4. si elle est mécanisable, et si oui, son implémentation dans `Verifier.java`.
 
 Une règle `C-xx` qui n'est pas mécanisable n'en est pas une : c'est un `H-xx`.

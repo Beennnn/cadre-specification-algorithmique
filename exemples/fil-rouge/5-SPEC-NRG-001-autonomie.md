@@ -170,7 +170,7 @@ vue, et c'est tout l'intérêt : `force_aerodynamique` ou `energie_mecanique` n'
 raison d'apparaître dans une discussion d'architecture.
 
 ```bash
-python3 outils/verifier.py --chaine exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md
+java outils/Verifier.java --chaine exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md
 ```
 
 produit la table « qui crée / qui utilise » de chaque grandeur, contrôle `C-35` et `C-36`,

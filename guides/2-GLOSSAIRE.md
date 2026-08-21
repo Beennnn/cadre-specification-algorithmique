@@ -53,7 +53,7 @@ le monde a lu un texte différent.
 |---|---|
 | Les notions du domaine employées dans les règles | Les termes techniques (cache, file, index, service) |
 | Les états et leurs transitions autorisées | Les mots du français courant que personne ne conteste |
-| Les grandeurs, **avec leur unité, leur devise, leur référentiel** | Les synonymes ajoutés « pour la variété » |
+| Les grandeurs, **avec leur unité, leur échelle, leur référentiel** | Les synonymes ajoutés « pour la variété » |
 | Les rôles et qui les tient | Les définitions circulaires |
 | Les objets et documents métier | Les termes que personne n'emploie à l'oral |
 | Les notions réglementaires ou contractuelles, **avec leur source** | Les acronymes internes non expliqués |
@@ -65,7 +65,7 @@ Six critères, tous vérifiables en relecture :
 1. **Une phrase.** Si vous en écrivez trois, c'est probablement deux notions.
 2. **Sans employer le mot défini.** « Panier : un panier de commande » ne définit rien.
 3. **Elle dit ce que la chose *est***, pas ce qu'elle fait, ni comment on l'obtient.
-4. **Elle porte l'unité, la devise, le fuseau** quand il s'agit d'une grandeur.
+4. **Elle porte l'unité, l'échelle, le référentiel** quand il s'agit d'une grandeur.
 5. **Elle dit ce que ce n'est pas**, quand une confusion est fréquente.
 6. **Elle cite sa source** quand le terme est réglementaire, contractuel ou normatif.
 
@@ -83,7 +83,7 @@ désigne ce qu'on doit payer.
 | | |
 |---|---|
 | ❌ | **Remise** — on applique 10 % quand le client commande 3 articles ou plus. |
-| ✅ | **Remise** — réduction consentie sur un montant, exprimée en taux ou en montant fixe. Une remise de *quantite_commandee* porte sur une ligne, une remise de *panier* porte sur l'ensemble de la commande. |
+| ✅ | **Remise** — réduction consentie sur un montant, exprimée en taux ou en montant fixe. Une remise de *quantité* porte sur une ligne, une remise de *panier* porte sur l'ensemble de la commande. |
 
 La mauvaise définition décrit **un traitement** au lieu d'une notion : elle enferme dans
 le glossaire une règle qui devrait vivre en `RG-xxx`, avec son identifiant, son
