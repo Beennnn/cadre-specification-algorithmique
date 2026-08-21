@@ -1,58 +1,111 @@
-# Cadre de spécification algorithmique métier
+# Cadre de spécification fonctionnelle
 
 > Le métier écrit la loi. L'IT écrit la machine.
 
-Ce dépôt décrit une méthode pour que les personnes qui **détiennent la connaissance
-métier et algorithmique** cessent de produire du code, et produisent à la place des
-**spécifications en pseudo-langage** : assez précises pour qu'un développeur les
-implémente sans deviner, assez libres pour qu'il choisisse le langage, les structures
-de données et l'architecture.
+**Ce dépôt est une méthode, pas un entrepôt de spécifications.** Il ne contient aucune
+spécification de votre système : il contient la façon de les écrire, les modèles pour le
+faire, et un exemple complet de bout en bout.
 
-## Par où commencer
+Les spécifications que vous produirez avec cette méthode vivent **dans le dépôt de votre
+produit, à côté du code** — c'est ce qui leur permet d'être versionnées, relues en demande
+de fusion, et de rester vraies.
 
-| Fichier | À qui | Quoi |
+---
+
+## Le problème
+
+Dans beaucoup d'organisations, la connaissance algorithmique appartient à des gens dont le
+métier n'est pas de développer. Ils codent quand même — tableur, carnet de calcul, script
+— parce que c'est le seul moyen qu'ils ont de vérifier que leur idée tient. Ce code finit
+en production par accident, ou est réécrit avec dérive, ou est jeté avec ses quarante
+décisions implicites.
+
+Le point commun : **le code mélange indissociablement l'intention et la mise en œuvre.**
+Et quand la spécification est floue, c'est le développeur qui décide du métier — sans le
+savoir et sans mandat.
+
+## Ce que la méthode produit
+
+Une **spécification fonctionnelle** en deux volets :
+
+1. **L'architecture fonctionnelle** — quelles fonctions existent, comment elles
+   s'appellent, qui en répond, où elles vivent dans le code, quel est leur contrat.
+2. **La spécification de chaque fonction** — les règles, en pseudo-langage, avec leurs
+   paramètres, leurs invariants, leur jeu d'essai et leurs contraintes chiffrées.
+
+Le tout assez précis pour qu'un développeur l'implémente sans deviner, et assez libre pour
+qu'il choisisse le langage, les structures de données et l'architecture.
+
+## Les trois temps
+
+| | | Guide |
 |---|---|---|
-| **[CADRE.md](CADRE.md)** | tout le monde | Le document de référence : le principe, la frontière métier/technique, le pseudo-langage, la fiche de contraintes, le processus, les anti-patterns. **C'est le document à lire en premier.** |
-| **[exemples/SPEC-PRX-001-montant-a-payer.md](exemples/SPEC-PRX-001-montant-a-payer.md)** | tout le monde | Exemple **gestion** : une spécification complète sur un cas que tout le monde comprend, *le calcul du montant à payer d'une commande*. |
-| **[exemples/SPEC-THM-001-refroidissement.md](exemples/SPEC-THM-001-refroidissement.md)** | profils scientifiques | Exemple **scientifique** : *le refroidissement d'une boisson chaude* — un phénomène que tout le monde connaît, calculé avec une loi croisée au lycée. Illustre les trois adaptations du cadre au calcul numérique. |
-| **[templates/MODELE-SPECIFICATION.md](templates/MODELE-SPECIFICATION.md)** | auteur métier | Le squelette vierge à copier pour écrire une nouvelle spécification. |
-| **[templates/CHECKLIST-RELECTURE.md](templates/CHECKLIST-RELECTURE.md)** | relecteurs | Ce qu'on vérifie en revue, par casquette (métier, technique, test). |
+| **1. Découper** | Identifier les fonctions, les nommer, leur donner un propriétaire, les ancrer dans le code existant | **[guides/1-DECOUPER.md](guides/1-DECOUPER.md)** |
+| **2. Écrire** | Le glossaire d'abord, puis les règles — à plusieurs, par lots, en revue croisée | **[guides/2-GLOSSAIRE.md](guides/2-GLOSSAIRE.md)** · **[guides/3-ECRIRE-A-PLUSIEURS.md](guides/3-ECRIRE-A-PLUSIEURS.md)** |
+| **3. Passer au développement** | Transmettre, pour que l'équipe puisse choisir l'architecture et le langage, coder, optimiser et qualifier | **[guides/4-PASSER-AU-DEVELOPPEMENT.md](guides/4-PASSER-AU-DEVELOPPEMENT.md)** |
 
-## Le pari en trois phrases
+## Ce que contient le dépôt
 
-1. Un expert métier qui code passe 80 % de son énergie sur des questions qui ne sont
-   pas les siennes (langage, performance, industrialisation) et 20 % sur ce que lui
-   seul sait — on inverse le ratio.
-2. Une règle métier n'est pas ambiguë parce qu'elle est écrite en français : elle est
-   ambiguë parce qu'il lui manque une unité, un arrondi, un « sinon » ou un cas de
-   départage. Le cadre force à les écrire.
-3. Le développeur ne peut choisir un langage et une architecture que si on lui donne
-   les contraintes en *unités métier* : volumes, latence, précision, rejouabilité,
-   fréquence de changement de la règle. Le cadre force à les chiffrer.
+| | |
+|---|---|
+| **[CADRE.md](CADRE.md)** | **Le document de référence.** Le principe, la frontière métier/technique, les huit faux amis, le pseudo-langage, l'adaptation au calcul scientifique, la fiche de contraintes, la gouvernance, les anti-patterns. À lire une fois, en entier |
+| **[guides/](guides/)** | Quatre guides opérationnels, à ouvrir pendant qu'on fait |
+| **[templates/](templates/)** | Les modèles vierges : spécification, fiche de fonction, glossaire, liste de vérification en revue |
+| **[exemples/fil-rouge/](exemples/fil-rouge/)** | **Le fil rouge complet** : *l'autonomie d'un véhicule électrique*, du découpage jusqu'à la spécification détaillée |
+| **[GLOSSAIRE.md](GLOSSAIRE.md)** | Le vocabulaire de la méthode elle-même |
+| **[REFERENCES.md](REFERENCES.md)** | D'où viennent les idées, ce qu'on leur emprunte et ce qu'on écarte |
+| **[FAQ.md](FAQ.md)** | Les objections fréquentes, et leurs réponses |
 
-## Deux exemples, deux conclusions opposées
+## Le fil rouge
 
-Les deux exemples sont issus de domaines volontairement éloignés, parce que **la même
-méthode y conduit à des décisions techniques contraires** — la meilleure preuve que c'est
-bien la spécification qui décide, et non l'habitude du développeur.
+Tous les guides s'appuient sur **le même scénario** : *[l'autonomie d'un véhicule
+électrique](exemples/fil-rouge/)*. « Jusqu'où puis-je aller, et où dois-je m'arrêter ? »
 
-| | Gestion (`SPEC-PRX-001`) | Scientifique (`SPEC-THM-001`) |
-|---|---|---|
-| Exigence d'exactitude | exacte au centime | tolérance relative |
-| Type numérique qui en découle | **décimal exact obligatoire** | **double précision suffisante** |
-| Critère d'acceptation | égalité stricte | reproductibilité, justesse numérique, validité du modèle |
-| Piège central traité | le centime résiduel d'une répartition | l'ordre d'ajout du lait — deux tiers de degré |
-| Ce que la liberté permet | jointure, mémoire ou cache | forme fermée **ou** intégrateur — les deux conformes |
+Il a été choisi parce qu'il réunit quatre qualités rares ensemble : tout le monde comprend
+la question, il y a de la vraie physique avec des équations, il est assez complexe pour
+être intéressant, et il se découpe naturellement en une douzaine de fonctions réparties
+sur cinq propriétaires métier.
 
-## Critère d'acceptation d'une spécification
+On l'y suit de bout en bout : [le découpage](exemples/fil-rouge/1-DECOUPAGE.md) → [le
+glossaire](exemples/fil-rouge/2-GLOSSAIRE.md) → [une fiche arrêtée au niveau
+3](exemples/fil-rouge/3-FN-004-planifier-les-recharges.md) → [la spécification
+complète](exemples/fil-rouge/4-SPEC-NRG-001-autonomie.md).
 
-> **Le test de la double implémentation.** Deux développeurs qui ne se parlent pas,
-> dans deux langages différents, produisent des programmes qui donnent **le même
-> résultat** sur l'intégralité du jeu d'essai — et sur les cas auxquels personne
-> n'avait pensé.
+**Deux vignettes** complètent l'illustration, gardées parce qu'elles aboutissent à des
+conclusions techniques **opposées** à partir de la même méthode :
+
+| | [Le montant à payer d'une commande](exemples/SPEC-PRX-001-montant-a-payer.md) | [Le refroidissement d'une boisson](exemples/SPEC-THM-001-refroidissement.md) | [L'autonomie d'un véhicule](exemples/fil-rouge/4-SPEC-NRG-001-autonomie.md) |
+|---|---|---|---|
+| Exigence d'exactitude | exacte au centime | tolérance de 10⁻⁶ | reproductibilité de 10⁻⁹ entre deux implémentations |
+| **Type numérique qui en découle** | **décimal exact obligatoire** | **double précision confortable** | **double précision indispensable** |
+| Faux ami central | le centime résiduel d'une répartition | l'ordre d'ajout du lait | le sens de l'arrondi de l'autonomie |
+
+*Trois exigences différentes, trois conclusions différentes.* C'est la démonstration que
+c'est la spécification qui décide, et non l'habitude du développeur.
+
+## Le critère d'acceptation
+
+> **Le test de la double implémentation.** Deux développeurs qui ne se parlent pas, dans
+> deux langages différents, produisent des programmes qui donnent **le même résultat** sur
+> l'intégralité du jeu d'essai — et sur les cas auxquels personne n'avait pensé.
 
 Si ce n'est pas vrai, la spécification n'est pas finie.
 
 Sur des grandeurs continues, ce critère se dédouble en **reproductibilité** (deux
-implémentations conformes donnent le même nombre) et **justesse** (le nombre est proche
-de la vérité physique) — voir `CADRE.md` §2.8.
+implémentations conformes donnent le même nombre), **justesse** (le nombre est la vraie
+valeur des formules) et **validité du modèle** (les formules décrivent la réalité) — voir
+[CADRE.md §2.8](CADRE.md).
+
+## Par où commencer
+
+1. Lisez **[CADRE.md](CADRE.md)** une fois, en entier. C'est le seul document long.
+2. Parcourez le **[fil rouge](exemples/fil-rouge/)** pour voir à quoi ça ressemble.
+3. Faites l'**exercice d'étalonnage** : prenez un algorithme existant, connu, moyennement
+   complexe, écrivez-en la spécification *a posteriori*, et faites-la implémenter par
+   quelqu'un qui ne connaît pas le domaine. Les écarts constatés convainquent — le
+   discours, non.
+
+> Ce cadre est un outil, pas un règlement. Une section qui ne sert jamais doit être
+> supprimée ; une question qui revient toujours doit être ajoutée à la liste de
+> vérification. La seule règle non négociable est la première : **la spécification s'écrit
+> avant le code**.

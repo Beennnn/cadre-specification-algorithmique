@@ -718,7 +718,13 @@ revient.
 
 ## 9. Les exemples : lecture guidée
 
-Deux spécifications complètes accompagnent ce cadre. Elles sont volontairement issues de
+Le **fil rouge** de ce dépôt — *[l'autonomie d'un véhicule
+électrique](exemples/fil-rouge/)* — déroule la méthode complète, du découpage à la
+spécification détaillée, en passant par le glossaire du domaine. C'est là qu'il faut
+aller pour voir l'ensemble s'articuler.
+
+Deux **vignettes** complètent l'illustration, plus courtes et volontairement issues de
+domaines opposés. Elles sont volontairement issues de
 domaines opposés, parce que **la même méthode y conduit à des conclusions techniques
 contraires** — ce qui est la meilleure preuve que c'est bien la spécification qui décide,
 et non l'habitude du développeur.
