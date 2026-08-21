@@ -37,7 +37,7 @@ validation est rejouée.
 
 | | **Étage 1 — contrôles mécaniques** | **Étage 2 — relecture qualité métier** | **Étage 3 — relecture qualité technique** |
 |---|---|---|---|
-| Qui | un script, puis une IA | le métier et le test | **un développeur qui ne connaît pas le domaine** |
+| Qui | un **script**, puis une **IA** — deux passes distinctes, voir ci-dessous | le métier et le test | **un développeur qui ne connaît pas le domaine** |
 | La question | y a-t-il des incohérences formelles ? | les règles sont-elles justes et complètes ? | **puis-je coder cela sans reposer de question ?** |
 | Verdict | binaire, reproductible | argumenté | **binaire** |
 | Coût | quelques secondes | quelques heures | une à deux heures |
@@ -49,6 +49,17 @@ validation est rejouée.
 > concentrent ensuite sur ce que seule une lecture humaine peut voir.
 
 ## Étage 1 — les contrôles mécaniques
+
+Il se déroule en **deux passes**, qui n'attrapent pas la même chose :
+
+| | Ce qu'elle attrape | Son verdict |
+|---|---|---|
+| **1ʳᵉ passe — le script** [`verifier.py`](../outils/verifier.py) | ce qui se **compte** : entrées orphelines, paramètres morts, règles non couvertes, identifiants dupliqués, versions incohérentes | **certain**, en quelques secondes, sans faux positif |
+| **2ᵉ passe — l'IA** | ce qui se **lit** : une règle floue, une contrainte d'implémentation glissée dans le texte, un « etc. » qui repousse une décision, un vocabulaire qui dérive | **à vérifier** — chaque constat doit citer un passage exact |
+
+Le script vient en premier parce qu'il est gratuit et sûr ; l'IA ensuite, sur un document
+déjà propre, où elle n'a plus à signaler ce qu'un contrôle mécanique aurait dû trouver.
+
 
 Les règles sont écrites **une fois**, dans
 [`outils/REGLES-DE-CONTROLE.md`](../outils/REGLES-DE-CONTROLE.md), et servent trois

@@ -173,15 +173,29 @@ avoir laissé de trace.
 
 ## La validation, en trois étages et dans cet ordre
 
-| | Qui | La question |
-|---|---|---|
-| **1** | un script, puis une IA | y a-t-il des incohérences **formelles** ? |
-| **2** | le métier et le test | les règles sont-elles **justes et complètes** ? |
-| **3** | un développeur **extérieur au domaine** | **puis-je coder cela sans reposer de question ?** |
+| Étage | Qui relit | Ce qu'on y cherche | Exemple de ce qui est attrapé |
+|---|---|---|---|
+| **1** | Un **script**, puis une **IA** | Les incohérences **formelles** — celles qui se constatent sans rien connaître au métier | Une entrée déclarée qu'aucune règle n'emploie ; un `SI` sans `SINON` ; un numéro de version qui ne correspond pas à l'historique |
+| **2** | Le **métier** et le **test** | La **justesse et la complétude** des règles | Un seuil qui devrait valoir 4 articles et non 3 ; un cas limite que personne n'avait envisagé |
+| **3** | Un **développeur extérieur** au domaine et à l'écriture | La **capacité à implémenter**, par oui ou par non | « Et si les deux ont le même score, on prend lequel ? » |
 
-L'ordre n'est pas négociable : faire relire par des humains un document qui contient encore
-un paramètre inutilisé gaspille la ressource la plus rare de la démarche. Le verdict de
-l'étage 3 est **binaire**, et le critère de sortie est **zéro question**.
+### Pourquoi deux passes au premier étage
+
+Elles n'attrapent pas la même chose, et l'une ne remplace pas l'autre.
+
+| | Ce qu'elle attrape | Son verdict |
+|---|---|---|
+| **Le script** — [`verifier.py`](outils/verifier.py) | ce qui se **compte** : entrées orphelines, paramètres morts, règles non couvertes, identifiants dupliqués, versions incohérentes | **certain**, en quelques secondes, sans faux positif |
+| **L'IA** | ce qui se **lit** : une règle floue, une contrainte d'implémentation glissée dans le texte, un « etc. » qui repousse une décision, un vocabulaire qui dérive | **à vérifier** — chaque constat doit citer un passage exact |
+
+Le script vient en premier parce qu'il est gratuit et sûr. L'IA vient ensuite, sur un
+document déjà propre : elle n'a plus à signaler ce qu'un contrôle mécanique aurait dû
+trouver, et peut se consacrer à ce que seule une lecture repère.
+
+L'ordre des trois étages n'est pas négociable : faire relire par des humains un document
+qui contient encore un paramètre inutilisé gaspille la ressource la plus rare de la
+démarche. Le verdict de l'étage 3 est **binaire**, et le critère de sortie est **zéro
+question**.
 
 ## La donnée de référence
 
