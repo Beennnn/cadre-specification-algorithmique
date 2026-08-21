@@ -61,14 +61,20 @@ traçabilité des lots de matière première, le contrôle qualité du mélange 
 
 ```
 request :
-    target_batch_mass : Mass(kg, > 0, 3 decimals)
-    balance_step      : Mass(kg, > 0, 3 decimals)
-    components        : List[Component](1 .. 50)
+    target_batch_mass : Mass(kg, > 0, 3 decimals)          [Scaled]
+    balance_step      : Mass(kg, > 0, 3 decimals)          [Scaled]
+    components        : Sequence[Component](1 .. 50)
 
 Component :
-    component_id         : Identifier(text, 3 to 20 characters, unique)
-    target_mass_fraction : Ratio(dimensionless, 6 decimals, 0.000000 .. 1.000000)
+    component_id         : Identifier(text, 3 to 20 characters, unique)   [CharacterString]
+    target_mass_fraction : Ratio(dimensionless, 6 decimals, 0.000000 .. 1.000000)  [Scaled]
 ```
+
+> **`[Scaled]`, et non `Real`.** La famille entre crochets est celle d'ISO/IEC 11404
+> ([CADRE §2.3](../CADRE.md)). `Scaled` désigne un rationnel à échelle décimale fixe,
+> **exact** ; `Real` une approximation. `INV-01` exige une égalité stricte : elle ne
+> tient pas en binaire flottant, où 0,1 n'est pas représentable. Le type porte
+> l'exigence — il ne la recommande pas.
 
 **Préconditions :**
 - `SUM OF target_mass_fraction OVER components = 1.000000`, exactement (`E-MAS-001`).
@@ -81,13 +87,13 @@ Component :
 
 ```
 result :
-    dispensed : List[Dispensed]
-    residual  : Mass(kg, 3 decimals)          -- signé, avant affectation
+    dispensed : Sequence[Dispensed]
+    residual  : Mass(kg, 3 decimals)   [Scaled]   -- signé, avant affectation
 
 Dispensed :
-    component_id   : Identifier(text, 3 to 20 characters)
-    nominal_mass   : Mass(kg, ≥ 0, 9 decimals)   -- avant arrondi, pour la traçabilité
-    dispensed_mass : Mass(kg, ≥ 0, 3 decimals)   -- ce qui est effectivement pesé
+    component_id   : Identifier(text, 3 to 20 characters)   [CharacterString]
+    nominal_mass   : Mass(kg, ≥ 0, 9 decimals)   [Scaled]   -- avant arrondi, traçabilité
+    dispensed_mass : Mass(kg, ≥ 0, 3 decimals)   [Scaled]   -- ce qui est effectivement pesé
 ```
 
 ---
@@ -300,7 +306,7 @@ Chaque dose nominale vaut ≈ 0,1429 kg, arrondie à 0,100 kg — somme 0,700 kg
 
 | Id | Énoncé | Source | Propriétaire | Vérification |
 |---|---|---|---|---|
-| `EX-01` | Le calcul emploie une **arithmétique décimale exacte**. Le binaire flottant est exclu : 0,1 n'y est pas représentable, et `INV-01` exige une égalité stricte | Contrainte d'exactitude §11 | Architecture SI | Revue de conception |
+| `EX-01` | Le calcul emploie une **arithmétique décimale exacte**, comme l'impose la famille `Scaled` du contrat (ISO/IEC 11404). Le binaire flottant est exclu : 0,1 n'y est pas représentable, et `INV-01` exige une égalité stricte | Contrat §4, §5 | Architecture SI | Revue de conception |
 | `EX-02` | Un lot comporte au plus 50 composants ; le calcul est appelé au plus 200 fois par heure | Capacité de l'atelier | Responsable production | Mesure en exploitation |
 | `EX-03` | Le calcul est **rejouable à l'identique** : mêmes entrées, mêmes masses, indéfiniment. Aucune dépendance à l'horloge, à l'ordre de lecture ou à un aléa | Exigence de traçabilité `QUA-TRC-2` | Assurance qualité | Rejeu sur archive, trimestriel |
 | `EX-04` | Les masses nominales sont conservées 10 ans avec le lot | `QUA-TRC-2` §4 | Assurance qualité | Audit d'archive |

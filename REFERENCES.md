@@ -176,6 +176,44 @@ ce que cette méthode cherche à produire.
 
 ---
 
+## Les types indépendants du langage
+
+> **ISO/IEC 11404, *Information technology — General-Purpose Datatypes*.**
+> Une norme qui définit un jeu de types de données **indépendant de tout langage de
+> programmation**, avec leur sémantique : `Integer`, `Real`, `Scaled`, `CharacterString`,
+> `Boolean`, `Enumerated`, `DateAndTime`, `TimeInterval`, et les générateurs `Sequence`,
+> `Array`, `Table`.
+
+**Ce qu'on emprunte** : les **noms et la sémantique** des familles de type du
+[CADRE.md §2.3](CADRE.md). C'est exactement notre besoin — décrire un type sans présumer
+du langage — et il est déjà normalisé, donc inutile de l'inventer.
+
+La distinction qui rapporte le plus est `Real` / `Scaled` : une approximation d'un côté,
+un rationnel à échelle décimale fixe et **exact** de l'autre. Elle transforme en **type**
+ce que le dépôt exprimait auparavant en recommandation — « attention au binaire flottant
+quand une somme doit tomber juste ».
+
+**Ce qu'on ajoute** : ce que la norme ne porte pas, parce que ce n'est pas son objet —
+l'**unité**, le **référentiel** et l'**incertitude** d'une grandeur.
+
+---
+
+## Les contrats
+
+> **Bertrand Meyer, *Design by Contract*, 1986 et suivants ; OMG, *Object Constraint
+> Language* (OCL).**
+> Une fonction est un contrat : des **préconditions** que l'appelant doit satisfaire, des
+> **postconditions** que la fonction garantit, des **invariants** vrais en permanence.
+
+**Ce qu'on emprunte** : les trois clauses `PRECONDITIONS`, `POSTCONDITIONS` et
+`INVARIANTS` du pseudo-langage, et l'exigence qu'un invariant vaille pour **toutes** les
+entrées et non pour les seuls cas du jeu d'essai.
+
+**Ce qu'on écarte** : la notation d'OCL, trop dense pour un lecteur qui ne programme pas.
+On garde la notion, pas la syntaxe — un invariant s'énonce dans le pseudo-langage.
+
+---
+
 ## Les langages contrôlés et dédiés
 
 > **OMG, *Semantics of Business Vocabulary and Business Rules* (SBVR), à partir de 2008.**

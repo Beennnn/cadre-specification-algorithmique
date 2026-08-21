@@ -296,6 +296,26 @@ qui réintroduit exactement ce que la méthode veut sortir des mains du métier.
 > *specification by example*, les invariants testables des tests de propriété, les unités
 > du SI et du GUM. On garde la règle, on laisse le métamodèle et l'outillage.
 
+#### Ce sur quoi le lexique s'adosse
+
+Écarter ces langages ne veut pas dire **inventer**. Un lexique inventé de bout en bout
+n'aurait ni sémantique de référence, ni antériorité, ni rien à opposer à qui le conteste.
+Chaque moitié du formalisme s'ancre donc sur une norme existante, dont on emprunte les
+noms et les définitions, et dont on **déclare l'écart**.
+
+| Ce qu'on écrit | Norme d'ancrage | Ce qu'on en prend | Ce dont on s'écarte, et pourquoi |
+|---|---|---|---|
+| **Les familles de type** | **ISO/IEC 11404**, *General-Purpose Datatypes* | Les noms et la sémantique : `Integer`, `Real`, `Scaled`, `CharacterString`, `Boolean`, `Enumerated`, `DateAndTime`, `TimeInterval`, `Sequence`, `Array`, `Table` | Rien sur les noms. On ajoute seulement ce que la norme ne porte pas : l'**unité**, le **référentiel** et l'**incertitude** (§2.3, §2.9) |
+| **Les grandeurs et leurs unités** | **SI**, **ISO 80000**, **GUM / JCGM 100** | Les unités, l'algèbre dimensionnelle, le vocabulaire de l'incertitude | On ne prescrit pas la méthode de propagation : la spécification déclare les incertitudes d'entrée, pas le calcul |
+| **Les expressions et opérations d'ensemble** | **DMN / FEEL** (OMG) | `if / then / else`, l'itération `for … in`, les fonctions de liste (`sum`, `mean`, `min`, `max`, `count`, `sort`), le filtrage, et les tables de décision avec leur contrôle de complétude | FEEL est **exécutable** et sans structure de bloc. On ajoute `END IF` / `END FOR`, `LET`, `RAISE ERROR` — et on écrit les mots-clés en majuscules, pour qu'ils se distinguent de la prose qui les entoure |
+| **Les clauses de contrat** | **Design by Contract** (Meyer), **OCL** (OMG) | `PRECONDITIONS`, `POSTCONDITIONS`, `INVARIANTS` — et l'idée qu'un invariant vaut pour **toutes** les entrées | La notation d'OCL, trop dense pour un lecteur non informaticien. On garde la notion, pas la syntaxe |
+| **La structure du document** | **ISO/IEC/IEEE 29148** | Le squelette d'une exigence : identifiable, non ambiguë, vérifiable, traçable | Son gabarit complet, taillé pour des exigences système et non pour un algorithme |
+
+> **Ce que l'ancrage change en pratique.** Un lecteur qui connaît ISO 11404 reconnaît nos
+> types sans les apprendre. Un outil DMN existant lit nos tables de décision. Et devant
+> qui conteste un choix, la réponse n'est pas « c'est notre convention » mais « c'est la
+> norme, et voici l'écart que nous assumons ».
+
 #### Le prix à payer, et ce qui le rend acceptable
 
 Un lexique de trente mots est **moins complet** que n'importe lequel de ces langages. Il
@@ -407,15 +427,39 @@ tangente — s'écrivent avec leur notation habituelle et ne sont pas des mots-c
 ce qu'elle coûte.
 
 ```
-montant_ht        : Montant(EUR, 2 décimales)
-poids             : Poids(kg, 3 décimales, ≥ 0)
-taux_remise       : Taux(0,0000 .. 1,0000, 4 décimales)
-date_commande     : Horodatage(fuseau Europe/Paris)
-date_effet        : Date(calendrier grégorien)
-quantite_commandee : Entier(≥ 1)
-reference_produit : Identifiant(texte, 3 à 20 caractères, unique)
-zone_livraison    : Énuméré { FRANCE_METRO, UE, HORS_UE }
+dispensed_mass       : Mass(kg, 3 decimals, ≥ 0)
+target_mass_fraction : Ratio(dimensionless, 0.000000 .. 1.000000, 6 decimals)
+ambient_temperature  : Temperature(°C, 2 decimals)
+measured_at          : DateAndTime(zone Europe/Paris)
+effective_date       : Date(Gregorian calendar)
+component_count      : Integer(≥ 1)
+component_id         : Identifier(text, 3 to 20 characters, unique)
+sample_state         : Enumerated { SOLID, LIQUID, GAS }
 ```
+
+**On écrit la grandeur, pas la famille — mais la famille est déclarée.** `Mass` et
+`Temperature` disent *ce que la valeur est* ; c'est ce qu'un lecteur métier reconnaît.
+Chacune se rattache à une **famille ISO/IEC 11404**, déclarée une fois au glossaire du
+domaine, et c'est elle qui dit au développeur quoi instancier :
+
+| Grandeur écrite dans la spécification | Famille ISO/IEC 11404 | Ce que le développeur en déduit |
+|---|---|---|
+| `Mass`, `Temperature`, `Length` mesurées | `Real` | un flottant, dont la précision se discute (§4) |
+| `Mass` **exacte**, soumise à conservation | `Scaled` | un décimal à échelle fixe — jamais un binaire flottant |
+| `Ratio`, `Rate` | `Real`, ou `Scaled` si une somme exacte est exigée | idem |
+| `Integer`, un dénombrement | `Integer` | un entier, dont l'amplitude est bornée par le domaine |
+| `Identifier`, un code | `CharacterString` | une chaîne, dont la longueur est bornée |
+| `Enumerated { … }` | `Enumerated` | un type énuméré fermé — jamais une chaîne libre |
+| `DateAndTime`, `Date` | `DateAndTime` | un instant, avec son fuseau ou son calendrier déclaré |
+| `Duration` | `TimeInterval` | une durée, distincte d'un instant |
+| `List[…]`, `Matrix[…]` | `Sequence`, `Array` | ordonné ou non, doublons admis ou non : §2.7 le déclare |
+
+> **`Scaled` est le cas qui rapporte le plus.** ISO/IEC 11404 distingue `Real` — une
+> approximation — de `Scaled` — un rationnel à échelle décimale fixe, **exact**. C'est
+> exactement la distinction que réclame [SPEC-MAS-001](exemples/SPEC-MAS-001-batch-mass-balance.md),
+> dont l'invariant de conservation exige une égalité stricte que le binaire flottant ne
+> peut pas tenir. Écrire `Scaled` plutôt que « décimal exact, attention au flottant »,
+> c'est remplacer une recommandation par un type.
 
 #### La ligne exacte entre le type et sa représentation
 
@@ -1830,8 +1874,9 @@ IMPOSÉE             ROUND(value, decimals, mode)
 
 TYPES               <nom> : <Famille>(<unité pivot> ▸ <unité d'usage>,
                                       <précision>, <plage>)
-  Familles : Entier · Flottant · Décimal · Chaîne · Booléen · Énuméré
-             Horodatage · Durée · Liste[…] · Table[…] · Matrice[…]
+  Familles (ISO/IEC 11404) : Integer · Real · Scaled · CharacterString
+             Boolean · Enumerated · DateAndTime · TimeInterval
+             Sequence[…] · Array[…] · Table[…]
 
 IDENTIFIANTS
   FN fonction · SPEC spécification · RG règle · P paramètre · D donnée
