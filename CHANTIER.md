@@ -1,6 +1,6 @@
 # État du chantier
 
-*Dernière mise à jour : 2026-08-21 (4)*
+*Dernière mise à jour : 2026-08-21 (5)*
 
 ---
 
@@ -27,6 +27,14 @@ illustrée de bout en bout par un fil rouge dont tous les chiffres sont vérifi�
 | Fil rouge complet | ✅ `exemples/fil-rouge/` — 6 documents |
 | Deux vignettes de contraste | ✅ `exemples/SPEC-PRX-001`, `SPEC-THM-001` |
 
+## Priorité décidée pour la reprise
+
+**L'outillage.** Le dépôt affirme que « l'incohérence doit être détectable mécaniquement »
+et que l'étage 1 nettoie avant les humains : cette promesse doit être tenue entièrement.
+**30 des 38 contrôles sont désormais mécanisés** ; restent `C-05` (valeur magique),
+`C-09` (complétude d'une table de décision), `C-12` (entrée facultative sans comportement
+d'absence), et les quatre qui demandent un jugement.
+
 ## Décisions structurantes déjà prises
 
 À ne pas rouvrir sans raison — elles ont chacune coûté une itération.
@@ -45,20 +53,21 @@ illustrée de bout en bout par un fil rouge dont tous les chiffres sont vérifi�
 
 | # | Sujet | Nature |
 |---|---|---|
-| A | **Confirmer l'option d'ancrage** (chemin+symbole vs marqueur dans le code) | décision du propriétaire du dépôt |
-| B | **Le contrôle des ancrages** (`FN-xxx` → symbole du code) n'est pas encore dans `verifier.py` : c'est lui qui empêche la carte de mentir. Les contrôles de spécification, eux, sont en place | à construire |
+| ~~A~~ | ~~L'option d'ancrage~~ — **tranché : l'ancrage est RETIRÉ du cadre.** Le but est d'écrire un besoin ; le code appartient à celui dont c'est le métier, avec toute son autonomie. La citation va **du code vers la spécification**, jamais l'inverse | fait |
+| ~~B~~ | ~~Le contrôle des ancrages~~ — sans objet depuis le retrait de A | sans objet |
 | C | **Monter `FN-004` (planifier les recharges) au niveau 4** | la fonction est au niveau 3 ; c'est le meilleur terrain pour illustrer « décrire un résultat, pas un parcours » sur une optimisation sous contrainte, et le résultat contre-intuitif des deux arrêts courts |
 | D | **Un exemple « avant / après »** : une même règle mal spécifiée puis bien spécifiée | très pédagogique, pas encore écrit |
 | E | **Le nom du dépôt** — `cadre-specification-algorithmique` est étroit depuis que l'architecture fonctionnelle est couverte | renommage GitHub indolore ; `atlas-fonctionnel` avait été proposé |
 | F | **Protéger `main`** en exigeant une revue, et créer un label `question-ouverte` | cohérence : le dépôt doit s'appliquer à lui-même sa propre gouvernance (`CADRE.md` §6.3) |
 | G | **Une version diaporama** pour présenter la démarche en interne | évoqué, non commencé |
-| H | **Mécaniser `C-05` à `C-13`** (valeur magique, `SI` sans `SINON`, arrondi sans sens, superlatif sans départage) — demande une analyse du pseudo-langage, pas seulement du markdown | à construire |
+| ~~H~~ | ~~Mécaniser `C-05` à `C-13`~~ — **fait pour `C-08`, `C-10`, `C-11`, `C-13`**, ainsi que `C-35`/`C-36` dans la passe globale. Restent `C-05`, `C-09`, `C-12` | partiellement fait |
+| H2 | ~~Mécaniser `C-05` à `C-13`~~ (ancienne ligne) (valeur magique, `SI` sans `SINON`, arrondi sans sens, superlatif sans départage) — demande une analyse du pseudo-langage, pas seulement du markdown | à construire |
 | I | ~~Les avertissements `C-01`/`C-02`~~ — **tranché** : le vocabulaire des règles a été aligné sur les identifiants du contrat. Zéro avertissement | fait |
 | J | **Mécaniser `C-25`** (orthographe identique entre contrat et règles) — proche de `C-01`, réalisable | à construire |
 | L | **Enrichir les glossaires d'illustrations** — chaque concept nommé, décrit **et illustré**. Les entrées existent, les illustrations manquent | à écrire |
 | M | **Appliquer la chaîne de traitement `ET-xx` aux deux vignettes** — seul `SPEC-NRG-001` la porte | à écrire |
-| N | **Mécaniser `C-35`/`C-36` dans le passage global** de `verifier.py` — ils ne tournent aujourd'hui que sous `--chaine` | à construire |
-| K | **Les fiches de données `D-xxx` du fil rouge** sont dans un seul document ; il faudrait décider si elles vivent en fichiers séparés comme les fiches de fonction | à arbitrer |
+| ~~N~~ | ~~Mécaniser `C-35`/`C-36` dans la passe globale~~ — **fait** | fait |
+| ~~K~~ | ~~Les fiches de données en fichiers séparés~~ — **tranché : un catalogue unique.** La valeur est dans la vue d'ensemble ; le diagramme de cheminement et le tableau d'impact n'ont de sens que rassemblés | fait |
 
 ## Reste dans l'autre dépôt
 

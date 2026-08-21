@@ -287,6 +287,8 @@ ou après P-06 itérations.
 SI P-06 itérations sont atteintes sans satisfaire P-05 ALORS
    SIGNALER ERREUR E-CONV-001
    aucun instant n'est produit
+SINON
+   instant_atteinte_cible est produit, et le nombre d'itérations utilisées est rapporté
 FIN SI
 
 Le nombre d'itérations réellement utilisées est rapporté.

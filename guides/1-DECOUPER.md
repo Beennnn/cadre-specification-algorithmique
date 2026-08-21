@@ -103,47 +103,57 @@ toutes les fonctions au même niveau.**
 |---|---|---|
 | **0** | La fonction existe et porte un nom | minutes |
 | **1** | + le **rôle** — à quoi elle sert, ce qu'elle produit — et un propriétaire | minutes |
-| **2** | + un ancrage dans le code existant | dizaines de minutes |
-| **3** | + le **contrat** typé d'entrées / sorties | heures |
-| **4** | + l'**algorithme** : règles, contraintes, jeu d'essai | jours |
+| **2** | + le **contrat** typé d'entrées / sorties | heures |
+| **3** | + l'**algorithme** : règles, contraintes, jeu d'essai | jours |
 
 On peut cartographier deux cents fonctions au **niveau 1** en une semaine, et ne monter
-au **niveau 4** que les dix qui le méritent — celles qui ont un impact financier,
+au **niveau 3** que les dix qui le méritent — celles qui ont un impact financier,
 contractuel ou réglementaire, qui vont vivre des années, ou qui changent souvent.
 
 **Le niveau est une donnée de la fiche.** Une fonction au niveau 1 n'est pas un travail
 inachevé : c'est un état assumé, qui dit « on sait qu'elle existe, on n'a pas encore eu
 besoin d'en savoir plus ».
 
-## Ancrer dans le code existant
+## Pourquoi cette méthode ne pointe pas vers le code
 
-C'est le point qui décide si la cartographie vit ou meurt. **Une cartographie qui ment
-est pire que pas de cartographie** : elle donne une fausse confiance et personne ne la
-rouvre après six mois.
+Une version antérieure de ce guide demandait d'**ancrer** chaque fonction dans le code
+existant — un chemin de fichier et un symbole. **Cette exigence a été retirée**, et la
+raison mérite d'être écrite, parce qu'elle dit quelque chose du cadre tout entier.
 
-| Option | Forme | Robustesse | Effort |
-|---|---|---|---|
-| **1. Chemin + symbole** ⭐ | `src/pricing/Cart.java#computeTotal` | se périme lentement ; **vérifiable automatiquement** (le symbole existe-t-il encore ?) | faible |
-| **2. Marqueur dans le code** | un commentaire `@fonction FN-012` posé à l'ancre | survit aux déplacements et renommages ; lien **bidirectionnel** | moyen, touche au code |
-| **3. Registre généré depuis le code** | le code est la source, la carte est produite | maximale | fort, rigide au démarrage |
+Le but de la démarche est **d'écrire un besoin**. Ce qu'il advient du code n'appartient pas
+à celui qui écrit la spécification : il appartient à quelqu'un dont c'est le métier, qui
+disposera de toutes les informations nécessaires et de **toute l'autonomie** pour produire
+du code optimisé et maintenable — même s'il n'est pas expert du domaine.
 
-**Recommandation : commencer par l'option 1, passer à la 2 quand la carte sert
-vraiment.** Le critère qui compte n'est pas la précision du pointeur, c'est que
-**l'incohérence soit détectable mécaniquement**. Dans les deux cas, une vérification
-automatique doit répondre à deux questions :
+Pointer depuis la spécification vers un fichier, c'était :
 
-- toute fiche de niveau ≥ 2 pointe-t-elle vers un symbole qui existe encore ?
-- tout marqueur posé dans le code référence-t-il une fiche existante ?
+| | |
+|---|---|
+| **Inverser la dépendance** | La spécification doit survivre à l'implémentation. La faire pointer vers elle la rend caduque à la première refonte |
+| **Entamer l'autonomie du développeur** | Un chemin dans une spécification se lit, qu'on le veuille ou non, comme « ta fonction doit vivre là » |
+| **Violer notre propre frontière** | Un chemin de fichier est une décision technique dans un document métier ([CADRE §1.4](../CADRE.md)) |
+| **Créer une carte qui ment** | Elle se périme silencieusement, et il faut alors un outil pour surveiller un lien dont on n'avait pas besoin |
 
-Ce contrôle a sa place dans l'intégration continue, au même titre qu'un test.
+### Le besoin réel, et sa bonne direction
 
-> Une fonction peut avoir **plusieurs ancrages** — c'est même un signal précieux : deux
-> implémentations de la même règle à deux endroits est exactement le genre de chose que
-> la cartographie doit faire remonter.
+Il reste une exigence légitime derrière tout cela : **« où est implémentée cette
+règle ? »**, que l'auditabilité impose. Elle est déjà satisfaite, et **dans l'autre
+sens** :
 
-## Le contrat typé
+> **C'est le code qui cite la spécification, jamais la spécification qui cite le code.**
 
-Au **niveau 3**, la fiche porte les entrées et sorties, **avec la notation exacte des
+Le développeur mentionne `RG-010` en commentaire à l'endroit qu'il juge bon, et dans le
+nom de ses tests ([guide 6](6-PASSER-AU-DEVELOPPEMENT.md)). Une recherche de `RG-010` dans
+le dépôt de code répond à la question en dix secondes.
+
+Cette direction a trois vertus que l'autre n'avait pas : elle **n'entame aucune
+autonomie** — le développeur cite où il veut, autant de fois qu'il veut ; elle **ne se
+périme pas**, puisque la citation voyage avec le code qu'elle annote ; et elle **ne
+salit pas la spécification**, qui ignore jusqu'à l'existence du dépôt de code.
+
+## Le contrat typé## Le contrat typé
+
+Au **niveau 2**, la fiche porte les entrées et sorties, **avec la notation exacte des
 §4 et §5 du [modèle de spécification](../templates/MODELE-SPECIFICATION.md)** — pas un
 second langage à apprendre :
 
@@ -200,5 +210,4 @@ frontière mal placée).
 | **Le verbe fourre-tout** | « gérer », « traiter » | masque plusieurs fonctions sous un seul nom, donc plusieurs propriétaires sous un seul |
 | **Le découpage par écran** | une fonction par page de l'interface | la spécification devient fausse au premier changement d'interface |
 | **Le grain unique** | tout au niveau 4, ou tout au niveau 1 | tout au niveau 4 : le projet n'aboutit jamais. Tout au niveau 1 : la carte ne sert à rien |
-| **L'ancrage non vérifié** | des chemins de fichiers écrits une fois, jamais contrôlés | la carte ment au bout de six mois, et on ne le sait pas |
 | **La carte exhaustive** | on veut cartographier tout le système avant de spécifier quoi que ce soit | l'effort est consommé avant le premier bénéfice, et la démarche est abandonnée |

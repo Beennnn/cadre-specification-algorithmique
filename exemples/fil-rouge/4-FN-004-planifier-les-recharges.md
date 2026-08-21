@@ -3,12 +3,12 @@
 | | |
 |---|---|
 | **Identifiant** | FN-004 |
-| **Niveau de maturité** | **3 — contrat typé** *(voir [Guide 1 §4](../../guides/1-DECOUPER.md))* |
+| **Niveau de maturité** | **2 — contrat typé** *(voir [Guide 1 §4](../../guides/1-DECOUPER.md))* |
 | **Propriétaire métier** | Expérience client |
 | **Répondant technique** | Architecte embarqué |
 | **Dernière modification** | 2026-02-24 |
 
-> **Cette fiche s'arrête volontairement au niveau 3.** Les entrées, les sorties et
+> **Cette fiche s'arrête volontairement au niveau 2.** Les entrées, les sorties et
 > l'objectif sont fixés ; les règles détaillées et le jeu d'essai ne sont pas écrits.
 > **Ce n'est pas un travail inachevé, c'est un état assumé** : on sait ce que la fonction
 > produit et on peut déjà s'en servir pour découper les responsabilités, estimer, et
@@ -25,7 +25,7 @@ combien de temps ? »*, une fois qu'il sait qu'il n'arrivera pas d'une traite.
 de charge visé et une durée ; et la durée totale du trajet qui en résulte.
 
 *(Rôle et contrat sont renseignés ; l'algorithme ne l'est pas — c'est ce que signifie le
-niveau 3. Voir [CADRE.md §3.0](../../CADRE.md).)*
+niveau 2. Voir [CADRE.md §3.0](../../CADRE.md).)*
 
 ## 2. Contrat
 
@@ -79,7 +79,7 @@ Arret :
 le moins d'arrêts, puis l'arrêt le plus tardif possible, puis l'identifiant de borne le
 plus petit dans l'ordre lexicographique.
 
-## 4. Ce qui reste à trancher avant le niveau 4
+## 4. Ce qui reste à trancher avant le niveau 3
 
 | Id | Question | Décideur |
 |---|---|---|
@@ -93,20 +93,7 @@ plus petit dans l'ordre lexicographique.
 > personne ne l'avait jamais posé. Dans le système actuel, la réponse existe — elle est
 > enfouie dans une boucle, et elle a été choisie par un développeur en 2023.
 
-## 5. Ancrage dans le code existant
-
-| Emplacement | Ce qu'on y trouve |
-|---|---|
-| `embarque/nav/ChargePlanner.java#buildPlan` | L'implémentation actuelle, gloutonne |
-| `embarque/nav/ChargePlanner.java#MIN_STOP_MINUTES` | Une constante à 10 min — **non spécifiée**, c'est l'objet de `Q-04-4` |
-| `services/routing/plan_service.py#plan_charges` | Une seconde implémentation, côté serveur |
-
-> **Deux implémentations de la même fonction, à deux endroits.** C'est précisément ce que
-> l'ancrage sert à faire remonter. Personne ne savait dire si elles produisaient le même
-> plan — et personne ne le sait encore, faute de jeu d'essai commun. C'est la raison pour
-> laquelle `FN-004` est la prochaine à monter au niveau 4.
-
-## 6. Dépendances
+## 5. Dépendances
 
 | Consomme | Est consommée par |
 |---|---|

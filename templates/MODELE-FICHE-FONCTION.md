@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Identifiant** | FN-000 |
-| **Niveau de maturité** | 0 / 1 / 2 / 3 / 4 |
+| **Niveau de maturité** | 0 / 1 / 2 / 3 |
 | **Propriétaire métier** | |
 | **Répondant technique** | |
 | **Dernière modification** | AAAA-MM-JJ |
@@ -14,10 +14,12 @@ MODE D'EMPLOI — voir guides/1-DECOUPER.md
 Le niveau de maturité dit jusqu'où cette fiche est remplie. C'est un état ASSUMÉ,
 pas un travail inachevé :
   0  la fonction existe et porte un nom          → §1 seulement
-  1  + description et propriétaire               → §1
-  2  + ancrage dans le code                      → §1, §5
-  3  + contrat typé                              → §1, §2, §3, §5, §6
-  4  + spécification complète                    → cette fiche + un SPEC-xxx
+  1  + rôle et propriétaire                      → §1
+  2  + contrat typé                              → §1, §2, §3
+  3  + algorithme complet                        → cette fiche + un SPEC-xxx
+
+Cette fiche ne pointe JAMAIS vers le code : c'est le code qui cite les RG-xxx
+qu'il implémente, jamais l'inverse. Voir guides/1-DECOUPER.md.
 
 Nommage : verbe à l'infinitif + complément, dans la langue du domaine.
 Verbes interdits : gérer, traiter, handle, process, administrer, prendre en charge.
@@ -70,28 +72,19 @@ sorties :
 |---|---|---|
 | `Q-000-1` | | |
 
-## 5. Ancrage dans le code existant
-<!-- Niveau 2 et au-delà. Chemin + symbole, vérifiable automatiquement.
-     Plusieurs ancrages pour une même fonction est un signal précieux :
-     deux implémentations de la même règle à deux endroits. -->
-
-| Emplacement | Ce qu'on y trouve |
-|---|---|
-| `chemin/vers/fichier.ext#symbole` | |
-
-## 6. Dépendances
+## 5. Dépendances
 
 | Consomme | Est consommée par |
 |---|---|
 | | |
 
-## 7. Algorithme
+## 6. Algorithme
 
 <!-- Niveau 4 uniquement. Les règles vivent dans le SPEC-xxx correspondant :
      cette section n'en porte que le lien. Le triptyque est alors complet —
      rôle (§1), contrat (§2), algorithme (§7). -->
 
-## 8. Spécification
+## 7. Spécification
 <!-- Niveau 4 uniquement : lien vers le SPEC-xxx correspondant. -->
 
 *(aucune — cette fonction est au niveau <n>)*

@@ -4,6 +4,15 @@
 qui les exécute ([`verifier.py`](verifier.py)), une IA à qui on les donne en consigne
 ([`PROMPT-RELECTURE-IA.md`](PROMPT-RELECTURE-IA.md)).*
 
+**Ce qui est mécanisé.** `verifier.py` met en œuvre `C-01` à `C-04`, `C-06` à `C-08`,
+`C-10`, `C-11`, `C-13` à `C-17`, `C-19` à `C-21`, `C-26` à `C-30`, `C-33` à `C-38` — soit
+**30 des 38**. Les huit restants (`C-05`, `C-09`, `C-12`, `C-18`, `C-22` à `C-25`, `C-31`,
+`C-32`) demandent un jugement ou une lecture que le script ne fait pas.
+
+`C-11` est **heuristique** : il ne se déclenche que sur un superlatif portant sur une
+collection, un superlatif entre deux scalaires étant sans ambiguïté. Il peut donc laisser
+passer un cas, et il est classé en avertissement à ce titre.
+
 Deux familles :
 
 - **`C-xx` — contrôles mécaniques.** Vérifiables sans connaître le domaine. Verdict

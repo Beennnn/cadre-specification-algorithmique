@@ -7,7 +7,6 @@ chaque équipe produit pour son propre métier ([guide 2](guides/2-GLOSSAIRE.md)
 
 | Terme | Définition |
 |---|---|
-| **Ancrage** | Pointeur d'une fiche de fonction vers l'endroit du code qui l'implémente. Vérifiable mécaniquement, sans quoi il ment au bout de six mois. |
 | **Cas de test** (`CT-xx`) | Un jeu d'entrées et le résultat attendu correspondant, **calculé à la main** par le métier. Un cas de test dont le résultat provient d'une implémentation ne vérifie rien. |
 | **Axe** | L'une des directions d'un symbole structuré. Une matrice de rang 2 a deux axes. Chaque axe porte une **étendue** et une signification déclarée. À ne pas confondre avec la **dimension**, qui est physique. |
 | **Contrat** | Les entrées et sorties d'une fonction, typées avec leur unité, leur précision et leur domaine de validité. Niveau 3 de l'échelle de maturité. |
@@ -23,7 +22,7 @@ chaque équipe produit pour son propre métier ([guide 2](guides/2-GLOSSAIRE.md)
 | **Invariant** (`INV-xx`) | Une propriété vraie pour **toutes** les entrées, et non seulement pour les cas du jeu d'essai. Se teste sur des entrées générées. |
 | **Jeu d'essai** | L'ensemble des cas de test d'une spécification. C'est le **plan de recette**, pas une illustration. |
 | **Justesse** | Écart entre le résultat calculé et une vérité connue — solution analytique, étalon, mesure. À distinguer de la reproductibilité. |
-| **Niveau de maturité** | De 0 à 4, l'état d'une fonction : nommée, décrite, ancrée, contractualisée, spécifiée. Un niveau bas est un état **assumé**, pas un travail inachevé. |
+| **Niveau de maturité** | De 0 à 3, l'état d'une fonction : nommée, puis son **rôle**, puis son **contrat**, puis son **algorithme** — le triptyque, gradué. Un niveau bas est un état **assumé**, pas un travail inachevé. |
 | **Oracle** | La source de vérité d'un cas de test : un calcul à la main, une solution analytique, un étalon. Jamais le programme testé. |
 | **Portée** | Périmètre ou interne. Elle restreint la **visibilité** d'un nom, jamais l'unicité de son **sens** : un même nom ne désigne jamais deux notions différentes, fût-ce dans deux fonctions qui ne se parlent pas. |
 | **Quantité** | Une valeur **et** son unité, indissociables. Dans une règle, une grandeur n'est jamais un nombre nu. L'addition n'est définie qu'entre quantite_commandees de même dimension ; une fonction transcendante n'accepte qu'une quantite_commandee sans dimension. |

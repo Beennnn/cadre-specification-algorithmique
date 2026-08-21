@@ -39,6 +39,13 @@ pédagogique.
 
 Un identifiant n'est **jamais** réutilisé, même après suppression.
 
+## Une règle de direction, absolue
+
+**La spécification ne pointe jamais vers le code.** C'est le code qui cite les `RG-xxx`
+qu'il implémente. Toute tentative de réintroduire un chemin de fichier ou un symbole dans
+une fiche de fonction ou une spécification est une régression — voir `CHANTIER.md`,
+décision 18.
+
 ## Forme des identifiants
 
 **`snake_case`, ASCII strict** — ni accent, ni symbole grec, ni majuscule (`C-38`).

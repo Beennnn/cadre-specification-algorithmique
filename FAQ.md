@@ -82,7 +82,6 @@ traitable** :
   spécifié est respecté.
 - Chaque `RG-xxx` est citée dans le code et dans les tests : une règle sans citation est
   visible.
-- Les ancrages du niveau 2 sont vérifiés mécaniquement.
 
 Et la règle est explicite : **quand les deux divergent, la spécification fait foi.** Soit
 le code est corrigé, soit la spécification est amendée, avec une version et une trace.

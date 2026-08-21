@@ -211,6 +211,8 @@ SOIT assiette_panier = SOMME DES (montant_brut_ligne − remise_quantite_ligne) 
 SELON le type du code promotionnel :
   — taux    : remise_panier_brute = ARRONDIR(assiette_panier × taux, 2, P-09)
   — montant : remise_panier_brute = le plus petit du montant du code et de assiette_panier
+              (superlatif entre deux montants : aucun départage nécessaire, le
+               résultat est une valeur et non le choix d'un élément)
 ```
 
 La remise panier ne s'applique **jamais** aux frais de livraison.
@@ -230,6 +232,9 @@ SINON
 FIN SI
 ```
 
+> L'écrêtement s'applique à un montant unique — la remise panier — et non au choix d'un
+> élément parmi plusieurs : aucune règle de départage n'est requise ici.
+>
 > L'écrêtement porte sur la remise panier, jamais sur la remise de quantité : la remise
 > de quantite_commandee est un droit acquis lié au volume commandé.
 > Le cas où la seule remise de quantité dépasse déjà le plafond est théoriquement
@@ -255,6 +260,8 @@ SI ecart_residuel ≠ 0,00 ALORS
    après remise de quantité est le plus élevé ; en cas d'égalité, à celle dont
    `reference_produit` est alphabétiquement la plus petite. Le résultat est
    remise_panier_ligne_ajustee pour cette ligne.
+SINON
+   aucune ligne n'est ajustée.
 FIN SI
 ```
 
@@ -317,6 +324,8 @@ FIN POUR
 
 SI frais_livraison_ht > 0,00 ALORS
    tva_livraison = ARRONDIR(frais_livraison_ht × P-04, 2, P-09)
+SINON
+   tva_livraison = 0,00
 FIN SI
 ```
 

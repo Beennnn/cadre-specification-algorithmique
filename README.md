@@ -40,7 +40,7 @@ qu'il choisisse le langage, les structures de données et l'architecture.
 
 | | Ce qu'on y fait | Guide |
 |---|---|---|
-| **1. Découper** | Identifier les fonctions, les nommer, leur donner un propriétaire, les ancrer dans le code | **[1-DECOUPER](guides/1-DECOUPER.md)** |
+| **1. Découper** | Identifier les fonctions, les nommer, leur donner un propriétaire, fixer leur contrat | **[1-DECOUPER](guides/1-DECOUPER.md)** |
 | **2. Nommer** | Fixer le vocabulaire commun — le premier livrable | **[2-GLOSSAIRE](guides/2-GLOSSAIRE.md)** |
 | **3. Tracer les données** | D'où elles viennent, qui en répond, ce qu'on fait quand elles manquent | **[3-DONNEES](guides/3-DONNEES.md)** |
 | **4. Écrire** | Les règles, à plusieurs, par lots, en revue croisée | **[4-ECRIRE-A-PLUSIEURS](guides/4-ECRIRE-A-PLUSIEURS.md)** |

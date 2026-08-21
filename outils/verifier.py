@@ -168,6 +168,63 @@ def verifier_spec(chemin):
                         "%s « %s » déclarée mais employée dans aucune règle"
                         % (quoi, champ))
 
+    # --- C-08 / C-10 / C-11 / C-13 : analyse du pseudo-langage
+    for titre, bloc in re.findall(r"^###\s+(RG-\d+)[^\n]*\n(.*?)(?=\n###\s|\Z)",
+                                  corps_regles, re.S | re.M):
+        for code in blocs_code(bloc):
+            lignes = code.splitlines()
+            multi = [l for l in lignes if re.match(r"\s*SI\b", l)
+                     and not re.search(r"\bFIN SI\b", l)]
+            sinon = [l for l in lignes if re.match(r"\s*SINON\b", l)
+                     and not re.match(r"\s*SINON SI\b", l)]
+            if len(multi) > len(sinon):
+                constat("ÉCHEC", "C-08", chemin,
+                        "%s : %d bloc(s) SI pour %d SINON"
+                        % (titre, len(multi), len(sinon)))
+            for appel in re.findall(r"ARRONDIR\(([^()]*(?:\([^()]*\)[^()]*)*)\)", code):
+                if appel.count(",") != 2:
+                    constat("ÉCHEC", "C-10", chemin,
+                            "%s : ARRONDIR(%s) — il faut valeur, décimales et mode"
+                            % (titre, appel.strip()[:40]))
+            if re.search(r"\bTANT QUE\b", code) and not re.search(
+                    r"it[ée]ration", bloc, re.I):
+                constat("ÉCHEC", "C-13", chemin,
+                        "%s : TANT QUE sans nombre maximal d'itérations déclaré" % titre)
+        # un superlatif sur deux scalaires (« le plus petit de a et b ») est sans
+        # ambiguïté ; seul un superlatif choisissant un ÉLÉMENT dans une collection
+        # exige un départage
+        superlatif = re.search(r"le plus (petit|grand|élevé|faible)|le meilleur|"
+                               r"\bMINIMUM\b|\bMAXIMUM\b|le premier", bloc, re.I)
+        collection = re.search(r"\bDES\b|\bDANS\b|\bTRIER\b|\bFILTRER\b|"
+                               r"lignes|segments|bornes|la ligne dont|celle dont",
+                               bloc)
+        if superlatif and collection and not re.search(
+                r"égalit|ex æquo|départage|alphabétiq|le plus précoce", bloc, re.I):
+            constat("AVERTIR", "C-11", chemin,
+                    "%s : superlatif sans règle de départage visible" % titre)
+
+    # --- C-35 / C-36 : cohérence de la chaîne, dans la passe globale
+    etapes, _ = lire_chaine(texte)
+    if etapes:
+        disponibles = set(champs(sec.get("entrees", ""))) | set(
+            re.findall(r"^\|\s*`(P-\d+)`", sec.get("parametres", ""), re.M))
+        internes = set(champs(texte.split("Grandeurs internes")[1][:1200])
+                       ) if "Grandeurs internes" in texte else set()
+        disponibles |= internes
+        produits, consommes = set(), set()
+        for e in etapes:
+            for g in e["consomme"]:
+                consommes.add(g)
+                if g not in disponibles:
+                    constat("ÉCHEC", "C-35", chemin,
+                            "%s consomme « %s » qui n'est ni entrée, ni paramètre, "
+                            "ni produit d'une étape antérieure" % (e["id"], g))
+            disponibles |= set(e["produit"])
+            produits |= set(e["produit"])
+        for g in sorted(produits - consommes - set(champs(sec.get("sorties", "")))):
+            constat("ÉCHEC", "C-36", chemin,
+                    "« %s » est produit mais n'est ni consommé ni déclaré en sortie" % g)
+
     # --- C-38 : identifiants en ASCII strict, snake_case
     for cle in ("entrees", "sorties"):
         for champ in champs(sec.get(cle, "")):
@@ -417,8 +474,8 @@ def main():
           "%d échec(s), %d avertissement(s)"
           % (len(fichiers), specs, len(echecs), len(constats) - len(echecs)))
     if not constats:
-        print("Aucun défaut mécanique. Les contrôles C-05 à C-13, C-18, C-22, C-25 et "
-              "les contrôles humains H-01 à H-07 relèvent de la relecture.")
+        print("Aucun défaut mécanique. 30 des 38 contrôles sont mécanisés ; les huit "
+              "restants et les contrôles humains H-01 à H-07 relèvent de la relecture.")
     return 1 if echecs else 0
 
 

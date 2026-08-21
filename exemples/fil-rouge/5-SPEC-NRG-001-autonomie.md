@@ -341,6 +341,10 @@ recherche dichotomique, par exemple — est fausse.
 Le POINT D'AUTONOMIE est la distance, depuis le départ, du PREMIER point
 où l'énergie cumulée atteint le budget utilisable.
 
+L'ordre du trajet tient lieu de règle de départage : les segments sont totalement
+ordonnés, donc « le premier » désigne un segment et un seul. Aucune égalité n'est
+possible.
+
 On parcourt les segments dans l'ordre. Pour le premier segment tel que
     energie_cumulee_avant + energie_segment ≥ budget_utilisable
    ET energie_segment > 0 :
@@ -353,6 +357,9 @@ SI aucun segment ne satisfait cette condition ALORS
     autonomie_atteinte = faux
     point_autonomie n'est pas produit
     energie_restante_arrivee = budget_utilisable − energie_totale
+SINON
+    autonomie_atteinte = vrai
+    energie_restante_arrivee n'est pas produite
 FIN SI
 ```
 
