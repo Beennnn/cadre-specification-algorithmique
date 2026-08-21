@@ -1045,6 +1045,21 @@ débats « c'est ton défaut / c'est le mien » par une lecture de deux lignes.
 schéma d'échange. Ceux-là dérivent du contrat, dans un langage donné, et changeront
 plusieurs fois pendant que le contrat, lui, tiendra.
 
+#### Le contrat a deux vies, et la seconde est la plus utile
+
+| Quand | Ce qu'il sert à faire |
+|---|---|
+| **Avant le développement** | Il est **validé** : le métier atteste que ce qui est promis est bien ce qu'il veut, le technique atteste que c'est tenable. Rien ne part tant que ce n'est pas fait ([guide 5](guides/5-VALIDER.md)) |
+| **Après le développement** | Il sert à **garantir que le résultat est bon** : les tests rejouent les entrées du contrat et comparent les sorties obtenues aux sorties attendues, aux tolérances déclarées près |
+
+C'est le même document qui joue les deux rôles, et ce n'est pas un hasard : **on ne peut
+vérifier que ce qu'on a promis**. Un contrat validé mais dont les sorties ne sont pas
+comparables — pas de jeu de données attendu, pas de tolérance déclarée, pas de valeurs
+intermédiaires exposées — ne sert que la moitié de son office.
+
+D'où une exigence qui se pose à l'écriture, longtemps avant la recette : **le contrat doit
+être écrit pour être vérifiable**, pas seulement pour être compris.
+
 ### 3.2 La chaîne de traitement
 
 Un calcul un peu long cesse d'être lisible comme une suite de règles. Il se lit alors
@@ -1231,10 +1246,56 @@ technique.
 
 Une spécification sans jeu d'essai n'est pas une spécification : c'est une intention.
 
-Le jeu d'essai est écrit **par le métier**, et ses résultats attendus sont **calculés à
-la main** (ou avec un tableur, peu importe) — jamais produits par l'implémentation. Un
-résultat attendu produit par le programme qu'il est censé valider ne prouve rien : il
-mesure la cohérence du programme avec lui-même.
+Le jeu d'essai est **arrêté par le métier**. Il couvre **l'ensemble des cas à tester**, et
+pour chacun il donne **le jeu de données d'entrée complet et le jeu de données de sortie
+attendu** — pas un extrait illustratif. Quand l'analyse d'écart le demandera
+([guide 8](guides/8-ANALYSER-LES-ECARTS.md)), il donne aussi les **valeurs intermédiaires**
+attendues à chaque étape de la chaîne.
+
+### D'où viennent les résultats attendus
+
+La règle n'est pas « calculés à la main ». Elle est plus précise, et elle tient en deux
+conditions :
+
+> **Un résultat attendu est valide s'il est produit indépendamment du composant à tester,
+> et s'il est validé par le métier.**
+
+| Source | Qualité | Quand l'employer |
+|---|---|---|
+| **Solution analytique** — une vérité mathématique | la meilleure | dès qu'elle existe : formule fermée, propriété démontrable |
+| **Étalon certifié, mesure de référence** | excellente | quand le domaine en dispose |
+| **Calcul à la main** par le métier | très bonne | cas simples, cas aux limites, cas riche déroulé pas à pas |
+| **Maquette technique**, sorties validées cas par cas | bonne — voir ci-dessous | quand les cas sont trop nombreux ou trop lourds pour la main |
+| ❌ **La sortie du composant à tester** | nulle | jamais. Elle mesure la cohérence du programme avec lui-même |
+
+### La maquette technique
+
+Quand on ne peut pas disposer des résultats attendus a priori — trop de cas, calculs trop
+lourds, données trop volumineuses — on les fait produire par une **maquette technique**.
+
+> Une maquette est **du code écrit sans contrainte d'industrialisation ni de performance**,
+> dans le seul but de produire des résultats de référence. Elle n'a ni tests, ni
+> exploitabilité, ni tenue en charge — et c'est précisément ce qui la rend rapide à
+> écrire.
+
+**Quatre règles la rendent honnête. Sans elles, elle redevient l'oracle circulaire :**
+
+| # | Règle | Ce qu'elle empêche |
+|---|---|---|
+| 1 | **Ses sorties ne sont pas l'oracle. L'oracle, ce sont ses sorties une fois validées par le métier**, cas par cas | Qu'on accepte un chiffre parce qu'un programme l'a produit |
+| 2 | Elle est écrite par **quelqu'un d'autre** que celui qui développera le composant, et **le code de production n'en dérive pas** | La perte d'indépendance — sans quoi les deux partagent leurs erreurs |
+| 3 | Elle est **versionnée avec le jeu d'essai** | Qu'on ne sache plus d'où venaient les chiffres |
+| 4 | Elle est **abandonnée** quand le composant est développé : ni maintenue, ni déployée, ni reprise | Qu'elle survive et redevienne le prototype-en-production du §1.1 |
+
+> **La règle 4 doit être écrite noir sur blanc au moment où la maquette est lancée**, pas
+> découverte après. Une maquette qu'on garde « au cas où » devient en dix-huit mois un
+> second système, non testé et sans propriétaire, dont les résultats contredisent
+> périodiquement ceux du vrai.
+
+Bien conduite, la maquette est en réalité une **application du test de la double
+implémentation** (§1.3) : deux programmes indépendants doivent donner le même résultat.
+Elle en est même la meilleure forme, puisqu'elle est écrite avant, sans contrainte, et
+qu'on l'abandonne sans regret.
 
 Ce qu'il contient, dans cet ordre :
 
@@ -1448,7 +1509,8 @@ revient.
 | **La grandeur nue** | Un montant sans devise, une date sans fuseau, un poids sans unité | Cause classique d'écarts, découverts tard et cher |
 | **La performance en prose** | « il faut que ce soit rapide », « éviter les traitements lourds » | Non vérifiable, non actionnable → à remplacer par un chiffre dans la fiche de contraintes |
 | **La spécification qui impose la technique** | « stocker dans une table », « utiliser un cache » | Le métier sort de son mandat et empêche des solutions meilleures |
-| **L'oracle circulaire** | Les résultats attendus du jeu d'essai ont été produits par le programme | Le test ne vérifie plus rien |
+| **L'oracle circulaire** | Les résultats attendus ont été produits par **le composant qu'ils doivent valider** — ou par une maquette dont le code de production dérive | Le test ne mesure plus que la cohérence du programme avec lui-même |
+| **La maquette qui survit** | La maquette technique n'a pas été abandonnée après le développement | En dix-huit mois, un second système non testé, sans responsable, dont les résultats contredisent périodiquement ceux du vrai |
 | **La spécification rétroactive** | Écrite après le code, pour la forme | On paie le coût de la démarche sans en avoir le bénéfice |
 | **Le paramètre enfermé dans la règle** | Un seuil écrit en toutes lettres au milieu du pseudo-code | Chaque décision commerciale devient une livraison logicielle |
 | **La question refermée en silence** | Un `Q-xx` qui disparaît du document sans décision tracée | Quelqu'un a tranché sans mandat, et on ne saura pas qui |

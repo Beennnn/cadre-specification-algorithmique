@@ -52,27 +52,38 @@ qu'il choisisse le langage, les structures de données et l'architecture.
 
 ## Les étapes
 
-| | Ce qu'on y fait | Où |
-|---|---|---|
-| **0. Définir les conventions de rédaction** | Le lexique du pseudo-langage, la forme des identifiants, la façon de déclarer un type, une unité, une plage. **À faire une fois pour l'organisation, avant la première spécification** | [CADRE §2](CADRE.md) |
-| **1. Découper** | Identifier les fonctions, les nommer, désigner qui valide qu'elles sont justes, fixer leur contrat | **[1-DECOUPER](guides/1-DECOUPER.md)** |
-| **2. Nommer** | Fixer le vocabulaire commun — le premier livrable | **[2-GLOSSAIRE](guides/2-GLOSSAIRE.md)** |
-| **3. Tracer les données** | D'où elles viennent, qui en est responsable, ce qu'on fait quand elles manquent | **[3-DONNEES](guides/3-DONNEES.md)** |
-| **4. Écrire** | Les règles, à plusieurs, par lots, en revue croisée | **[4-ECRIRE-A-PLUSIEURS](guides/4-ECRIRE-A-PLUSIEURS.md)** |
-| **5. Valider** | Le jalon. Contrôles mécaniques, puis relecture qualité. **Rien ne part en développement avant** | **[5-VALIDER](guides/5-VALIDER.md)** |
-| **6. Passer au développement** | Transmettre, pour choisir l'architecture et le langage, coder, optimiser et qualifier | **[6-PASSER-AU-DEVELOPPEMENT](guides/6-PASSER-AU-DEVELOPPEMENT.md)** |
-| **7. Versionner** | Transverse : ce qui gouverne la vie d'après | **[7-VERSIONNER](guides/7-VERSIONNER.md)** |
+Douze étapes, dont la dernière referme la boucle sur le métier.
 
-L'étape 0 se fait **une seule fois**, au démarrage : c'est le socle d'écriture commun à
-toutes les spécifications à venir. Les étapes 1 à 6 se répètent à chaque lot de fonctions,
-et l'étape 7 court en permanence.
+| | L'étape | Où c'est décrit |
+|---|---|---|
+| **1** | Définir les **conventions de rédaction** et les formats | [CADRE §2](CADRE.md) — *une fois pour l'organisation* |
+| **2** | **Découper** les traitements en fonctions | [1-DECOUPER](guides/1-DECOUPER.md) |
+| **3** | **Nommer et décrire** les fonctions et les données qu'elles véhiculent | [1-DECOUPER](guides/1-DECOUPER.md) · [2-GLOSSAIRE](guides/2-GLOSSAIRE.md) · [3-DONNEES](guides/3-DONNEES.md) |
+| **4** | Décrire l'**algorithme** en pseudo-langage | [CADRE §2](CADRE.md) · [4-ECRIRE-A-PLUSIEURS](guides/4-ECRIRE-A-PLUSIEURS.md) |
+| **5** | Identifier les **données de test et les résultats attendus** | [CADRE §5](CADRE.md) — calculés à la main, jamais produits par un programme |
+| **6** | **Figer une version** pour relecture | [7-VERSIONNER](guides/7-VERSIONNER.md) — on ne relit pas un document qui bouge |
+| **7** | Vérifier la **complétude et la cohérence** des informations métier | [5-VALIDER](guides/5-VALIDER.md) — étages 1 et 2 |
+| **8** | Vérifier la **capacité à implémenter**, par la lecture d'un profil technique | [5-VALIDER](guides/5-VALIDER.md) — étage 3, verdict binaire |
+| **9** | **Collecter les retours et itérer** jusqu'à un niveau de qualité suffisant | [5-VALIDER](guides/5-VALIDER.md) — questions `Q-xx` et suggestions `SM-xxx` |
+| **10** | Passer à l'**architecture technique, au développement et aux tests** qui rejouent les entrées et comparent les résultats | [6-PASSER-AU-DEVELOPPEMENT](guides/6-PASSER-AU-DEVELOPPEMENT.md) |
+| **11** | **Analyser les écarts** — par le métier, avec le support des développeurs, en lisant les valeurs propagées | [8-ANALYSER-LES-ECARTS](guides/8-ANALYSER-LES-ECARTS.md) |
+| **12** | Décider si ces écarts sont **significatifs au regard des tolérances** | [8-ANALYSER-LES-ECARTS](guides/8-ANALYSER-LES-ECARTS.md) |
+
+L'étape 1 se fait **une seule fois**, au démarrage. Les étapes 2 à 12 se répètent à chaque
+lot de fonctions. Le versionnement ([7-VERSIONNER](guides/7-VERSIONNER.md)) court en
+permanence, en travers de toutes.
+
+> **Les étapes 11 et 12 sont ce qui distingue cette méthode d'une simple discipline de
+> rédaction.** La spécification ne s'arrête pas quand le code est écrit : elle s'arrête
+> quand le métier a confirmé, chiffres en main, que ce qui tourne calcule bien ce qu'il
+> avait décrit.
 
 ## Ce que contient le dépôt
 
 | | |
 |---|---|
 | **[CADRE.md](CADRE.md)** | **Le document de référence.** Le principe, la frontière métier/technique, les huit faux amis, le pseudo-langage, l'adaptation au calcul scientifique, la fiche de contraintes, la gouvernance, les anti-patterns. À lire une fois, en entier |
-| **[guides/](guides/)** | Sept guides opérationnels, à ouvrir pendant qu'on fait |
+| **[guides/](guides/)** | Huit guides opérationnels, à ouvrir pendant qu'on fait |
 | **[outils/](outils/)** | Le catalogue des règles de contrôle, le vérificateur, et la consigne de relecture par une IA |
 | **[templates/](templates/)** | Les modèles vierges : spécification, fiche de fonction, fiche de donnée, glossaire, liste de vérification |
 | **[exemples/fil-rouge/](exemples/fil-rouge/)** | **Le fil rouge complet** : *l'autonomie d'un véhicule électrique*, du découpage jusqu'à la spécification détaillée |

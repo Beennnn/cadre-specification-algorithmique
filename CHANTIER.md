@@ -1,6 +1,6 @@
 # État du chantier
 
-*Dernière mise à jour : 2026-08-21 (5)*
+*Dernière mise à jour : 2026-08-21 (6)*
 
 ---
 

@@ -126,7 +126,9 @@ existent.
 
 ### Qualifier
 
-> **Le §10 n'est pas un exemple : c'est le plan de recette.**
+> **Le §10 n'est pas un exemple : c'est le plan de recette.** Il couvre l'ensemble des cas
+à tester, avec pour chacun le jeu de données d'entrée **et** le jeu de données de sortie
+attendu.
 
 | Élément de la spécification | Ce qu'il devient en test |
 |---|---|
@@ -147,6 +149,20 @@ questions différentes exigent trois campagnes différentes :
 
 Confondre les trois, c'est transformer chaque écart de mesure en rapport de bogue — et
 faire chercher à l'équipe un défaut dans du code correct.
+
+## Et après : l'analyse des écarts
+
+Les tests rejouent les entrées du §10 et comparent les résultats obtenus aux résultats
+attendus. **Ils ne coïncideront pas toujours** — et c'est une étape à part entière, pas un
+incident.
+
+Elle est conduite **par le métier, avec le support des développeurs**, en lisant les
+valeurs propagées d'une étape à l'autre : voir
+**[guide 8 — Analyser les écarts](8-ANALYSER-LES-ECARTS.md)**.
+
+Une conséquence à anticiper **dès l'écriture** : une fonction dont on devra analyser les
+écarts doit exposer en sortie les **valeurs intermédiaires** de sa chaîne de traitement.
+Sans elles, on constate que ça diverge sans pouvoir dire où.
 
 ## Ce que le développement renvoie au métier
 

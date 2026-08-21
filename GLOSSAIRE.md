@@ -23,7 +23,8 @@ chaque équipe produit pour son propre métier ([guide 2](guides/2-GLOSSAIRE.md)
 | **Jeu d'essai** | L'ensemble des cas de test d'une spécification. C'est le **plan de recette**, pas une illustration. |
 | **Justesse** | Écart entre le résultat calculé et une vérité connue — solution analytique, étalon, mesure. À distinguer de la reproductibilité. |
 | **Niveau de maturité** | De 0 à 3, l'état d'une fonction : nommée, puis son **rôle**, puis son **contrat**, puis son **algorithme** — le triptyque, gradué. Un niveau bas est un état **assumé**, pas un travail inachevé. |
-| **Oracle** | La source de vérité d'un cas de test : un calcul à la main, une solution analytique, un étalon. Jamais le programme testé. |
+| **Maquette technique** | Du code écrit sans contrainte d'industrialisation ni de performance, dans le seul but de produire des résultats de référence quand on ne peut pas les obtenir autrement. Ses sorties ne deviennent un oracle qu'**une fois validées par le métier, cas par cas**. Elle est **abandonnée** dès que le composant est développé. |
+| **Oracle** | La source de vérité d'un cas de test. Est valide tout résultat **produit indépendamment du composant à tester et validé par le métier** : solution analytique, étalon, calcul à la main, ou maquette technique. Jamais la sortie du composant lui-même. |
 | **Portée** | Périmètre ou interne. Elle restreint la **visibilité** d'un nom, jamais l'unicité de son **sens** : un même nom ne désigne jamais deux notions différentes, fût-ce dans deux fonctions qui ne se parlent pas. |
 | **Quantité** | Une valeur **et** son unité, indissociables. Dans une règle, une grandeur n'est jamais un nombre nu. L'addition n'est définie qu'entre quantite_commandees de même dimension ; une fonction transcendante n'accepte qu'une quantite_commandee sans dimension. |
 | **Rang** | Le nombre d'axes d'un symbole structuré. Une liste est de rang 1, une matrice de rang 2. |

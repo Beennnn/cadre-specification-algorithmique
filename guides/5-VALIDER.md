@@ -18,6 +18,21 @@ Le jalon a trois effets, et le troisième est le plus important :
 3. Il **force la relecture à avoir lieu**. Un document qui doit être validé est un
    document qui est lu.
 
+## Avant tout : figer une version
+
+**On ne relit pas un document qui bouge.** Avant d'ouvrir la relecture, l'auteur fige une
+version : numéro arrêté, étiquette posée ([guide 7](7-VERSIONNER.md)), plus aucune
+modification jusqu'au verdict.
+
+Sans ce gel, trois choses se produisent, et elles suffisent à ruiner la relecture : deux
+relecteurs commentent deux textes différents ; l'auteur corrige au fil de l'eau, si bien
+que personne ne sait plus ce qui a été relu ; et l'approbation ne porte sur rien de
+précis, donc n'engage personne.
+
+Les corrections issues de la relecture produisent une **nouvelle version**, dont
+l'incrément suit la règle habituelle — et si l'une d'elles change un résultat, la
+validation est rejouée.
+
 ## La validation se fait en trois étages
 
 | | **Étage 1 — contrôles mécaniques** | **Étage 2 — relecture qualité métier** | **Étage 3 — relecture qualité technique** |
@@ -250,6 +265,26 @@ L'assomption doit laisser une trace, sinon elle n'existe pas. Au moment du jalon
 > personne, et ne sera pas là dans trois ans quand un auditeur demandera pourquoi cette
 > règle a été acceptée. Le contrôle `C-27` vérifie qu'une passe IA déclarée porte bien un
 > opérateur nommé.
+
+## Itérer jusqu'à un niveau de qualité suffisant
+
+La première passe ne conclut presque jamais. Les retours des trois étages — constats
+mécaniques, remarques métier, questions du relecteur technique — se collectent, se
+tranchent, et produisent une version suivante.
+
+**Ce qui doit rester vrai à chaque tour :**
+
+| | |
+|---|---|
+| Chaque retour a une **issue écrite** | corrigé, ou refusé avec un motif. Rien ne se perd dans une conversation |
+| Chaque tour part d'une **version figée** | sinon on ne sait plus ce qui a été relu |
+| Les étages **se rejouent dans l'ordre** | inutile de refaire relire par des humains si l'étage 1 est redevenu rouge |
+| Le critère d'arrêt est **écrit d'avance** | zéro échec mécanique, zéro question du relecteur technique, zéro question ouverte bloquante |
+
+**Combien de tours ?** Deux à trois sur les premières spécifications d'une organisation,
+un seul quand la pratique est installée. Si le nombre de tours ne décroît pas d'une
+spécification à l'autre, ce n'est pas les auteurs qu'il faut reprendre : c'est la liste de
+vérification, qui ne couvre pas ce qui manque.
 
 ## Le jalon lui-même
 
