@@ -270,6 +270,53 @@ Trois qualités à tenir, dans cet ordre :
 > spécification que le métier ne peut pas relire est une spécification que le métier
 > n'écrit pas.
 
+#### Pourquoi ne pas prendre un langage existant ?
+
+C'est la bonne question, et les méthodes formelles n'y répondent pas : elles ne sont pas
+les concurrentes pertinentes. Il existe des langages **dédiés à ce problème précis** —
+énoncer une logique métier de façon non ambiguë et relisible par un non-informaticien.
+Les écarter demande un argument, pas une préférence.
+
+| Langage | Ce qu'il fait très bien | Pourquoi il ne suffit pas ici |
+|---|---|---|
+| **DMN / FEEL** (OMG) | Les tables de décision, avec complétude et non-recouvrement vérifiables | Ne couvre **que la décision**. Un calcul à douze étapes avec propagation d'incertitude n'entre pas dans une table |
+| **SBVR** (OMG) | Un anglais contrôlé pour le vocabulaire et les règles métier, avec une sémantique définie | Orienté **règles déclaratives** (obligations, contraintes), pas algorithmes séquentiels. Métamodèle lourd |
+| **RuleSpeak** | Des patrons de phrase qui suppriment l'ambiguïté des règles | Même limite : la règle, pas le calcul |
+| **Attempto Controlled English** | Un sous-ensemble de l'anglais traduit mécaniquement en logique du premier ordre | La contrainte syntaxique est si forte que **rédiger** devient un métier à part entière — l'écueil même qu'on fuit |
+| **Gherkin** | Les scénarios : *étant donné / quand / alors* | Décrit des **cas**, pas la règle qui les produit. On l'emploie pour le §10, pas pour le §7 |
+| **Modelica** | Les modèles physiques par équations acausales — le registre scientifique | C'est un langage **exécutable**, donc une implémentation : il tranche déjà le comment, et ramène le métier à coder |
+
+Deux constats en sortent. D'abord, **aucun ne couvre le périmètre** : chacun excelle sur
+un fragment — la décision, la règle déclarative, le cas de test, le modèle physique — et
+la spécification les traverse tous. Ensuite, les plus expressifs sont **exécutables**, ce
+qui réintroduit exactement ce que la méthode veut sortir des mains du métier.
+
+> **Ce qu'on fait donc : emprunter les disciplines, refuser les machineries.** Les tables
+> de décision viennent de DMN, les résultats attendus calculés à la main de la
+> *specification by example*, les invariants testables des tests de propriété, les unités
+> du SI et du GUM. On garde la règle, on laisse le métamodèle et l'outillage.
+
+#### Le prix à payer, et ce qui le rend acceptable
+
+Un lexique de trente mots est **moins complet** que n'importe lequel de ces langages. Il
+n'a ni sémantique formelle, ni preuve, ni exécution. Ce n'est acceptable qu'à une
+condition, et elle est non négociable :
+
+> **Le formalisme retenu est lui-même spécifié, par écrit, au même endroit que le reste.**
+
+C'est l'objet de ce chapitre 2 : le [lexique fermé](#22-le-lexique) et sa règle
+d'extension, les [types, unités et domaines](#23-types-unités-domaines), les
+[conventions de nommage](#24-nommer--portée-globale-et-immutabilité), la forme des tables
+de décision, et l'[aide-mémoire](#annexe-a--aide-mémoire-du-pseudo-langage) en annexe. Un
+lecteur qui ne connaît pas la méthode doit pouvoir apprendre le formalisme entier en une
+lecture — c'est précisément ce qu'un langage plus riche ne permettrait pas.
+
+Et ce qu'on perd en expressivité, on le récupère ailleurs : la non-ambiguïté n'est pas
+garantie par une sémantique formelle mais par le [test de la double implémentation](#13-le-critère-dacceptation--le-test-de-la-double-implémentation)
+et par les [contrôles mécaniques](outils/REGLES-DE-CONTROLE.md) — dont vingt-trois sont
+outillés. C'est un contrôle empirique là où un langage formel offrirait une preuve : moins
+fort en théorie, effectivement tenu en pratique.
+
 ### 2.2 Le lexique
 
 Le pseudo-langage tient en **une trentaine de mots**. C'est délibéré : un lexique qu'on ne

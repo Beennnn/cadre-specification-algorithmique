@@ -176,6 +176,47 @@ ce que cette méthode cherche à produire.
 
 ---
 
+## Les langages contrôlés et dédiés
+
+> **OMG, *Semantics of Business Vocabulary and Business Rules* (SBVR), à partir de 2008.**
+> Un anglais contrôlé pour définir le vocabulaire d'un domaine et y énoncer des règles,
+> avec une sémantique définie.
+>
+> **Ronald G. Ross, *RuleSpeak*.** Des patrons de phrase qui suppriment l'ambiguïté
+> courante des règles métier — « doit », « ne peut que », « au plus ».
+>
+> **Norbert E. Fuchs et al., *Attempto Controlled English* (ACE), Université de Zurich.**
+> Un sous-ensemble de l'anglais traduit mécaniquement en logique du premier ordre.
+
+**Ce qu'on emprunte** : l'idée centrale, qui est celle de toute la méthode — **un langage
+naturel restreint vaut mieux qu'un langage naturel libre**, et la restriction doit être
+écrite, pas implicite. La discipline de nommage du [CADRE.md §2.4](CADRE.md) et le
+caractère **fermé** du lexique (§2.2) en descendent directement.
+
+**Ce qu'on écarte** : leur portée et leur coût. SBVR vise les règles déclaratives, pas les
+algorithmes séquentiels, et porte un métamodèle lourd. ACE impose une syntaxe si stricte
+que rédiger devient une compétence à part entière — l'écueil même que la méthode cherche à
+éviter, puisqu'elle demande au métier d'écrire lui-même.
+
+---
+
+## Les langages de modélisation scientifique
+
+> **Modelica Association, *Modelica*, à partir de 1997.**
+> Un langage déclaratif à base d'équations acausales pour modéliser des systèmes
+> physiques : on écrit les équations, l'outil résout.
+
+**Ce qu'on emprunte** : la forme équationnelle du [CADRE.md §2.9](CADRE.md) — énoncer une
+relation entre grandeurs plutôt qu'une suite d'affectations — et l'attachement systématique
+d'une unité à chaque grandeur.
+
+**Ce qu'on écarte** : son caractère **exécutable**. Un modèle Modelica est une
+implémentation : il tranche la méthode de résolution, le pas d'intégration, la tolérance.
+L'écrire, c'est reprendre au développeur les décisions que la méthode veut lui laisser — et
+ramener l'expert métier à produire du code, ce dont on cherche précisément à le dispenser.
+
+---
+
 ## Les méthodes formelles
 
 > **B, Z, Alloy, TLA+.**
