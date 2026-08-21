@@ -161,7 +161,8 @@ Elle aide ensuite à coder — en appliquant les règles de codage de l'équipe,
 commentaires qui disent le **pourquoi** plutôt que de répéter le code, et en posant les
 annotations qui relient le code à la spécification puis en vérifiant leur cohérence dans
 les deux sens. Puis à dériver les tests du jeu d'essai, à comparer les résultats poste par
-poste et à figer les jeux de données. Mais elle ne dit pas si la règle est **la
+poste, et — **une fois que le métier les a jugés valides** — à figer les jeux de données
+qui deviennent alors des données de référence. Mais elle ne dit pas si la règle est **la
 bonne** règle, ne juge pas qu'un écart est acceptable, et ne voit pas ce qui manque sans
 avoir laissé de trace.
 

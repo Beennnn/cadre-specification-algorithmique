@@ -63,7 +63,13 @@ Puis la consigne prête à l'emploi : [`outils/PROMPT-RELECTURE-IA.md`](../outil
 | **7–8 Valider** | Tout ce qui précède, en une passe exhaustive | Les trois relecteurs |
 | **10 Coder et tester** | Produire une implémentation candidate ; appliquer les **règles de codage** de l'équipe ; écrire **commentaires et documentation** ; poser les **annotations de traçabilité** vers la spécification et en vérifier la cohérence ; transformer chaque `CT-xx` en test nommé ; dériver des tests de propriété depuis les invariants — voir ci-dessous | Le développeur, qui assume l'architecture, la qualité dans la durée et ce qu'il livre |
 | **11 Écarts** | Comparer obtenu et attendu **poste par poste le long de la chaîne**, localiser le premier point de divergence, proposer des hypothèses de cause | Le métier — **elle ne juge pas si l'écart est significatif** |
-| **Figer les jeux** | Produire, formater et versionner les jeux de données ; générer la trace de provenance | Le métier accepte, et c'est cette acceptation qui en fait des données de référence |
+| **Figer les jeux** | **Une fois que le métier les a jugés valides** : figer les jeux de données, les formater, les versionner, générer la trace de provenance et de validation | Le métier juge **avant** ; l'IA fige **après**. C'est ce jugement, et lui seul, qui transforme un jeu de données en donnée de référence |
+
+> **L'ordre compte, sur la dernière ligne.** L'IA ne fige rien de sa propre initiative :
+> elle attend que le métier ait examiné et accepté les résultats, puis elle exécute le
+> travail mécanique qui s'ensuit — formater, versionner, écrire la trace. Figer avant le
+> jugement reviendrait à graver dans le marbre ce qui n'a pas encore été validé, et à
+> donner à un jeu de données l'autorité d'un engagement qu'il n'a pas.
 
 > **Le meilleur apport de la liste est celui de l'étape 5.** Proposer les cas aux limites
 > est exactement ce qu'un expert fait mal : il connaît trop bien son domaine pour en voir
