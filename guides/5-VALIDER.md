@@ -202,7 +202,7 @@ est bien employé quelque part.
 | | |
 |---|---|
 | Elle **ne valide pas** | son verdict est un avis, pas une signature. La validation reste un acte humain, engageant, daté |
-| Elle **ne juge pas la justesse métier** | elle ne sait pas si le seuil devrait être à 3 ou à 4 articles ; personne ne le sait sauf le métier |
+| Elle **ne juge pas la justesse métier** | une règle peut être parfaitement claire, cohérente, complète — et fausse. Que la remise démarre à 3 articles quand la politique commerciale dit 4 ne se lit dans aucun document : cela ne se sait que du métier |
 | Elle est **plausible même quand elle a tort** | ses constats se vérifient un par un dans le document avant d'être traités |
 | Elle **hérite des angles morts** de la liste qu'on lui donne | ce qui n'est pas dans les règles ne sera pas cherché |
 

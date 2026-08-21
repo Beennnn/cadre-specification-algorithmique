@@ -139,7 +139,7 @@ Ces limites ne sont pas des défauts de maturité. Elles sont **structurelles**.
 
 | | |
 |---|---|
-| **Dire si la règle est la bonne règle** | Elle ne sait pas si le seuil devrait valoir 3 ou 4 articles. Personne ne le sait, sauf le métier (`H-06`) |
+| **Dire si la règle est la bonne règle** | Une règle peut être parfaitement claire, cohérente et complète — **et fausse**. Que la remise démarre à 3 articles quand la politique commerciale en vigueur dit 4 ne se lit dans aucun document : cela ne se sait que du métier (`H-06`) |
 | **Juger qu'un écart est acceptable** | C'est un arbitrage entre des conséquences, pas un calcul |
 | **Voir ce dont personne n'a jamais parlé** | **C'est la limite la plus importante** — voir l'explication ci-dessous |
 | **Assumer** | Elle n'a pas de mandat et ne rend de comptes à personne |

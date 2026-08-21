@@ -178,7 +178,7 @@ l'absence d'une troisième. Un trou ne se voit que s'il a des bords.
 | Étage | Qui relit | Ce qu'on y cherche | Exemple de ce qui est attrapé |
 |---|---|---|---|
 | **1** | Un **script**, puis une **IA** | Les incohérences **formelles** — celles qui se constatent sans rien connaître au métier | Une entrée déclarée qu'aucune règle n'emploie ; un `SI` sans `SINON` ; un numéro de version qui ne correspond pas à l'historique |
-| **2** | Le **métier** et le **test** | La **justesse et la complétude** des règles | Un seuil qui devrait valoir 4 articles et non 3 ; un cas limite que personne n'avait envisagé |
+| **2** | Le **métier** et le **test** | La **justesse et la complétude** des règles | Une règle **impeccablement écrite mais fausse** : le document dit que la remise démarre à 3 articles, la politique commerciale en vigueur dit 4. Ou un cas que le métier connaît et que personne n'a pensé à écrire |
 | **3** | Un **développeur extérieur** au domaine et à l'écriture | La **capacité à implémenter**, par oui ou par non | « Et si les deux ont le même score, on prend lequel ? » |
 
 ### Pourquoi deux passes au premier étage
@@ -193,6 +193,12 @@ Elles n'attrapent pas la même chose, et l'une ne remplace pas l'autre.
 Le script vient en premier parce qu'il est gratuit et sûr. L'IA vient ensuite, sur un
 document déjà propre : elle n'a plus à signaler ce qu'un contrôle mécanique aurait dû
 trouver, et peut se consacrer à ce que seule une lecture repère.
+
+**Ce que les deux premiers étages ne peuvent pas voir**, et qui fait tout l'intérêt du
+troisième : un document peut être **formellement irréprochable et matériellement faux**.
+Aucun script, aucune IA ne sait qu'une remise démarre en réalité à 4 articles — seul
+quelqu'un qui connaît la politique commerciale le sait. C'est exactement pour cela que les
+trois étages existent, et qu'aucun ne remplace les autres.
 
 L'ordre des trois étages n'est pas négociable : faire relire par des humains un document
 qui contient encore un paramètre inutilisé gaspille la ressource la plus rare de la
