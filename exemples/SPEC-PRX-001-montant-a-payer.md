@@ -390,6 +390,20 @@ voir un total calculé sur une base invalide.
 
 ## 10. Jeu d'essai
 
+### Provenance et validation des résultats attendus
+
+| | |
+|---|---|
+| **Provenance** | **Calcul à la main**, en arithmétique décimale exacte |
+| **Comment ils ont été examinés** | Chaque cas refait indépendamment par un second lecteur métier ; les répartitions au prorata et le centime résiduel vérifiés poste par poste |
+| **Validés par** | *(rôle : Direction commerciale)* |
+| **Le** | 2025-11-20 |
+| **Pour la version** | 1.0.0, revalidés en 2.0.0 (changement de règle TVA) |
+
+*Ces résultats sont des **données de référence** : ils qualifient le code et servent
+de base de non-régression. Ils ne se modifient que par une revalidation métier datée
+([CADRE §5](../CADRE.md)).*
+
 Tous les résultats ci-dessous ont été **calculés à la main** et vérifiés par le
 relecteur métier. Ils ne proviennent d'aucune implémentation.
 

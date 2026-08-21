@@ -1296,6 +1296,55 @@ non-régression** : toute évolution ultérieure qui les modifie devra être exp
 > un simple constat en référence — et son ampleur doit être proportionnée à l'enjeu. On
 > écrit **comment** il a été mené : lu, rejoué, varié, comparé à quoi, par qui.
 
+### La donnée de référence
+
+Quand une personne du métier a validé les sorties par rapport aux entrées **pour une
+fonction déterminée**, le couple (entrées, sorties) cesse d'être un exemple :
+
+> **Il devient une donnée de référence** — un engagement, opposable, réutilisable.
+
+| Avant la validation | Après |
+|---|---|
+| Un résultat candidat | Un **engagement** |
+| Discutable | **Opposable** : toute évolution qui le modifie devra être expliquée |
+| Attaché à personne | Attaché à **une fonction, une version de spécification, un valideur, une date** |
+
+Concrètement, un cas de test `CT-xx` dont les résultats ont été examinés et acceptés
+**devient** une donnée de référence. Ce n'est pas un objet nouveau : c'est un **statut**
+qu'acquiert le cas de test, et qui se trace.
+
+**Trois usages, et le deuxième est celui qui dure :**
+
+| Usage | Ce qu'il apporte |
+|---|---|
+| **Qualifier le code** | C'est le critère d'acceptation du développement : les données de référence passent, ou le composant n'est pas conforme |
+| **Tester la non-régression** | Le jour où quelqu'un optimise, refactorise, change de bibliothèque ou de plate-forme : si les données de référence passent toujours, **le comportement est intact**. C'est ce qui rend l'optimisation sans peur, et donc possible |
+| **Comparer deux implémentations** | Le test de la double implémentation, et le cas de deux cibles — embarqué et serveur — qui doivent coïncider |
+
+**La règle de versionnement qui donne son sens à tout le reste :**
+
+Une donnée de référence est attachée à une **version de la spécification**. Quand celle-ci
+passe en **majeur** — c'est-à-dire quand un résultat change —, les données de référence
+concernées doivent être **revalidées explicitement**, jamais mises à jour en silence. Leur
+historique est conservé : on doit pouvoir dire ce qu'on attendait à chaque version, et
+pourquoi cela a changé.
+
+> **L'anti-pattern, et c'est le plus tentant de tous : mettre à jour la donnée de référence
+> pour faire passer un test qui échoue.**
+>
+> C'est le jumeau de l'ajustement de tolérance en cours de recette
+> ([guide 8](guides/8-ANALYSER-LES-ECARTS.md)). Toujours défendable sur le moment, et il
+> supprime d'un coup la seule chose qui protégeait le comportement. Une donnée de
+> référence se modifie **par une revalidation métier, datée et motivée** — jamais parce
+> qu'un test est rouge.
+
+### Ce qui se trace, pour chaque jeu d'essai
+
+Le §10 d'une spécification porte donc, en tête, **la provenance et la validation** de ses
+résultats attendus : d'où ils viennent, comment ils ont été examinés, par qui, à quelle
+date, et pour quelle version. Sans cette trace, on ne saura pas, dans deux ans, si un
+chiffre est un engagement ou un vestige.
+
 ### Le seul cas qui n'est jamais valide
 
 > **Accepter un résultat parce qu'un programme l'a produit, sans l'examiner.**

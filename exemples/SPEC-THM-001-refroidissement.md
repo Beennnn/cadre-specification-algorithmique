@@ -360,6 +360,20 @@ entrées de la spécification**, parce que la reproductibilité d'un résultat e
 
 ## 10. Jeu d'essai
 
+### Provenance et validation des résultats attendus
+
+| | |
+|---|---|
+| **Provenance** | **Solution analytique** de l'équation de `RG-010` |
+| **Comment ils ont été examinés** | Recalculés à la calculatrice ; l'écart entre les deux variantes de `CT-02` vérifié dans les deux sens |
+| **Validés par** | *(rôle : Direction produit)* |
+| **Le** | 2026-01-01 |
+| **Pour la version** | 1.0.0 |
+
+*Ces résultats sont des **données de référence** : ils qualifient le code et servent
+de base de non-régression. Ils ne se modifient que par une revalidation métier datée
+([CADRE §5](../CADRE.md)).*
+
 **Construction de l'oracle.** Pour `k` et `T_ambiante` constants, `RG-010` admet la
 solution analytique `T(t) = T_amb + (T₀ − T_amb)·exp(−k·t)`, et `RG-050` la solution
 `t = ln((T_cible − T_amb) ÷ (T₀ − T_amb)) ÷ (−k)`. **La vérité de référence est donc

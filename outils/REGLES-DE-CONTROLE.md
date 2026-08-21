@@ -68,6 +68,7 @@ le plus souvent : personne ne vérifie spontanément que le vingt-troisième par
 | Id | Règle | Ce qu'un échec révèle |
 |---|---|---|
 | `C-14` | **Chaque règle `RG-xxx` figure dans la table de couverture.** | Une règle non testée : soit elle est inutile, soit il manque un cas |
+| `C-39` | **Le jeu d'essai porte la provenance et la validation de ses résultats attendus** : d'où ils viennent, comment ils ont été examinés, par qui, quand, pour quelle version. | Sans cette trace, on ne sait pas dans deux ans si un chiffre est un engagement opposable ou un vestige — et la non-régression ne protège plus rien |
 | `C-15` | **Chaque `CT-xx` cité existe**, et chaque `CT-xx` défini est cité. | La table de couverture ment |
 | `C-16` | **Chaque cas d'erreur `E-xxx` est couvert** par un cas de test, ou explicitement noté non couvert avec une question ouverte. | Le comportement de rejet n'est pas vérifié |
 | `C-17` | **Aucun identifiant n'est défini deux fois** dans un document. | Deux règles portent le même nom : les références deviennent ambiguës |

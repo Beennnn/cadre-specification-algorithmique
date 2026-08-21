@@ -168,6 +168,12 @@ def verifier_spec(chemin):
                         "%s « %s » déclarée mais employée dans aucune règle"
                         % (quoi, champ))
 
+    # --- C-39 : provenance et validation des résultats attendus
+    if "Provenance et validation" not in sec.get("essai", ""):
+        constat("ÉCHEC", "C-39", chemin,
+                "le jeu d'essai ne trace pas la provenance ni la validation "
+                "de ses résultats attendus")
+
     # --- C-08 / C-10 / C-11 / C-13 : analyse du pseudo-langage
     for titre, bloc in re.findall(r"^###\s+(RG-\d+)[^\n]*\n(.*?)(?=\n###\s|\Z)",
                                   corps_regles, re.S | re.M):

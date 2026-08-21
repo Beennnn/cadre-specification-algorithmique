@@ -445,6 +445,20 @@ consomme uniformément avec la distance.
 
 ## 10. Jeu d'essai
 
+### Provenance et validation des résultats attendus
+
+| | |
+|---|---|
+| **Provenance** | **Solution analytique.** Les formules du §7 sont fermées : aucune méthode approchée n'intervient |
+| **Comment ils ont été examinés** | Recalculés à la main, étape par étape, à la calculatrice scientifique ; le cas riche `CT-01` a été refait par un second lecteur |
+| **Validés par** | *(rôle : Direction R&D Énergie)* |
+| **Le** | 2026-02-24 |
+| **Pour la version** | 1.0.0, reconduits en 2.0.0 et 2.0.1 |
+
+*Ces résultats sont des **données de référence** : ils qualifient le code et servent
+de base de non-régression. Ils ne se modifient que par une revalidation métier datée
+([CADRE §5](../../CADRE.md)).*
+
 **Construction de l'oracle.** Les formules du §7 sont **fermées** : aucune méthode
 approchée n'intervient. Les valeurs ci-dessous sont donc calculables à la main, étape par
 étape, et n'ont été produites par aucune implémentation. Une calculatrice scientifique

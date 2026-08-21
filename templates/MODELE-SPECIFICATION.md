@@ -136,6 +136,21 @@ MODE D'EMPLOI
 
 ## 10. Jeu d'essai
 
+### Provenance et validation des résultats attendus
+<!-- Sans cette trace, on ne saura pas dans deux ans si un chiffre est un
+     engagement ou un vestige. Voir CADRE.md §5.
+     Un cas validé devient une DONNÉE DE RÉFÉRENCE : un engagement opposable,
+     réutilisable en non-régression, qui ne se modifie que par une
+     revalidation metier datee et motivee — jamais parce qu'un test est rouge. -->
+
+| | |
+|---|---|
+| **Provenance** | solution analytique / étalon / calcul à la main / maquette technique / analyse du composant |
+| **Comment ils ont été examinés** | |
+| **Validés par** | |
+| **Le** | AAAA-MM-JJ |
+| **Pour la version** | |
+
 <!-- Résultats calculés À LA MAIN. Jamais produits par une implémentation. -->
 
 ### Vue d'ensemble
