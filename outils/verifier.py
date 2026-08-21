@@ -480,7 +480,7 @@ def main():
           "%d échec(s), %d avertissement(s)"
           % (len(fichiers), specs, len(echecs), len(constats) - len(echecs)))
     if not constats:
-        print("Aucun défaut mécanique. 30 des 38 contrôles sont mécanisés ; les huit "
+        print("Aucun défaut mécanique. 31 des 41 contrôles sont mécanisés ; les huit "
               "restants et les contrôles humains H-01 à H-07 relèvent de la relecture.")
     return 1 if echecs else 0
 

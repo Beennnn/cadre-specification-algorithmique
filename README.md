@@ -149,6 +149,23 @@ dynamique.
 > valideur métier dispose. Une décision métier prise dans un commit est une décision
 > perdue.
 
+### La place de l'IA
+
+Elle intervient à presque toutes les étapes et **ne décide à aucune**. Son terrain le plus
+rentable est la **cohérence du contrat** : entrée déclarée jamais employée, sortie promise
+que rien ne produit, paramètre fantôme, unité absente, contrainte d'implémentation glissée
+dans une règle, formulation qui repousse la décision. Un travail exhaustif et fastidieux
+que l'humain fait mal — non par incompétence, mais parce qu'il fatigue.
+
+Elle aide ensuite à coder, à dériver les tests du jeu d'essai, à comparer les résultats
+poste par poste et à figer les jeux de données. Mais elle ne dit pas si la règle est **la
+bonne** règle, ne juge pas qu'un écart est acceptable, et ne voit pas ce qui manque sans
+avoir laissé de trace.
+
+> **Une IA n'est jamais un valideur.** La signature reste humaine, datée, nominative, et la
+> personne qui a lancé la passe assume ce qu'elle en a retenu comme si elle l'avait écrit.
+> Voir [guide 9](guides/9-L-APPORT-DE-L-IA.md).
+
 ## Deux mécanismes qui font tenir ce partage
 
 ### La validation se fait en trois étages, dans cet ordre
@@ -184,7 +201,7 @@ qu'un programme l'a produit, sans l'examiner**.
 | | |
 |---|---|
 | **[CADRE.md](CADRE.md)** | **Le document de référence.** Le principe, la frontière, les faux amis, le pseudo-langage, le contrat, la chaîne de traitement, l'oracle, la gouvernance, les anti-patterns. À lire une fois, en entier |
-| **[guides/](guides/)** | Huit guides opérationnels, à ouvrir pendant qu'on fait |
+| **[guides/](guides/)** | Neuf guides opérationnels, à ouvrir pendant qu'on fait — dont [l'apport de l'IA](guides/9-L-APPORT-DE-L-IA.md), transverse |
 | **[templates/](templates/)** | Les modèles vierges : [spécification](templates/MODELE-SPECIFICATION.md), [fiche de fonction](templates/MODELE-FICHE-FONCTION.md), [fiche de donnée](templates/MODELE-FICHE-DONNEE.md), [glossaire](templates/MODELE-GLOSSAIRE.md), [liste de vérification](templates/CHECKLIST-RELECTURE.md) |
 | **[outils/](outils/)** | Le catalogue des règles de contrôle, le vérificateur, la gestion des identités, la consigne de relecture par une IA |
 | **[exemples/fil-rouge/](exemples/fil-rouge/)** | Le fil rouge complet : *l'autonomie d'un véhicule électrique* |

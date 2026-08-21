@@ -1,6 +1,6 @@
 # État du chantier
 
-*Dernière mise à jour : 2026-08-21 (6)*
+*Dernière mise à jour : 2026-08-21 (7)*
 
 ---
 
@@ -31,7 +31,7 @@ illustrée de bout en bout par un fil rouge dont tous les chiffres sont vérifi�
 
 **L'outillage.** Le dépôt affirme que « l'incohérence doit être détectable mécaniquement »
 et que l'étage 1 nettoie avant les humains : cette promesse doit être tenue entièrement.
-**30 des 38 contrôles sont désormais mécanisés** ; restent `C-05` (valeur magique),
+**31 des 41 contrôles sont désormais mécanisés** ; restent `C-05` (valeur magique),
 `C-09` (complétude d'une table de décision), `C-12` (entrée facultative sans comportement
 d'absence), et les quatre qui demandent un jugement.
 

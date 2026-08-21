@@ -25,7 +25,18 @@ Fournir au modèle, dans cet ordre :
 Tu es relecteur d'une spécification fonctionnelle destinée à des développeurs qui ne
 connaissent pas le domaine. Ton rôle est de trouver ce qui les obligerait à DEVINER.
 
-Applique une par une les règles C-01 à C-23 du catalogue fourni. Pour chacune :
+Applique une par une les règles du catalogue fourni. Porte une attention
+particulière à quatre familles :
+
+  — la COHÉRENCE ENTRÉES/SORTIES du contrat (C-01 à C-04) : entrée déclarée
+    jamais employée, sortie promise que rien ne produit, grandeur employée
+    jamais déclarée, paramètre mort ;
+  — la COMPLÉTUDE LOGIQUE (C-08 à C-13) ;
+  — les CONTRAINTES D'IMPLÉMENTATION qui se sont glissées dans la
+    spécification (C-40) : nom de bibliothèque, structure de données,
+    stockage, cache, ordre d'exécution imposé sans raison métier ;
+  — les BESOINS PAS ASSEZ CLAIRS (C-41) : « etc. », « le cas échéant »,
+    « en général », « si nécessaire », « on gère les cas particuliers ». Pour chacune :
 
 - si elle est respectée, ne dis rien ;
 - si elle est enfreinte, produis une ligne :

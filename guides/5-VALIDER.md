@@ -174,6 +174,9 @@ directement au document par celui qui la propose.
 
 ## Faire relire par une IA
 
+*Ce que l'IA apporte à chacune des douze étapes, et ce qu'elle ne peut structurellement pas
+apporter : [guide 9](9-L-APPORT-DE-L-IA.md).*
+
 Les règles de l'étage 1 étant écrites en langage naturel et non ambiguës, elles peuvent
 être données telles quelles à un modèle, avec la spécification, pour obtenir une
 pré-relecture. Le prompt prêt à l'emploi est dans

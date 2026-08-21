@@ -6,7 +6,7 @@ qui les exécute ([`verifier.py`](verifier.py)), une IA à qui on les donne en c
 
 **Ce qui est mécanisé.** `verifier.py` met en œuvre `C-01` à `C-04`, `C-06` à `C-08`,
 `C-10`, `C-11`, `C-13` à `C-17`, `C-19` à `C-21`, `C-26` à `C-30`, `C-33` à `C-38` — soit
-**30 des 38**. Les huit restants (`C-05`, `C-09`, `C-12`, `C-18`, `C-22` à `C-25`, `C-31`,
+**31 des 41**. Les huit restants (`C-05`, `C-09`, `C-12`, `C-18`, `C-22` à `C-25`, `C-31`,
 `C-32`) demandent un jugement ou une lecture que le script ne fait pas.
 
 `C-11` est **heuristique** : il ne se déclenche que sur un superlatif portant sur une
@@ -62,6 +62,9 @@ le plus souvent : personne ne vérifie spontanément que le vingt-troisième par
 | `C-11` | **Tout superlatif a une règle de départage** : « le plus petit », « le meilleur », « le premier » — et s'il y en a deux ? | Le résultat dépend de l'ordre de lecture des données, donc de l'implémentation |
 | `C-12` | **Toute entrée facultative a un comportement défini en cas d'absence**, et le sens du repli est explicite. | Le développeur choisit le repli, presque toujours le plus commode plutôt que le plus prudent |
 | `C-13` | **Tout calcul itératif déclare** son critère d'arrêt, son nombre maximal d'itérations, **et ce qui est rapporté en cas de non-convergence**. | Le troisième point est presque toujours oublié : le programme renvoie son dernier itéré comme s'il avait convergé |
+
+| `C-40` | **Aucune contrainte d'implémentation ne figure dans la spécification** : nom de bibliothèque, structure de données, stockage, cache, ordre d'exécution imposé sans justification métier. | Le métier sort de son mandat et ferme des solutions meilleures. Se repère mieux à la lecture — humaine ou par IA — qu'avec une liste de mots-clés |
+| `C-41` | **Aucune formulation qui repousse la décision** : « etc. », « le cas échéant », « en général », « si nécessaire », « on gère les cas particuliers ». | Chacune est une question que quelqu'un devra trancher plus tard, sans mandat |
 
 ## Traçabilité
 
