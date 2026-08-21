@@ -141,8 +141,29 @@ Ces limites ne sont pas des défauts de maturité. Elles sont **structurelles**.
 |---|---|
 | **Dire si la règle est la bonne règle** | Elle ne sait pas si le seuil devrait valoir 3 ou 4 articles. Personne ne le sait, sauf le métier (`H-06`) |
 | **Juger qu'un écart est acceptable** | C'est un arbitrage entre des conséquences, pas un calcul |
-| **Savoir ce qui manque et n'a laissé aucune trace** | **C'est la limite la plus importante.** Une décision métier que personne n'a jamais posée ne manque à aucune règle : elle est invisible. L'IA travaille sur ce qui est écrit — l'atelier de découpage et la relecture humaine sont là pour trouver ce qui ne l'est pas |
+| **Voir ce dont personne n'a jamais parlé** | **C'est la limite la plus importante** — voir l'explication ci-dessous |
 | **Assumer** | Elle n'a pas de mandat et ne rend de comptes à personne |
+
+### La limite qui compte : un trou ne se voit que s'il a des bords
+
+Une IA repère une **incohérence entre deux choses écrites**. Elle ne repère pas l'absence
+d'une troisième dont personne n'a jamais parlé.
+
+| | |
+|---|---|
+| **Un trou avec des bords — elle le voit** | Un `SI` sans `SINON` : le `SI` est écrit, son incomplétude est visible dans le texte. Une entrée déclarée qu'aucune règle n'emploie : les deux bouts sont là, c'est leur rapport qui cloche |
+| **Un trou sans bords — elle ne le voit pas** | Personne ne s'est jamais demandé *« et si deux produits ont exactement le même prix ? »*. Alors aucune règle ne parle d'égalité, le glossaire n'a pas de terme pour ça, aucun cas de test n'en approche. **Le document est parfaitement cohérent** — il lui manque simplement une question que personne n'a posée |
+
+C'est structurel, et aucun progrès des modèles n'y changera rien : **on ne peut pas
+détecter l'absence de ce qui n'a jamais existé nulle part**. L'IA travaille sur ce qui est
+écrit.
+
+Ce qui trouve les trous sans bords, ce sont deux choses, et aucune n'est automatisable :
+
+- **l'atelier de découpage**, où un développeur demande « et si… ? » et où personne n'a la
+  réponse — c'est ainsi que `FN-012` est apparue sur le fil rouge ;
+- **la relecture technique** de l'étage 3, où quelqu'un qui doit coder se heurte au vide et
+  compte les fois où il aurait dû deviner.
 
 ## Trois pièges, et ce qui les désamorce
 

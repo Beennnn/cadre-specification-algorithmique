@@ -163,8 +163,9 @@ annotations qui relient le code à la spécification puis en vérifiant leur coh
 les deux sens. Puis à dériver les tests du jeu d'essai, à comparer les résultats poste par
 poste, et — **une fois que le métier les a jugés valides** — à figer les jeux de données
 qui deviennent alors des données de référence. Mais elle ne dit pas si la règle est **la
-bonne** règle, ne juge pas qu'un écart est acceptable, et ne voit pas ce qui manque sans
-avoir laissé de trace.
+bonne** règle, ne juge pas qu'un écart est acceptable, et **ne voit pas ce dont personne
+n'a jamais parlé** : elle repère une incohérence entre deux choses écrites, jamais
+l'absence d'une troisième. Un trou ne se voit que s'il a des bords.
 
 > **Une IA n'est jamais un valideur.** La signature reste humaine, datée, nominative, et la
 > personne qui a lancé la passe assume ce qu'elle en a retenu comme si elle l'avait écrit.

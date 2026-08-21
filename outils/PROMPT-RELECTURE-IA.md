@@ -80,6 +80,9 @@ Termine par exactement trois lignes :
 
 - Si la règle est **la bonne règle** — `H-06`. Seul le valideur métier le sait.
 - Ce qui **n'est pas dans le catalogue** : l'IA hérite intégralement de ses angles morts.
-- Ce qui est **absent sans laisser de trace** : une décision métier que personne n'a
-  jamais posée ne manque à aucune règle. C'est précisément ce que l'atelier de découpage
-  et la relecture humaine sont là pour trouver.
+- **Ce dont personne n'a jamais parlé.** Une IA repère une incohérence entre deux choses
+  écrites ; elle ne repère pas l'absence d'une troisième. Si personne ne s'est jamais
+  demandé « et si deux produits ont le même prix ? », aucune règle ne parle d'égalité et
+  le document reste parfaitement cohérent — il lui manque une question que personne n'a
+  posée. **Un trou ne se voit que s'il a des bords.** Ce sont l'atelier de découpage et la
+  relecture technique qui trouvent les autres.
