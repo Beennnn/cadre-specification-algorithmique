@@ -38,7 +38,7 @@ pour que chaque notion de la méthode se voie **appliquée sur un terrain déjà
    développement reçoit.
 
 > Les deux autres exemples du dépôt — [le montant à payer d'une
-> commande](../SPEC-PRX-001-montant-a-payer.md) et [le refroidissement d'une
+> lot](../SPEC-MAS-001-batch-mass-balance.md) et [le refroidissement d'une
 > boisson](../SPEC-THM-001-refroidissement.md) — sont des **vignettes** : des
 > spécifications courtes et complètes, gardées parce qu'elles aboutissent à des
 > conclusions techniques opposées sur le type numérique. Elles ne font pas partie du

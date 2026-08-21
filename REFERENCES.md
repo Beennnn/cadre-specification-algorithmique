@@ -242,7 +242,7 @@ formellement une fonction et d'employer cette méthode pour les quarante autres.
 
 **Ce qu'on emprunte** : l'idée que **rendre visible à l'œil un mélange que rien ne
 vérifie** a de la valeur. C'est ce que fait notre règle d'immutabilité, où le nom porte le
-**stade de transformation** : `remise_panier_brute` / `_retenue` / `_ligne_ajustée` ont
+**stade de transformation** : `nominal_mass` / `rounded_mass` / `dispensed_mass` ont
 même type et même unité, et seul le nom les distingue.
 
 **Ce qu'on écarte** : encoder dans le nom la portée, le type ou l'unité. Ils sont déjà

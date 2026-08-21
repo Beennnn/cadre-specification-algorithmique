@@ -138,11 +138,11 @@ possible : **une grandeur porte le même nom partout où elle passe**, et ce nom
 jamais qu'une seule valeur.
 
 ```bash
-java outils/Verifier.java --tracer montant_net_ligne
+java outils/Verifier.java --tracer dispensed_mass
 ```
 ```
-Parcours de « montant_net_ligne »
-  exemples/SPEC-PRX-001-montant-a-payer.md    employée par RG-090, RG-095, RG-110
+Parcours de « dispensed_mass »
+  exemples/SPEC-MAS-001-batch-mass-balance.md employée par RG-030, RG-050
 ```
 
 L'outil dit, pour chaque document : si la grandeur y est **déclarée** en entrée ou en
@@ -155,7 +155,7 @@ fonction la produit, lesquelles la consomment, et à quel endroit précis.
 |---|---|
 | Si je change l'unité de cette grandeur, qui casse ? | `--tracer` puis le [tableau d'impact](#le-tableau-dimpact) |
 | Cette sortie est-elle consommée par quelqu'un ? | `--tracer` : aucune occurrence ailleurs = sortie morte |
-| Où cette valeur est-elle transformée ? | la **chaîne des noms** : `remise_panier_brute` → `_retenue` → `_ligne` → `_ligne_ajustée` |
+| Où cette valeur est-elle transformée ? | la **chaîne des noms** : `nominal_mass` → `rounded_mass` → `dispensed_mass` |
 | Deux fonctions parlent-elles de la même chose ? | si elles emploient deux noms pour une même grandeur, la portée globale est violée |
 
 > **Le quatrième cas est le plus utile.** Deux équipes qui nomment différemment la même

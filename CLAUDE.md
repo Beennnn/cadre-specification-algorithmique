@@ -62,7 +62,7 @@ vers Java, C, Python ou C# est mécanique et déclarée une fois — même princ
 1. **Les règles emploient les identifiants du contrat, à l'identique** — pas le terme
    français équivalent. C'est ce qui rend `C-01` à `C-03` vérifiables.
 2. **Un nom valorisé ne change plus.** Toute transformation crée un nouveau nom qui la
-   porte (`remise_panier_brute` → `_retenue` → `_ligne_ajustee`). Pour une accumulation,
+   porte (`nominal_mass` → `rounded_mass` → `dispensed_mass`). Pour une accumulation,
    on indexe : `energie_cumulee(i)`.
 3. **On ne code dans le nom que ce qui n'est déclaré nulle part ailleurs** : ni la portée,
    ni le type, ni l'unité — tous trois déjà déclarés et vérifiables. Mais **oui** au stade
@@ -111,7 +111,7 @@ templates/         MODELE-SPECIFICATION · MODELE-FICHE-FONCTION · MODELE-GLOSS
 exemples/
   fil-rouge/       le scénario déroulé : 0-LE-CAS-METIER → 1-DECOUPAGE → 2-GLOSSAIRE
                    → 4-FN-004 (niveau 3) → 5-SPEC-NRG-001 (niveau 4)
-  SPEC-PRX-001…    vignette gestion (montant à payer d'une commande)
+  SPEC-MAS-001…    vignette discrète et exacte (bilan de masse d'un lot)
   SPEC-THM-001…    vignette scientifique courte (refroidissement d'une boisson)
 ```
 

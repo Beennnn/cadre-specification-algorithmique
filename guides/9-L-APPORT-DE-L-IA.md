@@ -84,8 +84,8 @@ jusqu'à l'existence du code.
 
 Appliquer la convention de l'équipe de façon **uniforme** : nommage, structure, style,
 organisation des fichiers. Et en particulier la **correspondance des noms** depuis le
-`snake_case` de la spécification vers la convention du langage — `montant_net_ht` →
-`montantNetHt` en Java, `MontantNetHt` en C#, inchangé en C ou en Python
+`snake_case` de la spécification vers la convention du langage — `dispensed_mass` →
+`dispensedMass` en Java, `DispensedMass` en C#, inchangé en C ou en Python
 ([CADRE §2.4](../CADRE.md)).
 
 C'est un travail systématique, sans jugement à porter : exactement ce qu'une IA fait bien

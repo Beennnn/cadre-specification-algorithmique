@@ -13,7 +13,7 @@
 ```bash
 java outils/Verifier.java                                   # tout le dépôt
 java outils/Verifier.java exemples/fil-rouge/5-SPEC-*.md     # une spécification
-java outils/Verifier.java --tracer montant_net_ligne         # parcours d'une grandeur
+java outils/Verifier.java --tracer dispensed_mass            # parcours d'une grandeur
 ```
 
 Le mode `--tracer` répond à « **où passe cette grandeur ?** » : dans quels documents elle

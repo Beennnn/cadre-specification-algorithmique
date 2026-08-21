@@ -516,13 +516,13 @@ est un cas d'erreur métier, pas une exception technique.
 ```
 
 ```
-vitesse_praticable   : Flottant(m·s⁻¹ ▸ km/h, 6 chiffres significatifs, > 0)
-montant_net_ht       : Décimal(EUR, 2 décimales, ≥ 0,00)
-quantite             : Entier(sans dimension, 1 .. 999)
-taux_remise          : Flottant(sans dimension, 4 décimales, 0,0000 .. 1,0000)
-reference_produit    : Chaîne(3 .. 20 caractères, alphanumérique majuscule)
-zone_livraison       : Énuméré{ FRANCE_METRO, UE }
-date_commande        : Horodatage(UTC ▸ Europe/Paris, à la seconde)
+practicable_speed    : Flottant(m·s⁻¹ ▸ km/h, 6 chiffres significatifs, > 0)
+dispensed_mass       : Décimal(kg, 3 décimales, ≥ 0,000)
+component_count      : Entier(sans dimension, 1 .. 50)
+target_mass_fraction : Flottant(sans dimension, 6 décimales, 0,000000 .. 1,000000)
+component_id         : Chaîne(3 .. 20 caractères, alphanumérique majuscule)
+rounding_mode        : Énuméré{ HALF_EVEN, HALF_UP, FLOOR }
+measured_at          : Horodatage(UTC ▸ Europe/Paris, à la seconde)
 tronque              : Booléen
 ```
 
@@ -610,7 +610,7 @@ Quand deux périmètres échangent, le nom est qualifié par le périmètre :
 structure à l'autre, on écrit le chemin complet : `boisson.masse`, `ajout.masse`.
 
 C'est cette règle qui rend **le parcours d'une grandeur suivable de bout en bout** : on
-peut demander « où passe `montant_net_ht` ? » et obtenir une réponse, parce que le nom ne
+peut demander « où passe `dispensed_mass` ? » et obtenir une réponse, parce que le nom ne
 change pas en route.
 
 #### Deux portées, et une seule règle d'unicité
@@ -621,7 +621,7 @@ change pas en route.
 | **Interne** | dans le corps d'une seule fonction | un bloc **Grandeurs internes**, en tête des règles |
 
 Une **grandeur interne** est un résultat intermédiaire qui ne traverse aucune frontière :
-`energie_mecanique`, `assiette_panier`, `force_aerodynamique`. Elle **n'apparaît jamais**
+`energie_mecanique`, `dispensed_total`, `force_aerodynamique`. Elle **n'apparaît jamais**
 dans un contrat, ni dans une sortie, ni dans une fiche de donnée — ces artefacts ne
 décrivent que ce qui franchit une frontière.
 
@@ -675,8 +675,8 @@ en reprendre les conventions. **Trois arguments s'y opposent, et le dernier est 
 - La spécification **survit au langage**. `SPEC-NRG-001` déclare une durée de vie de
   quinze ans ; adopter la convention d'un langage, c'est y faire entrer une décision
   technique par la fenêtre — exactement ce que le §1.4 interdit.
-- Elle a des **lecteurs qui ne codent pas** : métier, audit, conformité. `montant_net_ht`
-  se lit mieux que `montantNetHt` pour eux.
+- Elle a des **lecteurs qui ne codent pas** : métier, audit, conformité. `dispensed_mass`
+  se lit mieux que `dispensedMass` pour eux.
 - **Il y a deux cibles.** Le fil rouge est implémenté en C embarqué **et** côté serveur.
   Adopter la convention de l'une privilégie une équipe et impose une traduction à
   l'autre. Le jour où une troisième cible apparaît, la question se rouvre.
@@ -690,13 +690,13 @@ exactement notre situation, et c'est une pratique éprouvée à grande échelle.
 
 | Spécification | Java | C | Python | C# |
 |---|---|---|---|---|
-| `montant_net_ht` | `montantNetHt` | `montant_net_ht` | `montant_net_ht` | `MontantNetHt` |
-| `calculer_montant_a_payer` | `calculerMontantAPayer()` | `calculer_montant_a_payer()` | `calculer_montant_a_payer()` | `CalculerMontantAPayer()` |
-| `P-07` plafond de remise | `PLAFOND_REMISE` | `PLAFOND_REMISE` | `PLAFOND_REMISE` | `PlafondRemise` |
+| `dispensed_mass` | `dispensedMass` | `dispensed_mass` | `dispensed_mass` | `DispensedMass` |
+| `compute_mass_balance` | `computeMassBalance()` | `compute_mass_balance()` | `compute_mass_balance()` | `ComputeMassBalance()` |
+| `P-02` résidu maximal toléré | `MAX_RESIDUAL_STEPS` | `MAX_RESIDUAL_STEPS` | `MAX_RESIDUAL_STEPS` | `MaxResidualSteps` |
 
 > **La règle de correspondance est déclarée une fois, par cible, et elle est
 > systématique.** C'est ce qui permet à la traçabilité de tenir : partant de
-> `montant_net_ht` dans la spécification, on retrouve `montantNetHt` dans le code Java
+> `dispensed_mass` dans la spécification, on retrouve `dispensedMass` dans le code Java
 > sans avoir à chercher.
 
 #### Faut-il encoder la portée, le type et l'unité dans le nom ?
@@ -740,7 +740,7 @@ moitié de la hongroise applicative : **le stade de transformation**, que ni le 
 l'unité ne distinguent.
 
 ```
-remise_panier_brute  →  remise_panier_retenue  →  remise_panier_ligne_ajustee
+nominal_mass  →  rounded_mass  →  dispensed_mass
 ```
 
 Ces trois grandeurs ont la même famille, la même unité, la même plage. **Rien d'autre
@@ -755,13 +755,12 @@ exactement le cas d'usage que Spolsky défend, et c'est déjà notre règle d'im
 > **Toute transformation produit un nouveau nom**, qui dit la transformation.
 
 ```
-✗  remise_panier = 5,00
-   remise_panier = remise_panier − écart          ← le nom ment désormais
+✗  mass = 0,333333
+   mass = mass arrondie au pas de balance         ← le nom ment désormais
 
-✓  remise_panier_brute    = 5,00
-   remise_panier_retenue  = remise_panier_brute − écrêtement
-   remise_panier_ligne    = remise_panier_retenue × part
-   remise_panier_ligne_ajustee = remise_panier_ligne + résidu
+✓  nominal_mass   = target_batch_mass × target_mass_fraction
+   rounded_mass   = nominal_mass arrondie au pas de balance
+   dispensed_mass = rounded_mass + residual
 ```
 
 Ce que cela coûte : quelques noms de plus. Ce que cela rapporte, et c'est sans commune
@@ -786,7 +785,7 @@ Pour une accumulation, on n'écrase pas : on **indexe**.
 
 > Cette règle est empruntée à une pratique bien établie des compilateurs — l'affectation
 > unique — mais elle sert ici un tout autre but : non pas optimiser, mais **rendre le
-> texte lisible et le parcours traçable**. Un lecteur qui voit `montant_net_ligne` sait
+> texte lisible et le parcours traçable**. Un lecteur qui voit `dispensed_mass` sait
 > qu'il n'existe qu'une seule valeur portant ce nom, et qu'aucune règle plus loin ne la
 > changera dans son dos.
 
@@ -1703,7 +1702,7 @@ domaines opposés, parce que **la même méthode y conduit à des conclusions te
 contraires** — ce qui est la meilleure preuve que c'est bien la spécification qui décide,
 et non l'habitude du développeur.
 
-| | [SPEC-PRX-001](exemples/SPEC-PRX-001-montant-a-payer.md) — gestion | [SPEC-THM-001](exemples/SPEC-THM-001-refroidissement.md) — scientifique |
+| | [SPEC-MAS-001](exemples/SPEC-MAS-001-batch-mass-balance.md) — discret et exact | [SPEC-THM-001](exemples/SPEC-THM-001-refroidissement.md) — continu et approché |
 |---|---|---|
 | Le calcul | Le montant à payer d'une commande | La température d'une boisson qui refroidit |
 | Grandeurs | Montants, taux, quantités | Températures, durées, masses |

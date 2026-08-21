@@ -7,13 +7,6 @@
     "document": "exemples/fil-rouge/3-DONNEES.md"
   },
   {
-    "uuid": "0351aeb0-aae6-4c3d-bd8b-b8356e85983f",
-    "identifiant": "CT-08",
-    "nature": "cas de test",
-    "libelle": "Quantité exactement au seuil de la remise",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
-  },
-  {
     "uuid": "05ea43e3-893a-4bda-9086-8739be1e83d6",
     "identifiant": "Q-04-2",
     "nature": "question",
@@ -21,25 +14,11 @@
     "document": "exemples/fil-rouge/4-FN-004-planifier-les-recharges.md"
   },
   {
-    "uuid": "06363a73-1abe-4669-a672-e45e4ad67149",
-    "identifiant": "RG-045",
-    "nature": "règle",
-    "libelle": "Non-cumul",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
-  },
-  {
     "uuid": "069a2362-2dfb-4a2b-9e2e-f25e55c33516",
     "identifiant": "RG-030",
     "nature": "règle",
     "libelle": "Traction et récupération",
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
-  },
-  {
-    "uuid": "073745cb-8b22-40b1-a9f6-ffd483dba43b",
-    "identifiant": "RG-140",
-    "nature": "règle",
-    "libelle": "Montant à payer",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
   },
   {
     "uuid": "0746de64-53c0-4dce-a2d9-6c5f094f735e",
@@ -54,13 +33,6 @@
     "nature": "fonction",
     "libelle": "Décider de la stabilité d'un plan recalculé",
     "document": "exemples/fil-rouge/1-DECOUPAGE.md"
-  },
-  {
-    "uuid": "078b86e5-10bd-41e5-99a3-7396aedfe183",
-    "identifiant": "P-05",
-    "nature": "paramètre",
-    "libelle": "Quantité déclenchant la remise de quantité",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
   },
   {
     "uuid": "089406dd-f578-4bef-8d4b-3acbefc50e82",
@@ -84,20 +56,6 @@
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
   },
   {
-    "uuid": "0bb6635a-2f9e-4e8d-af4c-a23f0f37e775",
-    "identifiant": "P-03",
-    "nature": "paramètre",
-    "libelle": "Barème de port — UE",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
-  },
-  {
-    "uuid": "0bf9108f-3ec0-4e58-a5a7-fb30f9778d54",
-    "identifiant": "EX-03",
-    "nature": "exigence",
-    "libelle": "Le traitement et le stockage se font **dans l'Union européenne",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
-  },
-  {
     "uuid": "0c21b3f5-6dd0-46d4-bc12-cd24d35a5f10",
     "identifiant": "Q-05",
     "nature": "question",
@@ -119,25 +77,11 @@
     "document": "guides/7-VERSIONNER.md"
   },
   {
-    "uuid": "0ed327d0-6ba4-4f09-bfa4-1007512990c7",
-    "identifiant": "CT-04",
-    "nature": "cas de test",
-    "libelle": "Centime résiduel et départage d'ex æquo",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
-  },
-  {
     "uuid": "0fbe682c-8776-4e0b-8379-ae7aa9658f96",
     "identifiant": "CT-03",
     "nature": "cas de test",
     "libelle": "Cible inatteignable",
     "document": "exemples/SPEC-THM-001-refroidissement.md"
-  },
-  {
-    "uuid": "1112d490-6f36-497e-867a-57d8ca28ce2a",
-    "identifiant": "RG-100",
-    "nature": "règle",
-    "libelle": "Frais de livraison",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
   },
   {
     "uuid": "11ce095c-f267-40b0-84cb-49c18037bc46",
@@ -161,11 +105,11 @@
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
   },
   {
-    "uuid": "160a73f5-67a8-4357-8847-714ac56b9ca1",
-    "identifiant": "E-PANIER-001",
-    "nature": "cas d'erreur",
-    "libelle": "Le panier ne contient aucune ligne",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
+    "uuid": "14aa1bd5-f615-42c4-a9cb-3d2c078c1e0b",
+    "identifiant": "INV-03",
+    "nature": "invariant",
+    "libelle": "Chaque `dispensed_mass` est `≥ 0`. Un résidu négatif ne peut pas rendre une dose négative — si cela arrivait, `RG-040` aurait dû rejeter avant.",
+    "document": "exemples/SPEC-MAS-001-batch-mass-balance.md"
   },
   {
     "uuid": "1645cc91-0461-4d1f-9226-2800a352d859",
@@ -175,13 +119,6 @@
     "document": "exemples/SPEC-THM-001-refroidissement.md"
   },
   {
-    "uuid": "17612e04-2f6a-45c2-95e3-4ea4004b17f0",
-    "identifiant": "CT-09",
-    "nature": "cas de test",
-    "libelle": "Panier vide",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
-  },
-  {
     "uuid": "19326885-4fa0-498d-923f-d1b44998f662",
     "identifiant": "Q-04-4",
     "nature": "question",
@@ -189,11 +126,11 @@
     "document": "exemples/fil-rouge/4-FN-004-planifier-les-recharges.md"
   },
   {
-    "uuid": "19681b90-918a-4f0d-aac2-1ad23860432e",
-    "identifiant": "RG-020",
-    "nature": "règle",
-    "libelle": "Montant brut",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
+    "uuid": "1ae84506-b8e5-48fc-b902-b166a80b4b30",
+    "identifiant": "E-MAS-002",
+    "nature": "cas d'erreur",
+    "libelle": "Le résidu dépasse `P-02` pas de balance",
+    "document": "exemples/SPEC-MAS-001-batch-mass-balance.md"
   },
   {
     "uuid": "1b4f0d75-6953-45a5-9134-d3e656c3759c",
@@ -210,13 +147,6 @@
     "document": "exemples/SPEC-THM-001-refroidissement.md"
   },
   {
-    "uuid": "1d343eb6-10db-4c90-9785-83703a1c3fa2",
-    "identifiant": "EX-01",
-    "nature": "exigence",
-    "libelle": "Aucune donnée de paiement** n'entre dans le périmètre de ce calcul. Seul un identifiant client pseudonymisé y circule",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
-  },
-  {
     "uuid": "1e231894-98ee-40ef-a339-9ef41e368d51",
     "identifiant": "FN-004",
     "nature": "fonction",
@@ -224,18 +154,11 @@
     "document": "exemples/fil-rouge/1-DECOUPAGE.md"
   },
   {
-    "uuid": "1ec68056-a9f4-40ba-ad26-a7c5322c9f7a",
-    "identifiant": "INV-03",
-    "nature": "invariant",
-    "libelle": "La somme des `remise_panier_ligne` est exactement égale à la remise panier retenue",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
-  },
-  {
-    "uuid": "1f1edc75-ec58-4635-85db-c1c215e5db87",
-    "identifiant": "SPEC-PRX-001",
-    "nature": "document",
-    "libelle": "SPEC-PRX-001 — Calcul du montant à payer d'une commande",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
+    "uuid": "1f7dd670-3f98-4ea6-9bd1-04e2f61ad316",
+    "identifiant": "RG-010",
+    "nature": "règle",
+    "libelle": "Masse nominale d'un composant",
+    "document": "exemples/SPEC-MAS-001-batch-mass-balance.md"
   },
   {
     "uuid": "1ffdcc6b-2965-4ac9-a517-25affafc0b44",
@@ -243,13 +166,6 @@
     "nature": "question",
     "libelle": "`EX-08` impose une liste technique approuvée côté serveur, alors que `EX-01` impose du C MISRA à bord. La reproductibilité de 10⁻⁹ entre les deux implémentations (§8.2) est-elle tenable avec tous les langages de la liste, ou faut-il restreindre celle-ci pour cette fonction ?",
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
-  },
-  {
-    "uuid": "2030c329-e4d0-4bc7-a084-75069c76df61",
-    "identifiant": "EX-05",
-    "nature": "exigence",
-    "libelle": "Le code respecte le **standard de codage interne** `STD-DEV-2`, avec analyse statique bloquante",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
   },
   {
     "uuid": "21267255-1108-4c13-adf6-5832b0069bde",
@@ -273,6 +189,34 @@
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
   },
   {
+    "uuid": "289af665-16cb-4113-86ea-9ff53ce1a4c5",
+    "identifiant": "EX-01",
+    "nature": "exigence",
+    "libelle": "Le calcul emploie une **arithmétique décimale exacte**. Le binaire flottant est exclu : 0,1 n'y est pas représentable, et `INV-01` exige une égalité stricte",
+    "document": "exemples/SPEC-MAS-001-batch-mass-balance.md"
+  },
+  {
+    "uuid": "292e2c59-db4e-4dcd-b7e1-101cf6d76de0",
+    "identifiant": "SPEC-MAS-001",
+    "nature": "document",
+    "libelle": "SPEC-MAS-001 — Batch mass balance",
+    "document": "exemples/SPEC-MAS-001-batch-mass-balance.md"
+  },
+  {
+    "uuid": "2c2489c2-702a-46dd-a7cd-1064022ddbd4",
+    "identifiant": "RG-020",
+    "nature": "règle",
+    "libelle": "Arrondi au pas de la balance",
+    "document": "exemples/SPEC-MAS-001-batch-mass-balance.md"
+  },
+  {
+    "uuid": "2c76616f-cdf7-439f-88a6-107cd43b3d24",
+    "identifiant": "EX-04",
+    "nature": "exigence",
+    "libelle": "Les masses nominales sont conservées 10 ans avec le lot",
+    "document": "exemples/SPEC-MAS-001-batch-mass-balance.md"
+  },
+  {
     "uuid": "2cabdb36-4f9e-4af5-8a6e-812b673be478",
     "identifiant": "CT-02",
     "nature": "cas de test",
@@ -294,20 +238,6 @@
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
   },
   {
-    "uuid": "30bc5c0f-c236-42d7-9b52-2c291b83c01c",
-    "identifiant": "INV-08",
-    "nature": "invariant",
-    "libelle": "`points_fidelite_debites × P-08 = reduction_fidelite_ttc`",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
-  },
-  {
-    "uuid": "369ef972-0a24-472d-9938-7598f59c505c",
-    "identifiant": "E-ZONE-001",
-    "nature": "cas d'erreur",
-    "libelle": "La zone de livraison n'est pas desservie",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
-  },
-  {
     "uuid": "378cb511-d51c-4f98-8ef1-b5f414836038",
     "identifiant": "RG-030",
     "nature": "règle",
@@ -320,20 +250,6 @@
     "nature": "cas de test",
     "libelle": "Cible hors horizon",
     "document": "exemples/SPEC-THM-001-refroidissement.md"
-  },
-  {
-    "uuid": "3b6cfc1f-2f63-4de6-a6b2-aca95ace6fa4",
-    "identifiant": "INV-02",
-    "nature": "invariant",
-    "libelle": "La somme des `montant_net_ligne` est exactement égale à `montant_net_ht`",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
-  },
-  {
-    "uuid": "3c8fea47-f2c9-4272-9d49-28616412edd6",
-    "identifiant": "P-08",
-    "nature": "paramètre",
-    "libelle": "Valeur d'un point de fidélité",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
   },
   {
     "uuid": "3cc439b5-c892-4f1b-9b73-404b674cf47f",
@@ -357,39 +273,11 @@
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
   },
   {
-    "uuid": "40a60496-d220-4a4f-9c5e-af1440a5a8f4",
-    "identifiant": "P-06",
-    "nature": "paramètre",
-    "libelle": "Taux de la remise de quantité",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
-  },
-  {
     "uuid": "41dea1ff-81d5-42cc-a782-0da8ba4473eb",
     "identifiant": "Q-01",
     "nature": "question",
     "libelle": "Le barème de température procède par paliers (`RG-060`). Un dixième de degré peut faire varier l'autonomie de plusieurs kilomètres, ce qui peut heurter la contrainte de **stabilité** du §11. Faut-il interpoler, ou introduire une hystérésis ?",
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
-  },
-  {
-    "uuid": "420b6323-83c5-4fc4-b7c3-80e639109cee",
-    "identifiant": "Q-05",
-    "nature": "question",
-    "libelle": "Tranchée le 2026-05-12 :* la TVA est-elle calculée par taux agrégé ou ligne à ligne ? → **par taux agrégé**, cf. `RG-110`.",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
-  },
-  {
-    "uuid": "420df46d-6575-464c-af29-6669b968cddd",
-    "identifiant": "INV-04",
-    "nature": "invariant",
-    "libelle": "`total_remises_ht ≤ ARRONDIR(montant_brut_ht × P-07, 2)` — sauf dépassement par la seule remise de quantité (voir `RG-060`)",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
-  },
-  {
-    "uuid": "426f747b-a486-4102-a7f8-7a6f9cd7b087",
-    "identifiant": "E-FIDELITE-001",
-    "nature": "cas d'erreur",
-    "libelle": "Les points utilisés dépassent le solde du client",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
   },
   {
     "uuid": "43b0691e-1348-4088-99c5-86c584a90c42",
@@ -413,13 +301,6 @@
     "document": "exemples/SPEC-THM-001-refroidissement.md"
   },
   {
-    "uuid": "49f74a92-4624-4341-b206-0162921f965b",
-    "identifiant": "RG-040",
-    "nature": "règle",
-    "libelle": "Éligibilité de la remise panier",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
-  },
-  {
     "uuid": "4b06688f-6465-4532-aa52-0db400bee2f4",
     "identifiant": "CT-01",
     "nature": "cas de test",
@@ -427,11 +308,11 @@
     "document": "exemples/SPEC-THM-001-refroidissement.md"
   },
   {
-    "uuid": "4ce49af5-b5fe-4447-8a9a-b59f3fd74dc7",
-    "identifiant": "P-02",
+    "uuid": "4b92babc-dd3d-423e-8feb-046b7166db4e",
+    "identifiant": "P-01",
     "nature": "paramètre",
-    "libelle": "Barème de port — FRANCE_METRO",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
+    "libelle": "Mode d'arrondi des doses",
+    "document": "exemples/SPEC-MAS-001-batch-mass-balance.md"
   },
   {
     "uuid": "4d6f1ab4-7ded-4604-b857-b74f36df9407",
@@ -462,6 +343,13 @@
     "document": "exemples/fil-rouge/1-DECOUPAGE.md"
   },
   {
+    "uuid": "525363e7-8bba-49e7-89e3-f0761903866b",
+    "identifiant": "EX-02",
+    "nature": "exigence",
+    "libelle": "Un lot comporte au plus 50 composants ; le calcul est appelé au plus 200 fois par heure",
+    "document": "exemples/SPEC-MAS-001-batch-mass-balance.md"
+  },
+  {
     "uuid": "52d43b49-e236-4a5c-9835-ebe75ef1aecf",
     "identifiant": "INV-08",
     "nature": "invariant",
@@ -474,27 +362,6 @@
     "nature": "invariant",
     "libelle": "`T(t)` tend vers `T_ambiante` quand `t` croît, sans jamais l'atteindre",
     "document": "exemples/SPEC-THM-001-refroidissement.md"
-  },
-  {
-    "uuid": "54348f2a-1608-43c4-9711-8a4fd18920e2",
-    "identifiant": "E-PROMO-001",
-    "nature": "cas d'erreur",
-    "libelle": "Le code promotionnel n'existe pas",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
-  },
-  {
-    "uuid": "54a68829-f56c-4687-8d37-9cbde6eba04c",
-    "identifiant": "RG-030",
-    "nature": "règle",
-    "libelle": "Remise de quantité",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
-  },
-  {
-    "uuid": "55073c8c-6521-49d5-bf01-0fbd403894be",
-    "identifiant": "E-QTE-001",
-    "nature": "cas d'erreur",
-    "libelle": "Une quantite_commandee est nulle ou négative",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
   },
   {
     "uuid": "56568916-bbd1-44d2-86fc-12416f98676c",
@@ -518,13 +385,6 @@
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
   },
   {
-    "uuid": "5cc02d04-0db9-4bad-95d5-88ad2e76f355",
-    "identifiant": "INV-06",
-    "nature": "invariant",
-    "libelle": "Le calcul est **idempotent** : recalculer un panier inchangé ne change aucun montant",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
-  },
-  {
     "uuid": "5f56cc79-2938-4faa-a6fe-10aa2b53d021",
     "identifiant": "FN-006",
     "nature": "fonction",
@@ -532,18 +392,11 @@
     "document": "exemples/fil-rouge/1-DECOUPAGE.md"
   },
   {
-    "uuid": "63c7afeb-e6ef-4ef8-bb84-059d38b332ac",
-    "identifiant": "EX-02",
-    "nature": "exigence",
-    "libelle": "Les données du calcul sont **classées P1 (interne)** et n'ont pas à être chiffrées au repos ; le lien entre l'identifiant pseudonymisé et le client est classé **P3** et réside dans un périmètre séparé",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
-  },
-  {
-    "uuid": "64a2790a-3a7d-44e5-80f1-1b6b3996dc2e",
-    "identifiant": "RG-010",
-    "nature": "règle",
-    "libelle": "Prix unitaire retenu",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
+    "uuid": "60bffc03-1312-4d2a-94b9-152a5f0f18e6",
+    "identifiant": "INV-02",
+    "nature": "invariant",
+    "libelle": "Chaque `dispensed_mass` est un multiple entier de `balance_step`.",
+    "document": "exemples/SPEC-MAS-001-batch-mass-balance.md"
   },
   {
     "uuid": "6573a577-9067-4cd6-861d-b257b71803d5",
@@ -574,11 +427,11 @@
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
   },
   {
-    "uuid": "68db3600-1087-4e9c-a860-23f0b039607b",
-    "identifiant": "CT-02",
-    "nature": "cas de test",
-    "libelle": "Franchise de port au seuil exact",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
+    "uuid": "694d1152-ae43-44ea-9cee-1a9226214548",
+    "identifiant": "E-MAS-001",
+    "nature": "cas d'erreur",
+    "libelle": "La somme des fractions cibles ne vaut pas exactement 1",
+    "document": "exemples/SPEC-MAS-001-batch-mass-balance.md"
   },
   {
     "uuid": "6a2ac0bf-7a08-4a12-a6ff-e4d1d6c6ca33",
@@ -623,13 +476,6 @@
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
   },
   {
-    "uuid": "6d2f2e8d-1a8b-448f-a167-439ecdf18f5d",
-    "identifiant": "P-01",
-    "nature": "paramètre",
-    "libelle": "Seuil de franchise de port",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
-  },
-  {
     "uuid": "6ea114e2-f73a-4512-8cd4-9656c42c8060",
     "identifiant": "P-06",
     "nature": "paramètre",
@@ -651,46 +497,11 @@
     "document": "exemples/SPEC-THM-001-refroidissement.md"
   },
   {
-    "uuid": "6fd83548-f6f4-451c-9819-94905d64f925",
-    "identifiant": "EX-06",
-    "nature": "exigence",
-    "libelle": "La **couverture de branches** des règles de calcul atteint au moins 95 %",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
-  },
-  {
-    "uuid": "70d09edd-c6b6-4e15-b56b-314d32f1e701",
-    "identifiant": "RG-120",
-    "nature": "règle",
-    "libelle": "Montant avant fidélité",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
-  },
-  {
     "uuid": "730f2923-d586-400b-9248-83ac8d297acf",
     "identifiant": "Q-04-3",
     "nature": "question",
     "libelle": "La puissance réellement délivrée par une borne peut être inférieure à sa puissance affichée. Retient-on l'affichée, une valeur historique, ou un abattement forfaitaire ?",
     "document": "exemples/fil-rouge/4-FN-004-planifier-les-recharges.md"
-  },
-  {
-    "uuid": "73c4fe25-37f9-40b8-a0ac-7374ce755d79",
-    "identifiant": "Q-02",
-    "nature": "question",
-    "libelle": "Quand un prix promotionnel est supérieur au prix catalogue (`RG-010`), faut-il émettre une alerte vers le référentiel produit ?",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
-  },
-  {
-    "uuid": "73dda1ef-f363-4a40-ab0f-b49ef6a3dc4b",
-    "identifiant": "FN-021",
-    "nature": "fonction",
-    "libelle": "`tva_par_taux`",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
-  },
-  {
-    "uuid": "73ec9c34-fad6-4d43-a363-74c26c0df25a",
-    "identifiant": "CT-06",
-    "nature": "cas de test",
-    "libelle": "Code promotionnel expiré",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
   },
   {
     "uuid": "75cfe6fc-7213-4967-a81f-f4e80c55c727",
@@ -714,6 +525,13 @@
     "document": "exemples/SPEC-THM-001-refroidissement.md"
   },
   {
+    "uuid": "8080dc01-878b-4657-909b-b2199ecf4b60",
+    "identifiant": "RG-040",
+    "nature": "règle",
+    "libelle": "Recevabilité du résidu",
+    "document": "exemples/SPEC-MAS-001-batch-mass-balance.md"
+  },
+  {
     "uuid": "8416d9a7-cdb6-4116-bc37-a9538d3ff520",
     "identifiant": "SPEC-THM-001",
     "nature": "document",
@@ -721,25 +539,11 @@
     "document": "exemples/SPEC-THM-001-refroidissement.md"
   },
   {
-    "uuid": "8433118f-b428-4af9-be34-952e9c6b9845",
-    "identifiant": "RG-090",
-    "nature": "règle",
-    "libelle": "Montant net",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
-  },
-  {
     "uuid": "874a1ca9-d14a-43d5-9daf-865e9b8b7fc0",
     "identifiant": "EX-04",
     "nature": "exigence",
     "libelle": "La fonction s'exécute dans la **partition non critique** du calculateur ; elle ne peut ni lire ni écrire dans la partition de commande",
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
-  },
-  {
-    "uuid": "8783cdb2-f825-4649-9997-805d65f7eb77",
-    "identifiant": "RG-085",
-    "nature": "règle",
-    "libelle": "Répartition de la remise panier et centime résiduel",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
   },
   {
     "uuid": "87cb7eb4-c0f7-44bd-90b4-9e00c395c621",
@@ -756,13 +560,6 @@
     "document": "exemples/fil-rouge/3-DONNEES.md"
   },
   {
-    "uuid": "8c33f74e-f22d-4987-9157-a0d458574a80",
-    "identifiant": "E-PROMO-002",
-    "nature": "cas d'erreur",
-    "libelle": "Le code existe mais n'est pas en vigueur à la date de commande",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
-  },
-  {
     "uuid": "8cd75e36-1a32-4cbe-be56-1fa572e468ef",
     "identifiant": "INV-02",
     "nature": "invariant",
@@ -770,18 +567,11 @@
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
   },
   {
-    "uuid": "8df88a08-b098-463c-b407-89c2fd4f07e4",
-    "identifiant": "EX-04",
-    "nature": "exigence",
-    "libelle": "Le langage retenu appartient à la **liste technique approuvée** et dispose d'un type décimal exact natif ou d'une bibliothèque décimale éprouvée",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
-  },
-  {
-    "uuid": "8f0b79f2-bce6-4cb0-b02e-0c6949f9ea5b",
-    "identifiant": "Q-03",
+    "uuid": "9111352a-45f3-4b93-8115-3102c370b556",
+    "identifiant": "Q-01",
     "nature": "question",
-    "libelle": "Les points de fidélité doivent-ils pouvoir s'imputer sur les frais de livraison lorsque la franchise n'est pas atteinte ?",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
+    "libelle": "Faut-il répartir un résidu de plusieurs pas sur plusieurs composants, plutôt que de le porter entièrement sur le plus gros ?",
+    "document": "exemples/SPEC-MAS-001-batch-mass-balance.md"
   },
   {
     "uuid": "944cf16e-090c-4191-a688-c1696c65cad4",
@@ -805,13 +595,6 @@
     "document": "exemples/SPEC-THM-001-refroidissement.md"
   },
   {
-    "uuid": "97af403e-e44a-4e9c-9de4-24de01c1c165",
-    "identifiant": "P-04",
-    "nature": "paramètre",
-    "libelle": "Taux de TVA des frais de livraison",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
-  },
-  {
     "uuid": "980c488b-daf2-4834-b00e-c8d45668671a",
     "identifiant": "RG-010",
     "nature": "règle",
@@ -826,6 +609,13 @@
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
   },
   {
+    "uuid": "98d1b468-0e1f-4082-9f1a-43a47d0f1802",
+    "identifiant": "CT-02",
+    "nature": "cas de test",
+    "libelle": "Résidu négatif",
+    "document": "exemples/SPEC-MAS-001-batch-mass-balance.md"
+  },
+  {
     "uuid": "9e5fa8d2-ece3-4239-a3f5-6e034f7cbcfd",
     "identifiant": "Q-04",
     "nature": "question",
@@ -833,18 +623,11 @@
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
   },
   {
-    "uuid": "9efdc67f-eae4-4f97-ba59-03dcdade2106",
-    "identifiant": "P-07",
-    "nature": "paramètre",
-    "libelle": "Plafond global de remise",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
-  },
-  {
-    "uuid": "a0391457-4a04-42d3-b931-780a69c17f9a",
-    "identifiant": "Q-01",
-    "nature": "question",
-    "libelle": "Faut-il indiquer au client le montant manquant pour atteindre la franchise de port ? Si oui, ce calcul entre-t-il dans cette spécification ou dans celle de l'affichage ?",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
+    "uuid": "9eb759d5-63d4-4b94-8f80-dd07b8d47340",
+    "identifiant": "INV-04",
+    "nature": "invariant",
+    "libelle": "Le résultat est **invariant par permutation** de la liste des composants : réordonner l'entrée ne change aucune masse pesée. C'est ce que garantit la règle de départage de `RG-050`.",
+    "document": "exemples/SPEC-MAS-001-batch-mass-balance.md"
   },
   {
     "uuid": "a2f67f9d-5d0f-4b38-b3a6-afd875065ea6",
@@ -866,20 +649,6 @@
     "nature": "règle",
     "libelle": "Température à un instant donné",
     "document": "exemples/SPEC-THM-001-refroidissement.md"
-  },
-  {
-    "uuid": "a7edbeea-794d-42a5-a825-b6164189a821",
-    "identifiant": "RG-050",
-    "nature": "règle",
-    "libelle": "Montant de la remise panier",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
-  },
-  {
-    "uuid": "a7f84257-5354-476e-8bce-f7d68ff791e0",
-    "identifiant": "RG-130",
-    "nature": "règle",
-    "libelle": "Imputation des points de fidélité",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
   },
   {
     "uuid": "aeb9bd4f-38b4-4a27-8c60-28fc5d8141e7",
@@ -917,11 +686,11 @@
     "document": "exemples/SPEC-THM-001-refroidissement.md"
   },
   {
-    "uuid": "b2230afc-f9c4-47e4-b39a-5f99b5dbbc81",
-    "identifiant": "INV-07",
-    "nature": "invariant",
-    "libelle": "Ajouter une ligne à un panier ne peut jamais diminuer `montant_brut_ht`",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
+    "uuid": "b3e154c8-b776-4ecb-86c7-fe1cc06173a9",
+    "identifiant": "CT-01",
+    "nature": "cas de test",
+    "libelle": "Résidu positif, plus grande fraction unique",
+    "document": "exemples/SPEC-MAS-001-batch-mass-balance.md"
   },
   {
     "uuid": "b4ee9744-60d3-4131-86d6-bd96fe9c3416",
@@ -929,6 +698,13 @@
     "nature": "cas de test",
     "libelle": "Cible déjà atteinte",
     "document": "exemples/SPEC-THM-001-refroidissement.md"
+  },
+  {
+    "uuid": "b660aa4f-dd37-4cd9-b967-798a11586fd2",
+    "identifiant": "CT-03",
+    "nature": "cas de test",
+    "libelle": "Ex æquo sur la plus grande fraction",
+    "document": "exemples/SPEC-MAS-001-batch-mass-balance.md"
   },
   {
     "uuid": "b6a9cb5c-3772-4221-bd2b-81426d0491aa",
@@ -945,18 +721,18 @@
     "document": "exemples/SPEC-THM-001-refroidissement.md"
   },
   {
-    "uuid": "b93a0666-396c-4169-86f2-c6a57f8c72d2",
-    "identifiant": "RG-095",
-    "nature": "règle",
-    "libelle": "Détail restitué et agrégats",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
-  },
-  {
     "uuid": "bc161b8d-1cb1-4f60-b57f-905bcc8384fe",
     "identifiant": "FN-010",
     "nature": "fonction",
     "libelle": "Déterminer la réserve de sécurité applicable",
     "document": "exemples/fil-rouge/1-DECOUPAGE.md"
+  },
+  {
+    "uuid": "bdc923c8-9721-47cf-8b54-b77407f04bb1",
+    "identifiant": "CT-05",
+    "nature": "cas de test",
+    "libelle": "Résidu au-delà de la tolérance",
+    "document": "exemples/SPEC-MAS-001-batch-mass-balance.md"
   },
   {
     "uuid": "bebe83a6-bc21-4e69-9933-58259b8e74b1",
@@ -973,6 +749,20 @@
     "document": "exemples/SPEC-THM-001-refroidissement.md"
   },
   {
+    "uuid": "c16913b4-c54a-41ba-861a-7c369e06a149",
+    "identifiant": "Q-02",
+    "nature": "question",
+    "libelle": "Le départage alphabétique doit-il céder la place à un ordre de priorité déclaré par composant ?",
+    "document": "exemples/SPEC-MAS-001-batch-mass-balance.md"
+  },
+  {
+    "uuid": "c1c93cb0-ddf8-40e4-820d-e702b518f1fe",
+    "identifiant": "E-MAS-003",
+    "nature": "cas d'erreur",
+    "libelle": "Deux composants portent le même `component_id`",
+    "document": "exemples/SPEC-MAS-001-batch-mass-balance.md"
+  },
+  {
     "uuid": "c31484ce-4b11-467b-9cf5-8d3eaf5dd241",
     "identifiant": "CT-08",
     "nature": "cas de test",
@@ -987,13 +777,6 @@
     "document": "exemples/SPEC-THM-001-refroidissement.md"
   },
   {
-    "uuid": "c39cc17d-bc64-47fe-a83a-f8659e9bb002",
-    "identifiant": "RG-060",
-    "nature": "règle",
-    "libelle": "Plafond global de remise",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
-  },
-  {
     "uuid": "c471ab89-7df3-4389-9749-a08abdeadc30",
     "identifiant": "D-011",
     "nature": "donnée",
@@ -1006,6 +789,13 @@
     "nature": "exigence",
     "libelle": "Le temps d'exécution **pire cas** est borné, mesuré sur cible, et documenté",
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+  },
+  {
+    "uuid": "c55d71da-977b-4b31-93a3-66c3370a00a1",
+    "identifiant": "RG-050",
+    "nature": "règle",
+    "libelle": "Affectation du résidu",
+    "document": "exemples/SPEC-MAS-001-batch-mass-balance.md"
   },
   {
     "uuid": "cabb4a7c-3cc6-4b7f-840b-fa14ee4d0f4a",
@@ -1027,6 +817,13 @@
     "nature": "paramètre",
     "libelle": "Masse volumique de l'air de référence",
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+  },
+  {
+    "uuid": "cd6b8a1b-c171-4083-aa90-16fbfbffba9b",
+    "identifiant": "P-02",
+    "nature": "paramètre",
+    "libelle": "Résidu maximal toléré, en pas de balance",
+    "document": "exemples/SPEC-MAS-001-batch-mass-balance.md"
   },
   {
     "uuid": "cdc085b1-e472-43e3-be7b-2d28930aeed1",
@@ -1106,25 +903,11 @@
     "document": "exemples/fil-rouge/3-DONNEES.md"
   },
   {
-    "uuid": "d91c1a67-357e-4e68-95c9-94722c7880b1",
-    "identifiant": "P-09",
-    "nature": "paramètre",
-    "libelle": "Mode d'arrondi par défaut",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
-  },
-  {
-    "uuid": "d9c56240-eadb-4bcf-a76c-9021b8de684e",
-    "identifiant": "RG-110",
-    "nature": "règle",
-    "libelle": "TVA",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
-  },
-  {
-    "uuid": "dbc6d14b-3c1c-4ad2-b19d-dc861b9507c7",
-    "identifiant": "Q-04",
-    "nature": "question",
-    "libelle": "Aucun cas de test ne couvre `RG-045` (non-cumul). Quel code promotionnel non cumulable prendre comme référence ?",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
+    "uuid": "dbccfecf-777b-4959-a321-7cb6555461cf",
+    "identifiant": "INV-01",
+    "nature": "invariant",
+    "libelle": "`SUM OF dispensed_mass OVER dispensed = target_batch_mass`, **exactement**. C'est la conservation de la masse : elle ne tolère aucun écart, fût-il d'un pas.",
+    "document": "exemples/SPEC-MAS-001-batch-mass-balance.md"
   },
   {
     "uuid": "dc39074f-2f6b-4c19-a81b-9fc68185e56d",
@@ -1134,11 +917,11 @@
     "document": "exemples/SPEC-THM-001-refroidissement.md"
   },
   {
-    "uuid": "dd5abdf4-aaaf-417d-9557-3c011c7adc43",
-    "identifiant": "CT-03",
+    "uuid": "dfb6ff92-8efb-47e8-96c8-ca15b1704d70",
+    "identifiant": "CT-04",
     "nature": "cas de test",
-    "libelle": "Cas riche (trace de calcul complète)",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
+    "libelle": "Résidu nul",
+    "document": "exemples/SPEC-MAS-001-batch-mass-balance.md"
   },
   {
     "uuid": "e00a269d-7baf-4009-8412-13e4ccb848e8",
@@ -1218,11 +1001,11 @@
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
   },
   {
-    "uuid": "ec61da74-4c5b-4885-863a-f10a2acc5db0",
-    "identifiant": "CT-05",
-    "nature": "cas de test",
-    "libelle": "Écrêtement par le plafond global",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
+    "uuid": "ed9131d6-4472-4d21-b75d-fba1122da558",
+    "identifiant": "RG-030",
+    "nature": "règle",
+    "libelle": "Résidu",
+    "document": "exemples/SPEC-MAS-001-batch-mass-balance.md"
   },
   {
     "uuid": "ed9194c2-f465-458b-a68a-5bc2461be15d",
@@ -1232,18 +1015,18 @@
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
   },
   {
-    "uuid": "eeaea60f-91a9-4da8-99a0-f50801347ce4",
-    "identifiant": "CT-01",
-    "nature": "cas de test",
-    "libelle": "Cas nominal minimal",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
-  },
-  {
     "uuid": "ef5edef2-6e13-4c75-83e6-e4d82f6dfe6a",
     "identifiant": "E-ENTREE-001",
     "nature": "cas d'erreur",
     "libelle": "Ni `instant_demande` ni `temperature_cible` n'est fourni",
     "document": "exemples/SPEC-THM-001-refroidissement.md"
+  },
+  {
+    "uuid": "f12f64b6-8041-4729-91ec-92cdee0b1e71",
+    "identifiant": "E-MAS-004",
+    "nature": "cas d'erreur",
+    "libelle": "`target_batch_mass` n'est pas un multiple de `balance_step`",
+    "document": "exemples/SPEC-MAS-001-batch-mass-balance.md"
   },
   {
     "uuid": "f25aa050-8a85-4e55-b202-b31cb0a683b8",
@@ -1253,11 +1036,11 @@
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
   },
   {
-    "uuid": "f513ee13-2211-4f3c-8bd4-79f3bcc86369",
-    "identifiant": "CT-07",
-    "nature": "cas de test",
-    "libelle": "Points de fidélité supérieurs au montant des articles",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
+    "uuid": "f265a3a3-f970-41c9-81ca-f27bb0b129cb",
+    "identifiant": "EX-03",
+    "nature": "exigence",
+    "libelle": "Le calcul est **rejouable à l'identique** : mêmes entrées, mêmes masses, indéfiniment. Aucune dépendance à l'horloge, à l'ordre de lecture ou à un aléa",
+    "document": "exemples/SPEC-MAS-001-batch-mass-balance.md"
   },
   {
     "uuid": "f54e3523-e7d6-420e-ba89-c7ac8028e666",
@@ -1307,19 +1090,5 @@
     "nature": "donnée",
     "libelle": "Distance d'un segment",
     "document": "exemples/fil-rouge/3-DONNEES.md"
-  },
-  {
-    "uuid": "ff99a737-8a9d-4e04-9e4e-85c6b49d6e75",
-    "identifiant": "INV-01",
-    "nature": "invariant",
-    "libelle": "`montant_a_payer_ttc ≥ 0,00`",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
-  },
-  {
-    "uuid": "ffa99612-cb13-465f-aea2-28cf0f155914",
-    "identifiant": "INV-05",
-    "nature": "invariant",
-    "libelle": "Le calcul est **déterministe** : deux exécutions sur les mêmes entrées, à la même date de commande, donnent des résultats identiques au centime",
-    "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
   }
 ]
