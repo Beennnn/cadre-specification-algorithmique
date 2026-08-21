@@ -9,9 +9,15 @@
 ## Utilisation
 
 ```bash
-python3 outils/verifier.py                                    # tout le dépôt
-python3 outils/verifier.py exemples/fil-rouge/5-SPEC-*.md      # une spécification
+python3 outils/verifier.py                                   # tout le dépôt
+python3 outils/verifier.py exemples/fil-rouge/5-SPEC-*.md     # une spécification
+python3 outils/verifier.py --tracer montant_net_ligne         # parcours d'une grandeur
 ```
+
+Le mode `--tracer` répond à « **où passe cette grandeur ?** » : dans quels documents elle
+est déclarée en entrée ou en sortie, et quelles règles l'emploient. Il repose sur la
+portée globale des noms et sur l'immutabilité ([CADRE §2.4](../CADRE.md)) — sans elles, un
+nom désignerait plusieurs choses et le parcours n'aurait pas de sens.
 
 Code de retour `1` si au moins un **échec** — utilisable tel quel en intégration continue.
 
@@ -24,9 +30,15 @@ Code de retour `1` si au moins un **échec** — utilisable tel quel en intégra
 
 ## Ce que le script ne fait pas
 
-Il vérifie ce qui est **mécanisable**. Les contrôles `C-05` à `C-13`, `C-18` et `C-22`
-demandent une lecture du pseudo-langage que le script ne fait pas, et les contrôles `H-xx`
-demandent un jugement.
+Il vérifie ce qui est **mécanisable** : `C-01` à `C-04`, `C-14` à `C-17`, `C-19` à `C-21`,
+`C-23`, `C-24`, `C-26`. Les contrôles `C-05` à `C-13`, `C-18`, `C-22` et `C-25` demandent
+une lecture du pseudo-langage que le script ne fait pas, et les contrôles `H-xx` demandent
+un jugement.
+
+`H-07` (immutabilité) est le cas le plus net : deux branches d'un même `SI` qui affectent
+le même nom sont légitimes, une réaffectation séquentielle ne l'est pas. Un modèle lit
+correctement la structure des branches ; un script non. **C'est là que la passe IA apporte
+le plus.**
 
 C'est exactement le partage décrit au [guide 5](../guides/5-VALIDER.md) : le script
 d'abord, l'IA ensuite, les humains en dernier — chacun sur ce qu'il sait faire.

@@ -32,8 +32,22 @@ pédagogique.
 | `INV-xx` | invariant |
 | `CT-xx` | cas de test |
 | `Q-xx` | question ouverte |
+| `D-xxx` | donnée du catalogue |
+| `EX-xxx` | exigence de réalisation |
+| `N-<version>` | notice de changement |
+| `C-xx` / `H-xx` | contrôle mécanique / humain |
 
 Un identifiant n'est **jamais** réutilisé, même après suppression.
+
+## Deux règles d'écriture qui ne se négocient pas
+
+1. **Les règles emploient les identifiants du contrat, à l'identique** — pas le terme
+   français équivalent. C'est ce qui rend `C-01` à `C-03` vérifiables.
+2. **Un nom valorisé ne change plus.** Toute transformation crée un nouveau nom qui la
+   porte (`remise_panier_brute` → `_retenue` → `_ligne` → `_ligne_ajustée`). Pour une
+   accumulation, on indexe : `energie_cumulee(i)`.
+
+Voir `CADRE.md` §2.3 et §2.4.
 
 ## Règle absolue sur les chiffres
 

@@ -103,7 +103,7 @@ résultat :
     montant_net_ht           : Montant(EUR, 2 décimales, ≥ 0)
     frais_livraison_ht       : Montant(EUR, 2 décimales, ≥ 0)
     tva_par_taux             : liste de (taux : Taux, assiette : Montant, montant : Montant)
-    reduction_fidélité_ttc   : Montant(EUR, 2 décimales, ≥ 0)
+    réduction_fidélité_ttc   : Montant(EUR, 2 décimales, ≥ 0)
     points_fidélité_débités  : Entier(≥ 0)
     détail_par_ligne         : liste de DétailLigne
 
@@ -144,14 +144,15 @@ Ces valeurs **ne sont pas des règles**. Elles changent sans que la logique chan
 ### RG-010 — Prix unitaire retenu
 
 ```
-Pour chaque ligne, le PRIX UNITAIRE RETENU est :
+Pour chaque ligne :
 
-  SI un prix promotionnel existe
+  SI prix_promotionnel_ht est présent
      ET que promotion_début ≤ date_commande ≤ promotion_fin
   ALORS
-     le plus petit du prix catalogue et du prix promotionnel
+     prix_unitaire_retenu = le plus petit de prix_catalogue_ht
+                            et de prix_promotionnel_ht
   SINON
-     le prix catalogue
+     prix_unitaire_retenu = prix_catalogue_ht
   FIN SI
 ```
 
@@ -181,7 +182,9 @@ La comparaison est **au sens large** : une quantité égale à `P-05` déclenche
 
 ### RG-040 — Éligibilité de la remise panier
 
-| Code promotionnel | En vigueur à la date de commande | Cumulable avec la remise de quantité | Une remise de quantité s'applique | Résultat |
+Traitement de `code_promotionnel` :
+
+| `code_promotionnel` | En vigueur à la date de commande | Cumulable avec la remise de quantité | Une remise de quantité s'applique | Résultat |
 |---|---|---|---|---|
 | absent | — | — | — | pas de remise panier |
 | inconnu | — | — | — | erreur `E-PROMO-001` |
@@ -220,11 +223,10 @@ SOIT total_remises_demandées = SOMME DES remise_quantité_ligne
 SOIT plafond = ARRONDIR(montant_brut_ht × P-07, 2, P-09)
 
 SI total_remises_demandées > plafond ALORS
-   la remise panier est réduite de l'excédent :
-   remise_panier_retenue = remise_panier_brute − (total_remises_demandées − plafond)
-   SI remise_panier_retenue < 0,00 ALORS remise_panier_retenue = 0,00 FIN SI
+   remise_panier_écrêtée  = remise_panier_brute − (total_remises_demandées − plafond)
+   remise_panier_retenue  = le plus grand de remise_panier_écrêtée et de 0,00
 SINON
-   remise_panier_retenue = remise_panier_brute
+   remise_panier_retenue  = remise_panier_brute
 FIN SI
 ```
 
@@ -246,10 +248,13 @@ Pour chaque ligne :
 
 SOIT écart = remise_panier_retenue − SOMME DES remise_panier_ligne
 
+remise_panier_ligne_ajustée = remise_panier_ligne, sauf pour une ligne :
+
 SI écart ≠ 0,00 ALORS
-   l'écart est imputé en totalité à la ligne dont le montant après remise de quantité
-   est le plus élevé ; en cas d'égalité, à celle dont la référence produit est
-   alphabétiquement la plus petite.
+   l'écart est ajouté en totalité à la remise_panier_ligne de la ligne dont le montant
+   après remise de quantité est le plus élevé ; en cas d'égalité, à celle dont
+   `référence_produit` est alphabétiquement la plus petite. Le résultat est
+   remise_panier_ligne_ajustée pour cette ligne.
 FIN SI
 ```
 
@@ -263,9 +268,27 @@ FIN SI
 
 ```
 Pour chaque ligne :
-   montant_net_ligne = montant_brut_ligne − remise_quantité_ligne − remise_panier_ligne
+   montant_net_ligne = montant_brut_ligne − remise_quantité_ligne
+                     − remise_panier_ligne_ajustée
 SOIT montant_net_ht = SOMME DES montant_net_ligne DES lignes
 ```
+
+### RG-095 — Détail restitué et agrégats
+
+```
+détail_par_ligne = pour chaque ligne, prise dans l'ordre croissant de
+                   référence_produit :
+    ( référence_produit, prix_unitaire_retenu, montant_brut_ligne,
+      remise_quantité_ligne, remise_panier_ligne_ajustée, montant_net_ligne )
+
+SOIT remise_quantité_ht = SOMME DES remise_quantité_ligne DES lignes
+SOIT remise_panier_ht   = SOMME DES remise_panier_ligne_ajustée DES lignes
+SOIT total_remises_ht   = remise_quantité_ht + remise_panier_ht
+```
+
+> **L'ordre de restitution est une règle, pas un détail d'affichage.** Sans lui, deux
+> implémentations produisent le même total et deux factures différentes — et l'écart ne
+> se voit qu'à l'audit.
 
 ### RG-100 — Frais de livraison
 
@@ -286,9 +309,10 @@ inférieure (`1,000 kg` est facturé au tarif « ≤ 1 kg »).
 ### RG-110 — TVA
 
 ```
-POUR CHAQUE taux DISTINCT présent dans les lignes
-   assiette = SOMME DES montant_net_ligne DES lignes de ce taux
-   tva      = ARRONDIR(assiette × taux, 2, P-09)
+POUR CHAQUE valeur distincte de taux_tva présente dans les lignes
+   assiette = SOMME DES montant_net_ligne DES lignes portant ce taux_tva
+   tva      = ARRONDIR(assiette × taux_tva, 2, P-09)
+   tva_par_taux reçoit ( taux_tva, assiette, tva )
 FIN POUR
 
 SI frais_livraison_ht > 0,00 ALORS
@@ -317,7 +341,8 @@ réduction_fidélité_ttc = le plus petit de réduction_demandée et montant_art
 points_fidélité_débités = réduction_fidélité_ttc ÷ P-08          (nombre entier)
 ```
 
-Les points s'imputent sur le **montant TTC des articles uniquement**, jamais sur les
+Les points sont débités du compte de `client_identifiant`. Ils s'imputent sur le
+**montant TTC des articles uniquement**, jamais sur les
 frais de livraison — voir `Q-03`. Les points non utilisés du fait du plafonnement **ne
 sont pas débités** et restent acquis au client.
 
@@ -578,6 +603,7 @@ Un article à `10,00` HT, quantité **3**, TVA 20 %, poids `0,300 kg`.
 | `RG-060` | CT-05 |
 | `RG-085` | CT-03, CT-04 |
 | `RG-090` | tous |
+| `RG-095` | CT-03, CT-04 |
 | `RG-100` | CT-01, CT-02, CT-03 |
 | `RG-110` | CT-03 (deux taux), CT-01 |
 | `RG-120` | tous |
@@ -587,7 +613,9 @@ Un article à `10,00` HT, quantité **3**, TVA 20 %, poids `0,300 kg`.
 > Une case vide dans cette table est un défaut visible. `RG-045` n'a pas de cas de
 > test : c'est un manque, et il est nommé plutôt que caché.
 
-## 11. Fiche de contraintes
+## 11. Contraintes et exigences
+
+### 11.1 Contraintes métier
 
 | Dimension | Contrainte métier |
 |---|---|
@@ -608,6 +636,17 @@ Un article à `10,00` HT, quantité **3**, TVA 20 %, poids `0,300 kg`.
 | **Qui modifie** | Le marketing doit pouvoir changer un seuil ou un barème **sans livraison logicielle**, avec une validation N+1 et une date d'effet future. Aucune modification de règle sans passer par ce document |
 | **Durée de vie** | Ce calcul est au cœur du système de vente : durée de vie attendue supérieure à 10 ans |
 
+### 11.2 Exigences de réalisation
+
+| Id | Exigence | Source | Propriétaire | Vérification |
+|---|---|---|---|---|
+| `EX-01` | **Aucune donnée de paiement** n'entre dans le périmètre de ce calcul. Seul un identifiant client pseudonymisé y circule | Politique de sécurité `SEC-PCI-1` | Sécurité SI | Revue de conception + analyse des flux, annuelle |
+| `EX-02` | Les données du calcul sont **classées P1 (interne)** et n'ont pas à être chiffrées au repos ; le lien entre l'identifiant pseudonymisé et le client est classé **P3** et réside dans un périmètre séparé | Classification `SEC-CLASS-3` | Sécurité SI | Revue d'architecture |
+| `EX-03` | Le traitement et le stockage se font **dans l'Union européenne** | Politique de protection des données `POL-DCP-1` | Protection des données | Revue d'hébergement, annuelle |
+| `EX-04` | Le langage retenu appartient à la **liste technique approuvée** et dispose d'un type décimal exact natif ou d'une bibliothèque décimale éprouvée | Comité d'architecture ; contrainte d'exactitude §11.1 | Architecture SI | Revue d'architecture |
+| `EX-05` | Le code respecte le **standard de codage interne** `STD-DEV-2`, avec analyse statique bloquante | Comité d'architecture | Architecture SI | Intégration continue |
+| `EX-06` | La **couverture de branches** des règles de calcul atteint au moins 95 % | `STD-DEV-2` §4 | Architecture SI | Rapport de couverture, bloquant |
+
 ## 12. Questions ouvertes
 
 | Id | Question | Décideur | Échéance | Statut |
@@ -618,13 +657,50 @@ Un article à `10,00` HT, quantité **3**, TVA 20 %, poids `0,300 kg`.
 | `Q-04` | Aucun cas de test ne couvre `RG-045` (non-cumul). Quel code promotionnel non cumulable prendre comme référence ? | Auteur métier | 2026-09-15 | Ouverte |
 | `Q-05` | *Tranchée le 2026-05-12 :* la TVA est-elle calculée par taux agrégé ou ligne à ligne ? → **par taux agrégé**, cf. `RG-110`. | Conformité | — | Fermée |
 
-## 13. Historique
+## 13. Historique et notices de changement
 
-| Version | Date | Changement | Impact sur les résultats |
-|---|---|---|---|
-| 1.0.0 | 2025-11-20 | Version initiale | — |
-| 1.1.0 | 2026-01-08 | Ajout de `RG-045` (non-cumul) et de la table de décision `RG-040` | Aucun sur les cas existants |
-| **2.0.0** | 2026-05-12 | `RG-110` : TVA par taux agrégé au lieu de ligne à ligne (`Q-05`) | **Oui** — écarts d'un centime sur les paniers à plusieurs lignes de même taux. Rejeu non nécessaire : applicable aux commandes postérieures au 2026-06-01 |
+| Version | Date | Changement | Impact sur les résultats | Notice |
+|---|---|---|---|---|
+| 1.0.0 | 2025-11-20 | Version initiale | — | — |
+| 1.1.0 | 2026-01-08 | Ajout de `RG-045` (non-cumul) et de la table de décision `RG-040` | Aucun sur les cas existants | — |
+| **2.0.0** | 2026-05-12 | `RG-110` : TVA par taux agrégé au lieu de ligne à ligne (`Q-05`) | **Oui** — écarts d'un centime | `N-2.0.0` |
+
+### N-2.0.0 — La TVA se calcule par taux agrégé
+
+**Raison.** Le calcul ligne à ligne puis sommé produisait, sur les paniers comportant
+plusieurs lignes de même taux, un total de TVA différent d'un centime de celui obtenu par
+agrégation. La règle comptable applicable impose l'agrégation par taux. L'écart était
+invisible au client et visible en rapprochement comptable. Décision `Q-05`, tranchée le
+2026-05-12 par la Conformité.
+
+**Fonctions impactées**
+
+| Fonction | Nature de l'impact |
+|---|---|
+| `FN-021` calculer le montant à payer | **comportement** — le total TTC peut varier d'un centime |
+| `FN-034` éditer la facture | **comportement** — la ventilation de TVA imprimée change |
+| `FN-041` rapprochement comptable | **aucun** — réexaminée : elle consommait déjà la ventilation agrégée, l'écart qu'elle signalait disparaît |
+
+**Impacts sur les contrats**
+
+| Fonction | Élément | Nature | Détail | Compatibilité |
+|---|---|---|---|---|
+| `FN-021` | `tva_par_taux` | **modification** | le contenu change de sémantique : une entrée par taux distinct, agrégée, au lieu d'une entrée par ligne. Type et unité inchangés | **rupture silencieuse** |
+| `FN-021` | `détail_par_ligne` | *(inchangé)* | la TVA n'y figurait pas | — |
+
+> **La rupture est silencieuse, et c'est ce qui la rend dangereuse.** Le type de
+> `tva_par_taux` ne change pas ; un consommateur qui sommait naïvement ses éléments
+> obtenait le bon total avant comme après, mais un consommateur qui comptait le nombre
+> d'éléments pour retrouver les lignes du panier obtenait désormais un résultat faux, sans
+> aucune erreur d'exécution. Les deux consommateurs ont été identifiés et prévenus.
+
+**Conséquences**
+
+| | |
+|---|---|
+| **Rejeu** | non — applicable aux seules commandes postérieures à la date d'effet |
+| **Date d'effet** | 2026-06-01 |
+| **Consommateurs à prévenir** | `FN-034` (facturation), `FN-041` (rapprochement), export comptable quotidien |
 
 ---
 

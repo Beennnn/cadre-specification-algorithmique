@@ -134,3 +134,17 @@ répondre.
 Utilisée comme brouillon à corriger, elle fait gagner du temps. Utilisée comme source de
 vérité, elle **grave les bogues existants dans le marbre** en leur donnant l'autorité d'une
 spécification.
+
+Et dans tous les cas, le principe reste le même : **une personne nommée assume ce qu'elle
+a fait produire à l'IA**, et en répond comme si elle l'avait écrit — voir « L'humain aux
+commandes » au [guide 5](guides/5-VALIDER.md).
+
+### « L'IA relit les specs : peut-elle aussi les valider ? »
+
+Non, et la distinction n'est pas cosmétique. Valider est un **acte engageant** : il est
+daté, nominatif, et quelqu'un en répond des années plus tard devant un auditeur. Une IA
+n'a pas de mandat, ne rend de comptes à personne, et ne sera pas là.
+
+Elle **pré-instruit** : elle produit des constats localisés qu'un humain vérifie et
+retient ou écarte. C'est utile, mesurable, et ça libère le temps humain pour ce que seule
+une lecture humaine peut faire. Ce n'est pas une signature.

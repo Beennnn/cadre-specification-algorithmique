@@ -130,12 +130,44 @@ embarque :
 | les **versions** | spécification, glossaire, jeu de paramètres — voir [guide 7](7-VERSIONNER.md) |
 | la **date qui fait foi** | celle retenue ci-dessus |
 
+## Suivre le parcours d'une grandeur
+
+C'est ce que le nommage global et l'immutabilité ([CADRE §2.4](../CADRE.md)) rendent
+possible : **une grandeur porte le même nom partout où elle passe**, et ce nom ne désigne
+jamais qu'une seule valeur.
+
+```bash
+python3 outils/verifier.py --tracer montant_net_ligne
+```
+```
+Parcours de « montant_net_ligne »
+  exemples/SPEC-PRX-001-montant-a-payer.md    employée par RG-090, RG-095, RG-110
+```
+
+L'outil dit, pour chaque document : si la grandeur y est **déclarée** en entrée ou en
+sortie, et **quelles règles** l'emploient. Bout à bout, on obtient son parcours : quelle
+fonction la produit, lesquelles la consomment, et à quel endroit précis.
+
+**Ce que ça sert à faire, concrètement :**
+
+| Question | Ce qu'on lance |
+|---|---|
+| Si je change l'unité de cette grandeur, qui casse ? | `--tracer` puis le [tableau d'impact](#le-tableau-dimpact) |
+| Cette sortie est-elle consommée par quelqu'un ? | `--tracer` : aucune occurrence ailleurs = sortie morte |
+| Où cette valeur est-elle transformée ? | la **chaîne des noms** : `remise_panier_brute` → `_retenue` → `_ligne` → `_ligne_ajustée` |
+| Deux fonctions parlent-elles de la même chose ? | si elles emploient deux noms pour une même grandeur, la portée globale est violée |
+
+> **Le quatrième cas est le plus utile.** Deux équipes qui nomment différemment la même
+> grandeur ne s'en aperçoivent jamais en relisant leurs documents séparément — elles s'en
+> aperçoivent le jour où les chiffres ne se recoupent pas. Le parcours le montre en une
+> commande.
+
 ## Les outils
 
 | Outil | Ce qu'il fait |
 |---|---|
 | [`templates/MODELE-FICHE-DONNEE.md`](../templates/MODELE-FICHE-DONNEE.md) | le squelette d'une fiche `D-xxx` |
-| [`outils/verifier.py`](../outils/) | contrôle `C-01` à `C-07` : entrées et sorties orphelines, paramètres non déclarés ou inutilisés, unités manquantes |
+| [`outils/verifier.py`](../outils/) | contrôles `C-01` à `C-04` : entrées et sorties orphelines, paramètres non déclarés ou inutilisés. Et `--tracer <nom>` : le parcours d'une grandeur |
 | [`outils/REGLES-DE-CONTROLE.md`](../outils/REGLES-DE-CONTROLE.md) | les règles écrites une fois, exécutables par un script **ou** par une IA relectrice |
 
 ## Anti-patterns

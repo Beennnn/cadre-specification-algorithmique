@@ -163,16 +163,16 @@ linéaire.
 ```
 SOIT d = distance × 1000                                                 (m)
 
-    E_mecanique = F_totale × d                                           (J)
+    energie_mecanique = F_totale × d                                           (J)
 ```
 
 ### RG-030 — Traction et récupération
 
 ```
-SI E_mecanique > 0 ALORS
-    E_traction = E_mecanique ÷ rendement_traction                        (J, positif)
+SI energie_mecanique > 0 ALORS
+    energie_traction = energie_mecanique ÷ rendement_traction                        (J, positif)
 SINON
-    E_traction = E_mecanique × rendement_recuperation                    (J, négatif)
+    energie_traction = energie_mecanique × rendement_recuperation                    (J, négatif)
 FIN SI
 ```
 
@@ -187,7 +187,7 @@ FIN SI
 ```
 SOIT duree = d ÷ v                                                       (s)
 
-    E_auxiliaires = puissance_auxiliaires × duree                        (J)
+    energie_auxiliaires = puissance_auxiliaires × duree                        (J)
 ```
 
 Les auxiliaires consomment **par unité de temps**, pas par unité de distance. Rouler plus
@@ -197,7 +197,7 @@ contre-intuitive.
 ### RG-050 — Énergie d'un segment
 
 ```
-    E_segment = ( E_traction + E_auxiliaires ) ÷ 3 600 000               (kWh)
+    energie_segment = ( energie_traction + energie_auxiliaires ) ÷ 3 600 000               (kWh)
 ```
 
 **Aucun arrondi n'est appliqué ici**, ni à aucune étape intermédiaire. Les arrondis
@@ -240,9 +240,13 @@ facteur le plus défavorable du barème** — voir §11, mode dégradé.
 ### RG-080 — Profil cumulé
 
 ```
-POUR CHAQUE segment, dans l'ordre du trajet :
-    energie_cumulee = energie_cumulee du segment précédent + E_segment
-FIN POUR
+index = rang du segment dans le trajet, à partir de 1
+
+    energie_cumulee(0) = 0
+    energie_cumulee(i) = energie_cumulee(i − 1) + energie_segment(i)
+
+L'accumulation est indexée, jamais écrasée : energie_cumulee(i) désigne une
+valeur et une seule, pour toujours.
 ```
 
 L'énergie cumulée **n'est pas monotone** : un segment de descente prononcée la fait
@@ -256,10 +260,10 @@ Le POINT D'AUTONOMIE est la distance, depuis le départ, du PREMIER point
 où l'énergie cumulée atteint le budget utilisable.
 
 On parcourt les segments dans l'ordre. Pour le premier segment tel que
-    energie_cumulee_avant + E_segment ≥ budget_utilisable
-   ET E_segment > 0 :
+    energie_cumulee_avant + energie_segment ≥ budget_utilisable
+   ET energie_segment > 0 :
 
-    SOIT fraction = ( budget_utilisable − energie_cumulee_avant ) ÷ E_segment
+    SOIT fraction = ( budget_utilisable − energie_cumulee_avant ) ÷ energie_segment
     point_autonomie = distance cumulée avant ce segment + fraction × distance du segment
     autonomie_atteinte = vrai
 
@@ -275,7 +279,7 @@ Deux points que la formulation tranche explicitement :
 - **« le premier »**, et non « celui où l'on finit en dessous ». Une descente ultérieure
   peut ramener l'énergie cumulée sous le budget ; **elle ne rend pas l'autonomie déjà
   consommée**. Le conducteur est passé sur sa réserve, le fait est acquis.
-- **`ET E_segment > 0`** : sur un segment de récupération, l'énergie cumulée diminue ; il
+- **`ET energie_segment > 0`** : sur un segment de récupération, l'énergie cumulée diminue ; il
   ne peut pas contenir le point de franchissement, et l'interpolation y serait absurde.
 
 L'interpolation est **affine à l'intérieur du segment**, ce qui est cohérent avec
@@ -305,9 +309,9 @@ consomme uniformément avec la distance.
 
 | Id | Propriété |
 |---|---|
-| `INV-01` | Sur un segment de pente positive ou nulle, `E_segment > 0` |
+| `INV-01` | Sur un segment de pente positive ou nulle, `energie_segment > 0` |
 | `INV-02` | **Additivité** : découper un segment en deux moitiés de mêmes vitesse et pente donne exactement la même énergie que le segment entier |
-| `INV-03` | **Homogénéité** : à vitesse et pente égales, doubler la distance double `E_traction` et `E_auxiliaires` |
+| `INV-03` | **Homogénéité** : à vitesse et pente égales, doubler la distance double `energie_traction` et `energie_auxiliaires` |
 | `INV-04` | **Symétrie de la pente** : un aller-retour sur un même segment consomme strictement plus que deux fois le même segment à plat — la récupération ne compense jamais la montée |
 | `INV-05` | **Monotonie vis-à-vis de la vitesse, au-delà de la vitesse de consommation minimale** : voir la note ci-dessous |
 | `INV-06` | `point_autonomie`, s'il existe, est compris entre 0 et la longueur totale du trajet |
@@ -404,15 +408,15 @@ suffit à les refaire.
 | `F_roul` | `0,0100 × 1800 × 9,81 × cos(0)` | 176,58 N |
 | `F_pente` | `1800 × 9,81 × sin(0)` | 0,00 N |
 | `F_totale` | | **542,57 N** |
-| `E_mecanique` | `542,57 × 100 000` | 54,2568 MJ |
-| `E_traction` | `54,2568 ÷ 0,900` | 60,2853 MJ → **16,7459 kWh** |
+| `energie_mecanique` | `542,57 × 100 000` | 54,2568 MJ |
+| `energie_traction` | `54,2568 ÷ 0,900` | 60,2853 MJ → **16,7459 kWh** |
 | `duree` | `100 000 ÷ 30,5556` | 3 272,7 s |
-| `E_auxiliaires` | `500,0 × 3 272,7` | 1,6364 MJ → **0,4545 kWh** |
-| **`E_segment`** | | **17,2005 kWh** |
+| `energie_auxiliaires` | `500,0 × 3 272,7` | 1,6364 MJ → **0,4545 kWh** |
+| **`energie_segment`** | | **17,2005 kWh** |
 
 **Les quatre segments :**
 
-| # | `F_aero` | `F_roul` | `F_pente` | `F_totale` | `E_traction` | `E_aux` | **`E_segment`** | `E_cumulée` |
+| # | `F_aero` | `F_roul` | `F_pente` | `F_totale` | `energie_traction` | `energie_auxiliaires` | **`energie_segment`** | `energie_cumulee` |
 |---|---|---|---|---|---|---|---|---|
 | 1 | 365,99 | 176,58 | 0,00 | 542,57 | 16,7459 | 0,4545 | **17,2005** | 17,2005 |
 | 2 | 245,00 | 176,50 | +529,50 | 951,00 | 2,9352 | 0,0556 | **2,9907** | 20,1912 |
@@ -422,7 +426,7 @@ suffit à les refaire.
 - **`energie_totale` = 20,5060 kWh**
 - **`consommation_moyenne` = 16,405 kWh/100 km**
 
-> Notez la colonne `E_cumulée` : elle **décroît** entre les segments 2 et 3. C'est
+> Notez la colonne `energie_cumulee` : elle **décroît** entre les segments 2 et 3. C'est
 > `RG-080` en action, et c'est ce qui interdit toute recherche dichotomique.
 
 ### CT-02 — La récupération
@@ -434,10 +438,10 @@ Segment 3 isolé — 10,000 km à 90,0 km/h, pente −3,00 % :
 | `alpha` | `arctan(−0,03)` | −0,029991 rad |
 | `F_pente` | `1800 × 9,81 × sin(−0,029991)` | −529,50 N |
 | `F_totale` | `245,00 + 176,50 − 529,50` | **−108,00 N** |
-| `E_mecanique` | `−108,00 × 10 000` | −1,0800 MJ |
-| `E_traction` | `E_mecanique ≤ 0` → **on multiplie** : `−1,0800 × 0,600` | −0,6480 MJ → **−0,1800 kWh** |
-| `E_auxiliaires` | `500,0 × 400,0` | **+0,0556 kWh** |
-| **`E_segment`** | | **−0,1244 kWh** |
+| `energie_mecanique` | `−108,00 × 10 000` | −1,0800 MJ |
+| `energie_traction` | `energie_mecanique ≤ 0` → **on multiplie** : `−1,0800 × 0,600` | −0,6480 MJ → **−0,1800 kWh** |
+| `energie_auxiliaires` | `500,0 × 400,0` | **+0,0556 kWh** |
+| **`energie_segment`** | | **−0,1244 kWh** |
 
 > **Le détecteur d'erreur.** Une implémentation qui diviserait par le rendement dans les
 > deux branches donnerait ici `−1,0800 ÷ 0,600 = −1,8000 MJ`, soit **−0,5000 kWh** : le
@@ -535,7 +539,9 @@ kWh`, `budget_utilisable = 11,8000 kWh`, `point_autonomie = 68,602 km`.
 | `RG-050` | tous | | `INV-02` à `INV-05` | tests de propriété + CT-06 |
 | `RG-060` | CT-03, CT-04, CT-07 | | `E-VEHIC-001`, `E-RESERVE-001` | *non couverts — `Q-04`* |
 
-## 11. Fiche de contraintes
+## 11. Contraintes et exigences
+
+### 11.1 Contraintes métier
 
 Deux usages, **une seule spécification** — et deux implémentations qui doivent coïncider
 au milliardième.
@@ -559,6 +565,30 @@ au milliardième.
 | **Qui modifie** | La R&D doit pouvoir réviser le barème de température **sans remise à jour du calculateur** — barème téléchargé, versionné, daté | identique |
 | **Durée de vie** | **15 ans** — la durée de vie d'un véhicule | 10 ans |
 
+### 11.2 Exigences de réalisation
+
+Reçues de la Direction sûreté, de l'Architecture véhicule et de la Protection des
+données. Le métier ne les a pas écrites : il les intègre, parce que c'est ce document que
+le développement lira.
+
+| Id | Exigence | Source | Propriétaire | Vérification |
+|---|---|---|---|---|
+| `EX-01` | Le logiciel du calculateur est écrit dans le sous-ensemble **MISRA C:2012**, catégories obligatoires et requises | Politique de sûreté logicielle `DIR-SUR-004` | Direction Sûreté | Analyse statique **bloquante** en intégration continue |
+| `EX-02` | **Aucune allocation dynamique de mémoire** après la phase d'initialisation | `DIR-SUR-004` §4.2 | Direction Sûreté | Analyse statique + revue de conception |
+| `EX-03` | Le temps d'exécution **pire cas** est borné, mesuré sur cible, et documenté | `DIR-SUR-004` §6 | Direction Sûreté | Mesure sur banc, à chaque livraison |
+| `EX-04` | La fonction s'exécute dans la **partition non critique** du calculateur ; elle ne peut ni lire ni écrire dans la partition de commande | Architecture de sûreté `ARC-VEH-11` | Architecture véhicule | Revue d'architecture + test de cloisonnement |
+| `EX-05` | La fonction dispose d'au plus **512 Ko de mémoire vive** et ne suppose aucun ramasse-miettes | `ARC-VEH-11` §3 | Architecture véhicule | Mesure d'empreinte à chaque livraison |
+| `EX-06` | Le **trajet est une donnée personnelle de catégorie C2** : il ne quitte pas le véhicule sans consentement explicite, et n'est jamais journalisé sous forme non agrégée | Politique de protection des données `POL-DCP-2` | Protection des données | Revue de conformité annuelle + revue de code sur les points de journalisation |
+| `EX-07` | Les données de la partition non critique et celles de la partition de commande sont **stockées séparément**, sans canal de communication autre que l'interface déclarée | `ARC-VEH-11` §5 | Architecture véhicule | Test de cloisonnement |
+| `EX-08` | Le service serveur emploie un langage de la **liste technique approuvée** `LTA-2026` | Comité d'architecture | Architecture SI | Revue d'architecture avant mise en service |
+| `EX-09` | La **couverture des tests** du code embarqué atteint 100 % des branches sur les fonctions de calcul | `DIR-SUR-004` §7 | Direction Sûreté | Rapport de couverture, bloquant |
+
+> **Un conflit à arbitrer.** `EX-08` renvoie à une liste approuvée qui contient
+> majoritairement des environnements à ramasse-miettes, tandis que la contrainte métier de
+> latence côté serveur (300 ms au 95ᵉ centile) reste tenable — mais la contrainte de
+> **reproductibilité au milliardième** entre les deux implémentations, elle, exige un
+> comportement numérique identique à celui du C embarqué. Le point est ouvert en `Q-06`.
+
 ## 12. Questions ouvertes
 
 | Id | Question | Décideur | Échéance | Statut |
@@ -567,15 +597,51 @@ au milliardième.
 | `Q-02` | La masse volumique de l'air (`P-02`) est fixe. Faut-il la corriger de l'altitude, connue du trajet ? Gain estimé : 3 à 4 % en montagne | R&D Énergie | 2026-09-30 | Ouverte |
 | `Q-03` | `H-2` suppose l'absence de vent. Les prévisions météorologiques sont disponibles côté serveur, pas à bord. Introduire le vent créerait **deux résultats différents** pour les deux usages — ce que le §8.2 interdit aujourd'hui | Direction R&D | 2026-12-31 | Ouverte |
 | `Q-04` | `E-VEHIC-001` et `E-RESERVE-001` ne sont couverts par aucun cas de test | Auteur métier | 2026-05-31 | Ouverte |
+| `Q-06` | `EX-08` impose une liste technique approuvée côté serveur, alors que `EX-01` impose du C MISRA à bord. La reproductibilité de 10⁻⁹ entre les deux implémentations (§8.2) est-elle tenable avec tous les langages de la liste, ou faut-il restreindre celle-ci pour cette fonction ? | Architecture SI **et** Direction Sûreté | 2026-07-31 | Ouverte |
 | `Q-05` | *Tranchée le 2026-03-12 :* le point d'autonomie s'arrondit-il au plus proche ou vers le bas ? → **vers le bas**, sans exception (`RG-100`) | Expérience client | — | Fermée |
 
-## 13. Historique
+## 13. Historique et notices de changement
 
-| Version | Date | Changement | Impact sur les résultats |
-|---|---|---|---|
-| 1.0.0 | 2026-02-24 | Version initiale | — |
-| **2.0.0** | 2026-03-12 | `RG-100` : arrondi du point d'autonomie vers le bas (`Q-05`) | **Oui** — jusqu'à 1 m, toujours dans le sens prudent |
-| 2.0.1 | 2026-03-20 | Reprise de `RG-050` et `RG-090` : le terme *consommation moyenne* est remplacé par une formulation explicite de l'assiette, à la suite du retrait du terme au glossaire (v2.0.0) | Aucun — clarification de rédaction |
+| Version | Date | Changement | Impact sur les résultats | Notice |
+|---|---|---|---|---|
+| 1.0.0 | 2026-02-24 | Version initiale | — | — |
+| **2.0.0** | 2026-03-12 | `RG-100` : arrondi du point d'autonomie vers le bas (`Q-05`) | **Oui** — jusqu'à 1 m, toujours dans le sens prudent | `N-2.0.0` |
+| 2.0.1 | 2026-03-20 | Reprise de `RG-050` et `RG-090` : le terme *consommation moyenne* est remplacé par une formulation explicite de l'assiette, à la suite du retrait du terme au glossaire (v2.0.0) | Aucun — clarification de rédaction | — |
+
+### N-2.0.0 — L'arrondi du point d'autonomie passe vers le bas
+
+**Raison.** Trois conducteurs immobilisés en six mois, tous à moins de 500 m d'une borne
+atteignable selon l'affichage. L'analyse a montré que l'arrondi au plus proche produisait
+une estimation **optimiste** dans la moitié des cas. Un arrondi de quelques mètres est sans
+conséquence sur un tableur ; il en a une sur une voie rapide. Décision `Q-05`, tranchée le
+2026-03-12 par l'Expérience client.
+
+**Fonctions impactées**
+
+| Fonction | Nature de l'impact |
+|---|---|
+| `FN-001` | **comportement** — `point_autonomie` peut diminuer de 1 m au plus |
+| `FN-011` | **comportement** — l'autonomie affichée hérite du sens de l'arrondi |
+| `FN-004` | **aucun** — réexaminée : le plan de recharge s'appuie sur le budget énergétique, pas sur la distance arrondie |
+| `FN-007` | **aucun** — réexaminée : le seuil d'alerte porte sur l'énergie |
+
+**Impacts sur les contrats**
+
+| Fonction | Élément | Nature | Détail | Compatibilité |
+|---|---|---|---|---|
+| `FN-001` | `point_autonomie` | **modification** | le sens de l'arrondi passe de « au plus proche » à « vers le bas » ; type, unité et précision inchangés | compatible |
+
+Aucun ajout, aucune suppression. Le contrat est **inchangé dans sa forme** — seule la
+sémantique de la valeur se resserre, dans le sens prudent. C'est le cas favorable :
+les appelants n'ont rien à faire.
+
+**Conséquences**
+
+| | |
+|---|---|
+| **Rejeu** | non nécessaire — l'écart est borné à 1 m et va toujours dans le sens de la sécurité |
+| **Date d'effet** | 2026-04-01, avec la version 2026.2 du référentiel de méthodes |
+| **Consommateurs à prévenir** | équipes `FN-011` (affichage) et documentation conducteur |
 
 ---
 

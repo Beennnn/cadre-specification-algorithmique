@@ -192,6 +192,37 @@ formellement une fonction et d'employer cette méthode pour les quarante autres.
 
 ---
 
+## L'humain aux commandes
+
+> **Groupe d'experts de haut niveau de la Commission européenne, *Ethics Guidelines for
+> Trustworthy AI*, 2019.** Distingue trois modes de supervision — l'humain *dans* la
+> boucle, *sur* la boucle, et **aux commandes** — et place le troisième au-dessus : ce qui
+> compte n'est pas la position dans la chaîne d'exécution, c'est la capacité de décider si,
+> quand et comment le système est employé, et d'en répondre.
+
+> **Règlement européen sur l'intelligence artificielle (2024), article 14 — surveillance
+> humaine.** En tire les conséquences pratiques : comprendre les capacités et les limites
+> de l'outil, être conscient du biais d'automatisation, savoir interpréter la sortie, et
+> pouvoir décider de ne pas l'employer.
+
+> **Madeleine Clare Elish, « Moral Crumple Zones », 2019.** Décrit le dispositif où un
+> humain nominalement responsable absorbe le blâme d'un système qu'il n'était pas en mesure
+> de contrôler. C'est l'échec type d'une validation de façade.
+
+> **Raja Parasuraman et Victor Riley, « Humans and Automation: Use, Misuse, Disuse,
+> Abuse », 1997.** Le biais d'automatisation : on accorde spontanément plus de crédit à une
+> sortie automatisée qu'à sa propre lecture.
+
+**Ce qu'on emprunte** : tout le principe de la section « L'humain aux commandes » du
+[guide 5](guides/5-VALIDER.md), et surtout ses **trois conditions** — vérifiabilité,
+moyens, droit de dire non — sans lesquelles désigner un valideur ne crée pas de
+responsabilité mais un fusible.
+
+**Ce qu'on écarte** : les dispositifs de conformité formelle. Ce cadre n'est pas un
+système à haut risque au sens du règlement ; on en retient le principe, pas la procédure.
+
+---
+
 ## Ce que cette méthode ajoute
 
 Peu de choses, et elles sont assumées :

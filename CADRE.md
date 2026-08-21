@@ -14,7 +14,7 @@
   - [1.4 La frontière métier / technique](#14-la-frontière-métier--technique)
   - [1.5 Les faux amis](#15-les-faux-amis)
 - [2. Le pseudo-langage](#2-le-pseudo-langage)
-  - [2.8 Adapter le cadre au calcul scientifique](#28-adapter-le-cadre-au-calcul-scientifique)
+  - [2.9 Adapter le cadre au calcul scientifique](#29-adapter-le-cadre-au-calcul-scientifique)
 - [3. L'anatomie d'une spécification](#3-lanatomie-dune-spécification)
 - [4. La fiche de contraintes : ce qui permet de choisir le langage et l'architecture](#4-la-fiche-de-contraintes--ce-qui-permet-de-choisir-le-langage-et-larchitecture)
 - [5. Le jeu d'essai : l'oracle](#5-le-jeu-dessai--loracle)
@@ -35,8 +35,8 @@ markdown, dans le dépôt Git, écrit dans un pseudo-langage contraint.
 **Ce que la spécification contient obligatoirement.**
 
 1. Le **vocabulaire** du domaine (glossaire), utilisé partout de la même façon.
-2. Les **entrées et sorties typées**, avec unité, devise, fuseau, précision, domaine
-   de validité.
+2. Le **contrat** : les entrées exigées et les sorties garanties, typées avec unité,
+   devise, fuseau, précision et domaine de validité (§3.1).
 3. Les **règles** numérotées (`RG-010`, `RG-020`…), chacune écrite en pseudo-langage,
    chacune traçable jusqu'au code et jusqu'aux tests.
 4. Les **paramètres** (seuils, taux, barèmes) séparés des règles, avec leur
@@ -263,11 +263,87 @@ On ne se sert **jamais** de types techniques (`int32`, `float`, `varchar(50)`,
 `timestamp`) : ce sont des décisions du développeur, et elles découlent du domaine
 qu'on vient de décrire — pas l'inverse.
 
+**Les règles emploient les identifiants du contrat, écrits à l'identique.** Si le contrat
+déclare `prix_catalogue_ht`, la règle écrit `prix_catalogue_ht` — pas « le prix
+catalogue ». La prose autour peut employer le terme du glossaire ; le pseudo-code, lui,
+emploie l'identifiant. Deux raisons :
+
+- le lien entre contrat et règle devient **vérifiable mécaniquement** (`C-01` à `C-03`) ;
+- une entrée que plus aucune règle ne nomme devient **visible**, au lieu de survivre
+  indéfiniment dans un contrat que personne ne relit.
+
+Quand un champ est imbriqué et que son nom se répète d'une structure à l'autre — `masse`
+dans deux objets différents —, on écrit le **chemin complet** : `boisson.masse`,
+`ajout.masse`.
+
 Pour les montants, on précise en plus, une fois pour toutes, dans la spécification :
 la devise, le nombre de décimales, le mode d'arrondi par défaut, et l'étape à laquelle
 l'arrondi intervient.
 
-### 2.4 Décrire un résultat, pas un parcours
+### 2.4 Nommer : portée globale et immutabilité
+
+Deux règles seulement, et elles font ensemble beaucoup plus que séparément.
+
+#### La portée d'un nom est le périmètre, pas la fonction
+
+> Dans un périmètre donné, **un nom désigne une grandeur et une seule**, dans toutes les
+> fonctions. Deux fonctions qui manipulent la même grandeur l'appellent pareil ; deux
+> grandeurs différentes ne portent jamais le même nom, même dans deux fonctions qui ne se
+> parlent pas.
+
+Chaque nom porte une **description d'une phrase** : dans le contrat pour les grandeurs
+locales à une fonction, dans le [catalogue des données](guides/3-DONNEES.md) pour celles
+qui traversent une frontière.
+
+Quand deux périmètres échangent, le nom est qualifié par le périmètre :
+`energie.energie_disponible`. Quand un champ est imbriqué et que son nom se répète d'une
+structure à l'autre, on écrit le chemin complet : `boisson.masse`, `ajout.masse`.
+
+C'est cette règle qui rend **le parcours d'une grandeur suivable de bout en bout** : on
+peut demander « où passe `montant_net_ht` ? » et obtenir une réponse, parce que le nom ne
+change pas en route.
+
+#### Une fois valorisé, un nom ne change plus
+
+> **Toute transformation produit un nouveau nom**, qui dit la transformation.
+
+```
+✗  remise_panier = 5,00
+   remise_panier = remise_panier − écart          ← le nom ment désormais
+
+✓  remise_panier_brute    = 5,00
+   remise_panier_retenue  = remise_panier_brute − écrêtement
+   remise_panier_ligne    = remise_panier_retenue × part
+   remise_panier_ligne_ajustée = remise_panier_ligne + résidu
+```
+
+Ce que cela coûte : quelques noms de plus. Ce que cela rapporte, et c'est sans commune
+mesure :
+
+| | |
+|---|---|
+| **La chaîne des noms est la trace du calcul** | on lit l'algorithme dans les noms, sans dérouler les règles |
+| **Aucune ambiguïté sur « à quel moment »** | « le montant net » ne veut plus dire trois choses selon l'endroit où on lit |
+| **Le parcours devient vérifiable** | un nom valorisé deux fois est un défaut détectable mécaniquement |
+| **Les cas de test se lisent** | chaque étape de la trace de calcul porte le nom de son résultat |
+| **Le développeur reste libre** | l'immutabilité est une propriété du **texte**, pas de l'implémentation : rien n'interdit de réutiliser une case mémoire |
+
+Pour une accumulation, on n'écrase pas : on **indexe**.
+
+```
+✗  energie_cumulee = energie_cumulee + energie_segment
+
+✓  energie_cumulee(i) = energie_cumulee(i − 1) + energie_segment(i)
+   avec energie_cumulee(0) = 0
+```
+
+> Cette règle est empruntée à une pratique bien établie des compilateurs — l'affectation
+> unique — mais elle sert ici un tout autre but : non pas optimiser, mais **rendre le
+> texte lisible et le parcours traçable**. Un lecteur qui voit `montant_net_ligne` sait
+> qu'il n'existe qu'une seule valeur portant ce nom, et qu'aucune règle plus loin ne la
+> changera dans son dos.
+
+### 2.5 Décrire un résultat, pas un parcours
 
 C'est la règle de style la plus importante, parce que c'est elle qui **libère
 l'architecture**.
@@ -289,7 +365,7 @@ successive d'un barème par tranches, convergence itérative). Dans ce cas, on p
 critère d'arrêt **et** le nombre maximal d'itérations **et** ce qui se passe si on
 l'atteint.
 
-### 2.5 Les tables de décision
+### 2.6 Les tables de décision
 
 Dès qu'une règle combine plus de deux conditions, on abandonne les `SI` imbriqués pour
 une table. Une table de décision a une propriété que le texte n'a pas : **on voit tout
@@ -309,7 +385,7 @@ combinaison n'apparaît nulle part, la spécification est incomplète ; si elle 
 deux fois, elle est contradictoire. Cette vérification est mécanique — elle peut se
 faire en revue en trente secondes, et c'est le meilleur détecteur de trou connu.
 
-### 2.6 Ce qu'on n'écrit pas
+### 2.7 Ce qu'on n'écrit pas
 
 - Aucun nom de langage, de bibliothèque, de base de données, de service technique.
 - Aucun type technique, aucune structure de données (« tableau », « dictionnaire »,
@@ -325,7 +401,7 @@ faire en revue en trente secondes, et c'est le meilleur détecteur de trou connu
 - Aucun « etc. », « et ainsi de suite », « on gère les cas particuliers », « comme
   d'habitude », « le bon sens ». Ce sont les quatre mots qui coûtent le plus cher.
 
-### 2.7 Identifiants et traçabilité
+### 2.8 Identifiants et traçabilité
 
 Chaque règle porte un identifiant **stable et jamais réutilisé** :
 
@@ -353,7 +429,7 @@ Un identifiant n'est **jamais recyclé**. Une règle supprimée reste dans le do
 barrée, avec sa date de fin d'effet — parce qu'un calcul rejoué sur une période
 antérieure doit pouvoir s'y référer.
 
-### 2.8 Adapter le cadre au calcul scientifique
+### 2.9 Adapter le cadre au calcul scientifique
 
 Le cadre s'applique tel quel à un algorithme scientifique, mais trois points demandent
 une adaptation explicite. Ils sont illustrés dans
@@ -439,6 +515,66 @@ Voici le rôle de chaque section — et pourquoi aucune n'est facultative.
 | 12 | **Questions ouvertes** — `Q-xx`, décideur, échéance | Rendre l'incertitude visible au lieu de la laisser se résoudre en silence | Le développeur tranche à la place du métier |
 | 13 | **Historique** — versions, ce qui a changé, impact sur les résultats | Traçabilité réglementaire et comptable | Impossible d'expliquer un écart entre deux exercices |
 
+### 3.1 Le contrat — la notion centrale
+
+Les sections 4, 5 et 8 forment ensemble le **contrat** de la fonction. C'est la notion la
+plus importante du cadre, et celle qu'on sous-estime le plus souvent en la prenant pour
+une simple liste de champs.
+
+> **Le contrat est ce qui est promis, indépendamment de la façon dont la promesse est
+> tenue.** Il se fixe avant qu'on sache comment on fera — et c'est précisément ce qui le
+> rend utile.
+
+**Trois clauses, empruntées à la programmation par contrat et transposées au métier :**
+
+| Clause | Où | Ce qu'elle dit |
+|---|---|---|
+| **Ce que j'exige** | §4, préconditions | les entrées, leur type, leur domaine, ce sans quoi je ne calcule pas |
+| **Ce que je garantis** | §5, postconditions | les sorties, leur type, leur domaine |
+| **Ce qui reste vrai** | §8, invariants | les propriétés que le résultat satisfait toujours |
+
+**La règle de responsabilité qui en découle, et qui vaut à elle seule le formalisme :**
+
+> Si les préconditions sont violées, le résultat n'engage pas la fonction : c'est
+> l'appelant qui est en faute. Si elles sont respectées et qu'une postcondition ne l'est
+> pas, c'est la fonction qui est en faute.
+
+Cette phrase répartit la responsabilité **sans discussion possible**. Elle remplace les
+débats « c'est ton défaut / c'est le mien » par une lecture de deux lignes.
+
+**Pourquoi le contrat est essentiel, en quatre points :**
+
+1. **Il permet de travailler en parallèle.** Dès que le contrat de `FN-002` est fixé, tout
+   ce qui en dépend peut être écrit, estimé et même implémenté — sans attendre que
+   `FN-002` soit spécifiée. C'est ce qui rend le [niveau 3](guides/1-DECOUPER.md) utile en
+   soi, et pas un demi-travail.
+2. **Il est l'unité de dépendance.** Une spécification dépend du **contrat** d'une autre,
+   jamais de son implémentation ni de son texte complet. Une fonction peut être réécrite
+   entièrement sans qu'aucun de ses appelants ne bouge — tant que le contrat tient.
+3. **Il survit à tout le reste.** L'implémentation change, le langage change,
+   l'architecture change, l'équipe change. Le contrat reste. C'est donc lui qu'on
+   versionne avec le plus de soin, et lui dont la rupture se déclare explicitement
+   ([guide 7](guides/7-VERSIONNER.md)).
+4. **Il est vérifiable.** Un contrat se contrôle mécaniquement : une entrée déclarée que
+   nulle règle n'emploie, une sortie promise que rien ne produit, une grandeur employée et
+   jamais déclarée — ce sont les contrôles `C-01` à `C-04`
+   ([outils](outils/REGLES-DE-CONTROLE.md)).
+
+**Deux exigences de forme, non négociables :**
+
+- **Un contrat sans unité ne vaut rien.** `montant : nombre` n'apporte rien que le code ne
+  disait déjà. Toute la valeur est dans l'unité, la devise, le fuseau, la précision et le
+  domaine — c'est-à-dire dans ce que le typage d'un langage ne dit pas.
+- **Les règles emploient les identifiants du contrat, à l'identique** (§2.3). Si le contrat
+  déclare `prix_catalogue_ht` et que la règle parle du « prix catalogue », le lien n'est
+  plus vérifiable et le vocabulaire commence à diverger.
+
+**Ce qu'un contrat n'est pas** : une structure de données, une signature de fonction, un
+schéma d'échange. Ceux-là dérivent du contrat, dans un langage donné, et changeront
+plusieurs fois pendant que le contrat, lui, tiendra.
+
+---
+
 Sur la section 6, une précision qui a des conséquences architecturales lourdes :
 
 > **Un paramètre n'est pas une règle.** Une règle dit « on applique une remise de
@@ -455,6 +591,8 @@ lus directement par l'architecte (§4).
 ---
 
 ## 4. La fiche de contraintes : ce qui permet de choisir le langage et l'architecture
+
+### 4.1 Les contraintes métier
 
 C'est la partie que les experts métier oublient toujours, et c'est celle sans laquelle
 le développeur ne peut rien décider. **Le métier n'y exprime pas des solutions : il y
@@ -478,6 +616,63 @@ exprime des contraintes, en unités métier, chiffrées.** L'IT en déduit la so
 | **Fréquence de changement de la règle** | Combien de fois par an la règle change-t-elle ? Et les paramètres ? | **Code figé vs configuration externalisée vs moteur de règles** |
 | **Qui modifie la règle** | Le métier doit-il pouvoir modifier une valeur sans livraison logicielle ? | Interface d'administration, circuit de validation, tests de garde-fou |
 | **Durée de vie** | Combien de temps ce calcul est-il censé vivre ? | Arbitrage entre effort d'industrialisation et jetable assumé |
+
+### 4.2 Les exigences de réalisation
+
+Le tableau ci-dessus exprime des **besoins**, en unités métier : ils *permettent* à l'IT
+de choisir. Il existe une seconde famille, de nature opposée : des contraintes que
+l'organisation **impose** à la réalisation, et qui *restreignent* le choix.
+
+> **Deux familles, deux propriétaires, et il ne faut pas les mélanger.**
+>
+> | | **Contraintes métier** (§4.1) | **Exigences de réalisation** (§4.2) |
+> |---|---|---|
+> | Nature | un besoin exprimé | une contrainte imposée |
+> | Effet | **permet** de choisir | **restreint** le choix |
+> | Propriétaire | le métier | sécurité, architecture, sûreté, conformité |
+> | Origine | le calcul lui-même | une politique, une norme, un contrat, une plate-forme |
+
+L'expert métier **ne les invente pas** : il les reçoit et les intègre au document, parce
+que c'est le document que le développement lira. Elles portent des identifiants `EX-xxx`.
+
+**Ce sur quoi elles portent, typiquement :**
+
+| Famille | Exemples |
+|---|---|
+| **Classification et segmentation des données** | niveau de sensibilité de chaque donnée, cloisonnement entre partitions, ce qui ne doit jamais quitter un périmètre, durée de conservation, pseudonymisation |
+| **Langages et bibliothèques** | liste technique approuvée, versions minimales, sous-ensembles normatifs imposés, bibliothèques interdites |
+| **Règles de codage** | norme applicable, analyse statique bloquante, seuils de couverture, revue obligatoire |
+| **Plate-forme cible** | matériel, système, ressources disponibles, absence de ramasse-miettes, déterminisme temporel, partitionnement |
+| **Intégration et exploitation** | protocoles et formats imposés, journalisation, supervision, mode de déploiement |
+| **Conformité et certification** | normes produit, preuves à produire, traçabilité exigée par un auditeur |
+
+**Le discriminant, et il est sans appel :**
+
+> **Une exigence de réalisation sans source nommée n'est pas une exigence : c'est une
+> préférence d'équipe déguisée.**
+
+« Utiliser Java » n'est pas une exigence. « Le logiciel du calculateur respecte le
+sous-ensemble MISRA C:2012 — politique de sûreté logicielle `DIR-SUR-004`, direction
+Sûreté, vérifié par analyse statique bloquante en intégration » en est une. La différence
+n'est pas de forme : la seconde a quelqu'un qui en répond et un moyen de prouver qu'elle
+est tenue.
+
+Chaque `EX-xxx` porte donc quatre choses, et les quatre sont obligatoires :
+
+| | |
+|---|---|
+| **L'énoncé** | au présent de l'indicatif ou avec « doit », vérifiable |
+| **La source** | le texte, la norme, la politique ou le contrat dont elle découle |
+| **Le propriétaire** | qui peut l'amender, et qui répond de son existence |
+| **La vérification** | comment on prouve qu'elle est tenue — sans quoi elle est décorative |
+
+**Quand une exigence contredit une contrainte métier**, ce qui arrive plus souvent qu'on
+ne croit — une latence de 20 ms face à une plate-forme imposée à ramasse-miettes —, le
+conflit **ne se règle pas dans le document** : il devient une question ouverte `Q-xx`,
+arbitrée par les deux propriétaires. Le résoudre en silence, c'est faire porter à un
+développeur un arbitrage entre la sûreté et l'expérience client.
+
+---
 
 Deux commentaires qui valent le détour :
 

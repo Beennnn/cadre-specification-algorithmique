@@ -59,6 +59,76 @@ Pour le **glossaire**, la même logique donne :
 | **Renommer** un terme | **majeur** — l'ancien nom devient un synonyme déprécié, daté |
 | **Retirer** un terme | **majeur** — toute règle qui l'employait doit être reprise |
 
+## La notice de changement
+
+Une ligne d'historique dit *qu'il* y a eu un changement. Elle ne dit ni **pourquoi**, ni
+**qui est touché**. Dès qu'un changement a un impact — sur un résultat ou sur un contrat —
+il porte une **notice**, `N-<version>`, qui répond à trois questions et pas une de plus.
+
+### 1. La raison
+
+Deux phrases : ce qui n'allait pas, et ce que le changement corrige. Pas la solution
+retenue — le problème. Si la raison est « on nous l'a demandé », la notice doit dire qui
+et pourquoi, sinon personne ne saura, dans trois ans, s'il est encore légitime de la
+maintenir.
+
+### 2. Les fonctions impactées
+
+| Fonction | Nature de l'impact |
+|---|---|
+| `FN-001` | **comportement** — un résultat change, le contrat ne bouge pas |
+| `FN-004` | **contrat** — voir le détail ci-dessous |
+| `FN-011` | **aucun** — réexaminée, sans impact *(la ligne reste : elle évite de refaire l'analyse)* |
+
+Une fonction réexaminée sans impact **figure quand même**. C'est cette ligne qui, dans
+trois ans, évitera de recommencer le travail d'analyse.
+
+### 3. Les impacts sur les contrats
+
+Le cœur de la notice, et la raison pour laquelle elle existe.
+
+| Fonction | Élément | Nature | Détail | Compatibilité |
+|---|---|---|---|---|
+| `FN-004` | `etat_de_charge_arrivee_minimal` | **ajout** | entrée, `Fraction(0,000..1,000)`, obligatoire | **rupture** |
+| `FN-001` | `point_autonomie` | **modification** | sens de l'arrondi : au plus proche → vers le bas | compatible |
+| `FN-002` | `facteur_temperature_brut` | **suppression** | sortie retirée | **rupture** |
+
+Trois natures, et trois seulement : **ajout**, **modification**, **suppression** — d'une
+entrée ou d'une sortie.
+
+**Ce qui est une rupture, et ce qui ne l'est pas :**
+
+| Changement de contrat | Effet sur les appelants |
+|---|---|
+| Ajout d'une entrée **facultative** | compatible |
+| Ajout d'une entrée **obligatoire** | **rupture** — tous les appelants doivent changer |
+| Ajout d'une sortie | compatible |
+| Suppression d'une sortie | **rupture** |
+| Suppression d'une entrée | compatible, mais les appelants la fournissent pour rien |
+| Modification d'un type, d'une **unité**, d'une précision | **rupture** |
+| Restriction d'un domaine d'entrée | **rupture** |
+| Élargissement d'un domaine d'entrée | compatible |
+| **Changement de sens** d'un nom, à type inchangé | **rupture silencieuse** — la pire de toutes : rien ne casse, et tout devient faux |
+
+### Deux axes indépendants, qu'on confond toujours
+
+|  | **Le contrat change** | **Le contrat ne bouge pas** |
+|---|---|---|
+| **Un résultat change** | majeur **et** rupture — le cas le plus lourd | **majeur** |
+| **Aucun résultat ne change** | **rupture** (ou compatible, si simple ajout facultatif) | mineur ou correctif |
+
+Le numéro de version suit la règle du **résultat**. La notice porte, en plus, le verdict
+de **compatibilité** — parce qu'un ajout de sortie ne change aucun résultat et oblige
+pourtant les consommateurs à se mettre à jour pour en profiter.
+
+### 4. Les conséquences
+
+Trois lignes, toujours les mêmes : **rejeu** nécessaire ou non, **date d'effet**,
+**consommateurs à prévenir**.
+
+> **Le contrôle `C-24`** vérifie mécaniquement que toute ligne d'historique déclarant un
+> impact renvoie à une notice existante. Un changement sans notice ne passe pas.
+
 ## Version et date d'effet sont deux axes indépendants
 
 C'est la confusion la plus fréquente, et elle produit des rejeux faux.

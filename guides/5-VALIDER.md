@@ -109,8 +109,77 @@ est bien employé quelque part.
 
 > Le bon usage : l'IA en **troisième passe de l'étage 1**, après le script et avant les
 > humains. Elle attrape ce que le script ne sait pas formaliser — une règle floue, une
-> hypothèse implicite, une incohérence de vocabulaire — et elle libère les relecteurs
-> humains pour ce qu'eux seuls peuvent faire.
+> hypothèse implicite, une réaffectation qui viole l'immutabilité (`H-07`) — et elle libère
+> les relecteurs humains pour ce qu'eux seuls peuvent faire.
+
+## L'humain aux commandes
+
+> **Principe : toute production d'une IA est assumée par une personne nommée, qui en
+> répond comme si elle l'avait écrite elle-même.**
+
+### Le terme juste
+
+Trois notions circulent, et on les confond parce qu'elles se ressemblent. Elles ne disent
+pas du tout la même chose.
+
+| Notion | Ce qu'elle décrit | Ce qu'elle garantit |
+|---|---|---|
+| **Humain dans la boucle** *(human-in-the-loop)* | l'humain est un **maillon d'exécution** : le système s'arrête et attend son intervention | qu'il intervient — pas qu'il comprend, ni qu'il répond |
+| **Humain sur la boucle** *(human-on-the-loop)* | l'humain **supervise** un système qui tourne seul, et peut l'interrompre | qu'il peut intervenir — s'il remarque quelque chose |
+| **Humain aux commandes** *(human-in-command)* | l'humain **décide si, quand et comment** le système est employé, **et il en répond** | l'imputabilité |
+
+Ce dont il s'agit ici est le troisième. Ce n'est pas une question de **position dans la
+boucle**, c'est une question de **responsabilité**. Un relecteur peut être parfaitement
+« dans la boucle » et n'assumer rien du tout — il lui suffit d'approuver sans lire.
+
+> La distinction est posée par le groupe d'experts de haut niveau de la Commission
+> européenne (*Ethics Guidelines for Trustworthy AI*, 2019), qui place explicitement
+> l'humain **aux commandes** au-dessus des deux autres modes. Le règlement européen sur
+> l'intelligence artificielle (2024) en tire les conséquences pratiques à son article 14
+> sur la surveillance humaine : comprendre les capacités et les limites de l'outil, être
+> conscient du **biais d'automatisation**, savoir interpréter la sortie, et pouvoir décider
+> de ne pas l'employer.
+
+### Les trois conditions pour que l'assomption soit réelle
+
+Écrire « un humain valide » ne crée pas de la responsabilité. Trois conditions doivent
+être réunies, faute de quoi on n'a nommé qu'un fusible.
+
+| # | Condition | Comment on la tient ici |
+|---|---|---|
+| **1** | **Vérifiabilité** — le relecteur doit pouvoir contrôler chaque affirmation | la consigne impose à l'IA de **citer un passage exact** pour chaque constat. Un constat non localisable n'est pas traitable, donc pas assumable |
+| **2** | **Moyens** — du temps et la compétence de juger | les contrôles mécaniques passent **avant**, pour que le temps humain aille sur ce qui le mérite. Un relecteur à qui on donne deux cents pages en une heure ne valide pas : il tamponne |
+| **3** | **Droit de dire non** — refuser la sortie, et refuser d'employer l'outil | la passe IA est **facultative**. Un relecteur peut la déclarer inexploitable et procéder sans elle, sans avoir à s'en justifier |
+
+### Le piège, et il porte un nom
+
+> **La zone de froissement morale** *(moral crumple zone,* M. C. Elish, 2019*)* : le
+> dispositif où un humain, nominalement responsable, absorbe le blâme d'un système qu'il
+> n'était pas en mesure de contrôler réellement.
+
+C'est ce qui arrive quand on désigne un valideur sans lui donner les trois conditions
+ci-dessus. Le processus **a l'air** responsable ; en pratique il a produit un fusible.
+
+Le risque est accru par le **biais d'automatisation** : on accorde spontanément plus de
+crédit à une sortie automatisée qu'à sa propre lecture — d'autant plus qu'elle est bien
+formulée. **Une IA écrit bien. C'est précisément ce qui rend son verdict dangereux** :
+rien, dans la forme, ne distingue le constat exact du constat inventé.
+
+### Ce qu'on écrit dans le document
+
+L'assomption doit laisser une trace, sinon elle n'existe pas. Au moment du jalon :
+
+| | |
+|---|---|
+| **L'outil et sa version** | quel modèle, quelle consigne |
+| **La date** | |
+| **L'opérateur** | la personne qui a lancé la passe **et qui répond de ce qui en a été retenu** |
+| **Les constats retenus / écartés** | deux nombres. L'écart entre les deux est ce qui montre qu'il y a eu jugement |
+
+> **La signature est humaine, toujours.** Une IA n'a pas de mandat, ne rend de comptes à
+> personne, et ne sera pas là dans trois ans quand un auditeur demandera pourquoi cette
+> règle a été acceptée. Le contrôle `C-27` vérifie qu'une passe IA déclarée porte bien un
+> opérateur nommé.
 
 ## Le jalon lui-même
 

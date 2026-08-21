@@ -93,8 +93,21 @@ def verifier_spec(chemin):
                     % (entete, lignes_hist[-1][0]))
         precedente = None
         for version, reste in lignes_hist:
-            impact = reste.split("|")[-2] if reste.count("|") >= 2 else reste
+            cellules = [c.strip() for c in reste.split("|")]
+            impact = cellules[2] if len(cellules) > 2 else ""
+            notice = cellules[3] if len(cellules) > 3 else ""
             change = re.search(r"\boui\b", impact, re.I)
+            # C-24 : un changement à impact renvoie à une notice existante
+            if change:
+                if not re.search(r"N-[0-9.]+", notice):
+                    constat("ÉCHEC", "C-24", chemin,
+                            "la version %s déclare un impact sans renvoyer "
+                            "à une notice de changement" % version)
+                else:
+                    nom = re.search(r"N-[0-9.]+", notice).group(0)
+                    if not re.search(r"^###\s+%s\b" % re.escape(nom), texte, re.M):
+                        constat("ÉCHEC", "C-24", chemin,
+                                "la notice %s est citée mais absente du document" % nom)
             v = version_tuple(version)
             if change and precedente and v and v[0] == precedente[0]:
                 constat("ÉCHEC", "C-20", chemin,
@@ -151,6 +164,17 @@ def verifier_spec(chemin):
                         "%s « %s » déclarée mais employée dans aucune règle"
                         % (quoi, champ))
 
+    # --- C-26 : exigence de réalisation sans source, propriétaire ou vérification
+    for ligne in re.findall(r"^\|\s*`(EX-[\d-]+)`\s*\|(.*)$",
+                            sec.get("contraintes", ""), re.M):
+        cellules = [c.strip() for c in ligne[1].split("|")]
+        manquants = [nom for nom, i in (("énoncé", 0), ("source", 1),
+                                        ("propriétaire", 2), ("vérification", 3))
+                     if len(cellules) <= i or not cellules[i]]
+        if manquants:
+            constat("ÉCHEC", "C-26", chemin,
+                    "%s sans %s" % (ligne[0], ", ".join(manquants)))
+
     # --- C-21 : question ouverte sans décideur ni échéance
     for ligne in re.findall(r"^\|\s*`(Q-[\d-]+)`\s*\|(.*)$",
                             sec.get("questions", ""), re.M):
@@ -173,8 +197,44 @@ def verifier_liens(chemin):
 
 
 # ---------------------------------------------------------------- exécution
+def tracer(nom, fichiers):
+    """Parcours d'une grandeur : où elle est déclarée, produite, consommée."""
+    motif = re.compile(r"\b%s\b" % re.escape(nom))
+    print("Parcours de « %s »\n" % nom)
+    trouve = False
+    for chemin in sorted(fichiers):
+        texte = open(chemin, encoding="utf-8").read()
+        if not motif.search(texte):
+            continue
+        sec = sections(texte)
+        roles = []
+        if nom in champs(sec.get("entrees", "")):
+            roles.append("ENTRÉE")
+        if nom in champs(sec.get("sorties", "")):
+            roles.append("SORTIE")
+        regles = sorted(set(re.findall(r"###\s+(RG-\d+)[^\n]*\n(?:(?!###).)*?"
+                                       + re.escape(nom),
+                                       sec.get("regles", ""), re.S)))
+        if regles:
+            roles.append("employée par " + ", ".join(regles))
+        if not roles:
+            roles.append("citée")
+        trouve = True
+        print("  %-46s %s" % (os.path.relpath(chemin, RACINE), " · ".join(roles)))
+    if not trouve:
+        print("  (aucune occurrence)")
+    return 0
+
+
 def main():
     cibles = sys.argv[1:]
+    if cibles and cibles[0] == "--tracer":
+        if len(cibles) < 2:
+            print("usage : verifier.py --tracer <nom de grandeur>")
+            return 2
+        return tracer(cibles[1],
+                      [os.path.join(r, f) for r, d, fs in os.walk(RACINE)
+                       if ".git" not in r for f in fs if f.endswith(".md")])
     if cibles:
         fichiers = [os.path.abspath(c) for c in cibles]
     else:
@@ -194,8 +254,8 @@ def main():
           "%d échec(s), %d avertissement(s)"
           % (len(fichiers), specs, len(echecs), len(constats) - len(echecs)))
     if not constats:
-        print("Aucun défaut mécanique. Les contrôles C-05 à C-13, C-18, C-22 et "
-              "les contrôles humains H-01 à H-06 relèvent de la relecture.")
+        print("Aucun défaut mécanique. Les contrôles C-05 à C-13, C-18, C-22, C-25 et "
+              "les contrôles humains H-01 à H-07 relèvent de la relecture.")
     return 1 if echecs else 0
 
 

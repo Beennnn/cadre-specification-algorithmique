@@ -1,6 +1,6 @@
 # État du chantier
 
-*Dernière mise à jour : 2026-08-21 (2)*
+*Dernière mise à jour : 2026-08-21 (3)*
 
 ---
 
@@ -53,7 +53,9 @@ illustrée de bout en bout par un fil rouge dont tous les chiffres sont vérifi�
 | F | **Protéger `main`** en exigeant une revue, et créer un label `question-ouverte` | cohérence : le dépôt doit s'appliquer à lui-même sa propre gouvernance (`CADRE.md` §6.3) |
 | G | **Une version diaporama** pour présenter la démarche en interne | évoqué, non commencé |
 | H | **Mécaniser `C-05` à `C-13`** (valeur magique, `SI` sans `SINON`, arrondi sans sens, superlatif sans départage) — demande une analyse du pseudo-langage, pas seulement du markdown | à construire |
-| I | **Les 21 avertissements `C-01`/`C-02` restants** : les règles désignent les champs par leur nom français plutôt que par l'identifiant du contrat. À trancher — aligner le vocabulaire, ou assouplir le contrôle | à arbitrer |
+| I | ~~Les avertissements `C-01`/`C-02`~~ — **tranché** : le vocabulaire des règles a été aligné sur les identifiants du contrat. Zéro avertissement | fait |
+| J | **Mécaniser `C-25`** (orthographe identique entre contrat et règles) — proche de `C-01`, réalisable | à construire |
+| K | **Les fiches de données `D-xxx` du fil rouge** sont dans un seul document ; il faudrait décider si elles vivent en fichiers séparés comme les fiches de fonction | à arbitrer |
 
 ## Reste dans l'autre dépôt
 

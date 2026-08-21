@@ -151,11 +151,15 @@ resultat :
 ### RG-010 — Le modèle de refroidissement
 
 ```
+SOIT k           = coefficient_refroidissement
+SOIT T_ambiante  = temperature_ambiante
+SOIT T(0)        = boisson.temperature_initiale
+
 La température de la boisson suit la loi de refroidissement de Newton :
 
     dT/dt = − k × ( T(t) − T_ambiante )
 
-où k est le coefficient de refroidissement et T_ambiante est constante.
+T_ambiante est constante sur toute la durée prévue (hypothèse H-2).
 ```
 
 **Hypothèses assumées par le métier**, chacune fausse dans l'absolu et acceptable dans
@@ -195,14 +199,22 @@ Si `instant_demande` dépasse `P-04`, la valeur n'est pas produite et
 Lors d'un ajout, la température résultante est celle qui conserve l'énergie
 thermique de l'ensemble :
 
-    T_melange = ( m₁ × c₁ × T₁  +  m₂ × c₂ × T₂ )
-                ÷ ( m₁ × c₁  +  m₂ × c₂ )
+SOIT capacite_boisson = boisson.masse × boisson.capacite_massique
+SOIT capacite_ajout   = ajout.masse   × ajout.capacite_massique
 
-La masse de la boisson devient m₁ + m₂.
-La capacité massique de la boisson devient ( m₁ × c₁ + m₂ × c₂ ) ÷ ( m₁ + m₂ ).
+    temperature_apres_ajout =
+        ( capacite_boisson × T(instant_ajout) + capacite_ajout × ajout.temperature )
+        ÷ ( capacite_boisson + capacite_ajout )
+
+Le mélange ne modifie pas la boisson : il en produit une nouvelle.
+
+    boisson_melangee.masse             = boisson.masse + ajout.masse
+    boisson_melangee.capacite_massique = ( capacite_boisson + capacite_ajout )
+                                         ÷ boisson_melangee.masse
+    boisson_melangee.temperature       = temperature_apres_ajout
 ```
 
-Si `m₂ = 0`, la formule laisse la boisson inchangée : le cas est **couvert par la règle
+Si `ajout.masse = 0`, la formule laisse la boisson inchangée : le cas est **couvert par la règle
 générale**, il n'a pas besoin d'être traité à part. Une spécification qui ajoute une
 branche `SI masse = 0 ALORS ...` pour un cas déjà couvert crée deux chemins là où un
 seul suffit — et un jour, ils divergeront.
@@ -215,8 +227,8 @@ de convention par défaut : le demandeur doit le déclarer.
 
 Le calcul se déroule en deux phases :
     1. refroidissement seul, de t = 0 à t = instant_ajout          (RG-010)
-    2. mélange à t = instant_ajout                                 (RG-030)
-    3. refroidissement du mélange, à partir de t = instant_ajout   (RG-010)
+    2. mélange à t = instant_ajout, produisant temperature_apres_ajout  (RG-030)
+    3. refroidissement de boisson_melangee, à partir de t = instant_ajout  (RG-010)
 ```
 
 > **C'est le faux ami central de cette spécification, et il est contre-intuitif.**
@@ -243,7 +255,7 @@ L'instant d'atteinte est le PLUS PETIT t ≥ 0 tel que T(t) ≤ temperature_cibl
 
 Conditions d'existence, évaluées dans cet ordre :
 
-  SI T(0) ≤ temperature_cible ALORS
+  SI boisson.temperature_initiale ≤ temperature_cible ALORS
      instant_atteinte_cible = 0,00 ; cible_deja_atteinte = vrai ; on s'arrête
 
   SINON SI temperature_cible ≤ temperature_ambiante + P-07 ALORS
@@ -482,7 +494,9 @@ Ajout de `0,0000 kg` à `5,00 °C`, à `t = 0`.
 > couverte parce qu'aucune entrée réaliste ne la déclenche avec une résolution exacte —
 > ce qui est justement une question à trancher (`Q-03`).
 
-## 11. Fiche de contraintes
+## 11. Contraintes et exigences
+
+### 11.1 Contraintes métier
 
 Deux profils d'usage, **une seule spécification**. C'est la fiche de contraintes qui
 diffère, et c'est elle qui produira deux implémentations.
@@ -503,6 +517,14 @@ diffère, et c'est elle qui produira deux implémentations.
 | **Fréquence de changement** | `P-01`, `P-02`, `P-03` : réestimés 1 à 2 fois par an quand la gamme de récipients évolue. Règles : très rares | idem |
 | **Qui modifie** | Le responsable modèles doit pouvoir réestimer `P-01` et `P-02` **sans livraison logicielle** — donc les paramètres sont téléchargés, pas compilés | idem |
 | **Durée de vie** | 5 ans et plus | 10 ans (support pédagogique) |
+
+### 11.2 Exigences de réalisation
+
+| Id | Exigence | Source | Propriétaire | Vérification |
+|---|---|---|---|---|
+| `EX-01` | Le calcul embarqué **n'émet aucune requête réseau** : il fonctionne hors ligne et ne transmet rien | Engagement produit « aucune donnée ne quitte l'appareil » | Direction produit | Analyse des flux réseau, à chaque version publiée |
+| `EX-02` | Le fichier de paramètres téléchargé est **signé**, et une signature invalide entraîne le maintien de la version précédente | Politique de sécurité applicative `SEC-APP-4` | Sécurité SI | Test de non-régression sur signature invalide |
+| `EX-03` | Le code respecte le **standard de codage interne** `STD-DEV-2` | Comité d'architecture | Architecture SI | Intégration continue |
 
 ## 12. Questions ouvertes
 
