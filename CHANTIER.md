@@ -1,6 +1,6 @@
 # État du chantier
 
-*Dernière mise à jour : 2026-08-21*
+*Dernière mise à jour : 2026-08-21 (2)*
 
 ---
 
@@ -20,11 +20,11 @@ illustrée de bout en bout par un fil rouge dont tous les chiffres sont vérifi�
 | La gouvernance et le versionnement | ✅ `CADRE.md` §6 |
 | L'adoption progressive et les anti-patterns | ✅ `CADRE.md` §7-8 |
 | **Temps 1 — découper** | ✅ `guides/1-DECOUPER.md` |
-| **Temps 2 — glossaire puis écriture collaborative** | ✅ `guides/2-GLOSSAIRE.md`, `guides/3-ECRIRE-A-PLUSIEURS.md` |
-| **Temps 3 — passation au développement** | ✅ `guides/4-PASSER-AU-DEVELOPPEMENT.md` |
+| **Temps 2 — glossaire puis écriture collaborative** | ✅ `guides/2-GLOSSAIRE.md`, `guides/4-ECRIRE-A-PLUSIEURS.md` |
+| **Temps 3 — passation au développement** | ✅ `guides/6-PASSER-AU-DEVELOPPEMENT.md` |
 | Fondements théoriques et sources | ✅ `REFERENCES.md` |
 | Objections fréquentes | ✅ `FAQ.md` |
-| Fil rouge complet | ✅ `exemples/fil-rouge/` — 5 documents |
+| Fil rouge complet | ✅ `exemples/fil-rouge/` — 6 documents |
 | Deux vignettes de contraste | ✅ `exemples/SPEC-PRX-001`, `SPEC-THM-001` |
 
 ## Décisions structurantes déjà prises
@@ -46,12 +46,14 @@ illustrée de bout en bout par un fil rouge dont tous les chiffres sont vérifi�
 | # | Sujet | Nature |
 |---|---|---|
 | A | **Confirmer l'option d'ancrage** (chemin+symbole vs marqueur dans le code) | décision du propriétaire du dépôt |
-| B | **Le script de vérification des ancrages** — n'existe pas encore. C'est lui qui empêche la carte de mentir ; sans lui le niveau 2 est déclaratif | à construire |
+| B | **Le contrôle des ancrages** (`FN-xxx` → symbole du code) n'est pas encore dans `verifier.py` : c'est lui qui empêche la carte de mentir. Les contrôles de spécification, eux, sont en place | à construire |
 | C | **Monter `FN-004` (planifier les recharges) au niveau 4** | la fonction est au niveau 3 ; c'est le meilleur terrain pour illustrer « décrire un résultat, pas un parcours » sur une optimisation sous contrainte, et le résultat contre-intuitif des deux arrêts courts |
 | D | **Un exemple « avant / après »** : une même règle mal spécifiée puis bien spécifiée | très pédagogique, pas encore écrit |
 | E | **Le nom du dépôt** — `cadre-specification-algorithmique` est étroit depuis que l'architecture fonctionnelle est couverte | renommage GitHub indolore ; `atlas-fonctionnel` avait été proposé |
 | F | **Protéger `main`** en exigeant une revue, et créer un label `question-ouverte` | cohérence : le dépôt doit s'appliquer à lui-même sa propre gouvernance (`CADRE.md` §6.3) |
 | G | **Une version diaporama** pour présenter la démarche en interne | évoqué, non commencé |
+| H | **Mécaniser `C-05` à `C-13`** (valeur magique, `SI` sans `SINON`, arrondi sans sens, superlatif sans départage) — demande une analyse du pseudo-langage, pas seulement du markdown | à construire |
+| I | **Les 21 avertissements `C-01`/`C-02` restants** : les règles désignent les champs par leur nom français plutôt que par l'identifiant du contrat. À trancher — aligner le vocabulaire, ou assouplir le contrôle | à arbitrer |
 
 ## Reste dans l'autre dépôt
 

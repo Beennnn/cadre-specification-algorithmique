@@ -3,10 +3,11 @@
 | | |
 |---|---|
 | **Identifiant** | SPEC-PRX-001 |
-| **Version** | 1.2.0 |
+| **Version** | 2.0.0 |
 | **Statut** | Acceptée |
 | **Auteur métier** | *(rôle : Responsable tarification)* |
 | **Propriétaire de la règle** | *(rôle : Direction commerciale)* |
+| **Glossaire de référence** | interne — §3 de ce document |
 | **Répondant technique** | *(rôle : Architecte applicatif)* |
 | **Date d'effet** | 2026-01-01 |
 | **Dernière modification** | 2026-08-21 — voir §13 |
@@ -135,7 +136,7 @@ Ces valeurs **ne sont pas des règles**. Elles changent sans que la logique chan
 | `P-08` | Valeur d'un point de fidélité | 0,01 | EUR TTC | Marketing | Validation Direction | 1 fois par an | 2026-01-01 |
 | `P-09` | Mode d'arrondi par défaut | COMMERCIAL | — | Conformité | — | jamais | 2026-01-01 |
 
-`COMMERCIAL` : arrondi au plus proche ; en cas d'exacte moitié, on s'éloigne de zéro
+`P-09` vaut `COMMERCIAL` : arrondi au plus proche ; en cas d'exacte moitié, on s'éloigne de zéro
 (0,005 → 0,01). Sauf mention contraire, tout arrondi de montant se fait à 2 décimales.
 
 ## 7. Règles
@@ -170,7 +171,7 @@ SOIT montant_brut_ht    = SOMME DES montant_brut_ligne DES lignes
 ```
 Pour chaque ligne :
   SI quantité ≥ P-05 ALORS
-     remise_quantité_ligne = ARRONDIR(montant_brut_ligne × P-06, 2, COMMERCIAL)
+     remise_quantité_ligne = ARRONDIR(montant_brut_ligne × P-06, 2, P-09)
   SINON
      remise_quantité_ligne = 0,00
   FIN SI
@@ -205,7 +206,7 @@ détail par ligne indique une remise panier nulle.
 SOIT assiette_panier = SOMME DES (montant_brut_ligne − remise_quantité_ligne) DES lignes
 
 SELON le type du code promotionnel :
-  — taux    : remise_panier_brute = ARRONDIR(assiette_panier × taux, 2, COMMERCIAL)
+  — taux    : remise_panier_brute = ARRONDIR(assiette_panier × taux, 2, P-09)
   — montant : remise_panier_brute = le plus petit du montant du code et de assiette_panier
 ```
 
@@ -216,7 +217,7 @@ La remise panier ne s'applique **jamais** aux frais de livraison.
 ```
 SOIT total_remises_demandées = SOMME DES remise_quantité_ligne
                              + remise_panier_brute
-SOIT plafond = ARRONDIR(montant_brut_ht × P-07, 2, COMMERCIAL)
+SOIT plafond = ARRONDIR(montant_brut_ht × P-07, 2, P-09)
 
 SI total_remises_demandées > plafond ALORS
    la remise panier est réduite de l'excédent :
@@ -241,7 +242,7 @@ de quantité**, afin de pouvoir calculer la TVA par taux.
 ```
 Pour chaque ligne :
    part = (montant_brut_ligne − remise_quantité_ligne) ÷ assiette_panier
-   remise_panier_ligne = ARRONDIR(remise_panier_retenue × part, 2, COMMERCIAL)
+   remise_panier_ligne = ARRONDIR(remise_panier_retenue × part, 2, P-09)
 
 SOIT écart = remise_panier_retenue − SOMME DES remise_panier_ligne
 
@@ -287,11 +288,11 @@ inférieure (`1,000 kg` est facturé au tarif « ≤ 1 kg »).
 ```
 POUR CHAQUE taux DISTINCT présent dans les lignes
    assiette = SOMME DES montant_net_ligne DES lignes de ce taux
-   tva      = ARRONDIR(assiette × taux, 2, COMMERCIAL)
+   tva      = ARRONDIR(assiette × taux, 2, P-09)
 FIN POUR
 
 SI frais_livraison_ht > 0,00 ALORS
-   tva_livraison = ARRONDIR(frais_livraison_ht × P-04, 2, COMMERCIAL)
+   tva_livraison = ARRONDIR(frais_livraison_ht × P-04, 2, P-09)
 FIN SI
 ```
 
@@ -310,7 +311,7 @@ SOIT montant_avant_fidélité_ttc = montant_articles_ttc + montant_port_ttc
 ### RG-130 — Imputation des points de fidélité
 
 ```
-SOIT réduction_demandée = ARRONDIR(points_fidélité_utilisés × P-08, 2, COMMERCIAL)
+SOIT réduction_demandée = ARRONDIR(points_fidélité_utilisés × P-08, 2, P-09)
 
 réduction_fidélité_ttc = le plus petit de réduction_demandée et montant_articles_ttc
 points_fidélité_débités = réduction_fidélité_ttc ÷ P-08          (nombre entier)
@@ -623,7 +624,7 @@ Un article à `10,00` HT, quantité **3**, TVA 20 %, poids `0,300 kg`.
 |---|---|---|---|
 | 1.0.0 | 2025-11-20 | Version initiale | — |
 | 1.1.0 | 2026-01-08 | Ajout de `RG-045` (non-cumul) et de la table de décision `RG-040` | Aucun sur les cas existants |
-| 1.2.0 | 2026-05-12 | `RG-110` : TVA par taux agrégé au lieu de ligne à ligne (`Q-05`) | **Oui** — écarts d'un centime sur les paniers à plusieurs lignes de même taux. Rejeu non nécessaire : applicable aux commandes postérieures au 2026-06-01 |
+| **2.0.0** | 2026-05-12 | `RG-110` : TVA par taux agrégé au lieu de ligne à ligne (`Q-05`) | **Oui** — écarts d'un centime sur les paniers à plusieurs lignes de même taux. Rejeu non nécessaire : applicable aux commandes postérieures au 2026-06-01 |
 
 ---
 

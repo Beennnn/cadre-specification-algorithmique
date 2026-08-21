@@ -9,6 +9,8 @@
 | **Propriétaire de la règle** | |
 | **Répondant technique** | |
 | **Date d'effet** | AAAA-MM-JJ |
+| **Glossaire de référence** | <lien> v0.0.0 |
+| **Jeu de paramètres** | <référentiel> v0000.0 |
 | **Dernière modification** | AAAA-MM-JJ |
 
 <!--

@@ -52,6 +52,7 @@ Valeurs de référence du fil rouge (véhicule 1 800 kg, Cx·S 0,64 m², Crr 0,0
 | Vitesse de consommation minimale | 29,92 km/h |
 | Point d'autonomie à 20 °C / −5 °C (SoC 40 %, réserve 5 kWh) | 106,017 km / 82,555 km |
 | Autonomie batterie pleine, 110 km/h 20 °C vs 130 km/h −5 °C | 320 km vs 199 km |
+| Consommation en montée à 5 %, 110 km/h | 44,410 kWh/100 km |
 
 ## Structure
 
@@ -61,16 +62,28 @@ CADRE.md           le document de référence, long, à lire une fois
 GLOSSAIRE.md       le vocabulaire de la méthode elle-même
 REFERENCES.md      les sources ; ce qu'on emprunte et ce qu'on écarte
 FAQ.md             les objections fréquentes
-guides/            1-DECOUPER · 2-GLOSSAIRE · 3-ECRIRE-A-PLUSIEURS · 4-PASSER-AU-DEVELOPPEMENT
+guides/            1-DECOUPER · 2-GLOSSAIRE · 4-ECRIRE-A-PLUSIEURS · 6-PASSER-AU-DEVELOPPEMENT
 templates/         MODELE-SPECIFICATION · MODELE-FICHE-FONCTION · MODELE-GLOSSAIRE · CHECKLIST-RELECTURE
 exemples/
   fil-rouge/       le scénario déroulé : 0-LE-CAS-METIER → 1-DECOUPAGE → 2-GLOSSAIRE
-                   → 3-FN-004 (niveau 3) → 4-SPEC-NRG-001 (niveau 4)
+                   → 4-FN-004 (niveau 3) → 5-SPEC-NRG-001 (niveau 4)
   SPEC-PRX-001…    vignette gestion (montant à payer d'une commande)
   SPEC-THM-001…    vignette scientifique courte (refroidissement d'une boisson)
 ```
 
 ## Vérifier avant de pousser
+
+**Toujours** lancer le vérificateur. Code de retour 1 s'il reste un échec :
+
+```bash
+python3 outils/verifier.py
+```
+
+Il met en œuvre les règles `C-xx` de `outils/REGLES-DE-CONTROLE.md`. Un **ÉCHEC** est un
+défaut certain et bloque ; un **AVERTIR** se tranche à la main et ne se fait jamais taire
+en modifiant le script.
+
+<details><summary>Contrôle des liens seuls (inclus dans verifier.py)</summary>
 
 ```bash
 # liens relatifs cassés
@@ -88,6 +101,8 @@ for root,d,files in os.walk('.'):
                 print("CASSÉ", p, "->", t)
 EOF
 ```
+
+</details>
 
 ## Git
 

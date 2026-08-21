@@ -3,13 +3,15 @@
 | | |
 |---|---|
 | **Identifiant** | SPEC-NRG-001 — spécifie `FN-001` |
-| **Version** | 1.2.0 |
+| **Version** | 2.0.1 |
 | **Statut** | Acceptée |
 | **Niveau de maturité** | **4 — spécification complète** |
 | **Auteur métier** | *(rôle : Responsable modèles énergétiques, R&D Énergie)* |
 | **Propriétaire de la règle** | *(rôle : Direction R&D Énergie)* |
 | **Répondant technique** | *(rôle : Architecte embarqué)* |
 | **Date d'effet** | 2026-04-01 |
+| **Glossaire de référence** | [Glossaire du domaine](2-GLOSSAIRE.md) v2.0.0 |
+| **Jeu de paramètres** | Référentiel de méthodes v2026.2 |
 
 > Fonction centrale du fil rouge *[L'autonomie d'un véhicule électrique](README.md)*.
 > Le glossaire employé ici est celui du domaine : **[2-GLOSSAIRE.md](2-GLOSSAIRE.md)**.
@@ -203,7 +205,7 @@ n'interviennent qu'à la production des sorties (`RG-100`).
 
 ### RG-060 — Énergie disponible et facteur de température
 
-Le facteur de température s'applique par **paliers**, bornes supérieures incluses :
+Le barème `P-03` s'applique par **paliers**, bornes supérieures incluses :
 
 | Température de la batterie | Facteur |
 |---|---|
@@ -572,8 +574,8 @@ au milliardième.
 | Version | Date | Changement | Impact sur les résultats |
 |---|---|---|---|
 | 1.0.0 | 2026-02-24 | Version initiale | — |
-| 1.1.0 | 2026-03-12 | `RG-100` : arrondi du point d'autonomie vers le bas (`Q-05`) | **Oui** — jusqu'à 1 m, toujours dans le sens prudent |
-| 1.2.0 | 2026-03-20 | Reprise de `RG-050` et `RG-090` : le terme *consommation moyenne* est remplacé par une formulation explicite de l'assiette, à la suite du retrait du terme au glossaire (v1.1.0) | Aucun — clarification de rédaction |
+| **2.0.0** | 2026-03-12 | `RG-100` : arrondi du point d'autonomie vers le bas (`Q-05`) | **Oui** — jusqu'à 1 m, toujours dans le sens prudent |
+| 2.0.1 | 2026-03-20 | Reprise de `RG-050` et `RG-090` : le terme *consommation moyenne* est remplacé par une formulation explicite de l'assiette, à la suite du retrait du terme au glossaire (v2.0.0) | Aucun — clarification de rédaction |
 
 ---
 

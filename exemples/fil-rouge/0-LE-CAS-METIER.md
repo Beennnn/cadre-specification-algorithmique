@@ -188,8 +188,8 @@ chemin. Chacune impose un outil de méthode, et ces outils, eux, resservent part
 | « Précis à combien ? » n'a pas une réponse mais trois. | **Les trois niveaux d'exactitude** : reproductibilité, justesse, validité du modèle |
 | Comment prouver que l'implémentation est juste, sans se comparer à elle-même ? | **L'oracle** : des formules fermées, calculables à la main, et un jeu d'essai qui en découle |
 | Comment le développeur choisit-il son langage et son architecture ? | **La fiche de contraintes**, chiffrée en unités métier |
-| Cinq propriétaires métier différents doivent écrire en parallèle. Comment ? | **Une fonction = un fichier = un propriétaire** — [guide 3](../../guides/3-ECRIRE-A-PLUSIEURS.md) |
-| Que remet-on exactement à l'équipe de développement ? | **Le dossier de passation** et son guide de lecture — [guide 4](../../guides/4-PASSER-AU-DEVELOPPEMENT.md) |
+| Cinq propriétaires métier différents doivent écrire en parallèle. Comment ? | **Une fonction = un fichier = un propriétaire** — [guide 3](../../guides/4-ECRIRE-A-PLUSIEURS.md) |
+| Que remet-on exactement à l'équipe de développement ? | **Le dossier de passation** et son guide de lecture — [guide 4](../../guides/6-PASSER-AU-DEVELOPPEMENT.md) |
 
 > **C'est là tout le pari du fil rouge.** On ne cherche pas à produire une bonne
 > spécification d'autonomie de véhicule électrique — cela n'intéresse que les
@@ -214,8 +214,8 @@ chemin. Chacune impose un outil de méthode, et ces outils, eux, resservent part
 | **0** | *Vous êtes ici* — comprendre le cas | cette page |
 | **1** | Identifier et nommer les fonctions, leur donner un propriétaire | [1-DECOUPAGE.md](1-DECOUPAGE.md) |
 | **2** | Fixer le vocabulaire commun | [2-GLOSSAIRE.md](2-GLOSSAIRE.md) |
-| **3** | Voir une fonction arrêtée au niveau 3 — un état assumé, pas inachevé | [3-FN-004](3-FN-004-planifier-les-recharges.md) |
-| **4** | La spécification complète, celle que le développement reçoit | [4-SPEC-NRG-001](4-SPEC-NRG-001-autonomie.md) |
+| **3** | Voir une fonction arrêtée au niveau 3 — un état assumé, pas inachevé | [4-FN-004](4-FN-004-planifier-les-recharges.md) |
+| **4** | La spécification complète, celle que le développement reçoit | [5-SPEC-NRG-001](5-SPEC-NRG-001-autonomie.md) |
 
 ## Ce qu'on obtient à l'arrivée
 

@@ -38,19 +38,24 @@ qu'il choisisse le langage, les structures de données et l'architecture.
 
 ## Les trois temps
 
-| | | Guide |
+| | Ce qu'on y fait | Guide |
 |---|---|---|
-| **1. Découper** | Identifier les fonctions, les nommer, leur donner un propriétaire, les ancrer dans le code existant | **[guides/1-DECOUPER.md](guides/1-DECOUPER.md)** |
-| **2. Écrire** | Le glossaire d'abord, puis les règles — à plusieurs, par lots, en revue croisée | **[guides/2-GLOSSAIRE.md](guides/2-GLOSSAIRE.md)** · **[guides/3-ECRIRE-A-PLUSIEURS.md](guides/3-ECRIRE-A-PLUSIEURS.md)** |
-| **3. Passer au développement** | Transmettre, pour que l'équipe puisse choisir l'architecture et le langage, coder, optimiser et qualifier | **[guides/4-PASSER-AU-DEVELOPPEMENT.md](guides/4-PASSER-AU-DEVELOPPEMENT.md)** |
+| **1. Découper** | Identifier les fonctions, les nommer, leur donner un propriétaire, les ancrer dans le code | **[1-DECOUPER](guides/1-DECOUPER.md)** |
+| **2. Nommer** | Fixer le vocabulaire commun — le premier livrable | **[2-GLOSSAIRE](guides/2-GLOSSAIRE.md)** |
+| **3. Tracer les données** | D'où elles viennent, qui en répond, ce qu'on fait quand elles manquent | **[3-DONNEES](guides/3-DONNEES.md)** |
+| **4. Écrire** | Les règles, à plusieurs, par lots, en revue croisée | **[4-ECRIRE-A-PLUSIEURS](guides/4-ECRIRE-A-PLUSIEURS.md)** |
+| **5. Valider** | Le jalon. Contrôles mécaniques, puis relecture qualité. **Rien ne part en développement avant** | **[5-VALIDER](guides/5-VALIDER.md)** |
+| **6. Passer au développement** | Transmettre, pour choisir l'architecture et le langage, coder, optimiser et qualifier | **[6-PASSER-AU-DEVELOPPEMENT](guides/6-PASSER-AU-DEVELOPPEMENT.md)** |
+| **7. Versionner** | Transverse : ce qui gouverne la vie d'après | **[7-VERSIONNER](guides/7-VERSIONNER.md)** |
 
 ## Ce que contient le dépôt
 
 | | |
 |---|---|
 | **[CADRE.md](CADRE.md)** | **Le document de référence.** Le principe, la frontière métier/technique, les huit faux amis, le pseudo-langage, l'adaptation au calcul scientifique, la fiche de contraintes, la gouvernance, les anti-patterns. À lire une fois, en entier |
-| **[guides/](guides/)** | Quatre guides opérationnels, à ouvrir pendant qu'on fait |
-| **[templates/](templates/)** | Les modèles vierges : spécification, fiche de fonction, glossaire, liste de vérification en revue |
+| **[guides/](guides/)** | Sept guides opérationnels, à ouvrir pendant qu'on fait |
+| **[outils/](outils/)** | Le catalogue des règles de contrôle, le vérificateur, et la consigne de relecture par une IA |
+| **[templates/](templates/)** | Les modèles vierges : spécification, fiche de fonction, fiche de donnée, glossaire, liste de vérification |
 | **[exemples/fil-rouge/](exemples/fil-rouge/)** | **Le fil rouge complet** : *l'autonomie d'un véhicule électrique*, du découpage jusqu'à la spécification détaillée |
 | **[GLOSSAIRE.md](GLOSSAIRE.md)** | Le vocabulaire de la méthode elle-même |
 | **[REFERENCES.md](REFERENCES.md)** | D'où viennent les idées, ce qu'on leur emprunte et ce qu'on écarte |
@@ -69,14 +74,15 @@ sur cinq propriétaires métier.
 
 On l'y suit de bout en bout : **[le cas métier](exemples/fil-rouge/0-LE-CAS-METIER.md)**
 → [le découpage](exemples/fil-rouge/1-DECOUPAGE.md) → [le
-glossaire](exemples/fil-rouge/2-GLOSSAIRE.md) → [une fiche arrêtée au niveau
-3](exemples/fil-rouge/3-FN-004-planifier-les-recharges.md) → [la spécification
-complète](exemples/fil-rouge/4-SPEC-NRG-001-autonomie.md).
+glossaire](exemples/fil-rouge/2-GLOSSAIRE.md) → [le cheminement des
+données](exemples/fil-rouge/3-DONNEES.md) → [une fiche arrêtée au niveau
+3](exemples/fil-rouge/4-FN-004-planifier-les-recharges.md) → [la spécification
+complète](exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md).
 
 **Deux vignettes** complètent l'illustration, gardées parce qu'elles aboutissent à des
 conclusions techniques **opposées** à partir de la même méthode :
 
-| | [Le montant à payer d'une commande](exemples/SPEC-PRX-001-montant-a-payer.md) | [Le refroidissement d'une boisson](exemples/SPEC-THM-001-refroidissement.md) | [L'autonomie d'un véhicule](exemples/fil-rouge/4-SPEC-NRG-001-autonomie.md) |
+| | [Le montant à payer d'une commande](exemples/SPEC-PRX-001-montant-a-payer.md) | [Le refroidissement d'une boisson](exemples/SPEC-THM-001-refroidissement.md) | [L'autonomie d'un véhicule](exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md) |
 |---|---|---|---|
 | Exigence d'exactitude | exacte au centime | tolérance de 10⁻⁶ | reproductibilité de 10⁻⁹ entre deux implémentations |
 | **Type numérique qui en découle** | **décimal exact obligatoire** | **double précision confortable** | **double précision indispensable** |
@@ -84,6 +90,23 @@ conclusions techniques **opposées** à partir de la même méthode :
 
 *Trois exigences différentes, trois conclusions différentes.* C'est la démonstration que
 c'est la spécification qui décide, et non l'habitude du développeur.
+
+## La validation, en deux étages
+
+Une spécification ne part pas en développement parce qu'elle a l'air prête, mais parce
+qu'elle a été **validée** — et la validation se fait dans cet ordre :
+
+| | Qui | Ce qu'on cherche |
+|---|---|---|
+| **Étage 1** | un script, puis une IA | des incohérences **formelles** : entrée déclarée jamais employée, paramètre fantôme qui circule, paramètre mort, règle non couverte, version incohérente |
+| **Étage 2** | trois relecteurs humains | de la **compréhensibilité** et de la justesse métier : « combien de fois aurais-je dû deviner ? » |
+
+L'ordre n'est pas négociable : faire relire par des humains un document qui contient
+encore un paramètre inutilisé gaspille la ressource la plus rare de la démarche.
+
+```bash
+python3 outils/verifier.py exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md
+```
 
 ## Le critère d'acceptation
 

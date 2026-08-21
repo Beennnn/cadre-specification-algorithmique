@@ -57,7 +57,7 @@ Quatre couples de lignes du §11 décident de presque tout :
 > Sur le fil rouge, c'est le couple *latence + mémoire* qui a écarté, à bord, tout
 > environnement à ramasse-miettes. Et c'est la ligne *qui modifie* qui a sorti le barème
 > de température du programme. Voir [l'annexe technique de
-> SPEC-NRG-001](../exemples/fil-rouge/4-SPEC-NRG-001-autonomie.md).
+> SPEC-NRG-001](../exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md).
 
 **Ce que la spécification ne vous dira pas, et que vous devez décider seul** : le
 découpage en services, le stockage, le protocole, la stratégie de déploiement, le cache.

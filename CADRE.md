@@ -602,21 +602,29 @@ bénéfice dure des années.
 
 ### 6.4 Le versionnement, en termes métier
 
+*Traité en détail dans le [guide 7 — Versionner](guides/7-VERSIONNER.md), qui couvre le
+quadruplet de rejouabilité, la distinction entre version et date d'effet, et le gel des
+versions.*
+
 | Incrément | Quand | Conséquence |
 |---|---|---|
 | **Majeur** (2.0.0) | Un résultat change pour au moins un cas | Nouvelle date d'effet, information des consommateurs, rejeu à prévoir |
 | **Mineur** (1.3.0) | Un cas nouveau est couvert, sans changer les résultats existants | Nouveaux tests, pas de rejeu |
 | **Correctif** (1.2.4) | Clarification de rédaction, sans aucun impact sur les résultats | Rien |
 
-L'auteur doit pouvoir justifier son incrément. « Ce n'est qu'une clarification » est la
-phrase à surveiller en revue : neuf fois sur dix c'est vrai, la dixième fois elle cache
-un changement de comportement.
+**Le test décisif est mécanique** : on rejoue le jeu d'essai de la version précédente sur
+la nouvelle. Si un seul cas change de résultat attendu, c'est un **majeur**. « Ce n'est
+qu'une clarification » est la phrase à surveiller en revue — neuf fois sur dix elle est
+vraie, la dixième fois ce test la démasque en trente secondes.
 
 Toute règle porte une **date d'effet** et, si elle est abrogée, une **date de fin
 d'effet**. Une règle abrogée n'est pas supprimée du document : elle est barrée et datée,
 parce qu'un rejeu sur une période antérieure doit pouvoir s'y référer.
 
 ### 6.5 Prêt à développer / prêt à livrer
+
+*Le jalon de validation est traité en détail dans le [guide 5 — Valider](guides/5-VALIDER.md),
+avec ses deux étages : contrôles mécaniques outillés, puis relecture qualité humaine.*
 
 **Prêt à développer** (la spécification peut partir en développement) :
 - [ ] Toutes les entrées et sorties sont typées, avec unité et domaine

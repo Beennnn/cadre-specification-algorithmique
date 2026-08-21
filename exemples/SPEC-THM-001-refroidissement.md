@@ -9,6 +9,7 @@
 | **Propriétaire de la règle** | *(rôle : Direction produit)* |
 | **Répondant technique** | *(rôle : Architecte applicatif)* |
 | **Date d'effet** | 2026-01-01 |
+| **Glossaire de référence** | interne — §3 de ce document |
 
 > **Note de lecture.** Exemple pédagogique du cadre décrit dans [CADRE.md](../CADRE.md),
 > appliqué à un **modèle physique**. Le phénomène — une boisson chaude qui refroidit —

@@ -3,6 +3,16 @@
 > Trois relecteurs, trois casquettes. Une spécification relue par une seule population
 > n'est relue par personne.
 
+**Avant d'ouvrir cette liste**, l'étage 1 de la validation doit être vert :
+
+```bash
+python3 outils/verifier.py <la spécification>
+```
+
+Les contrôles mécaniques `C-01` à `C-23` attrapent les entrées mortes, les paramètres
+fantômes, les règles non couvertes et les versions incohérentes. Cette liste-ci ne sert
+qu'à ce qu'eux ne savent pas voir — voir [guide 5](../guides/5-VALIDER.md).
+
 ---
 
 ## Relecteur métier — « est-ce juste et complet ? »
