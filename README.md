@@ -55,6 +55,7 @@ qu'il choisisse le langage, les structures de données et l'architecture.
 | **[GLOSSAIRE.md](GLOSSAIRE.md)** | Le vocabulaire de la méthode elle-même |
 | **[REFERENCES.md](REFERENCES.md)** | D'où viennent les idées, ce qu'on leur emprunte et ce qu'on écarte |
 | **[FAQ.md](FAQ.md)** | Les objections fréquentes, et leurs réponses |
+| **[CHANTIER.md](CHANTIER.md)** | L'état des travaux : ce qui est fait, les décisions déjà prises, ce qui reste ouvert |
 
 ## Le fil rouge
 
@@ -66,7 +67,8 @@ la question, il y a de la vraie physique avec des équations, il est assez compl
 être intéressant, et il se découpe naturellement en une douzaine de fonctions réparties
 sur cinq propriétaires métier.
 
-On l'y suit de bout en bout : [le découpage](exemples/fil-rouge/1-DECOUPAGE.md) → [le
+On l'y suit de bout en bout : **[le cas métier](exemples/fil-rouge/0-LE-CAS-METIER.md)**
+→ [le découpage](exemples/fil-rouge/1-DECOUPAGE.md) → [le
 glossaire](exemples/fil-rouge/2-GLOSSAIRE.md) → [une fiche arrêtée au niveau
 3](exemples/fil-rouge/3-FN-004-planifier-les-recharges.md) → [la spécification
 complète](exemples/fil-rouge/4-SPEC-NRG-001-autonomie.md).
@@ -99,8 +101,12 @@ valeur des formules) et **validité du modèle** (les formules décrivent la ré
 ## Par où commencer
 
 1. Lisez **[CADRE.md](CADRE.md)** une fois, en entier. C'est le seul document long.
-2. Parcourez le **[fil rouge](exemples/fil-rouge/)** pour voir à quoi ça ressemble.
-3. Faites l'**exercice d'étalonnage** : prenez un algorithme existant, connu, moyennement
+2. Lisez **[le cas métier du fil rouge](exemples/fil-rouge/0-LE-CAS-METIER.md)** : le
+   scénario expliqué simplement puis techniquement, et ce que sa formalisation va nous
+   forcer à construire. C'est la page à montrer à quelqu'un qui n'a que dix minutes.
+3. Parcourez le reste du **[fil rouge](exemples/fil-rouge/)** pour voir à quoi ça
+   ressemble une fois déroulé.
+4. Faites l'**exercice d'étalonnage** : prenez un algorithme existant, connu, moyennement
    complexe, écrivez-en la spécification *a posteriori*, et faites-la implémenter par
    quelqu'un qui ne connaît pas le domaine. Les écarts constatés convainquent — le
    discours, non.
