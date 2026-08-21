@@ -93,9 +93,10 @@ qu'à ce qu'eux ne savent pas voir — voir [guide 5](../guides/5-VALIDER.md).
 
 - [ ] Le jeu d'essai contient au moins : un cas nominal, un cas riche avec trace de
       calcul détaillée, les cas aux limites, les cas d'erreur.
-- [ ] Les résultats attendus ont été produits **indépendamment du composant à tester** —
-      calcul analytique, calcul à la main, ou maquette technique dont les sorties ont été
-      validées cas par cas — et **jamais** par le composant lui-même.
+- [ ] Chaque résultat attendu a été **examiné et accepté** par une personne du métier, et
+      la façon dont il l'a été est écrite : calcul analytique, calcul à la main, maquette,
+      ou analyse statique et dynamique du composant. Aucun résultat n'a été accepté
+      **parce qu'un programme l'a produit**.
 - [ ] La table de couverture existe, et chaque `RG-xxx` y figure — les cases vides sont
       nommées et suivies.
 - [ ] Les invariants sont écrits sous une forme testable sur des entrées quelconques.

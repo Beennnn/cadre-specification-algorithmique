@@ -1252,21 +1252,57 @@ attendu** — pas un extrait illustratif. Quand l'analyse d'écart le demandera
 ([guide 8](guides/8-ANALYSER-LES-ECARTS.md)), il donne aussi les **valeurs intermédiaires**
 attendues à chaque étape de la chaîne.
 
-### D'où viennent les résultats attendus
+### Ce qui rend un résultat attendu valide
 
-La règle n'est pas « calculés à la main ». Elle est plus précise, et elle tient en deux
-conditions :
+La règle n'est ni « calculé à la main », ni « produit indépendamment ». Ces deux
+formulations sont trop étroites : elles écartent des pratiques légitimes.
 
-> **Un résultat attendu est valide s'il est produit indépendamment du composant à tester,
-> et s'il est validé par le métier.**
+> **Ce qui fait la validité d'un résultat attendu, ce n'est pas d'où il vient — c'est
+> qu'une personne du métier l'ait examiné et accepté en connaissance de cause.**
 
-| Source | Qualité | Quand l'employer |
+Un résultat peut parfaitement provenir **du composant à tester lui-même**. C'est même le
+seul recours quand il n'existe ni solution analytique, ni étalon, ni moyen raisonnable de
+calculer la valeur à l'avance. Ce qui compte alors, c'est **la qualité de l'examen** qui
+précède l'acceptation.
+
+| Source du résultat candidat | Ce que l'examen doit établir |
+|---|---|
+| **Solution analytique** | que la formule employée est bien celle de la règle |
+| **Étalon, mesure de référence** | que les conditions de la mesure correspondent au cas |
+| **Calcul à la main** | que le calcul est juste, et refait par un second lecteur pour le cas riche |
+| **Maquette technique** | que la maquette applique bien les règles, et que ses sorties tiennent cas par cas |
+| **Le composant à tester** | qu'il calcule bien ce que la spécification décrit — par **analyse statique et dynamique** |
+
+### Examiner un résultat produit par le composant lui-même
+
+C'est le cas le plus exigeant, et il est parfaitement admissible s'il est mené
+sérieusement. Deux moyens, complémentaires :
+
+| | Ce qu'on fait | Ce que ça établit |
 |---|---|---|
-| **Solution analytique** — une vérité mathématique | la meilleure | dès qu'elle existe : formule fermée, propriété démontrable |
-| **Étalon certifié, mesure de référence** | excellente | quand le domaine en dispose |
-| **Calcul à la main** par le métier | très bonne | cas simples, cas aux limites, cas riche déroulé pas à pas |
-| **Maquette technique**, sorties validées cas par cas | bonne — voir ci-dessous | quand les cas sont trop nombreux ou trop lourds pour la main |
-| ❌ **La sortie du composant à tester** | nulle | jamais. Elle mesure la cohérence du programme avec lui-même |
+| **Analyse statique** | On lit ce que le composant fait à chaque étape et on le confronte à la règle correspondante | Que la règle écrite est bien celle qui est appliquée |
+| **Analyse dynamique** | On exécute en observant les **valeurs propagées** d'une étape à l'autre ; on fait varier une entrée et on vérifie que la sortie bouge comme la règle le prédit | Que le comportement suit la règle **hors du seul cas observé** |
+
+La seconde est celle qu'on néglige, et c'est la plus probante : constater qu'un chiffre
+est plausible ne prouve rien ; constater qu'il **réagit correctement** à une variation
+d'entrée prouve beaucoup. Faire varier la température de 5 °C et vérifier que l'autonomie
+diminue de l'ordre attendu vaut mieux que d'approuver une valeur isolée.
+
+Une fois examinés et acceptés, ces résultats deviennent la **référence de
+non-régression** : toute évolution ultérieure qui les modifie devra être expliquée.
+
+> **La contrepartie, à connaître :** un résultat accepté depuis le composant fige *ce que
+> le composant fait*, y compris ses défauts éventuels. L'examen est donc ce qui transforme
+> un simple constat en référence — et son ampleur doit être proportionnée à l'enjeu. On
+> écrit **comment** il a été mené : lu, rejoué, varié, comparé à quoi, par qui.
+
+### Le seul cas qui n'est jamais valide
+
+> **Accepter un résultat parce qu'un programme l'a produit, sans l'examiner.**
+
+C'est cela, l'oracle circulaire — et non le fait que la valeur vienne du composant. La
+faute n'est pas dans la provenance, elle est dans **l'absence de jugement**. Elle se
+reconnaît à une phrase : « c'est ce que ça sort aujourd'hui, on part de là. »
 
 ### La maquette technique
 
@@ -1509,7 +1545,7 @@ revient.
 | **La grandeur nue** | Un montant sans devise, une date sans fuseau, un poids sans unité | Cause classique d'écarts, découverts tard et cher |
 | **La performance en prose** | « il faut que ce soit rapide », « éviter les traitements lourds » | Non vérifiable, non actionnable → à remplacer par un chiffre dans la fiche de contraintes |
 | **La spécification qui impose la technique** | « stocker dans une table », « utiliser un cache » | Le métier sort de son mandat et empêche des solutions meilleures |
-| **L'oracle circulaire** | Les résultats attendus ont été produits par **le composant qu'ils doivent valider** — ou par une maquette dont le code de production dérive | Le test ne mesure plus que la cohérence du programme avec lui-même |
+| **L'oracle circulaire** | Un résultat a été accepté **parce qu'un programme l'a produit**, sans examen — « c'est ce que ça sort aujourd'hui, on part de là » | Le test ne mesure plus que la cohérence du programme avec lui-même. La faute est dans l'absence de jugement, pas dans la provenance |
 | **La maquette qui survit** | La maquette technique n'a pas été abandonnée après le développement | En dix-huit mois, un second système non testé, sans responsable, dont les résultats contredisent périodiquement ceux du vrai |
 | **La spécification rétroactive** | Écrite après le code, pour la forme | On paie le coût de la démarche sans en avoir le bénéfice |
 | **Le paramètre enfermé dans la règle** | Un seuil écrit en toutes lettres au milieu du pseudo-code | Chaque décision commerciale devient une livraison logicielle |

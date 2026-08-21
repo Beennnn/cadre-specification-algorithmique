@@ -217,6 +217,23 @@ recourir ; c'est même ce que la déclaration de dimension du §2.3 lui permet d
 
 ---
 
+## Capturer le comportement existant
+
+> **Michael Feathers, *Working Effectively with Legacy Code*, 2004** — les *characterization
+> tests* : des tests qui capturent le comportement actuel d'un composant pour servir de
+> référence, avant toute modification.
+
+**Ce qu'on emprunte** : l'idée qu'un comportement observé peut légitimement devenir une
+référence de non-régression, y compris quand on ne dispose d'aucune vérité indépendante.
+
+**Ce qu'on y ajoute, et c'est essentiel** : un test de caractérisation, seul, fige *ce que
+le programme fait* — défauts compris. Ce qui le transforme en oracle, c'est **l'examen par
+le métier** : analyse statique pour vérifier que la règle appliquée est bien celle qui est
+écrite, analyse dynamique pour vérifier que le comportement suit la règle hors du seul cas
+observé. Sans cet examen, on n'a pas un oracle, on a un constat.
+
+---
+
 ## L'expression de l'incertitude
 
 > **JCGM 100 — *Guide to the expression of uncertainty in measurement* (GUM), et son
