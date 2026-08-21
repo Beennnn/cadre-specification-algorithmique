@@ -78,20 +78,78 @@ lot de fonctions. Le [versionnement](guides/7-VERSIONNER.md) court en travers de
 
 ---
 
-## Trois idées qui portent le reste
+## Le partage des rôles
 
-### La frontière se tranche par une seule question
+### Les deux dérives
+
+Elles sont symétriques, et aucune n'est volontaire.
+
+| Le métier fait le travail du développeur | Le développeur fait le travail du métier |
+|---|---|
+| Il écrit du code qui finit en production | Il choisit un arrondi, et son sens |
+| Il choisit des structures de données, optimise | Il décide quoi faire d'une donnée absente |
+| Il impose une technologie dans la spécification | Il départage deux valeurs ex æquo |
+| Il fige un format de stockage, un ordre d'exécution | Il fixe un seuil, une valeur par défaut |
+| Il se prononce sur la performance | Il décide du comportement en mode dégradé |
+
+À gauche, on demande une expertise logicielle à qui ne l'a pas. À droite, on laisse
+trancher des questions **comptables, contractuelles ou réglementaires** à quelqu'un qui
+n'a ni le mandat ni les éléments — et le plus souvent sans qu'il s'en aperçoive.
+
+### La question qui tranche
 
 > Si modifier ce point change un résultat observable par un client, un comptable, un
 > régulateur ou un opérateur → **c'est du métier**.
 > Si ça ne change que le temps, la mémoire, le coût ou la façon de déployer → **c'est de la
 > technique**.
 
-Ce qui fait tomber du côté métier une série de points qu'on croit techniques : les
+Elle fait basculer du côté métier toute une série de points qu'on croit techniques : les
 arrondis, l'ordre des opérations non commutatives, le départage des ex æquo, le traitement
-des valeurs absentes, les bornes, et le comportement en mode dégradé. Ce sont les
-[huit faux amis](CADRE.md), et ils causent l'essentiel des écarts entre deux
-implémentations honnêtes.
+des valeurs absentes, les bornes, le mode dégradé. Ce sont les [huit faux amis](CADRE.md),
+et ils causent l'essentiel des écarts entre deux implémentations honnêtes.
+
+### Le rôle du métier
+
+**Il décrit ce qui doit être calculé, et à partir de quoi.**
+
+| Il décide | Il ne décide pas |
+|---|---|
+| Les règles, et leur ordre quand il change le résultat | Le langage, l'architecture, les structures de données |
+| Les paramètres, les seuils, les plafonds, les barèmes | La parallélisation, le cache, le déploiement |
+| Les arrondis, leur sens, le sort du reste | Les optimisations |
+| Le départage des ex æquo | L'endroit du code où la fonction vivra |
+| Le comportement sur donnée absente ou invalide | Le format de stockage et de sérialisation |
+| Le mode dégradé quand une dépendance tombe | |
+| Les contraintes **chiffrées en unités métier** : volumes, latence acceptable, exactitude, rejouabilité, fréquence de changement | |
+| Les données de référence, et leur validation | |
+| Si un écart constaté est significatif | |
+
+Et il **atteste** que l'expression fonctionnelle est juste, puis tranche les questions
+ouvertes qui s'y rapportent.
+
+### Le rôle de la technique
+
+**Elle décide comment c'est calculé, et elle en répond dans la durée.**
+
+| Elle décide | Elle ne décide pas |
+|---|---|
+| Le langage, l'architecture, les structures de données | Une règle, un seuil, un arrondi |
+| L'algorithme retenu, les optimisations, la parallélisation | Le départage d'un ex æquo |
+| Le stockage, le cache, le déploiement, l'observabilité | Le sort d'une donnée absente |
+| Le découpage du code et son organisation | Le comportement en mode dégradé |
+| Comment la qualité tient dans la durée : maintenabilité, testabilité, performance, sécurité | Si un écart est acceptable |
+
+Et elle **co-écrit la fiche de contraintes**, signale ce qui coûtera cher, vérifie qu'elle
+peut coder sans reposer de question, implémente, teste contre les données de référence, et
+fournit au métier les moyens de voir — les valeurs propagées, l'analyse statique et
+dynamique.
+
+> **Quand elle rencontre un cas non prévu — et elle en rencontrera — elle ne tranche pas :
+> elle ouvre une question ou une suggestion de modification.** Le développeur propose, le
+> valideur métier dispose. Une décision métier prise dans un commit est une décision
+> perdue.
+
+## Deux mécanismes qui font tenir ce partage
 
 ### La validation se fait en trois étages, dans cet ordre
 
@@ -110,7 +168,8 @@ l'étage 3 est **binaire**, et le critère de sortie est **zéro question**.
 Quand le métier a examiné et accepté les sorties par rapport aux entrées, le couple cesse
 d'être un exemple : il devient un **engagement opposable**, attaché à une fonction, une
 version, un valideur et une date. Il sert à qualifier le code, à **tester la
-non-régression**, et à comparer deux implémentations.
+non-régression** — c'est ce qui rend l'optimisation sans peur, donc possible — et à
+comparer deux implémentations.
 
 Ce qui rend un tel résultat valide n'est pas sa provenance mais **l'examen** qui précède son
 acceptation. Il peut donc venir d'une solution analytique, d'un calcul à la main, d'une

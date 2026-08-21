@@ -131,6 +131,34 @@ Ce n'est pas une répartition de tâches, c'est une répartition de **souveraine
   « stocker dans une table indexée sur la référence produit » est aussi fautive qu'un
   développeur qui décide seul d'arrondir au centime inférieur.
 
+#### Ce que chacun décide, et ce qu'il ne décide pas
+
+| | **Le métier décide** | **La technique décide** |
+|---|---|---|
+| | Les règles, et leur ordre quand il change le résultat | Le langage, l'architecture, les structures de données |
+| | Les paramètres, seuils, plafonds, barèmes | L'algorithme retenu, les optimisations, la parallélisation |
+| | Les arrondis, leur sens, le sort du reste | Le stockage, le cache, le déploiement, l'observabilité |
+| | Le départage des ex æquo | Le découpage du code et son organisation |
+| | Le comportement sur donnée absente ou invalide | Comment la qualité tient dans la durée |
+| | Le mode dégradé quand une dépendance tombe | |
+| | Les contraintes chiffrées en unités métier | |
+| | Les données de référence et leur validation | |
+| | Si un écart constaté est significatif | |
+
+**Les deux dérives que ce partage corrige** sont symétriques, et aucune n'est volontaire :
+
+| Le métier fait le travail du développeur | Le développeur fait le travail du métier |
+|---|---|
+| Il écrit du code qui finit en production | Il choisit un arrondi, et son sens |
+| Il choisit des structures de données, optimise | Il décide quoi faire d'une donnée absente |
+| Il impose une technologie dans la spécification | Il départage deux valeurs ex æquo |
+| Il fige un format de stockage, un ordre d'exécution | Il fixe un seuil, une valeur par défaut |
+| Il se prononce sur la performance | Il décide du comportement en mode dégradé |
+
+À gauche, on demande une expertise logicielle à qui ne l'a pas. À droite, on laisse
+trancher des questions comptables, contractuelles ou réglementaires à quelqu'un qui n'a ni
+le mandat ni les éléments — et le plus souvent sans qu'il s'en aperçoive.
+
 L'objectif de forme qui découle du principe : **la spécification doit contraindre le
 résultat et libérer le chemin.** Chaque fois qu'on peut décrire un résultat plutôt
 qu'un parcours, on le fait — c'est ce qui laisse au développeur la latitude de
