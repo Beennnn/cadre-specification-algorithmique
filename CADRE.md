@@ -63,8 +63,8 @@ n'invente pas : il ouvre une **question** dans la spécification, et le métier 
 ### 1.1 Le problème qu'on cherche à résoudre
 
 Dans beaucoup d'organisations, la connaissance algorithmique est détenue par des gens
-dont le métier n'est pas de développer : actuaires, analystes de risque, ingénieurs
-process, tarificateurs, chargés de conformité, chercheurs, contrôleurs de gestion. Ces
+dont le métier n'est pas de développer : chercheurs, ingénieurs process, métrologues,
+thermiciens, biostatisticiens, géophysiciens, chargés de conformité. Ces
 personnes codent quand même — parce que c'est le seul moyen de vérifier qu'une idée
 tient. **Ce travail est légitime, et souvent excellent** : il remplit exactement l'office
 qu'on lui demande, démontrer qu'un raisonnement fonctionne.
@@ -84,8 +84,8 @@ apprentissage, au même titre que l'actuariat ou la métrologie.
 
 > **On ne peut pas raisonnablement attendre cette expertise de personnes dont le métier
 > est de concevoir et de maintenir les besoins algorithmiques métier** — pas plus qu'on
-> n'attendrait d'un développeur qu'il maîtrise la tarification d'un contrat ou la
-> physique d'un capteur.
+> n'attendrait d'un développeur qu'il maîtrise la thermodynamique d'un échangeur ou la
+> chaîne d'étalonnage d'un capteur.
 
 Il ne s'agit donc pas de compétences manquantes, mais de **deux expertises distinctes**,
 qu'aucune organisation ne devrait demander aux mêmes personnes de cumuler.
@@ -110,9 +110,9 @@ plus « on retient le prix le plus bas » — une règle de gestion, décidée, 
 
 Et l'effet symétrique est tout aussi coûteux : **quand la spécification est floue, c'est
 le développeur qui tranche des questions métier**, sans le savoir et sans mandat. Il
-choisit un arrondi, une valeur par défaut sur une donnée absente, un ordre d'application
-de deux remises. Ces décisions ont des conséquences comptables, contractuelles et parfois
-réglementaires.
+choisit un arrondi, une valeur par défaut sur une donnée absente, l'ordre dans lequel il
+somme mille mesures. Ces décisions ont des conséquences sur la justesse du résultat, sur
+sa reproductibilité, et parfois sur sa conformité réglementaire.
 
 Dans un sens comme dans l'autre, **on demande à chacun de faire le métier de l'autre** —
 et c'est cela, et cela seul, que la méthode cherche à corriger.
@@ -156,7 +156,7 @@ Ce n'est pas une répartition de tâches, c'est une répartition de **souveraine
 | Il se prononce sur la performance | Il décide du comportement en mode dégradé |
 
 À gauche, on demande une expertise logicielle à qui ne l'a pas. À droite, on laisse
-trancher des questions comptables, contractuelles ou réglementaires à quelqu'un qui n'a ni
+trancher des questions de justesse, de tolérance ou de conformité à quelqu'un qui n'a ni
 le mandat ni les éléments — et le plus souvent sans qu'il s'en aperçoive.
 
 L'objectif de forme qui découle du principe : **la spécification doit contraindre le
@@ -215,11 +215,15 @@ spécification doit les traiter explicitement, toujours :
 1. **L'arrondi.** À quelle étape ? À combien de décimales ? Dans quel sens
    (commercial, inférieur, supérieur, au pair) ? Et surtout : *que fait-on du centime
    résiduel* quand la somme des lignes arrondies ne retombe pas sur le total arrondi ?
-2. **L'ordre des opérations non commutatives.** Deux remises de 10 % et de 5 € ne
-   donnent pas le même résultat selon l'ordre. Le métier tranche, et écrit pourquoi.
-3. **Le départage des ex æquo.** « On retient l'offre la moins chère » — et s'il y en a
-   deux ? Sans règle de départage, le résultat dépend de l'ordre de lecture des données,
-   donc de l'implémentation, donc il n'est pas reproductible.
+2. **L'ordre des opérations non commutatives.** Sommer mille mesures en virgule
+   flottante ne donne pas le même résultat selon l'ordre : additionnées de la plus
+   petite à la plus grande, ou dans l'ordre d'acquisition, les derniers chiffres
+   diffèrent. De même, arrondir puis sommer n'est pas sommer puis arrondir. Le métier
+   tranche, et écrit pourquoi.
+3. **Le départage des ex æquo.** « On retient la mesure la plus proche de la consigne »
+   — et s'il y en a deux, à égale distance de part et d'autre ? Sans règle de
+   départage, le résultat dépend de l'ordre de lecture des données, donc de
+   l'implémentation, donc il n'est pas reproductible.
 4. **Les valeurs absentes.** Une donnée manquante : on rejette, on prend une valeur par
    défaut, on ignore la ligne, on dégrade ? Chacune de ces réponses est une décision
    métier différente, aux conséquences différentes.
@@ -227,14 +231,16 @@ spécification doit les traiter explicitement, toujours :
    bascule ? Quelle date fait foi : la date de l'événement, celle de sa saisie, ou
    celle du calcul ? Et lors d'un rejeu, on utilise les règles d'aujourd'hui ou celles
    en vigueur à la date de l'événement ?
-6. **Les unités et les échelles.** Et le facteur de conversion : lequel, à quelle date, de
-   quelle source, arrondi comment ?
+6. **Les unités et les échelles.** Une longueur en mètres ou en pieds, un angle en
+   degrés ou en radians, une température en °C ou en K. Et le facteur de conversion :
+   lequel, de quelle source, appliqué à quelle étape, arrondi comment ?
 7. **Les bornes.** Un seuil est-il atteint à `≥` ou à `>` ? Un plafond écrête-t-il ou
    rejette-t-il ? Une boucle a-t-elle un nombre maximal d'itérations, et que se
    passe-t-il si on l'atteint ?
-8. **Le comportement en cas d'erreur.** « Le service de fidélité est indisponible » :
-   on refuse la commande, ou on la passe sans fidélité en prévenant le client ? C'est
-   une décision commerciale, pas une décision d'exploitation.
+8. **Le comportement en cas d'erreur.** « Le capteur de température ambiante ne répond
+   plus » : on refuse de produire un résultat, ou on le produit avec la dernière valeur
+   connue en signalant la dégradation ? C'est une décision métier, pas une décision
+   d'exploitation.
 
 Et symétriquement, les points qui *ressemblent* à du métier et qui n'en sont pas : le
 cache, le traitement par lots ou au fil de l'eau, le nombre de tentatives, l'index, la
@@ -248,8 +254,9 @@ montée en charge, le choix entre un moteur de règles et du code. Le métier fo
 ### 2.1 Ce qu'on cherche
 
 Un pseudo-langage n'est pas un langage de programmation simplifié : c'est du **français
-discipliné**. Il doit être lisible par un juriste, un auditeur ou un nouveau venu dans
-l'équipe, et exécutable mentalement sans ambiguïté par un développeur.
+discipliné**. Il doit être lisible par **un expert du domaine qui ne programme pas**, par
+un auditeur ou par un nouveau venu dans l'équipe, et exécutable mentalement sans ambiguïté
+par un développeur.
 
 Trois qualités à tenir, dans cet ordre :
 
