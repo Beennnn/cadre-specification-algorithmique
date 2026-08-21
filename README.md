@@ -80,74 +80,34 @@ lot de fonctions. Le [versionnement](guides/7-VERSIONNER.md) court en travers de
 
 *Les quatre sections qui suivent disent qui fait quoi, et pourquoi ce partage tient.*
 
-## Les deux dérives
+## Qui décide quoi
 
-Elles sont symétriques, et aucune n'est volontaire.
+> **Le métier écrit la loi, la technique écrit la machine.**
+> Le métier décrit *ce qui doit être calculé, et à partir de quoi*. La technique décide
+> *comment*, et en assume la tenue dans la durée.
 
-| Le métier fait le travail du développeur | Le développeur fait le travail du métier |
-|---|---|
-| Il écrit du code qui finit en production | Il choisit un arrondi, et son sens |
-| Il choisit des structures de données, optimise | Il décide quoi faire d'une donnée absente |
-| Il impose une technologie dans la spécification | Il départage deux valeurs ex æquo |
-| Il fige un format de stockage, un ordre d'exécution | Il fixe un seuil, une valeur par défaut |
-| Il se prononce sur la performance | Il décide du comportement en mode dégradé |
+Ce n'est pas un partage de tâches, c'est un partage de **souveraineté** : aucun des deux
+ne se prononce dans le champ de l'autre. Une spécification qui impose une table indexée
+est aussi fautive qu'un développeur qui décide seul du sens d'un arrondi.
 
-À gauche, on demande une expertise logicielle à qui ne l'a pas. À droite, on laisse
-trancher des questions **comptables, contractuelles ou réglementaires** à quelqu'un qui
-n'a ni le mandat ni les éléments — et le plus souvent sans qu'il s'en aperçoive.
+**La question qui tranche :**
 
-## La question qui tranche
+> Si modifier ce point change **un résultat observable** → c'est du **métier**.
+> Si ça ne change que le temps, la mémoire, le coût ou le déploiement → c'est de la
+> **technique**.
 
-> Si modifier ce point change un résultat observable par un client, un comptable, un
-> régulateur ou un opérateur → **c'est du métier**.
-> Si ça ne change que le temps, la mémoire, le coût ou la façon de déployer → **c'est de la
-> technique**.
+Elle fait basculer côté métier toute une série de points qu'on croit techniques : les
+arrondis, l'ordre des opérations non commutatives, le départage des ex æquo, le
+traitement des valeurs absentes, les bornes, le mode dégradé. Ce sont les **huit faux
+amis**, et ils causent l'essentiel des écarts entre deux implémentations honnêtes.
 
-Elle fait basculer du côté métier toute une série de points qu'on croit techniques : les
-arrondis, l'ordre des opérations non commutatives, le départage des ex æquo, le traitement
-des valeurs absentes, les bornes, le mode dégradé. Ce sont les [huit faux amis](CADRE.md),
-et ils causent l'essentiel des écarts entre deux implémentations honnêtes.
+> **Quand la technique rencontre un cas non prévu — et elle en rencontrera — elle ne
+> tranche pas : elle ouvre une question ou une suggestion de modification.** Le
+> développeur propose, le valideur métier dispose. Une décision métier prise dans un
+> commit est une décision perdue.
 
-## Le rôle du métier
-
-> **Il décrit ce qui doit être calculé, et à partir de quoi.**
-
-| Il décide | Il ne décide pas |
-|---|---|
-| Les règles, et leur ordre quand il change le résultat | Le langage, l'architecture, les structures de données |
-| Les paramètres, les seuils, les plafonds, les barèmes | La parallélisation, le cache, le déploiement |
-| Les arrondis, leur sens, le sort du reste | Les optimisations |
-| Le départage des ex æquo | L'endroit du code où la fonction vivra |
-| Le comportement sur donnée absente ou invalide | Le format de stockage et de sérialisation |
-| Le mode dégradé quand une dépendance tombe | |
-| Les contraintes **chiffrées en unités métier** : volumes, latence acceptable, exactitude, rejouabilité, fréquence de changement | |
-| Les données de référence, et leur validation | |
-| Si un écart constaté est significatif | |
-
-Et il **atteste** que l'expression fonctionnelle est juste, puis tranche les questions
-ouvertes qui s'y rapportent.
-
-## Le rôle de la technique
-
-> **Elle décide comment c'est calculé, et elle en assume la tenue dans la durée.**
-
-| Elle décide | Elle ne décide pas |
-|---|---|
-| Le langage, l'architecture, les structures de données | Une règle, un seuil, un arrondi |
-| L'algorithme retenu, les optimisations, la parallélisation | Le départage d'un ex æquo |
-| Le stockage, le cache, le déploiement, l'observabilité | Le sort d'une donnée absente |
-| Le découpage du code et son organisation | Le comportement en mode dégradé |
-| Comment la qualité tient dans la durée : maintenabilité, testabilité, performance, sécurité | Si un écart est acceptable |
-
-Et elle **co-écrit la fiche de contraintes**, signale ce qui coûtera cher, vérifie qu'elle
-peut coder sans reposer de question, implémente, teste contre les données de référence, et
-fournit au métier les moyens de voir — les valeurs propagées, l'analyse statique et
-dynamique.
-
-> **Quand elle rencontre un cas non prévu — et elle en rencontrera — elle ne tranche pas :
-> elle ouvre une question ou une suggestion de modification.** Le développeur propose, le
-> valideur métier dispose. Une décision métier prise dans un commit est une décision
-> perdue.
+→ Le partage détaillé, les deux dérives qu'il corrige et les huit faux amis, un par un :
+**[CADRE §1.2 à §1.5](CADRE.md)**.
 
 ## La place de l'IA
 
@@ -364,11 +324,8 @@ décide, et non l'habitude du développeur.
 
 Si ce n'est pas vrai, la spécification n'est pas finie.
 
-Sur des grandeurs continues, ce critère se dédouble en **reproductibilité** (deux
-implémentations conformes donnent le même nombre), **justesse numérique** (le nombre est la
-vraie valeur des formules) et **validité du modèle** (les formules décrivent la réalité).
-Confondre les trois transforme chaque écart de mesure en rapport de bogue — voir
-[CADRE §2.9](CADRE.md).
+→ Ce qu'il devient sur des grandeurs continues, où il se dédouble en reproductibilité,
+justesse numérique et validité du modèle : **[CADRE §1.3 et §2.9](CADRE.md)**.
 
 ## Par où commencer
 
@@ -381,7 +338,5 @@ Confondre les trois transforme chaque écart de mesure en rapport de bogue — v
    quelqu'un qui ne connaît pas le domaine. Les écarts constatés convainquent — le
    discours, non.
 
-> Ce cadre est un outil, pas un règlement. Une section qui ne sert jamais doit être
-> supprimée ; une question qui revient toujours doit être ajoutée à la liste de
-> vérification. La seule règle non négociable est la première : **la spécification s'écrit
-> avant le code**.
+> La seule règle non négociable : **la spécification s'écrit avant le code.** Tout le
+> reste est un outil, pas un règlement — [CADRE.md](CADRE.md) dit comment l'adapter.
