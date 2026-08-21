@@ -29,7 +29,7 @@ chaque équipe produit pour son propre métier ([guide 2](guides/2-GLOSSAIRE.md)
 | **Rang** | Le nombre d'axes d'un symbole structuré. Une liste est de rang 1, une matrice de rang 2. |
 | **Résolution** | Le pas d'une valeur — 2 décimales, 6 chiffres significatifs. Propriété de représentation, distincte de l'**incertitude**. |
 | **Paramètre** (`P-xx`) | Une valeur qui peut changer sans que la logique change : seuil, taux, barème. Porte un propriétaire, un circuit de modification et une date d'effet. Ne vit jamais au milieu d'une règle. |
-| **Propriétaire de la règle** | La personne qui **répond** d'une règle et arbitre les questions ouvertes qui la concernent. Une personne, jamais un comité. |
+| **Propriétaire de la règle** | La personne qui **décide de ce que la règle dit**, arbitre les questions ouvertes qui la concernent, et valide tout changement de son comportement. Une personne nommée, jamais un comité. Ce n'est ni l'auteur du document, ni celui qui l'implémente. |
 | **Unité pivot** | L'unité dans laquelle une grandeur circule et se calcule — l'unité SI de sa dimension, sauf exception déclarée. Toute valeur entrante y est convertie une fois, au bord. |
 | **Unité d'usage** | L'unité dans laquelle la grandeur est saisie et affichée : `km/h` là où le pivot est `m·s⁻¹`. C'est une décision métier, pas d'affichage. |
 | **Pseudo-langage** | Le français discipliné dans lequel les règles sont écrites : structuré, typé, sans construction propre à un langage de programmation. |

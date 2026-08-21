@@ -41,7 +41,9 @@ Dans les deux cas, **on demande à chacun de faire le métier de l'autre**.
 Une **spécification fonctionnelle** en deux volets :
 
 1. **L'architecture fonctionnelle** — quelles fonctions existent, comment elles
-   s'appellent, qui en répond, où elles vivent dans le code, quel est leur contrat.
+   s'appellent, **qui décide de ce qu'elles font**, et quel est leur contrat d'entrée et
+   de sortie. Rien sur l'endroit où elles seront codées : ce découpage-là appartient au
+   développeur et à l'architecte.
 2. **La spécification de chaque fonction** — les règles, en pseudo-langage, avec leurs
    paramètres, leurs invariants, leur jeu d'essai et leurs contraintes chiffrées.
 
@@ -54,7 +56,7 @@ qu'il choisisse le langage, les structures de données et l'architecture.
 |---|---|---|
 | **1. Découper** | Identifier les fonctions, les nommer, leur donner un propriétaire, fixer leur contrat | **[1-DECOUPER](guides/1-DECOUPER.md)** |
 | **2. Nommer** | Fixer le vocabulaire commun — le premier livrable | **[2-GLOSSAIRE](guides/2-GLOSSAIRE.md)** |
-| **3. Tracer les données** | D'où elles viennent, qui en répond, ce qu'on fait quand elles manquent | **[3-DONNEES](guides/3-DONNEES.md)** |
+| **3. Tracer les données** | D'où elles viennent, qui en est responsable, ce qu'on fait quand elles manquent | **[3-DONNEES](guides/3-DONNEES.md)** |
 | **4. Écrire** | Les règles, à plusieurs, par lots, en revue croisée | **[4-ECRIRE-A-PLUSIEURS](guides/4-ECRIRE-A-PLUSIEURS.md)** |
 | **5. Valider** | Le jalon. Contrôles mécaniques, puis relecture qualité. **Rien ne part en développement avant** | **[5-VALIDER](guides/5-VALIDER.md)** |
 | **6. Passer au développement** | Transmettre, pour choisir l'architecture et le langage, coder, optimiser et qualifier | **[6-PASSER-AU-DEVELOPPEMENT](guides/6-PASSER-AU-DEVELOPPEMENT.md)** |

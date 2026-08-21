@@ -8,7 +8,8 @@ données du périmètre, leur source, et le diagramme de leur cheminement.*
 ## Pourquoi, alors qu'on a déjà les contrats
 
 Un contrat typé dit **ce qui entre** dans une fonction. Il ne dit ni **d'où ça vient**, ni
-**qui en répond**, ni **ce qui se passe quand ça manque**.
+**qui en est responsable** — au sens de : qui garantit sa définition et sa qualité, et
+qu'on prévient quand elle change — ni **ce qui se passe quand elle manque**.
 
 Or ces trois questions décident de choses très concrètes :
 

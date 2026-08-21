@@ -50,7 +50,7 @@ c'est la seule dont une erreur laisse un conducteur en panne au bord de la route
 autres attendent d'en avoir besoin.
 
 **Un niveau 0 assumé.** `FN-009` est identifiée et nommée, rien de plus. C'est un état
-légitime : on sait qu'elle existe, on sait qui en répond, on n'a pas encore eu besoin
+légitime : on sait qu'elle existe, on sait qui en est responsable, on n'a pas encore eu besoin
 d'en savoir plus. L'écrire évite qu'elle soit redécouverte dans six mois comme une
 surprise.
 
@@ -102,8 +102,8 @@ confirmation qu'on aime avoir.
 
 | Action | Qui | Quand |
 |---|---|---|
-| Monter `FN-004` au niveau 4 | Expérience client + R&D Batterie | prochain lot |
-| Ancrer `FN-005` à `FN-008` dans le code existant (niveau 2) | les développeurs | en continu |
+| Monter `FN-004` au niveau 3 | Expérience client + R&D Batterie | prochain lot |
+| Monter `FN-005` à `FN-008` au niveau 2 — leur contrat typé | leurs propriétaires métier | en continu |
 | Trancher : `FN-009` doit-elle exister, ou est-ce une amélioration de `FN-001` ? | R&D Énergie | avant le prochain lot |
 
 ## Annexe — Identités

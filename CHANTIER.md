@@ -45,7 +45,7 @@ d'absence), et les quatre qui demandent un jugement.
 | 2 | **Un seul fil rouge**, décliné dans tous les guides | Mieux qu'une collection d'exemples jetables : le lecteur capitalise |
 | 3 | **Le fil rouge est l'autonomie d'un véhicule électrique** | Universel, avec de vraies équations, assez complexe, et il se découpe en 12 fonctions sur 5 propriétaires. Deux fils rouges antérieurs écartés : la commande en ligne (pas d'équations), la détection de pics (trop proche de l'instrumentation) |
 | 4 | **Les deux vignettes sont conservées** | Elles aboutissent à trois conclusions opposées sur le type numérique — c'est la démonstration que la spécification décide, pas l'habitude |
-| 5 | **Ancrage dans le code : chemin + symbole** (option 1) | Vérifiable automatiquement, faible effort. Le marqueur `@fonction FN-xxx` dans le code (option 2) viendra quand la carte servira vraiment. **Ce choix n'a pas encore été confirmé par le propriétaire du dépôt** |
+| ~~5~~ | ~~Ancrage dans le code~~ — **annulée par la décision 18** : la spécification ne pointe jamais vers le code | |
 | 6 | **Pas de langage formel** (B, TLA+, Alloy) | Une spec que le métier ne peut pas relire est une spec que le métier n'écrit pas. Argumenté dans `REFERENCES.md` |
 | 7 | **Échelle de maturité en 5 niveaux** | C'est ce qui rend la démarche applicable à un existant sans tout spécifier |
 

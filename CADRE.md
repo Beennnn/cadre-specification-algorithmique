@@ -1189,7 +1189,7 @@ que c'est le document que le développement lira. Elles portent des identifiants
 « Utiliser Java » n'est pas une exigence. « Le logiciel du calculateur respecte le
 sous-ensemble MISRA C:2012 — politique de sûreté logicielle `DIR-SUR-004`, direction
 Sûreté, vérifié par analyse statique bloquante en intégration » en est une. La différence
-n'est pas de forme : la seconde a quelqu'un qui en répond et un moyen de prouver qu'elle
+n'est pas de forme : la seconde a un responsable nommé et un moyen de prouver qu'elle
 est tenue.
 
 Chaque `EX-xxx` porte donc quatre choses, et les quatre sont obligatoires :
