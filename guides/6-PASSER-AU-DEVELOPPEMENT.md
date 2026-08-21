@@ -99,6 +99,11 @@ Trois lignes du §11 pèsent plus que toutes les préférences d'équipe :
 - Les règles écrites en **opérations d'ensemble** (`SOMME DES`, `FILTRER`, `REGROUPER
   PAR`) vous laissent explicitement libres : agrégation en mémoire, requête en base,
   vectorisation. Rien de tout cela ne peut trahir la règle.
+- **Faites contrôler les citations dans votre intégration continue**, dans les deux sens :
+  toute `RG-xxx` de la spécification est citée dans le code et dans un test ; toute
+  citation présente dans le code référence une règle qui existe encore. Ce contrôle vit
+  chez vous, pas dans le dépôt de méthode — et une IA sait le poser et le maintenir
+  ([guide 9](9-L-APPORT-DE-L-IA.md)).
 - **Ne corrigez jamais une règle en silence.** Si vous rencontrez un cas non prévu — et
   vous en rencontrerez —, ouvrez une `Q-xx` dans la spécification. Une décision métier
   prise dans un commit est une décision perdue.

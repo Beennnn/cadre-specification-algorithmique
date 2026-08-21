@@ -61,13 +61,71 @@ Puis la consigne prête à l'emploi : [`outils/PROMPT-RELECTURE-IA.md`](../outil
 | **4 Écrire** | Reformuler de la prose en pseudo-langage ; transformer des `SI` imbriqués en table de décision ; signaler une boucle qui pourrait être une opération d'ensemble | Le métier — **elle ne fournit jamais la règle** |
 | **5 Jeu d'essai** | **Proposer les cas aux limites qu'on n'a pas pensés** : zéro, vide, un seul élément, valeur exactement au seuil, ex æquo, demi-centime, bascule de date, dépassement de plafond. Calculer les résultats attendus | Le métier — les résultats restent des **candidats jusqu'à examen** |
 | **7–8 Valider** | Tout ce qui précède, en une passe exhaustive | Les trois relecteurs |
-| **10 Coder et tester** | Produire une implémentation candidate ; transformer chaque `CT-xx` en test nommé ; dériver des tests de propriété depuis les invariants | Le développeur, qui répond de l'architecture, de la qualité dans la durée et de ce qu'il livre |
+| **10 Coder et tester** | Produire une implémentation candidate ; appliquer les **règles de codage** de l'équipe ; écrire **commentaires et documentation** ; poser les **annotations de traçabilité** vers la spécification et en vérifier la cohérence ; transformer chaque `CT-xx` en test nommé ; dériver des tests de propriété depuis les invariants — voir ci-dessous | Le développeur, qui assume l'architecture, la qualité dans la durée et ce qu'il livre |
 | **11 Écarts** | Comparer obtenu et attendu **poste par poste le long de la chaîne**, localiser le premier point de divergence, proposer des hypothèses de cause | Le métier — **elle ne juge pas si l'écart est significatif** |
 | **Figer les jeux** | Produire, formater et versionner les jeux de données ; générer la trace de provenance | Le métier accepte, et c'est cette acceptation qui en fait des données de référence |
 
 > **Le meilleur apport de la liste est celui de l'étape 5.** Proposer les cas aux limites
 > est exactement ce qu'un expert fait mal : il connaît trop bien son domaine pour en voir
 > les trous. Une IA n'a pas ce biais — elle n'a pas d'intuition à protéger.
+
+## Sur le code : conventions, commentaires, et lien avec la spécification
+
+Quatre usages, tous du côté du **dépôt de code** — jamais dans la spécification, qui ignore
+jusqu'à l'existence du code.
+
+### Faire respecter les règles de codage
+
+Appliquer la convention de l'équipe de façon **uniforme** : nommage, structure, style,
+organisation des fichiers. Et en particulier la **correspondance des noms** depuis le
+`snake_case` de la spécification vers la convention du langage — `montant_net_ht` →
+`montantNetHt` en Java, `MontantNetHt` en C#, inchangé en C ou en Python
+([CADRE §2.4](../CADRE.md)).
+
+C'est un travail systématique, sans jugement à porter : exactement ce qu'une IA fait bien
+et qu'un relecteur humain fait de moins en moins bien à mesure que le fichier s'allonge.
+
+### Écrire des commentaires et une documentation qui servent
+
+Un bon commentaire ne répète pas le code : il dit **pourquoi**. Et le « pourquoi », dans
+cette méthode, est déjà écrit — ce sont les notes de justification des règles
+(« *Pourquoi « le plus petit » et pas « le prix promotionnel »* »).
+
+> **L'IA fait ici un transfert, pas une invention** : elle reporte dans le code la
+> justification que le métier a écrite dans la spécification. C'est ce qui évite qu'un
+> développeur, dans trois ans, « simplifie » une règle dont il ne voit plus la raison.
+
+Elle aide de même à produire la documentation d'usage du composant — ce qu'il calcule, ce
+qu'il exige, ce qu'il garantit — en la dérivant du **rôle** et du **contrat**, sans les
+paraphraser.
+
+### Poser les annotations de traçabilité
+
+Le code cite la spécification, **jamais l'inverse** ([guide 1](1-DECOUPER.md)) :
+
+- l'identifiant `RG-xxx` en commentaire, à l'endroit qui l'implémente ;
+- l'identifiant `CT-xx` dans le nom ou la description du test correspondant ;
+- la **version de spécification** que le composant déclare implémenter.
+
+L'IA sait poser ces annotations à grande échelle, et surtout les **maintenir** quand le
+code bouge — c'est là qu'elles se perdent habituellement.
+
+### Vérifier la cohérence de ces liens
+
+Le contrôle se fait dans les **deux sens**, et il tourne dans l'intégration continue du
+dépôt de code :
+
+| Sens | Ce qu'on vérifie | Ce qu'un échec révèle |
+|---|---|---|
+| **Spécification → code** | Toute `RG-xxx` est citée au moins une fois dans le code **et** dans un test | Une règle non implémentée, ou implémentée sans être testée |
+| **Code → spécification** | Toute citation référence une règle qui **existe encore** dans la version courante | Une citation périmée : règle abrogée, ou identifiant qui a changé |
+| **Version** | La version déclarée par le composant est bien celle qu'on croit implémenter | Un composant qui applique une version antérieure sans que personne ne le sache |
+| **Couverture** | Chaque `CT-xx` du jeu d'essai a un test qui le rejoue | Une donnée de référence qui ne protège plus rien |
+
+> **Une annotation est un pointeur, pas une preuve.** Qu'un `RG-010` soit cité à côté d'un
+> bloc de code n'établit en rien que ce bloc applique la règle : seuls les tests contre les
+> **données de référence** l'établissent. L'annotation sert à *retrouver*, pas à *garantir*
+> — et il faut le savoir, sinon elle donne une fausse confiance.
 
 ## Ce qu'elle ne peut pas faire
 

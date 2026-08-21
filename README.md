@@ -157,8 +157,11 @@ que rien ne produit, paramètre fantôme, unité absente, contrainte d'implémen
 dans une règle, formulation qui repousse la décision. Un travail exhaustif et fastidieux
 que l'humain fait mal — non par incompétence, mais parce qu'il fatigue.
 
-Elle aide ensuite à coder, à dériver les tests du jeu d'essai, à comparer les résultats
-poste par poste et à figer les jeux de données. Mais elle ne dit pas si la règle est **la
+Elle aide ensuite à coder — en appliquant les règles de codage de l'équipe, en écrivant des
+commentaires qui disent le **pourquoi** plutôt que de répéter le code, et en posant les
+annotations qui relient le code à la spécification puis en vérifiant leur cohérence dans
+les deux sens. Puis à dériver les tests du jeu d'essai, à comparer les résultats poste par
+poste et à figer les jeux de données. Mais elle ne dit pas si la règle est **la
 bonne** règle, ne juge pas qu'un écart est acceptable, et ne voit pas ce qui manque sans
 avoir laissé de trace.
 
