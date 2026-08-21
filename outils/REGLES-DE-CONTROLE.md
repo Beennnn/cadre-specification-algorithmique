@@ -84,7 +84,7 @@ le plus souvent : personne ne vérifie spontanément que le vingt-troisième par
 | `C-23` | **L'en-tête nomme le glossaire et le jeu de paramètres de référence, avec leur version.** | Le résultat n'est pas rejouable, même si la spécification l'est |
 | `C-24` | **Toute ligne d'historique déclarant un impact renvoie à une notice de changement `N-<version>` présente dans le document.** | On sait qu'il y a eu un changement, on ne sait ni pourquoi, ni qui est touché, ni ce que les contrats sont devenus |
 | `C-25` | **Chaque nom employé dans une règle apparaît sous la même orthographe dans le contrat**, chemin complet compris. | Le lien entre contrat et règles cesse d'être vérifiable, et le vocabulaire diverge |
-| `C-26` | **Toute exigence de réalisation `EX-xxx` porte un énoncé, une source, un propriétaire et un moyen de vérification.** | Sans source, c'est une préférence d'équipe déguisée en exigence. Sans vérification, c'est décoratif |
+| `C-26` | **Toute exigence de réalisation `EX-xxx` porte un énoncé, une source, un valideur et un moyen de vérification.** | Sans source, c'est une préférence d'équipe déguisée en exigence. Sans vérification, c'est décoratif |
 | `C-28` | **Tout objet identifié figure dans l'annexe « Identités » avec un UUID valide.** | Sans identité durable, un renommage ou un déplacement casse toutes les références |
 | `C-29` | **Aucun UUID n'est porté par deux objets**, dans tout le dépôt. | Deux objets confondus : la traçabilité devient fausse au lieu d'être absente, ce qui est pire |
 | `C-27` | **Une passe de relecture par une IA déclarée porte un opérateur nommé**, la date, et le nombre de constats retenus et écartés. | Sans opérateur nommé, personne n'assume : on a produit un fusible, pas une validation ([guide 5](../guides/5-VALIDER.md)) |
@@ -101,7 +101,7 @@ Ce que seul un lecteur peut juger. Une IA peut les pré-instruire et signaler de
 | `H-03` | **Les règles décrivent-elles un résultat, ou un parcours ?** | Toute boucle explicite non justifiée est un choix d'implémentation qui s'est glissé dans la spécification |
 | `H-04` | **Les hypothèses du modèle sont-elles explicites ?** | Ce que le modèle ne représente pas doit être écrit, sinon on le découvrira en production |
 | `H-05` | **Le cas riche du jeu d'essai est-il suivable de bout en bout**, à la calculatrice, sans rien deviner ? | On le refait |
-| `H-06` | **Les règles sont-elles celles que l'organisation veut appliquer ?** | Seul le propriétaire de la règle peut répondre. C'est la seule question que ni script ni IA n'approchera jamais |
+| `H-06` | **Les règles sont-elles celles que l'organisation veut appliquer ?** | Seul le valideur métier peut répondre. C'est la seule question que ni script ni IA n'approchera jamais |
 | `H-07` | **L'immutabilité est-elle respectée ?** Un nom valorisé est-il réaffecté plus loin, au lieu qu'un nouveau nom porte la transformation ? | Se lit, ne se mécanise pas : deux branches d'un même `SI` qui affectent le même nom sont légitimes, une réaffectation séquentielle ne l'est pas. **C'est le contrôle où la passe IA apporte le plus** — un modèle lit correctement la structure des branches, un script non |
 
 ---

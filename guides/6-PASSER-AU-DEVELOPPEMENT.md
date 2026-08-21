@@ -11,7 +11,7 @@ Ce que le développement reçoit, ni plus ni moins :
 
 | # | Élément | Où |
 |---|---|---|
-| 1 | Le **découpage** du périmètre : les fonctions, leurs propriétaires, leurs niveaux | [guide 1](1-DECOUPER.md) |
+| 1 | Le **découpage** du périmètre : les fonctions, leurs valideurs métier, leurs niveaux | [guide 1](1-DECOUPER.md) |
 | 2 | Le **glossaire** du domaine, verrouillé | [guide 2](2-GLOSSAIRE.md) |
 | 3 | La **spécification** de chaque fonction du lot, acceptée | [modèle](../templates/MODELE-SPECIFICATION.md) |
 | 4 | Les **questions ouvertes** restantes, avec décideur et échéance | §12 de chaque spécification |

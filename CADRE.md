@@ -40,7 +40,7 @@ markdown, dans le dépôt Git, écrit dans un pseudo-langage contraint.
 3. Les **règles** numérotées (`RG-010`, `RG-020`…), chacune écrite en pseudo-langage,
    chacune traçable jusqu'au code et jusqu'aux tests.
 4. Les **paramètres** (seuils, taux, barèmes) séparés des règles, avec leur
-   propriétaire, leur circuit de mise à jour et leur date d'effet.
+   qui peut les changer, leur circuit de validation et leur date d'effet.
 5. Les **invariants** — ce qui doit rester vrai quoi qu'il arrive.
 6. Le **jeu d'essai** : les cas nominaux, les cas aux limites, les cas d'erreur, avec
    les résultats attendus calculés à la main.
@@ -124,9 +124,9 @@ et c'est cela, et cela seul, que la méthode cherche à corriger.
 
 Ce n'est pas une répartition de tâches, c'est une répartition de **souveraineté** :
 
-- Le métier n'a pas à justifier ses règles auprès de l'IT — il les pose, il en répond.
+- Le métier n'a pas à justifier ses règles auprès de l'IT — il les pose, et il en assume les conséquences.
 - L'IT n'a pas à justifier ses choix techniques auprès du métier — elle les fait, elle
-  en répond (coût, délai, exploitabilité).
+  en assume les conséquences (coût, délai, exploitabilité).
 - **Aucun des deux ne se prononce dans le champ de l'autre.** Une spécification qui dit
   « stocker dans une table indexée sur la référence produit » est aussi fautive qu'un
   développeur qui décide seul d'arrondir au centime inférieur.
@@ -943,12 +943,12 @@ Voici le rôle de chaque section — et pourquoi aucune n'est facultative.
 
 | # | Section | À quoi elle sert | Ce qui arrive si on la saute |
 |---|---|---|---|
-| 1 | **En-tête** — identifiant, version, statut, auteur, propriétaire métier, date d'effet | Savoir qui répond de quoi, et à partir de quand la règle s'applique | On ne sait pas quelle version a produit le chiffre de l'an dernier |
+| 1 | **En-tête** — identifiant, version, statut, auteur, valideur métier, date d'effet | Savoir qui a validé quoi, et à partir de quand la règle s'applique | On ne sait pas quelle version a produit le chiffre de l'an dernier |
 | 2 | **Objectif et contexte** — en cinq lignes, ce que ça calcule et pour qui | Permettre à un lecteur de décider en 30 secondes si ça le concerne | Personne ne lit |
 | 3 | **Périmètre / hors périmètre** — explicitement les deux | Fixer la frontière du contrat | Le développeur découvre en fin de course que « bien sûr, il fallait aussi gérer les avoirs » |
 | 4 | **Glossaire** — chaque terme du domaine, défini une fois | Donner un vocabulaire unique au métier, au code et aux tests | Trois mots pour la même chose, un mot pour trois choses |
 | 5 | **Entrées / Sorties** — typées, avec unités et domaines | Poser le contrat de la fonction | Ambiguïtés d'unité, de devise, de fuseau |
-| 6 | **Paramètres** — les valeurs, séparées des règles, avec propriétaire et date d'effet | Distinguer ce qui change souvent de ce qui change rarement | Un changement de taux devient une livraison logicielle |
+| 6 | **Paramètres** — les valeurs, séparées des règles, avec qui peut les changer et leur date d'effet | Distinguer ce qui change souvent de ce qui change rarement | Un changement de taux devient une livraison logicielle |
 | 7 | **Règles** — numérotées, en pseudo-langage | Le cœur | — |
 | 8 | **Invariants et propriétés** | Ce qui doit rester vrai quelles que soient les entrées | On ne détecte pas les régressions sur les cas non testés |
 | 9 | **Cas d'erreur métier** — code, condition, message, conséquence | Décider du comportement anormal *par le métier* | Le développeur invente le comportement de rejet |
@@ -1118,8 +1118,8 @@ Sur la section 6, une précision qui a des conséquences architecturales lourdes
 > mêmes personnes, ni selon le même circuit d'approbation. Les mélanger, c'est
 > transformer chaque décision commerciale en projet informatique.
 
-Chaque paramètre est décrit par : identifiant, libellé, valeur, unité, **propriétaire**
-(la personne ou le rôle qui peut le changer), **circuit de modification** (qui valide),
+Chaque paramètre est décrit par : identifiant, libellé, valeur, unité, **qui peut le
+changer** (une personne ou un rôle nommé), **circuit de modification** (qui valide),
 **fréquence de changement observée**, **date d'effet**. Ces trois derniers points sont
 lus directement par l'architecte (§4).
 
@@ -1158,13 +1158,13 @@ Le tableau ci-dessus exprime des **besoins**, en unités métier : ils *permette
 de choisir. Il existe une seconde famille, de nature opposée : des contraintes que
 l'organisation **impose** à la réalisation, et qui *restreignent* le choix.
 
-> **Deux familles, deux propriétaires, et il ne faut pas les mélanger.**
+> **Deux familles, deux valideurs, et il ne faut pas les mélanger.**
 >
 > | | **Contraintes métier** (§4.1) | **Exigences de réalisation** (§4.2) |
 > |---|---|---|
 > | Nature | un besoin exprimé | une contrainte imposée |
 > | Effet | **permet** de choisir | **restreint** le choix |
-> | Propriétaire | le métier | sécurité, architecture, sûreté, conformité |
+> | Qui la valide | le métier | sécurité, architecture, sûreté, conformité |
 > | Origine | le calcul lui-même | une politique, une norme, un contrat, une plate-forme |
 
 L'expert métier **ne les invente pas** : il les reçoit et les intègre au document, parce
@@ -1198,13 +1198,13 @@ Chaque `EX-xxx` porte donc quatre choses, et les quatre sont obligatoires :
 |---|---|
 | **L'énoncé** | au présent de l'indicatif ou avec « doit », vérifiable |
 | **La source** | le texte, la norme, la politique ou le contrat dont elle découle |
-| **Le propriétaire** | qui peut l'amender, et qui répond de son existence |
+| **Le valideur** | qui atteste qu'elle est juste, et qui peut l'amender |
 | **La vérification** | comment on prouve qu'elle est tenue — sans quoi elle est décorative |
 
 **Quand une exigence contredit une contrainte métier**, ce qui arrive plus souvent qu'on
 ne croit — une latence de 20 ms face à une plate-forme imposée à ramasse-miettes —, le
 conflit **ne se règle pas dans le document** : il devient une question ouverte `Q-xx`,
-arbitrée par les deux propriétaires. Le résoudre en silence, c'est faire porter à un
+arbitrée par les deux valideurs. Le résoudre en silence, c'est faire porter à un
 développeur un arbitrage entre la sûreté et l'expérience client.
 
 ---
@@ -1274,10 +1274,11 @@ n'avait pas pensé. C'est le complément naturel du test de la double implément
 
 | Rôle | Qui | Responsabilité |
 |---|---|---|
-| **Auteur métier** | l'expert du domaine | Écrit la spécification, répond des règles |
-| **Propriétaire de la règle** | souvent un responsable métier | Arbitre les questions ouvertes, valide les changements ayant un impact sur les résultats |
+| **Auteur métier** | l'expert du domaine | Écrit la spécification et la soumet à validation |
+| **Valideur métier** | un responsable du domaine, nommé | **Atteste que l'expression fonctionnelle est juste du point de vue métier.** Tranche les questions ouvertes, et revalide tout changement modifiant un résultat |
 | **Relecteur métier** | un pair de l'auteur | Vérifie l'exactitude métier et la complétude des cas |
-| **Répondant technique** | un développeur | Vérifie que c'est implémentable, chiffre, signale les contraintes irréalistes ou coûteuses |
+| **Co-auteur technique** | un développeur | Écrit la fiche de contraintes avec l'auteur, pose les questions qui font apparaître les cas non prévus, signale ce qui coûtera cher. **Il ne rédige pas les règles** |
+| **Relecteur technique** | un développeur **extérieur** au domaine et à l'écriture | Répond par oui ou par non : « ai-je toutes les informations pour coder cela sans reposer de question ? » ([guide 5](guides/5-VALIDER.md)) |
 | **Relecteur test** | testeur / recette | Vérifie que la spécification est vérifiable : jeu d'essai, couverture, invariants |
 
 Trois relecteurs, trois casquettes. Une spécification relue par une seule population
@@ -1293,7 +1294,7 @@ flowchart LR
     C -- acceptée --> D[Implémentation]
     D --> E{Question<br/>découverte ?}
     E -- oui --> F[Q-xx ouverte<br/>dans la spécification]
-    F --> G[Arbitrage<br/>propriétaire]
+    F --> G[Arbitrage<br/>valideur métier]
     G --> B
     E -- non --> H[Jeu d'essai<br/>exécuté]
     H -- écart --> I{Erreur de code<br/>ou de spécification ?}
@@ -1305,7 +1306,7 @@ flowchart LR
 
 Le point non négociable du schéma : **le développeur ne corrige jamais une règle
 silencieusement**. Quand il rencontre un cas non prévu — et il en rencontrera —, il
-ouvre une question `Q-xx` dans le document, et le propriétaire tranche. Une décision
+ouvre une question `Q-xx` dans le document, et le valideur métier tranche. Une décision
 métier prise dans un commit est une décision perdue.
 
 Le second point : **quand le programme et la spécification divergent, c'est la
@@ -1442,7 +1443,7 @@ revient.
 |---|---|---|
 | **Le pseudo-code déguisé** | `import`, `try/except`, `for i in range`, des types techniques | L'auteur pense encore dans son langage ; il transmet ses choix d'implémentation comme s'ils étaient des règles |
 | **Le « etc. »** | « les autres cas se traitent de la même façon », « on gère les cas particuliers » | Le développeur devra deviner — et il devinera |
-| **La valeur magique** | `0,85` sans nom, sans source, sans propriétaire | Personne ne saura jamais s'il faut la changer, ni qui a le droit de le faire |
+| **La valeur magique** | `0,85` sans nom, sans source, sans personne habilitée à la changer | Personne ne saura jamais s'il faut la changer, ni qui a le droit de le faire |
 | **Le `SI` sans `SINON`** | Une condition sans branche complémentaire | Le comportement dans le cas non traité est décidé par le compilateur |
 | **La grandeur nue** | Un montant sans devise, une date sans fuseau, un poids sans unité | Cause classique d'écarts, découverts tard et cher |
 | **La performance en prose** | « il faut que ce soit rapide », « éviter les traitements lourds » | Non vérifiable, non actionnable → à remplacer par un chiffre dans la fiche de contraintes |
@@ -1481,7 +1482,7 @@ et non l'habitude du développeur.
 ### Ce qu'il faut regarder dans l'exemple de gestion
 
 **Les paramètres séparés des règles (§6).** Le seuil de franchise de port a un
-propriétaire (« Direction commerciale »), une fréquence de changement observée
+un responsable habilité à le changer (« Direction commerciale »), une fréquence de changement observée
 (« hebdomadaire en soldes ») et une date d'effet. L'architecte y lit immédiatement :
 *ces valeurs ne doivent pas être dans le code*.
 

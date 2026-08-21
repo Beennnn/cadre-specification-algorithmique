@@ -24,7 +24,7 @@ qu'à ce qu'eux ne savent pas voir — voir [guide 5](../guides/5-VALIDER.md).
 - [ ] Chaque règle correspond à une décision réellement prise, par quelqu'un
       d'identifiable — pas à une habitude ou à ce que fait le système actuel.
 - [ ] Les choix non évidents portent une note « pourquoi ».
-- [ ] Les paramètres ont tous un propriétaire nommé et un circuit de modification.
+- [ ] Chaque paramètre nomme qui peut le changer, et selon quel circuit de validation.
 - [ ] Les questions ouvertes ont un décideur et une échéance.
 - [ ] Les cas d'erreur décrivent une **décision métier** (refuser, dégrader, valeur par
       défaut), pas un comportement technique.
@@ -73,7 +73,7 @@ qu'à ce qu'eux ne savent pas voir — voir [guide 5](../guides/5-VALIDER.md).
 - [ ] **Invariants de symétrie** — translation de l'origine, changement d'unité,
       permutation des entrées : sont-ils écrits ?
 
-## Répondant technique — « est-ce implémentable, et à quel coût ? »
+## Co-auteur technique — « est-ce implémentable, et à quel coût ? »
 
 - [ ] Toutes les entrées et sorties sont typées, avec unité, précision et domaine.
 - [ ] **Aucun** nom de langage, de bibliothèque, de base de données, de structure de

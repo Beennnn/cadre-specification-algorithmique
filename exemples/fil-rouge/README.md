@@ -11,7 +11,7 @@ pour que chaque notion de la méthode se voie **appliquée sur un terrain déjà
 | **Ça parle à tout le monde** | « Est-ce que j'arrive à destination, et où dois-je m'arrêter ? » — pas besoin de connaître le domaine pour juger si la spécification est claire |
 | **Il y a de la vraie science** | Bilan des forces, traînée aérodynamique, énergie, rendements, effet de la température. Les équations sont celles du lycée, mais elles sont réelles |
 | **C'est assez complexe** | Non-linéarités (la récupération change la formule de signe), interpolation, condition d'arrêt, courbe de charge par paliers, optimisation sous contrainte |
-| **Ça se découpe naturellement** | Une douzaine de fonctions, cinq propriétaires métier différents — exactement ce qu'il faut pour illustrer le découpage et le travail collaboratif |
+| **Ça se découpe naturellement** | Une douzaine de fonctions, cinq valideurs métier différents — exactement ce qu'il faut pour illustrer le découpage et le travail collaboratif |
 | **Les faux amis y sont spectaculaires** | Le sens de l'arrondi de l'autonomie, la réserve de sécurité, la stabilité d'un plan recalculé, deux arrêts courts contre un long |
 
 ## Ce que vous trouverez ici
@@ -19,7 +19,7 @@ pour que chaque notion de la méthode se voie **appliquée sur un terrain déjà
 | Fichier | Ce que ça illustre | Guide associé |
 |---|---|---|
 | **[0-LE-CAS-METIER.md](0-LE-CAS-METIER.md)** | **Le point d'entrée** : le cas expliqué simplement, puis techniquement, et pourquoi c'est en le formalisant qu'on construit la méthode | — |
-| **[1-DECOUPAGE.md](1-DECOUPAGE.md)** | La sortie d'un atelier de découpage : 12 fonctions nommées, avec propriétaire et niveau de maturité | [Guide 1 — Découper](../../guides/1-DECOUPER.md) |
+| **[1-DECOUPAGE.md](1-DECOUPAGE.md)** | La sortie d'un atelier de découpage : 12 fonctions nommées, avec leur valideur métier et leur niveau de maturité | [Guide 1 — Découper](../../guides/1-DECOUPER.md) |
 | **[2-GLOSSAIRE.md](2-GLOSSAIRE.md)** | Un glossaire de domaine réel, avec ses homonymes et ses contextes | [Guide 2 — Le glossaire](../../guides/2-GLOSSAIRE.md) |
 | **[3-DONNEES.md](3-DONNEES.md)** | Le catalogue des données, leur source, leur cheminement — et les trois constats que l'exercice a produits | [Guide 3 — Les données](../../guides/3-DONNEES.md) |
 | **[4-FN-004-planifier-les-recharges.md](4-FN-004-planifier-les-recharges.md)** | Une fiche de fonction arrêtée au **niveau 3** : contrat typé, pas encore de spécification. Un état assumé, pas un travail inachevé | [Guide 1 §4](../../guides/1-DECOUPER.md) |

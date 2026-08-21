@@ -188,7 +188,7 @@ chemin. Chacune impose un outil de méthode, et ces outils, eux, resservent part
 | « Précis à combien ? » n'a pas une réponse mais trois. | **Les trois niveaux d'exactitude** : reproductibilité, justesse, validité du modèle |
 | Comment prouver que l'implémentation est juste, sans se comparer à elle-même ? | **L'oracle** : des formules fermées, calculables à la main, et un jeu d'essai qui en découle |
 | Comment le développeur choisit-il son langage et son architecture ? | **La fiche de contraintes**, chiffrée en unités métier |
-| Cinq propriétaires métier différents doivent écrire en parallèle. Comment ? | **Une fonction = un fichier = un propriétaire** — [guide 3](../../guides/4-ECRIRE-A-PLUSIEURS.md) |
+| Cinq valideurs métier différents doivent écrire en parallèle. Comment ? | **Une fonction = un fichier = un valideur métier** — [guide 3](../../guides/4-ECRIRE-A-PLUSIEURS.md) |
 | Que remet-on exactement à l'équipe de développement ? | **Le dossier de passation** et son guide de lecture — [guide 4](../../guides/6-PASSER-AU-DEVELOPPEMENT.md) |
 
 > **C'est là tout le pari du fil rouge.** On ne cherche pas à produire une bonne
@@ -204,7 +204,7 @@ chemin. Chacune impose un outil de méthode, et ces outils, eux, resservent part
 | **Tout le monde comprend la question** | « Est-ce que j'arrive ? » — aucune connaissance de domaine ne peut masquer une ambiguïté de rédaction |
 | **Il y a de la vraie science** | Trois forces, deux rendements, une interpolation. Les équations sont celles du lycée, mais elles sont réelles et les chiffres sont justes |
 | **C'est assez complexe** | Deux non-linéarités, un cumul non monotone, une optimisation sous contrainte |
-| **Ça se découpe** | Douze fonctions, cinq propriétaires métier — de quoi illustrer le travail collaboratif, pas seulement la rédaction |
+| **Ça se découpe** | Douze fonctions, cinq valideurs métier — de quoi illustrer le travail collaboratif, pas seulement la rédaction |
 | **Les enjeux sont clairs** | Une erreur laisse quelqu'un au bord de la route. On n'a pas besoin d'expliquer pourquoi la rigueur est nécessaire |
 
 ## Le chemin
@@ -212,7 +212,7 @@ chemin. Chacune impose un outil de méthode, et ces outils, eux, resservent part
 | Étape | Ce qu'on y fait | Où |
 |---|---|---|
 | **0** | *Vous êtes ici* — comprendre le cas | cette page |
-| **1** | Identifier et nommer les fonctions, leur donner un propriétaire | [1-DECOUPAGE.md](1-DECOUPAGE.md) |
+| **1** | Identifier et nommer les fonctions, désigner qui valide qu'elles sont justes | [1-DECOUPAGE.md](1-DECOUPAGE.md) |
 | **2** | Fixer le vocabulaire commun | [2-GLOSSAIRE.md](2-GLOSSAIRE.md) |
 | **3** | Voir une fonction arrêtée au niveau 3 — un état assumé, pas inachevé | [4-FN-004](4-FN-004-planifier-les-recharges.md) |
 | **4** | La spécification complète, celle que le développement reçoit | [5-SPEC-NRG-001](5-SPEC-NRG-001-autonomie.md) |

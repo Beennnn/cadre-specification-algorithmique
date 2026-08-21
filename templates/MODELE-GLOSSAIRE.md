@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Version** | 0.1.0 |
-| **Propriétaire** | |
+| **Valideur métier** | |
 | **Dernière modification** | AAAA-MM-JJ |
 
 <!--

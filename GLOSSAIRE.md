@@ -14,7 +14,7 @@ chaque équipe produit pour son propre métier ([guide 2](guides/2-GLOSSAIRE.md)
 | **Étendue** | La taille d'un axe : fixe (`4`), bornée (`1 .. 3 000`), ou liée à une autre grandeur. Une étendue non bornée est un défaut, jamais une souplesse. |
 | **Faux ami** | Un point qui *ressemble* à une décision technique et qui est une décision métier : arrondi, ordre des opérations, départage d'ex æquo, valeur absente, borne, mode dégradé. Cause majoritaire des écarts entre deux implémentations honnêtes. |
 | **Fiche de contraintes** | La section d'une spécification qui exprime, **en unités métier et chiffrées**, les volumes, la latence, l'exactitude, la rejouabilité, la fréquence de changement. C'est elle qui permet à l'IT de choisir le langage et l'architecture. |
-| **Fiche de fonction** | Le document qui décrit une fonction : nom, description, propriétaire, ancrage, contrat, niveau de maturité. Aux niveaux 0 à 3, c'est le seul document existant. |
+| **Fiche de fonction** | Le document qui décrit une fonction : nom, rôle, valideur métier, contrat, niveau de maturité. Aux niveaux 0 à 2, c'est le seul document existant. |
 | **Fonction** (`FN-xxx`) | Une transformation qui produit un résultat identifiable à partir d'entrées identifiables, et dont le métier sait nommer le résultat sans parler de mise en œuvre. |
 | **Identité durable** | Le UUID d'un objet, attribué une fois et jamais modifié ni réattribué. L'identifiant lisible et le libellé sont des étiquettes ; l'identité, non. C'est ce qui distingue un renommage d'une suppression suivie d'un ajout. |
 | **Incertitude** | L'écart dans lequel se trouve la vraie valeur d'une grandeur. À ne pas confondre avec la **résolution**, qui est le pas de la valeur : une température peut avoir une résolution de 0,1 °C et une incertitude de 2 °C. |
@@ -28,14 +28,17 @@ chaque équipe produit pour son propre métier ([guide 2](guides/2-GLOSSAIRE.md)
 | **Quantité** | Une valeur **et** son unité, indissociables. Dans une règle, une grandeur n'est jamais un nombre nu. L'addition n'est définie qu'entre quantite_commandees de même dimension ; une fonction transcendante n'accepte qu'une quantite_commandee sans dimension. |
 | **Rang** | Le nombre d'axes d'un symbole structuré. Une liste est de rang 1, une matrice de rang 2. |
 | **Résolution** | Le pas d'une valeur — 2 décimales, 6 chiffres significatifs. Propriété de représentation, distincte de l'**incertitude**. |
-| **Paramètre** (`P-xx`) | Une valeur qui peut changer sans que la logique change : seuil, taux, barème. Porte un propriétaire, un circuit de modification et une date d'effet. Ne vit jamais au milieu d'une règle. |
-| **Propriétaire de la règle** | La personne qui **décide de ce que la règle dit**, arbitre les questions ouvertes qui la concernent, et valide tout changement de son comportement. Une personne nommée, jamais un comité. Ce n'est ni l'auteur du document, ni celui qui l'implémente. |
+| **Paramètre** (`P-xx`) | Une valeur qui peut changer sans que la logique change : seuil, taux, barème. Porte le nom de qui peut le changer, un circuit de validation et une date d'effet. Ne vit jamais au milieu d'une règle. |
+| **Valideur métier** | La personne qui **atteste que l'expression fonctionnelle est juste du point de vue métier** — au moment de la validation, puis à chaque changement qui modifie un résultat. C'est elle qui tranche les questions ouvertes. Une personne nommée, jamais un comité ; ni l'auteur du document, ni celui qui l'implémente. |
+| **Co-auteur technique** | Le développeur qui écrit la fiche de contraintes **avec** l'auteur métier et pose les questions qui font apparaître les cas non prévus. Il ne rédige pas les règles. |
+| **Relecteur technique** | Un développeur **extérieur au domaine et à l'écriture**, qui répond par oui ou par non à : « ai-je toutes les informations pour coder cela sans reposer de question ? » |
+| **Garant d'une donnée** | La personne qui garantit la définition et la qualité d'une donnée, et qu'on prévient avant tout changement la concernant. |
 | **Unité pivot** | L'unité dans laquelle une grandeur circule et se calcule — l'unité SI de sa dimension, sauf exception déclarée. Toute valeur entrante y est convertie une fois, au bord. |
 | **Unité d'usage** | L'unité dans laquelle la grandeur est saisie et affichée : `km/h` là où le pivot est `m·s⁻¹`. C'est une décision métier, pas d'affichage. |
 | **Pseudo-langage** | Le français discipliné dans lequel les règles sont écrites : structuré, typé, sans construction propre à un langage de programmation. |
 | **Question ouverte** (`Q-xx`) | Un point non tranché, avec un décideur nommé et une date. Reste au document une fois fermée, avec sa réponse. Un désaccord se transforme en question ouverte, **jamais en compromis de rédaction**. |
 | **Règle de gestion** (`RG-xxx`) | Un énoncé normatif décrivant une partie de ce qui est calculé. Porte un identifiant stable, jamais réutilisé. |
-| **Répondant technique** | Le développeur qui co-écrit la fiche de contraintes, pose les questions qui font mal, et signale ce qui coûtera cher. Ne rédige pas les règles. |
+| **Co-auteur technique** | Le développeur qui co-écrit la fiche de contraintes, pose les questions qui font mal, et signale ce qui coûtera cher. Ne rédige pas les règles. |
 | **Reproductibilité** | Propriété de deux implémentations conformes de produire le même résultat. S'évalue contre la spécification, pas contre la réalité. |
 | **Spécification** (`SPEC-xxx`) | Le document complet d'une fonction : glossaire, contrat, paramètres, règles, invariants, cas d'erreur, jeu d'essai, fiche de contraintes, questions ouvertes. Niveau 4. |
 | **Test de la double implémentation** | Le critère d'acceptation d'une spécification : deux développeurs qui ne se parlent pas, dans deux langages différents, produisent le même résultat. Se dédouble en reproductibilité et justesse sur des grandeurs continues. |

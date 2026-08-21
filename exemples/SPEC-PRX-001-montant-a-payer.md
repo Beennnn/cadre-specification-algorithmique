@@ -6,9 +6,9 @@
 | **Version** | 2.0.0 |
 | **Statut** | Acceptée |
 | **Auteur métier** | *(rôle : Responsable tarification)* |
-| **Propriétaire de la règle** | *(rôle : Direction commerciale)* |
+| **Valideur métier** | *(rôle : Direction commerciale)* |
 | **Glossaire de référence** | interne — §3 de ce document |
-| **Répondant technique** | *(rôle : Architecte applicatif)* |
+| **Co-auteur technique** | *(rôle : Architecte applicatif)* |
 | **Date d'effet** | 2026-01-01 |
 | **Dernière modification** | 2026-08-21 — voir §13 |
 
@@ -124,7 +124,7 @@ DétailLigne :
 
 Ces valeurs **ne sont pas des règles**. Elles changent sans que la logique change.
 
-| Id | Libellé | Valeur | Unité | Propriétaire | Circuit | Fréquence observée | Date d'effet |
+| Id | Libellé | Valeur | Unité | Qui peut le changer | Circuit de validation | Fréquence observée | Date d'effet |
 |---|---|---|---|---|---|---|---|
 | `P-01` | Seuil de franchise de port | 60,00 | EUR HT | Direction commerciale | Validation N+1 | 3 à 4 fois par an, hebdomadaire en soldes | 2026-01-01 |
 | `P-02` | Barème de port — FRANCE_METRO | ≤ 1,000 kg → 4,90 ; ]1,000 ; 5,000] kg → 6,90 ; > 5,000 kg → 9,90 | EUR HT | Logistique | Validation Direction | 1 à 2 fois par an | 2026-01-01 |
@@ -647,7 +647,7 @@ Un article à `10,00` HT, quantite_commandee **3**, TVA 20 %, poids `0,300 kg`.
 
 ### 11.2 Exigences de réalisation
 
-| Id | Exigence | Source | Propriétaire | Vérification |
+| Id | Exigence | Source | Qui la valide | Vérification |
 |---|---|---|---|---|
 | `EX-01` | **Aucune donnée de paiement** n'entre dans le périmètre de ce calcul. Seul un identifiant client pseudonymisé y circule | Politique de sécurité `SEC-PCI-1` | Sécurité SI | Revue de conception + analyse des flux, annuelle |
 | `EX-02` | Les données du calcul sont **classées P1 (interne)** et n'ont pas à être chiffrées au repos ; le lien entre l'identifiant pseudonymisé et le client est classé **P3** et réside dans un périmètre séparé | Classification `SEC-CLASS-3` | Sécurité SI | Revue d'architecture |

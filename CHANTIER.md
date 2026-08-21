@@ -43,7 +43,7 @@ d'absence), et les quatre qui demandent un jugement.
 |---|---|---|
 | 1 | **Le dépôt est une méthode, pas un entrepôt** | Les specs réelles vivent dans le dépôt du produit. Une première version cataloguait des fonctions réelles : abandonnée |
 | 2 | **Un seul fil rouge**, décliné dans tous les guides | Mieux qu'une collection d'exemples jetables : le lecteur capitalise |
-| 3 | **Le fil rouge est l'autonomie d'un véhicule électrique** | Universel, avec de vraies équations, assez complexe, et il se découpe en 12 fonctions sur 5 propriétaires. Deux fils rouges antérieurs écartés : la commande en ligne (pas d'équations), la détection de pics (trop proche de l'instrumentation) |
+| 3 | **Le fil rouge est l'autonomie d'un véhicule électrique** | Universel, avec de vraies équations, assez complexe, et il se découpe en 12 fonctions sur 5 valideurs métier. Deux fils rouges antérieurs écartés : la commande en ligne (pas d'équations), la détection de pics (trop proche de l'instrumentation) |
 | 4 | **Les deux vignettes sont conservées** | Elles aboutissent à trois conclusions opposées sur le type numérique — c'est la démonstration que la spécification décide, pas l'habitude |
 | ~~5~~ | ~~Ancrage dans le code~~ — **annulée par la décision 18** : la spécification ne pointe jamais vers le code | |
 | 6 | **Pas de langage formel** (B, TLA+, Alloy) | Une spec que le métier ne peut pas relire est une spec que le métier n'écrit pas. Argumenté dans `REFERENCES.md` |
@@ -74,4 +74,4 @@ d'absence), et les quatre qui demandent un jugement.
 Une PR de transit, désormais obsolète, subsiste sur `Beennnn/scratch` :
 [#1](https://github.com/Beennnn/scratch/pull/1). Elle contenait la première version du
 contenu avant que ce dépôt n'existe, et décrit encore un exemple qui n'existe plus.
-**Elle peut être fermée** — décision du propriétaire.
+**Elle peut être fermée** — décision du titulaire du compte.

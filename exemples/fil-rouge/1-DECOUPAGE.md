@@ -21,7 +21,7 @@ et le diagnostic de santé de la batterie.
 
 ## Les fonctions identifiées
 
-| Id | Fonction | Ce qu'elle produit | Propriétaire | Niveau |
+| Id | Fonction | Ce qu'elle produit | Valideur métier | Niveau |
 |---|---|---|---|---|
 | `FN-001` | **Estimer l'autonomie sur un trajet** | l'énergie consommée et le point où la réserve est atteinte | R&D Énergie | **4** |
 | `FN-002` | **Estimer l'énergie disponible dans la batterie** | une énergie en kWh, à partir de l'état de charge et de la température | R&D Batterie | 3 |
@@ -38,7 +38,7 @@ et le diagnostic de santé de la batterie.
 
 ## Ce que ce tableau raconte
 
-**Cinq propriétaires différents.** C'est le résultat le plus utile de l'atelier, et
+**Cinq valideurs métier différents.** C'est le résultat le plus utile de l'atelier, et
 personne ne l'avait anticipé : la réserve de sécurité (`FN-010`) et l'arrondi de
 l'autonomie affichée (`FN-011`) appartiennent à l'**Expérience client**, pas à la R&D.
 Ce sont des arbitrages entre rassurer et ne pas mentir — pas des questions de physique.
@@ -57,7 +57,7 @@ surprise.
 **Deux fonctions qui n'existaient pas avant l'atelier.** `FN-012` (« décider de la
 stabilité d'un plan recalculé ») a été identifiée quand un développeur a demandé : *« et
 si on recalcule un kilomètre plus loin et que le plan change, on affiche quoi ? »*.
-Personne n'avait la réponse. C'est devenu une fonction, avec un propriétaire.
+Personne n'avait la réponse. C'est devenu une fonction, avec un valideur métier.
 
 > **C'est la vraie valeur d'un atelier de découpage** : il ne cartographie pas seulement
 > ce qui existe, il fait apparaître les décisions que personne n'avait jamais prises
@@ -103,7 +103,7 @@ confirmation qu'on aime avoir.
 | Action | Qui | Quand |
 |---|---|---|
 | Monter `FN-004` au niveau 3 | Expérience client + R&D Batterie | prochain lot |
-| Monter `FN-005` à `FN-008` au niveau 2 — leur contrat typé | leurs propriétaires métier | en continu |
+| Monter `FN-005` à `FN-008` au niveau 2 — leur contrat typé | leurs valideurs métier | en continu |
 | Trancher : `FN-009` doit-elle exister, ou est-ce une amélioration de `FN-001` ? | R&D Énergie | avant le prochain lot |
 
 ## Annexe — Identités

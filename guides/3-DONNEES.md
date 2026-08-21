@@ -30,7 +30,7 @@ Or ces trois questions décident de choses très concrètes :
 |---|---|---|---|
 | **Mesurée** | un capteur, un instrument | précision, fréquence, comportement si le capteur est muet | température de la batterie |
 | **Saisie** | un humain | qui saisit, quand, quels contrôles à la saisie | masse transportée |
-| **Référentielle** | un référentiel maîtrisé | propriétaire, circuit de mise à jour, date d'effet | barème de température |
+| **Référentielle** | un référentiel maîtrisé | son garant, son circuit de mise à jour, sa date d'effet | barème de température |
 | **Dérivée** | calculée par une autre fonction | quelle fonction, dans quelle version de son contrat | vitesse praticable (`FN-003`) |
 
 La distinction n'est pas académique. Une donnée **mesurée** peut manquer ; une donnée
@@ -48,7 +48,7 @@ réutilisé.
 | **Nom** | celui du glossaire, à l'identique |
 | **Nature** | mesurée / saisie / référentielle / dérivée |
 | **Source de vérité** | **une seule** — le système, le capteur, la fonction ou la personne qui fait foi |
-| **Propriétaire** | qui répond de sa définition et de sa qualité |
+| **Garant** | qui garantit sa définition et sa qualité, et qu'on prévient avant tout changement |
 | **Type** | unité, précision, domaine — même notation que les contrats |
 | **Date qui fait foi** | l'instant auquel la valeur est arrêtée (« as-of ») |
 | **Fraîcheur tolérée** | au-delà de quel âge la valeur n'est plus utilisable |

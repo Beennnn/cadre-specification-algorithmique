@@ -7,8 +7,8 @@
 | **Statut** | Acceptée |
 | **Niveau de maturité** | **4 — spécification complète** |
 | **Auteur métier** | *(rôle : Responsable modèles énergétiques, R&D Énergie)* |
-| **Propriétaire de la règle** | *(rôle : Direction R&D Énergie)* |
-| **Répondant technique** | *(rôle : Architecte embarqué)* |
+| **Valideur métier** | *(rôle : Direction R&D Énergie)* |
+| **Co-auteur technique** | *(rôle : Architecte embarqué)* |
 | **Date d'effet** | 2026-04-01 |
 | **Glossaire de référence** | [Glossaire du domaine](2-GLOSSAIRE.md) v2.0.0 |
 | **Jeu de paramètres** | Référentiel de méthodes v2026.2 |
@@ -119,7 +119,7 @@ ProfilSegment :
 
 ## 6. Paramètres
 
-| Id | Libellé | Valeur | Unité | Propriétaire | Circuit | Fréquence | Date d'effet |
+| Id | Libellé | Valeur | Unité | Qui peut le changer | Circuit de validation | Fréquence | Date d'effet |
 |---|---|---|---|---|---|---|---|
 | `P-01` | Accélération de la pesanteur | 9,81 | m·s⁻² | *constante physique, non modifiable* | — | jamais | 2026-04-01 |
 | `P-02` | Masse volumique de l'air de référence | 1,225 | kg·m⁻³ | R&D Énergie | Validation Direction R&D | rare | 2026-04-01 |
@@ -660,7 +660,7 @@ Reçues de la Direction sûreté, de l'Architecture véhicule et de la Protectio
 données. Le métier ne les a pas écrites : il les intègre, parce que c'est ce document que
 le développement lira.
 
-| Id | Exigence | Source | Propriétaire | Vérification |
+| Id | Exigence | Source | Qui la valide | Vérification |
 |---|---|---|---|---|
 | `EX-01` | Le logiciel du calculateur est écrit dans le sous-ensemble **MISRA C:2012**, catégories obligatoires et requises | Politique de sûreté logicielle `DIR-SUR-004` | Direction Sûreté | Analyse statique **bloquante** en intégration continue |
 | `EX-02` | **Aucune allocation dynamique de mémoire** après la phase d'initialisation | `DIR-SUR-004` §4.2 | Direction Sûreté | Analyse statique + revue de conception |

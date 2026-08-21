@@ -19,7 +19,7 @@ explicitement**, au lieu de les laisser se résoudre en silence dans le code.
 
 ## La structure qui rend le travail parallèle possible
 
-> **Une fonction = un fichier = un propriétaire.**
+> **Une fonction = un fichier = un valideur métier.**
 
 C'est la seule règle d'organisation qui compte, et elle a trois conséquences immédiates :
 
@@ -27,7 +27,7 @@ C'est la seule règle d'organisation qui compte, et elle a trois conséquences i
 |---|---|
 | Deux personnes peuvent écrire en même temps sans se gêner | Le document unique de 80 pages **sérialise** le travail : un seul auteur à la fois, et une file d'attente |
 | Chaque relecture est courte | On relit sérieusement 8 pages ; on survole 80 |
-| La responsabilité est traçable | « Qui répond de cette règle ? » a une réponse, ligne par ligne, dans l'historique |
+| La responsabilité est traçable | « Qui a écrit cette règle, et qui l'a validée ? » a une réponse, ligne par ligne, dans l'historique |
 
 **Le glossaire est la seule exception** : c'est un bien commun, donc le seul point de
 contention structurel. Il se traite **en premier** ([guide 2](2-GLOSSAIRE.md)) et se
@@ -40,11 +40,11 @@ comme un changement structurant, pas comme une correction de détail.
 |---|---|---|---|---|
 | 1 | **Atelier de découpage** | 2 h | métier + développeurs + animateur | les fonctions nommées, niveau 1 ([guide 1](1-DECOUPER.md)) |
 | 2 | **Atelier de glossaire** | 1 h, + 1 h deux semaines après | les mêmes | 30 à 60 termes ([guide 2](2-GLOSSAIRE.md)) |
-| 3 | **Écriture** | asynchrone, quelques jours | 1 auteur métier + 1 répondant technique, **en binôme** | une spécification par fonction |
+| 3 | **Écriture** | asynchrone, quelques jours | 1 auteur métier + 1 co-auteur technique, **en binôme** | une spécification par fonction |
 | 4 | **Revue croisée** | asynchrone, 2 à 4 jours | 3 relecteurs, 3 casquettes | acceptation, ou questions ouvertes |
 
 Et, en continu, un cinquième temps : **l'arbitrage des questions ouvertes**, en séance
-courte, par le propriétaire de la règle.
+courte, par le valideur métier.
 
 ## Le binôme métier / développeur pendant l'écriture
 

@@ -6,8 +6,8 @@
 | **Version** | 0.1.0 |
 | **Statut** | Brouillon / En revue / Acceptée / Abrogée |
 | **Auteur métier** | |
-| **Propriétaire de la règle** | |
-| **Répondant technique** | |
+| **Valideur métier** | |
+| **Co-auteur technique** | |
 | **Date d'effet** | AAAA-MM-JJ |
 | **Glossaire de référence** | <lien> v0.0.0 |
 | **Jeu de paramètres** | <référentiel> v0000.0 |
@@ -68,12 +68,12 @@ MODE D'EMPLOI
 
 ## 6. Paramètres
 
-| Id | Libellé | Valeur | Unité | Propriétaire | Circuit de modification | Fréquence observée | Date d'effet |
+| Id | Libellé | Valeur | Unité | Qui peut le changer | Circuit de validation | Fréquence observée | Date d'effet |
 |---|---|---|---|---|---|---|---|
 | `P-01` | | | | | | | |
 
 <!-- Un paramètre est une valeur qui peut changer sans que la logique change.
-     Les trois colonnes « propriétaire / circuit / fréquence » sont lues par
+     Les trois colonnes « qui peut le changer / circuit / fréquence » sont lues par
      l'architecte : elles décident si la valeur vit dans le code ou dans un
      référentiel externe. Ne les laissez pas vides. -->
 
@@ -204,13 +204,13 @@ MODE D'EMPLOI
      · règles de codage · plate-forme cible · intégration et exploitation
      · conformité et certification. -->
 
-| Id | Exigence | Source | Propriétaire | Vérification |
+| Id | Exigence | Source | Qui la valide | Vérification |
 |---|---|---|---|---|
 | `EX-01` | | | | |
 
 <!-- Un conflit entre une exigence de réalisation et une contrainte métier ne se
      règle pas ici : il devient une question ouverte, arbitrée par les deux
-     propriétaires. -->
+     valideurs. -->
 
 ## 12. Questions ouvertes
 

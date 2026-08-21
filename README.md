@@ -50,17 +50,22 @@ Une **spécification fonctionnelle** en deux volets :
 Le tout assez précis pour qu'un développeur l'implémente sans deviner, et assez libre pour
 qu'il choisisse le langage, les structures de données et l'architecture.
 
-## Les trois temps
+## Les étapes
 
-| | Ce qu'on y fait | Guide |
+| | Ce qu'on y fait | Où |
 |---|---|---|
-| **1. Découper** | Identifier les fonctions, les nommer, leur donner un propriétaire, fixer leur contrat | **[1-DECOUPER](guides/1-DECOUPER.md)** |
+| **0. Définir les conventions de rédaction** | Le lexique du pseudo-langage, la forme des identifiants, la façon de déclarer un type, une unité, une plage. **À faire une fois pour l'organisation, avant la première spécification** | [CADRE §2](CADRE.md) |
+| **1. Découper** | Identifier les fonctions, les nommer, désigner qui valide qu'elles sont justes, fixer leur contrat | **[1-DECOUPER](guides/1-DECOUPER.md)** |
 | **2. Nommer** | Fixer le vocabulaire commun — le premier livrable | **[2-GLOSSAIRE](guides/2-GLOSSAIRE.md)** |
 | **3. Tracer les données** | D'où elles viennent, qui en est responsable, ce qu'on fait quand elles manquent | **[3-DONNEES](guides/3-DONNEES.md)** |
 | **4. Écrire** | Les règles, à plusieurs, par lots, en revue croisée | **[4-ECRIRE-A-PLUSIEURS](guides/4-ECRIRE-A-PLUSIEURS.md)** |
 | **5. Valider** | Le jalon. Contrôles mécaniques, puis relecture qualité. **Rien ne part en développement avant** | **[5-VALIDER](guides/5-VALIDER.md)** |
 | **6. Passer au développement** | Transmettre, pour choisir l'architecture et le langage, coder, optimiser et qualifier | **[6-PASSER-AU-DEVELOPPEMENT](guides/6-PASSER-AU-DEVELOPPEMENT.md)** |
 | **7. Versionner** | Transverse : ce qui gouverne la vie d'après | **[7-VERSIONNER](guides/7-VERSIONNER.md)** |
+
+L'étape 0 se fait **une seule fois**, au démarrage : c'est le socle d'écriture commun à
+toutes les spécifications à venir. Les étapes 1 à 6 se répètent à chaque lot de fonctions,
+et l'étape 7 court en permanence.
 
 ## Ce que contient le dépôt
 
@@ -84,7 +89,7 @@ Tous les guides s'appuient sur **le même scénario** : *[l'autonomie d'un véhi
 Il a été choisi parce qu'il réunit quatre qualités rares ensemble : tout le monde comprend
 la question, il y a de la vraie physique avec des équations, il est assez complexe pour
 être intéressant, et il se découpe naturellement en une douzaine de fonctions réparties
-sur cinq propriétaires métier.
+sur cinq valideurs métier différents.
 
 On l'y suit de bout en bout : **[le cas métier](exemples/fil-rouge/0-LE-CAS-METIER.md)**
 → [le découpage](exemples/fil-rouge/1-DECOUPAGE.md) → [le

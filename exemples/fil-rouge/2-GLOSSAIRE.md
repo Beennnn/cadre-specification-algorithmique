@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Version** | 1.1.0 |
-| **Propriétaire** | R&D Énergie |
+| **Valideur métier** | R&D Énergie |
 | **Dernière modification** | 2026-02-17 |
 
 *Produit lors de l'atelier de glossaire du 2026-02-10, révisé le 2026-02-17.

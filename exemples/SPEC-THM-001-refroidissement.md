@@ -6,8 +6,8 @@
 | **Version** | 1.0.0 |
 | **Statut** | Acceptée |
 | **Auteur métier** | *(rôle : Responsable modèles physiques)* |
-| **Propriétaire de la règle** | *(rôle : Direction produit)* |
-| **Répondant technique** | *(rôle : Architecte applicatif)* |
+| **Valideur métier** | *(rôle : Direction produit)* |
+| **Co-auteur technique** | *(rôle : Architecte applicatif)* |
 | **Date d'effet** | 2026-01-01 |
 | **Glossaire de référence** | interne — §3 de ce document |
 
@@ -130,7 +130,7 @@ resultat :
 
 ## 6. Paramètres
 
-| Id | Libellé | Valeur | Unité | Propriétaire | Circuit | Fréquence observée | Date d'effet |
+| Id | Libellé | Valeur | Unité | Qui peut le changer | Circuit de validation | Fréquence observée | Date d'effet |
 |---|---|---|---|---|---|---|---|
 | `P-01` | Coefficient de refroidissement — tasse en céramique ouverte | 0,03000 | min⁻¹ | Responsable modèles | Validation Direction produit | 1 à 2 fois par an | 2026-01-01 |
 | `P-02` | Coefficient de refroidissement — mug isotherme fermé | 0,00600 | min⁻¹ | Responsable modèles | Validation Direction produit | 1 à 2 fois par an | 2026-01-01 |
@@ -522,7 +522,7 @@ diffère, et c'est elle qui produira deux implémentations.
 
 ### 11.2 Exigences de réalisation
 
-| Id | Exigence | Source | Propriétaire | Vérification |
+| Id | Exigence | Source | Qui la valide | Vérification |
 |---|---|---|---|---|
 | `EX-01` | Le calcul embarqué **n'émet aucune requête réseau** : il fonctionne hors ligne et ne transmet rien | Engagement produit « aucune donnée ne quitte l'appareil » | Direction produit | Analyse des flux réseau, à chaque version publiée |
 | `EX-02` | Le fichier de paramètres téléchargé est **signé**, et une signature invalide entraîne le maintien de la version précédente | Politique de sécurité applicative `SEC-APP-4` | Sécurité SI | Test de non-régression sur signature invalide |

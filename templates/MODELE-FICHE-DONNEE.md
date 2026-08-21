@@ -5,7 +5,7 @@
 | **Identifiant** | D-000 |
 | **Nature** | mesurée / saisie / référentielle / dérivée |
 | **Source de vérité** | *(une seule — système, capteur, fonction ou personne)* |
-| **Propriétaire** | |
+| **Garant** | |
 | **Dernière modification** | AAAA-MM-JJ |
 
 <!--

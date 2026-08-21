@@ -4,8 +4,8 @@
 |---|---|
 | **Identifiant** | FN-004 |
 | **Niveau de maturité** | **2 — contrat typé** *(voir [Guide 1 §4](../../guides/1-DECOUPER.md))* |
-| **Propriétaire métier** | Expérience client |
-| **Répondant technique** | Architecte embarqué |
+| **Valideur métier** | Expérience client |
+| **Co-auteur technique** | Architecte embarqué |
 | **Dernière modification** | 2026-02-24 |
 
 > **Cette fiche s'arrête volontairement au niveau 2.** Les entrées, les sorties et

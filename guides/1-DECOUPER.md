@@ -1,7 +1,7 @@
 # Guide 1 — Découper : identifier et nommer les fonctions
 
 *À utiliser avant d'écrire la moindre règle. Sortie attendue : la liste des fonctions du
-périmètre, nommées, décrites en une phrase, avec un propriétaire.*
+périmètre, nommées, décrites en une phrase, avec le valideur métier qui atteste qu'elles sont justes.*
 
 ---
 
@@ -102,7 +102,7 @@ toutes les fonctions au même niveau.**
 | Niveau | Ce qui est acquis | Coût typique |
 |---|---|---|
 | **0** | La fonction existe et porte un nom | minutes |
-| **1** | + le **rôle** — à quoi elle sert, ce qu'elle produit — et un propriétaire | minutes |
+| **1** | + le **rôle** — à quoi elle sert, ce qu'elle produit — et son valideur métier | minutes |
 | **2** | + le **contrat** typé d'entrées / sorties | heures |
 | **3** | + l'**algorithme** : règles, contraintes, jeu d'essai | jours |
 
@@ -193,7 +193,7 @@ frontière mal placée).
 | 40 min | Chacun liste les résultats métier produits dans le périmètre — **des résultats, pas des traitements**. On met en commun, on regroupe les doublons |
 | 30 min | On nomme, verbe par verbe. C'est le moment le plus lent et le plus utile : chaque désaccord de nom cache un désaccord de fond |
 | 20 min | Contrôle par les parcours utilisateurs connus : chacun mobilise-t-il des fonctions identifiées ? |
-| 15 min | Propriétaire pour chaque fonction, et priorisation : lesquelles montent au niveau 4, et pourquoi |
+| 15 min | Valideur métier pour chaque fonction, et priorisation : lesquelles montent au niveau 3, et pourquoi |
 
 **Deux règles d'animation :**
 
@@ -207,7 +207,7 @@ frontière mal placée).
 | Anti-pattern | À quoi on le reconnaît | Pourquoi c'est grave |
 |---|---|---|
 | **Le découpage technique** | des fonctions qui portent le nom des couches : « Valider », « Persister », « Notifier » | on cartographie l'architecture actuelle, pas le métier — la carte meurt à la première refonte |
-| **Le verbe fourre-tout** | « gérer », « traiter » | masque plusieurs fonctions sous un seul nom, donc plusieurs propriétaires sous un seul |
+| **Le verbe fourre-tout** | « gérer », « traiter » | masque plusieurs fonctions sous un seul nom, donc plusieurs valideurs sous un seul |
 | **Le découpage par écran** | une fonction par page de l'interface | la spécification devient fausse au premier changement d'interface |
 | **Le grain unique** | tout au niveau 4, ou tout au niveau 1 | tout au niveau 4 : le projet n'aboutit jamais. Tout au niveau 1 : la carte ne sert à rien |
 | **La carte exhaustive** | on veut cartographier tout le système avant de spécifier quoi que ce soit | l'effort est consommé avant le premier bénéfice, et la démarche est abandonnée |

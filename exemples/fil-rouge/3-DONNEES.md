@@ -7,7 +7,7 @@ Méthode : [Guide 3 — Le cheminement des données](../../guides/3-DONNEES.md)*
 
 ## Le catalogue
 
-| Id | Donnée | Nature | Source de vérité | Propriétaire | Consommée par |
+| Id | Donnée | Nature | Source de vérité | Garant | Consommée par |
 |---|---|---|---|---|---|
 | `D-001` | Distance d'un segment | référentielle | référentiel cartographique | Cartographie | `FN-001`, `FN-004` |
 | `D-002` | Pente d'un segment | référentielle | modèle numérique de terrain | Cartographie | `FN-001` |
@@ -58,7 +58,7 @@ flowchart LR
 |---|---|
 | **Nature** | mesurée |
 | **Source de vérité** | capteur du pack, valeur moyennée sur 60 s |
-| **Propriétaire** | R&D Batterie |
+| **Garant** | R&D Batterie |
 | **Type** | `Température(°C, 1 décimale, −40,0 .. 80,0)` |
 | **Date qui fait foi** | date d'**observation** — la valeur au moment du calcul |
 | **Fraîcheur tolérée** | 5 minutes |
@@ -76,7 +76,7 @@ flowchart LR
 |---|---|
 | **Nature** | saisie |
 | **Source de vérité** | le conducteur, dans les réglages du véhicule |
-| **Propriétaire** | Expérience client |
+| **Garant** | Expérience client |
 | **Type** | `Masse(kg, 1 décimale, 0,0 .. 600,0)` |
 | **Date qui fait foi** | date de **saisie** — elle vaut jusqu'à la prochaine |
 | **Fraîcheur tolérée** | **aucune limite** — c'est le problème, voir ci-dessous |

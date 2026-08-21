@@ -153,7 +153,7 @@ Chaque proposition porte un identifiant `SM-xxx` et vit dans la spécification, 
 Une suggestion **acceptée** devient un changement comme un autre : si elle a un impact,
 elle porte une [notice `N-<version>`](7-VERSIONNER.md).
 
-Le sens de circulation reste celui du cadre : **le développeur propose, le propriétaire de
+Le sens de circulation reste celui du cadre : **le développeur propose, le valideur métier de
 la règle dispose.** Une suggestion n'est pas une modification, et elle ne s'applique jamais
 directement au document par celui qui la propose.
 
@@ -257,9 +257,9 @@ L'assomption doit laisser une trace, sinon elle n'existe pas. Au moment du jalon
 
 | Rôle | Ce qu'il engage |
 |---|---|
-| **Propriétaire de la règle** | que les règles sont celles que l'organisation veut appliquer |
+| **Valideur métier** | que les règles sont celles que l'organisation veut appliquer |
 | **Relecteur métier** | que le domaine est correctement représenté, cas limites compris |
-| **Répondant technique** | que c'est implémentable, et que les contraintes du §11 sont réalistes |
+| **Co-auteur technique** | que c'est implémentable, et que les contraintes du §11 sont réalistes |
 | **Relecteur test** | que la spécification est vérifiable : jeu d'essai, couverture, invariants |
 
 **Comment c'est tracé** — l'approbation de la demande de fusion **est** la signature :
@@ -296,7 +296,7 @@ elle revient plus tard.
 Cela arrivera, et ce n'est pas un échec du jalon.
 
 - Le développement ouvre une `Q-xx`, **il ne corrige pas en silence**.
-- Le propriétaire arbitre.
+- Le valideur métier arbitre.
 - La spécification est amendée, avec une nouvelle version — dont l'incrément est
   déterminé par la règle du [guide 7](7-VERSIONNER.md), pas par le confort.
 - Si l'incrément est **majeur**, la validation est **rejouée** : une règle qui change un

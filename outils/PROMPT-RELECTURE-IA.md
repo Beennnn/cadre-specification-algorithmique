@@ -67,7 +67,7 @@ Termine par exactement trois lignes :
 
 ## Ce que cette passe ne verra jamais
 
-- Si la règle est **la bonne règle** — `H-06`. Seul le propriétaire de la règle le sait.
+- Si la règle est **la bonne règle** — `H-06`. Seul le valideur métier le sait.
 - Ce qui **n'est pas dans le catalogue** : l'IA hérite intégralement de ses angles morts.
 - Ce qui est **absent sans laisser de trace** : une décision métier que personne n'a
   jamais posée ne manque à aucune règle. C'est précisément ce que l'atelier de découpage

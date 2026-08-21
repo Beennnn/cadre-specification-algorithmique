@@ -87,7 +87,7 @@ désigne ce qu'on doit payer.
 
 La mauvaise définition décrit **un traitement** au lieu d'une notion : elle enferme dans
 le glossaire une règle qui devrait vivre en `RG-xxx`, avec son identifiant, son
-propriétaire et sa date d'effet. Le jour où le seuil passe à 4 articles, il faudra
+le nom de qui peut le changer et sa date d'effet. Le jour où le seuil passe à 4 articles, il faudra
 modifier le glossaire — c'est-à-dire le socle partagé — pour un changement de paramètre.
 
 > **Le test.** Si une définition contient un chiffre, une condition ou un « si », c'est
