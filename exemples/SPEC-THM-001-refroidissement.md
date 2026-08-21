@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Identifiant** | SPEC-THM-001 |
-| **Version** | 1.0.0 |
+| **Version** | 1.0.1 |
 | **Statut** | Acceptée |
 | **Auteur métier** | *(rôle : Responsable modèles physiques)* |
 | **Valideur métier** | *(rôle : Direction produit)* |
@@ -203,7 +203,7 @@ SOIT capacite_boisson = boisson.masse × boisson.capacite_massique
 SOIT capacite_ajout   = ajout.masse   × ajout.capacite_massique
 
     temperature_apres_ajout =
-        ( capacite_boisson × T(instant_ajout) + capacite_ajout × ajout.temperature )
+        ( capacite_boisson × T(ajout.instant) + capacite_ajout × ajout.temperature )
         ÷ ( capacite_boisson + capacite_ajout )
 
 Le mélange ne modifie pas la boisson : il en produit une nouvelle.
@@ -226,9 +226,9 @@ L'instant de l'ajout est une DONNÉE D'ENTRÉE. La spécification n'impose pas
 de convention par défaut : le demandeur doit le déclarer.
 
 Le calcul se déroule en deux phases :
-    1. refroidissement seul, de t = 0 à t = instant_ajout          (RG-010)
-    2. mélange à t = instant_ajout, produisant temperature_apres_ajout  (RG-030)
-    3. refroidissement de boisson_melangee, à partir de t = instant_ajout  (RG-010)
+    1. refroidissement seul, de t = 0 à t = ajout.instant          (RG-010)
+    2. mélange à t = ajout.instant, produisant temperature_apres_ajout  (RG-030)
+    3. refroidissement de boisson_melangee, à partir de t = ajout.instant  (RG-010)
 ```
 
 > **C'est le faux ami central de cette spécification, et il est contre-intuitif.**
@@ -557,6 +557,7 @@ diffère, et c'est elle qui produira deux implémentations.
 | Version | Date | Changement | Impact sur les résultats |
 |---|---|---|---|
 | 1.0.0 | 2026-01-01 | Version initiale | — |
+| 1.0.1 | 2026-08-21 | `RG-030` et `RG-040` : l'instant de l'ajout est nommé `ajout.instant`, comme au contrat, au lieu de `instant_ajout` — la même grandeur portait deux noms (fantôme relevé par `C-03`) | Aucun — la grandeur et sa valeur sont inchangées |
 
 ---
 

@@ -248,7 +248,7 @@ qu'un programme l'a produit, sans l'examiner**.
 Il lit les spécifications du dépôt et rend deux services : il **contrôle**, et il
 **donne à voir**.
 
-**Il contrôle** — 31 des 41 règles du catalogue, réparties en quatre familles :
+**Il contrôle** — 23 des 39 règles du catalogue, réparties en quatre familles :
 
 | Famille | Exemples de ce qu'il attrape |
 |---|---|
@@ -261,6 +261,7 @@ Il lit les spécifications du dépôt et rend deux services : il **contrôle**, 
 
 ```bash
 python3 outils/verifier.py                    # tous les contrôles, sur tout le dépôt
+java    outils/Verifier.java                  # la même chose en Java, fichier unique
 python3 outils/verifier.py --chaine <spec>    # qui crée / qui utilise chaque grandeur,
                                               # fils d'exécution, chemin critique, vue groupée
 python3 outils/verifier.py --tracer <nom>     # où passe cette grandeur, dans tout le corpus
@@ -269,6 +270,14 @@ python3 outils/identites.py --registre        # le registre des identités durab
 
 Sans dépendance, code de retour `1` sur échec — utilisable en intégration continue tel
 quel.
+
+**Deux implémentations, et c'est délibéré.** Le catalogue de règles est l'actif ; le
+vérificateur n'en est qu'une réalisation. La version Python se lit et s'exécute sans rien
+installer ; la version Java, en **fichier unique** (`java outils/Verifier.java`, sans
+construction ni dépendance), convient à un contexte industriel Java. Les deux doivent
+s'accorder au caractère près sur le [corpus de défauts connus](outils/jeu-d-essai/) —
+c'est le test de la double implémentation appliqué à l'outillage lui-même, et **il a déjà
+trouvé un défaut dans chacune des deux**.
 
 ### Pourquoi c'est possible : le formalisme
 

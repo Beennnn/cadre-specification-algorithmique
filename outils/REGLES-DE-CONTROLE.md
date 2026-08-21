@@ -4,14 +4,34 @@
 qui les exécute ([`verifier.py`](verifier.py)), une IA à qui on les donne en consigne
 ([`PROMPT-RELECTURE-IA.md`](PROMPT-RELECTURE-IA.md)).*
 
-**Ce qui est mécanisé.** `verifier.py` met en œuvre `C-01` à `C-04`, `C-06` à `C-08`,
-`C-10`, `C-11`, `C-13` à `C-17`, `C-19` à `C-21`, `C-26` à `C-30`, `C-33` à `C-38` — soit
-**31 des 41**. Les huit restants (`C-05`, `C-09`, `C-12`, `C-18`, `C-22` à `C-25`, `C-31`,
-`C-32`) demandent un jugement ou une lecture que le script ne fait pas.
+**Ce qui est mécanisé.** `verifier.py` et `Verifier.java` mettent en œuvre `C-01` à
+`C-04`, `C-08`, `C-10`, `C-11`, `C-13` à `C-15`, `C-17`, `C-19` à `C-21`, `C-23`, `C-24`,
+`C-26`, `C-28`, `C-29`, `C-35`, `C-36`, `C-38`, `C-39` — soit **23 des 39**. Les seize
+restants (`C-05` à `C-07`, `C-09`, `C-12`, `C-16`, `C-18`, `C-22`, `C-25`, `C-27`, `C-30`
+à `C-32`, `C-37`, `C-40`, `C-41`) demandent un jugement ou une lecture que le script ne
+fait pas.
+
+> **Ce décompte est vérifiable.** Il a été faux : le dépôt a longtemps annoncé « 31 des
+> 41 », en citant des règles `C-33` et `C-34` qui n'existent pas et en omettant `C-39`.
+> Une prose de couverture ne se relit pas, elle se recompte — sur les appels à `constat`
+> des deux implémentations.
 
 `C-11` est **heuristique** : il ne se déclenche que sur un superlatif portant sur une
 collection, un superlatif entre deux scalaires étant sans ambiguïté. Il peut donc laisser
 passer un cas, et il est classé en avertissement à ce titre.
+
+`C-03` est **heuristique** lui aussi, dans l'autre sens. Il ne considère comme grandeur
+qu'un identifiant contenant un `_` : c'est la convention `snake_case` (`C-38`) qui le
+distingue du français ordinaire entourant le pseudo-code, faute de quoi « ligne » ou
+« que » seraient signalés. Un fantôme nommé d'un seul mot lui échappe donc. Un nom est
+tenu pour déclaré s'il est introduit dans les règles — `SOIT`, `POUR CHAQUE`, ou membre
+gauche d'une affectation, champ compris — ou s'il apparaît ailleurs dans le document.
+
+> **Ce contrôle a fait ses preuves le jour où il a été écrit.** Passé sur nos propres
+> exemples, il a trouvé deux fantômes réels : `instant_ajout`, que l'algorithme employait
+> alors que le contrat déclarait `ajout.instant` — la même grandeur sous deux noms — et
+> `energie_cumulee_avant`, employé sans avoir jamais été défini. Les deux avaient
+> traversé la relecture humaine.
 
 Deux familles :
 

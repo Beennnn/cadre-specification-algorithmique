@@ -4,6 +4,8 @@
 |---|---|
 | **[REGLES-DE-CONTROLE.md](REGLES-DE-CONTROLE.md)** | Le catalogue des règles de contrôle `C-01` à `C-23` (mécaniques) et `H-01` à `H-06` (humaines). Écrit une fois, lu par un humain, exécuté par le script, donné en consigne à une IA |
 | **[verifier.py](verifier.py)** | Met en œuvre les règles `C-xx` mécanisables. Aucune dépendance : Python 3 seul |
+| **[Verifier.java](Verifier.java)** | **La même chose en Java** — fichier unique, aucune dépendance, aucune construction : `java outils/Verifier.java`. Pour un contexte industriel Java |
+| **[jeu-d-essai/](jeu-d-essai/)** | Le corpus de défauts connus et le verdict attendu — c'est lui qui permet de vérifier que deux implémentations contrôlent bien la même chose |
 | **[PROMPT-RELECTURE-IA.md](PROMPT-RELECTURE-IA.md)** | La consigne prête à l'emploi pour une pré-relecture par un modèle |
 
 ## Utilisation
@@ -91,8 +93,14 @@ Trois choses suffisent, et elles existent déjà :
    règles sont mécanisables et ce qu'un échec révèle.
 2. **Un corpus de référence** — les documents de ce dépôt, dont on connaît le verdict :
    `0 échec, 0 avertissement`. Toute réimplémentation doit retrouver ce verdict.
-3. **Un corpus de défauts connus** — des documents volontairement fautifs, un par règle,
-   avec le constat attendu. *(À constituer : voir `CHANTIER.md`.)*
+3. **Un corpus de défauts connus** — [`jeu-d-essai/`](jeu-d-essai/), un document
+   volontairement fautif dont le verdict attendu est figé : **19 échecs, 3 avertissements**.
+
+> **Ce corpus a déjà servi.** Confrontées dessus, les deux implémentations divergeaient sur
+> trois points — et chacune avait tort sur l'un d'eux : Python signalait le même identifiant
+> dupliqué une fois par occurrence, Java lisait la mauvaise colonne de l'historique, et
+> `C-24` manquait entièrement à Java. **C'est très exactement ce que le test de la double
+> implémentation est censé produire.**
 
 Les deux implémentations doivent alors **s'accorder sur le même corpus**. C'est la seule
 façon de savoir qu'elles vérifient bien la même chose — et c'est très exactement ce que la

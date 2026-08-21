@@ -2,9 +2,13 @@
 # -*- coding: utf-8 -*-
 """Contrôles mécaniques d'une spécification fonctionnelle.
 
-Met en œuvre les règles C-xx de REGLES-DE-CONTROLE.md qui sont mécanisables.
-Les règles non mécanisables (C-05 à C-13 en partie, C-18, C-22) et les contrôles
-humains H-xx relèvent de la relecture — voir guides/5-VALIDER.md.
+Met en œuvre 23 des 39 règles C-xx de REGLES-DE-CONTROLE.md — celles qui sont
+mécanisables. Les seize autres et les contrôles humains H-xx relèvent de la
+relecture : voir guides/5-VALIDER.md. Le décompte exact est tenu dans le
+catalogue ; il se recompte sur les appels à constat(), pas sur cette prose.
+
+Verifier.java est la seconde implémentation du même catalogue : les deux doivent
+rendre le même verdict sur le même corpus (test de la double implémentation).
 
 Usage :
     python3 outils/verifier.py                  # tout le dépôt
@@ -137,7 +141,7 @@ def verifier_spec(chemin):
 
     # --- C-14 / C-15 / C-17 : traçabilité
     definies = re.findall(r"^###\s+(RG-\d+)", corps_regles, re.M)
-    for r in definies:
+    for r in sorted(set(definies)):
         if definies.count(r) > 1:
             constat("ÉCHEC", "C-17", chemin, "%s défini plusieurs fois" % r)
     couverture = ""
@@ -167,6 +171,42 @@ def verifier_spec(chemin):
                 constat("AVERTIR", regle, chemin,
                         "%s « %s » déclarée mais employée dans aucune règle"
                         % (quoi, champ))
+
+    # --- C-03 : grandeur employée dans une règle et déclarée nulle part (fantôme)
+    #
+    # L'inverse de C-01. On ne retient que les identifiants comportant un « _ » :
+    # la convention snake_case (C-38) les distingue du français ordinaire qui
+    # entoure le pseudo-code, et cette restriction évite de prendre « ligne » ou
+    # « que » pour des grandeurs. Un nom est réputé déclaré s'il est introduit
+    # dans les règles (SOIT, POUR CHAQUE, affectation) ou s'il apparaît ailleurs
+    # dans le document — contrat, paramètres, glossaire, jeu d'essai.
+    code_regles = "\n".join(b for t, c in re.findall(
+        r"^###\s+(RG-\d+)[^\n]*\n(.*?)(?=\n###\s|\Z)", corps_regles, re.S | re.M)
+        for b in blocs_code(c))
+    employes = set(re.findall(r"\b([a-z][a-z0-9]*(?:_[a-z0-9]+)+)\b", code_regles))
+    introduits = set()
+    for motif in (r"\bSOIT\s+([a-z][a-z0-9_]*)",
+                  r"\bPOUR\s+CHAQUE\s+([a-z][a-z0-9_]*)"):
+        introduits |= set(re.findall(motif, code_regles, re.M))
+    # Une affectation introduit son membre gauche. « = » est aussi l'opérateur de
+    # comparaison (§2.2) : on écarte donc les lignes de condition, et on tolère un
+    # préfixe (branche de table de décision, puce) devant le nom affecté. Le nom
+    # est celui qui précède le premier « = », champ éventuel retiré :
+    # « boisson_melangee.masse = … » introduit « boisson_melangee ».
+    for ligne in code_regles.splitlines():
+        if re.match(r"\s*(SI|SINON|TANT QUE|FILTRER|OÙ|POUR|IL EXISTE|AUCUN|TOUS)\b",
+                    ligne):
+            continue
+        gauche = ligne.split("=")[0] if "=" in ligne else ""
+        m = re.search(r"([a-z][a-z0-9_]*)(?:\.[a-z][a-z0-9_]*)?\s*$", gauche)
+        if m:
+            introduits.add(m.group(1))
+    ailleurs = texte.replace(corps_regles, "")
+    for nom in sorted(employes - introduits):
+        if not re.search(r"\b%s\b" % re.escape(nom), ailleurs):
+            constat("ÉCHEC", "C-03", chemin,
+                    "« %s » est employé dans une règle mais déclaré nulle part "
+                    "(fantôme)" % nom)
 
     # --- C-39 : provenance et validation des résultats attendus
     if "Provenance et validation" not in sec.get("essai", ""):
@@ -465,7 +505,8 @@ def main():
         fichiers = [os.path.abspath(c) for c in cibles]
     else:
         fichiers = [os.path.join(r, f)
-                    for r, d, fs in os.walk(RACINE) if ".git" not in r
+                    for r, d, fs in os.walk(RACINE)
+                    if ".git" not in r and "jeu-d-essai" not in r
                     for f in fs if f.endswith(".md")]
     specs = 0
     for f in sorted(fichiers):
@@ -480,7 +521,7 @@ def main():
           "%d échec(s), %d avertissement(s)"
           % (len(fichiers), specs, len(echecs), len(constats) - len(echecs)))
     if not constats:
-        print("Aucun défaut mécanique. 31 des 41 contrôles sont mécanisés ; les huit "
+        print("Aucun défaut mécanique. 23 des 39 contrôles sont mécanisés ; les seize "
               "restants et les contrôles humains H-01 à H-07 relèvent de la relecture.")
     return 1 if echecs else 0
 

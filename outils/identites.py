@@ -103,7 +103,7 @@ def attribuer(chemin):
 def registre():
     entrees, doublons = {}, []
     for r, d, fs in os.walk(RACINE):
-        if ".git" in r or "templates" in r:
+        if ".git" in r or "templates" in r or "jeu-d-essai" in r:
             continue
         for f in sorted(fs):
             if not f.endswith(".md"):
@@ -137,6 +137,7 @@ if __name__ == "__main__":
         cibles = args[1:] or [os.path.join(r, f)
                               for r, d, fs in os.walk(RACINE)
                               if ".git" not in r and "templates" not in r
+                              and "jeu-d-essai" not in r
                               for f in fs if f.endswith(".md")]
         total = sum(attribuer(os.path.abspath(c)) for c in cibles)
         print("%d identité(s) attribuée(s)" % total)

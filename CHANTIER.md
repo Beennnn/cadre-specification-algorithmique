@@ -1,6 +1,6 @@
 # État du chantier
 
-*Dernière mise à jour : 2026-08-21 (8)*
+*Dernière mise à jour : 2026-08-21 (9)*
 
 ---
 
@@ -31,9 +31,10 @@ illustrée de bout en bout par un fil rouge dont tous les chiffres sont vérifi�
 
 **L'outillage.** Le dépôt affirme que « l'incohérence doit être détectable mécaniquement »
 et que l'étage 1 nettoie avant les humains : cette promesse doit être tenue entièrement.
-**31 des 41 contrôles sont désormais mécanisés** ; restent `C-05` (valeur magique),
-`C-09` (complétude d'une table de décision), `C-12` (entrée facultative sans comportement
-d'absence), et les quatre qui demandent un jugement.
+**23 des 39 contrôles sont désormais mécanisés** — `C-03` (fantôme) l'a été en dernier,
+et a immédiatement trouvé deux défauts réels dans nos propres exemples. Restent `C-05`
+(valeur magique), `C-09` (complétude d'une table de décision), `C-12` (entrée facultative
+sans comportement d'absence), et ceux qui demandent un jugement.
 
 ## Décisions structurantes déjà prises
 
@@ -64,8 +65,8 @@ d'absence), et les quatre qui demandent un jugement.
 | H2 | ~~Mécaniser `C-05` à `C-13`~~ (ancienne ligne) (valeur magique, `SI` sans `SINON`, arrondi sans sens, superlatif sans départage) — demande une analyse du pseudo-langage, pas seulement du markdown | à construire |
 | I | ~~Les avertissements `C-01`/`C-02`~~ — **tranché** : le vocabulaire des règles a été aligné sur les identifiants du contrat. Zéro avertissement | fait |
 | J | **Mécaniser `C-25`** (orthographe identique entre contrat et règles) — proche de `C-01`, réalisable | à construire |
-| O | **Un corpus de défauts connus** — un document volontairement fautif par règle mécanisée, avec le constat attendu. C'est ce qui manque pour qu'une réimplémentation (en Java par exemple) puisse être validée contre la même référence | à construire — **préalable à toute réimplémentation** |
-| P | **Le vérificateur en Java**, packagé et intégré à la chaîne de construction de l'organisation, à partir du même catalogue | à construire, après O |
+| ~~O~~ | ~~Un corpus de défauts connus~~ — **fait** : `outils/jeu-d-essai/`, verdict figé à 19 échecs et 3 avertissements | fait |
+| ~~P~~ | ~~Le vérificateur en Java~~ — **fait** : `outils/Verifier.java`, fichier unique sans dépendance ni construction. Reste à décider s'il doit être empaqueté en module Maven et intégré à la chaîne de construction de l'organisation | fait ; empaquetage à arbitrer |
 | L | **Enrichir les glossaires d'illustrations** — chaque concept nommé, décrit **et illustré**. Les entrées existent, les illustrations manquent | à écrire |
 | M | **Appliquer la chaîne de traitement `ET-xx` aux deux vignettes** — seul `SPEC-NRG-001` la porte | à écrire |
 | ~~N~~ | ~~Mécaniser `C-35`/`C-36` dans la passe globale~~ — **fait** | fait |

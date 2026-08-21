@@ -1,0 +1,6 @@
+# Artefacts d'exécution Python
+__pycache__/
+*.pyc
+
+# Artefacts d'exécution Java
+*.class

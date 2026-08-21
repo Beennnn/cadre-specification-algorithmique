@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Identifiant** | SPEC-NRG-001 — spécifie `FN-001` |
-| **Version** | 2.0.1 |
+| **Version** | 2.0.2 |
 | **Statut** | Acceptée |
 | **Niveau de maturité** | **4 — spécification complète** |
 | **Auteur métier** | *(rôle : Responsable modèles énergétiques, R&D Énergie)* |
@@ -345,7 +345,13 @@ L'ordre du trajet tient lieu de règle de départage : les segments sont totalem
 ordonnés, donc « le premier » désigne un segment et un seul. Aucune égalité n'est
 possible.
 
-On parcourt les segments dans l'ordre. Pour le premier segment tel que
+On parcourt les segments dans l'ordre. Pour un segment donné, l'énergie déjà
+consommée à son entrée est celle de tous les segments qui le précèdent :
+
+    SOIT energie_cumulee_avant = SOMME DES energie_segment DES segments
+                                 qui précèdent le segment courant
+
+Pour le premier segment tel que
     energie_cumulee_avant + energie_segment ≥ budget_utilisable
    ET energie_segment > 0 :
 
@@ -710,6 +716,7 @@ le développement lira.
 | 1.0.0 | 2026-02-24 | Version initiale | — | — |
 | **2.0.0** | 2026-03-12 | `RG-100` : arrondi du point d'autonomie vers le bas (`Q-05`) | **Oui** — jusqu'à 1 m, toujours dans le sens prudent | `N-2.0.0` |
 | 2.0.1 | 2026-03-20 | Reprise de `RG-050` et `RG-090` : le terme *consommation moyenne* est remplacé par une formulation explicite de l'assiette, à la suite du retrait du terme au glossaire (v2.0.0) | Aucun — clarification de rédaction | — |
+| 2.0.2 | 2026-08-21 | `RG-090` : `energie_cumulee_avant` était employé sans avoir jamais été défini (fantôme relevé par `C-03`) ; la règle l'introduit désormais explicitement | Aucun — l'énoncé rend explicite ce qui était implicite | — |
 
 ### N-2.0.0 — L'arrondi du point d'autonomie passe vers le bas
 

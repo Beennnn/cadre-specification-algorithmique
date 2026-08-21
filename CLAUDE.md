@@ -76,6 +76,7 @@ Voir `CADRE.md` §2.3 et §2.4.
 python3 outils/identites.py --attribuer   # UUID des nouveaux objets
 python3 outils/identites.py --registre    # regénère registre.json
 python3 outils/verifier.py                # doit finir à 0 échec
+java    outils/Verifier.java              # seconde implémentation : même verdict exigé
 ```
 
 ## Règle absolue sur les chiffres
