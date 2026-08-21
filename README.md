@@ -15,14 +15,26 @@ de fusion, et de rester vraies.
 ## Le problème
 
 Dans beaucoup d'organisations, la connaissance algorithmique appartient à des gens dont le
-métier n'est pas de développer. Ils codent quand même — tableur, carnet de calcul, script
-— parce que c'est le seul moyen qu'ils ont de vérifier que leur idée tient. Ce code finit
-en production par accident, ou est réécrit avec dérive, ou est jeté avec ses quarante
-décisions implicites.
+métier n'est pas de développer. Ils codent quand même — tableur, carnet de calcul, script —
+parce que c'est le seul moyen de vérifier qu'une idée tient. Ce travail est légitime, et
+souvent excellent : il fait exactement ce qu'on lui demande, démontrer qu'un raisonnement
+fonctionne.
 
-Le point commun : **le code mélange indissociablement l'intention et la mise en œuvre.**
-Et quand la spécification est floue, c'est le développeur qui décide du métier — sans le
-savoir et sans mandat.
+Mais un code qui part en production doit tenir autre chose : un niveau de qualité **assuré
+dans la durée** — maintenabilité, testabilité, capacité à évoluer, performance,
+exploitabilité, sécurité. Ces contraintes relèvent du **métier de développeur et
+d'architecte logiciel**, et on ne peut pas raisonnablement en attendre l'expertise de gens
+dont le métier est de concevoir et de maintenir les besoins algorithmiques — pas plus
+qu'on n'attend d'un développeur qu'il maîtrise leur domaine.
+
+Deux effets en découlent, et ils sont symétriques :
+
+- le code mélange l'intention et la mise en œuvre, si bien qu'on ne distingue plus la
+  règle de gestion du choix d'implémentation ;
+- quand la spécification est floue, c'est le développeur qui tranche des questions
+  métier — sans le savoir et sans mandat.
+
+Dans les deux cas, **on demande à chacun de faire le métier de l'autre**.
 
 ## Ce que la méthode produit
 

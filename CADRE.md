@@ -65,25 +65,57 @@ n'invente pas : il ouvre une **question** dans la spécification, et le métier 
 Dans beaucoup d'organisations, la connaissance algorithmique est détenue par des gens
 dont le métier n'est pas de développer : actuaires, analystes de risque, ingénieurs
 process, tarificateurs, chargés de conformité, chercheurs, contrôleurs de gestion. Ces
-personnes codent quand même — parce que c'est le seul moyen qu'elles ont de vérifier
-que leur idée tient. Et ce code finit invariablement dans l'un de ces trois états :
+personnes codent quand même — parce que c'est le seul moyen de vérifier qu'une idée
+tient. **Ce travail est légitime, et souvent excellent** : il remplit exactement l'office
+qu'on lui demande, démontrer qu'un raisonnement fonctionne.
 
-| État | Ce qui se passe | Le coût |
+La difficulté n'apparaît qu'ensuite, quand ce code doit servir à autre chose.
+
+#### Ce qu'exige un code de production, et à qui cette expertise appartient
+
+Un logiciel qui part en production doit tenir un **niveau de qualité assuré dans la
+durée** : il devra être repris par d'autres, testé, corrigé sous contrainte de temps,
+porté sur une autre plate-forme, tenir la montée en charge, être exploité, tracé,
+sécurisé, et rester modifiable après le départ de ses auteurs.
+
+Ces exigences ne s'improvisent pas. **Elles constituent le métier de développeur et
+d'architecte logiciel** — un métier qui a ses techniques, ses arbitrages et son
+apprentissage, au même titre que l'actuariat ou la métrologie.
+
+> **On ne peut pas raisonnablement attendre cette expertise de personnes dont le métier
+> est de concevoir et de maintenir les besoins algorithmiques métier** — pas plus qu'on
+> n'attendrait d'un développeur qu'il maîtrise la tarification d'un contrat ou la
+> physique d'un capteur.
+
+Il ne s'agit donc pas de compétences manquantes, mais de **deux expertises distinctes**,
+qu'aucune organisation ne devrait demander aux mêmes personnes de cumuler.
+
+#### Les trois trajectoires habituelles, et leur coût
+
+| Trajectoire | Ce qui se passe | Le coût, pour tout le monde |
 |---|---|---|
-| **Le prototype devient la production** | Le classeur ou le script tourne « en attendant », puis pendant huit ans. | Personne n'ose y toucher, personne ne sait le tester, une seule personne le comprend. |
-| **Le prototype est réécrit** | L'IT le réimplémente « proprement ». | La règle dérive silencieusement. Les écarts se découvrent en production, souvent via un client ou un auditeur. |
-| **Le prototype est jeté** | Le développeur repart d'une spécification en prose de trois pages. | Les 40 décisions implicites du prototype (arrondis, ordres, valeurs par défaut, départages) sont reprises au hasard. |
+| **Le prototype passe en production** | Il devait tenir « en attendant » ; il tourne encore huit ans plus tard | Il n'a jamais été conçu pour être maintenu par d'autres : ni jeu de tests, ni trace des décisions. La charge repose sur une seule personne, qui ne peut plus s'en détacher |
+| **Le prototype est réimplémenté** | L'IT le reprend avec les exigences de production | Faute d'un énoncé des règles indépendant du code, la réimplémentation doit **deviner l'intention à partir de la mise en œuvre**. Les écarts se découvrent tard, souvent par un client ou un auditeur |
+| **Le prototype sert de point de départ** | Le développeur repart d'une note de quelques pages | Les décisions que le prototype avait tranchées sans les écrire — arrondis, ordres d'application, valeurs par défaut, départages — sont reprises au jugé |
 
-Le point commun des trois : **le code du métier mélange indissociablement l'intention
-et la mise en œuvre**. On ne sait plus distinguer « on retient le prix le plus bas »
-(une règle de gestion, votée, opposable) de « on trie la liste puis on prend le
-premier » (un choix d'implémentation, remplaçable).
+**Aucune de ces trajectoires ne relève d'une négligence.** Un prototype a pour but de
+vérifier qu'un raisonnement tient ; il n'a jamais eu pour but de consigner des décisions
+ni d'être maintenu dix ans. On lui demande après coup ce qu'on ne lui avait pas demandé.
 
-Le second effet est plus grave : quand la spécification est floue, **c'est le
-développeur qui décide du métier**, sans le savoir et sans mandat. Il choisit un
-arrondi, une valeur par défaut sur une donnée absente, un ordre d'application de deux
-remises. Ces décisions ont des conséquences comptables, contractuelles et parfois
-réglementaires — prises par la mauvaise personne, au mauvais moment, sans trace.
+#### Le vrai point commun
+
+**Le code mélange indissociablement l'intention et la mise en œuvre.** On ne distingue
+plus « on retient le prix le plus bas » — une règle de gestion, décidée, opposable — de
+« on trie la liste puis on prend le premier » — un choix d'implémentation, remplaçable.
+
+Et l'effet symétrique est tout aussi coûteux : **quand la spécification est floue, c'est
+le développeur qui tranche des questions métier**, sans le savoir et sans mandat. Il
+choisit un arrondi, une valeur par défaut sur une donnée absente, un ordre d'application
+de deux remises. Ces décisions ont des conséquences comptables, contractuelles et parfois
+réglementaires.
+
+Dans un sens comme dans l'autre, **on demande à chacun de faire le métier de l'autre** —
+et c'est cela, et cela seul, que la méthode cherche à corriger.
 
 ### 1.2 Le principe : le métier écrit la loi, l'IT écrit la machine
 
