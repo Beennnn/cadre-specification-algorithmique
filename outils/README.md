@@ -43,6 +43,49 @@ le plus.**
 C'est exactement le partage décrit au [guide 5](../guides/5-VALIDER.md) : le script
 d'abord, l'IA ensuite, les humains en dernier — chacun sur ce qu'il sait faire.
 
+## Pourquoi ces outils sont en Python — et pourquoi une version Java est légitime
+
+La question se pose dès qu'on sort du dépôt de méthode : **en contexte industriel Java, on
+préférera du Java.** C'est justifié, et la réponse tient dans une distinction que la méthode
+elle-même enseigne.
+
+> **Le catalogue de règles est l'actif. Le vérificateur n'en est qu'une implémentation.**
+
+[`REGLES-DE-CONTROLE.md`](REGLES-DE-CONTROLE.md) joue exactement le rôle d'une
+spécification : il énonce **ce qui doit être vérifié**, sans dire comment. `verifier.py` en
+est une réalisation possible ; une réalisation en Java en serait une autre, tout aussi
+conforme. C'est le [test de la double implémentation](../CADRE.md) appliqué à l'outillage
+lui-même.
+
+**Deux artefacts, deux finalités différentes :**
+
+| | **Le vérificateur de démonstration** — ici | **Le vérificateur industriel** — chez vous |
+|---|---|---|
+| Sa vertu | se lire et **s'exécuter sans rien installer** : `python3 outils/verifier.py`, aucune dépendance, aucun build | être **maintenu comme le reste du code de l'organisation** : mêmes conventions, même revue, même chaîne de construction |
+| Son public | quiconque découvre la méthode et veut la voir tourner en trente secondes | les équipes, en intégration continue |
+| Le bon langage | un langage de script, parce qu'il n'y a rien à installer et que le texte s'y manipule bien | **celui de l'organisation** — en contexte Java, du Java, packagé et testé comme le reste |
+
+> **Attention à ne pas confondre avec l'arbitrage sur les identifiants** ([CADRE
+> §2.4](../CADRE.md)). Là, on refuse la convention d'un langage parce que **la
+> spécification doit survivre au langage**. Ici, c'est l'inverse : un vérificateur est du
+> code ordinaire, soumis aux mêmes exigences de maintenabilité que le reste — et le §1.1
+> s'applique à lui comme à n'importe quel autre composant.
+
+## Réimplémenter le vérificateur
+
+Trois choses suffisent, et elles existent déjà :
+
+1. **Le catalogue** — [`REGLES-DE-CONTROLE.md`](REGLES-DE-CONTROLE.md), qui dit quelles
+   règles sont mécanisables et ce qu'un échec révèle.
+2. **Un corpus de référence** — les documents de ce dépôt, dont on connaît le verdict :
+   `0 échec, 0 avertissement`. Toute réimplémentation doit retrouver ce verdict.
+3. **Un corpus de défauts connus** — des documents volontairement fautifs, un par règle,
+   avec le constat attendu. *(À constituer : voir `CHANTIER.md`.)*
+
+Les deux implémentations doivent alors **s'accorder sur le même corpus**. C'est la seule
+façon de savoir qu'elles vérifient bien la même chose — et c'est très exactement ce que la
+méthode demande de tout composant.
+
 ## Faire évoluer
 
 Une règle s'ajoute au catalogue **quand son absence a causé un incident réel**. Si elle
