@@ -78,9 +78,9 @@ lot de fonctions. Le [versionnement](guides/7-VERSIONNER.md) court en travers de
 
 ---
 
-## Le partage des rôles
+*Les quatre sections qui suivent disent qui fait quoi, et pourquoi ce partage tient.*
 
-### Les deux dérives
+## Les deux dérives
 
 Elles sont symétriques, et aucune n'est volontaire.
 
@@ -96,7 +96,7 @@ Elles sont symétriques, et aucune n'est volontaire.
 trancher des questions **comptables, contractuelles ou réglementaires** à quelqu'un qui
 n'a ni le mandat ni les éléments — et le plus souvent sans qu'il s'en aperçoive.
 
-### La question qui tranche
+## La question qui tranche
 
 > Si modifier ce point change un résultat observable par un client, un comptable, un
 > régulateur ou un opérateur → **c'est du métier**.
@@ -108,9 +108,9 @@ arrondis, l'ordre des opérations non commutatives, le départage des ex æquo, 
 des valeurs absentes, les bornes, le mode dégradé. Ce sont les [huit faux amis](CADRE.md),
 et ils causent l'essentiel des écarts entre deux implémentations honnêtes.
 
-### Le rôle du métier
+## Le rôle du métier
 
-**Il décrit ce qui doit être calculé, et à partir de quoi.**
+> **Il décrit ce qui doit être calculé, et à partir de quoi.**
 
 | Il décide | Il ne décide pas |
 |---|---|
@@ -127,9 +127,9 @@ et ils causent l'essentiel des écarts entre deux implémentations honnêtes.
 Et il **atteste** que l'expression fonctionnelle est juste, puis tranche les questions
 ouvertes qui s'y rapportent.
 
-### Le rôle de la technique
+## Le rôle de la technique
 
-**Elle décide comment c'est calculé, et elle en répond dans la durée.**
+> **Elle décide comment c'est calculé, et elle en assume la tenue dans la durée.**
 
 | Elle décide | Elle ne décide pas |
 |---|---|
@@ -149,7 +149,7 @@ dynamique.
 > valideur métier dispose. Une décision métier prise dans un commit est une décision
 > perdue.
 
-### La place de l'IA
+## La place de l'IA
 
 Elle intervient à presque toutes les étapes et **ne décide à aucune**. Son terrain le plus
 rentable est la **cohérence du contrat** : entrée déclarée jamais employée, sortie promise
@@ -166,9 +166,9 @@ avoir laissé de trace.
 > personne qui a lancé la passe assume ce qu'elle en a retenu comme si elle l'avait écrit.
 > Voir [guide 9](guides/9-L-APPORT-DE-L-IA.md).
 
-## Deux mécanismes qui font tenir ce partage
+---
 
-### La validation se fait en trois étages, dans cet ordre
+## La validation, en trois étages et dans cet ordre
 
 | | Qui | La question |
 |---|---|---|
@@ -180,7 +180,9 @@ L'ordre n'est pas négociable : faire relire par des humains un document qui con
 un paramètre inutilisé gaspille la ressource la plus rare de la démarche. Le verdict de
 l'étage 3 est **binaire**, et le critère de sortie est **zéro question**.
 
-### Un résultat validé devient une donnée de référence
+## La donnée de référence
+
+> **Un résultat validé cesse d'être un exemple : il devient un engagement.**
 
 Quand le métier a examiné et accepté les sorties par rapport aux entrées, le couple cesse
 d'être un exemple : il devient un **engagement opposable**, attaché à une fonction, une
