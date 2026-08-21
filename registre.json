@@ -297,7 +297,7 @@
     "uuid": "30bc5c0f-c236-42d7-9b52-2c291b83c01c",
     "identifiant": "INV-08",
     "nature": "invariant",
-    "libelle": "`points_fidélité_débités × P-08 = réduction_fidélité_ttc`",
+    "libelle": "`points_fidelite_debites × P-08 = reduction_fidelite_ttc`",
     "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
   },
   {
@@ -493,7 +493,7 @@
     "uuid": "55073c8c-6521-49d5-bf01-0fbd403894be",
     "identifiant": "E-QTE-001",
     "nature": "cas d'erreur",
-    "libelle": "Une quantité est nulle ou négative",
+    "libelle": "Une quantite_commandee est nulle ou négative",
     "document": "exemples/SPEC-PRX-001-montant-a-payer.md"
   },
   {

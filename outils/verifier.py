@@ -168,6 +168,13 @@ def verifier_spec(chemin):
                         "%s « %s » déclarée mais employée dans aucune règle"
                         % (quoi, champ))
 
+    # --- C-38 : identifiants en ASCII strict, snake_case
+    for cle in ("entrees", "sorties"):
+        for champ in champs(sec.get(cle, "")):
+            if not re.fullmatch(r"[a-z][a-z0-9_]*", champ):
+                constat("ÉCHEC", "C-38", chemin,
+                        "l'identifiant « %s » n'est pas en ASCII snake_case" % champ)
+
     # --- C-28 / C-29 : identités durables
     table = identites.annexe_existante(texte)
     for ident, nature, _ in identites.objets(texte):

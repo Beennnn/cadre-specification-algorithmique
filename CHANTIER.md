@@ -1,6 +1,6 @@
 # État du chantier
 
-*Dernière mise à jour : 2026-08-21 (3)*
+*Dernière mise à jour : 2026-08-21 (4)*
 
 ---
 
@@ -55,6 +55,9 @@ illustrée de bout en bout par un fil rouge dont tous les chiffres sont vérifi�
 | H | **Mécaniser `C-05` à `C-13`** (valeur magique, `SI` sans `SINON`, arrondi sans sens, superlatif sans départage) — demande une analyse du pseudo-langage, pas seulement du markdown | à construire |
 | I | ~~Les avertissements `C-01`/`C-02`~~ — **tranché** : le vocabulaire des règles a été aligné sur les identifiants du contrat. Zéro avertissement | fait |
 | J | **Mécaniser `C-25`** (orthographe identique entre contrat et règles) — proche de `C-01`, réalisable | à construire |
+| L | **Enrichir les glossaires d'illustrations** — chaque concept nommé, décrit **et illustré**. Les entrées existent, les illustrations manquent | à écrire |
+| M | **Appliquer la chaîne de traitement `ET-xx` aux deux vignettes** — seul `SPEC-NRG-001` la porte | à écrire |
+| N | **Mécaniser `C-35`/`C-36` dans le passage global** de `verifier.py` — ils ne tournent aujourd'hui que sous `--chaine` | à construire |
 | K | **Les fiches de données `D-xxx` du fil rouge** sont dans un seul document ; il faudrait décider si elles vivent en fichiers séparés comme les fiches de fonction | à arbitrer |
 
 ## Reste dans l'autre dépôt

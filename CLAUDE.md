@@ -39,15 +39,37 @@ pédagogique.
 
 Un identifiant n'est **jamais** réutilisé, même après suppression.
 
-## Deux règles d'écriture qui ne se négocient pas
+## Forme des identifiants
+
+**`snake_case`, ASCII strict** — ni accent, ni symbole grec, ni majuscule (`C-38`).
+Le corps du texte, lui, reste en français accentué : la contrainte ne porte que sur ce qui
+est cité, tracé et comparé mécaniquement.
+
+Pas la convention du langage cible : la spécification survit au langage, elle a des
+lecteurs qui ne codent pas, et il y a **deux cibles** dans le fil rouge. La correspondance
+vers Java, C, Python ou C# est mécanique et déclarée une fois — même principe que
+*protobuf*. Voir `CADRE.md` §2.4.
+
+## Trois règles d'écriture qui ne se négocient pas
 
 1. **Les règles emploient les identifiants du contrat, à l'identique** — pas le terme
    français équivalent. C'est ce qui rend `C-01` à `C-03` vérifiables.
 2. **Un nom valorisé ne change plus.** Toute transformation crée un nouveau nom qui la
-   porte (`remise_panier_brute` → `_retenue` → `_ligne` → `_ligne_ajustée`). Pour une
-   accumulation, on indexe : `energie_cumulee(i)`.
+   porte (`remise_panier_brute` → `_retenue` → `_ligne_ajustee`). Pour une accumulation,
+   on indexe : `energie_cumulee(i)`.
+3. **On ne code dans le nom que ce qui n'est déclaré nulle part ailleurs** : ni la portée,
+   ni le type, ni l'unité — tous trois déjà déclarés et vérifiables. Mais **oui** au stade
+   de transformation, que rien d'autre ne distingue.
 
 Voir `CADRE.md` §2.3 et §2.4.
+
+## Après toute modification
+
+```bash
+python3 outils/identites.py --attribuer   # UUID des nouveaux objets
+python3 outils/identites.py --registre    # regénère registre.json
+python3 outils/verifier.py                # doit finir à 0 échec
+```
 
 ## Règle absolue sur les chiffres
 

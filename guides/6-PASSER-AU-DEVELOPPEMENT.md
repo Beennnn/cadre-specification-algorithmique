@@ -84,6 +84,11 @@ Trois lignes du §11 pèsent plus que toutes les préférences d'équipe :
 
 ### Coder
 
+- **La correspondance des noms est mécanique et systématique.** La spécification écrit
+  `snake_case` en ASCII ; vous appliquez la convention de votre langage —
+  `montant_net_ht` → `montantNetHt` en Java, `MontantNetHt` en C#, inchangé en C ou en
+  Python ([CADRE §2.4](../CADRE.md)). La règle est déclarée une fois, par cible : c'est
+  ce qui permet de retrouver un nom de la spécification dans le code sans le chercher.
 - Le **glossaire est votre nomenclature.** Les noms des règles deviennent les noms des
   fonctions, les termes du domaine deviennent les noms des types et des variables. Si
   votre code emploie un mot qui n'est pas au glossaire, ou l'inverse, l'un des deux a

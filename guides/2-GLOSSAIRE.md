@@ -83,7 +83,7 @@ désigne ce qu'on doit payer.
 | | |
 |---|---|
 | ❌ | **Remise** — on applique 10 % quand le client commande 3 articles ou plus. |
-| ✅ | **Remise** — réduction consentie sur un montant, exprimée en taux ou en montant fixe. Une remise de *quantité* porte sur une ligne, une remise de *panier* porte sur l'ensemble de la commande. |
+| ✅ | **Remise** — réduction consentie sur un montant, exprimée en taux ou en montant fixe. Une remise de *quantite_commandee* porte sur une ligne, une remise de *panier* porte sur l'ensemble de la commande. |
 
 La mauvaise définition décrit **un traitement** au lieu d'une notion : elle enferme dans
 le glossaire une règle qui devrait vivre en `RG-xxx`, avec son identifiant, son

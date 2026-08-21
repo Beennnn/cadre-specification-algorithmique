@@ -33,6 +33,7 @@ le plus souvent : personne ne vérifie spontanément que le vingt-troisième par
 | `C-37` | **Aucune grandeur de portée interne n'apparaît dans un contrat, dans une sortie, dans le catalogue des données, ni dans la chaîne inter-étapes.** | Une grandeur interne exposée est une fuite d'implémentation dans le contrat : elle sera consommée, puis on ne pourra plus la changer |
 | `C-36` | **Toute grandeur produite par une étape est consommée plus loin ou déclarée en sortie.** | Un produit mort : du calcul fait pour rien, ou une sortie oubliée au contrat |
 | `C-32` | **Un résultat n'est pas restitué avec plus de chiffres significatifs que son incertitude n'en autorise.** | `106,017 km ± 3 km` est une faute d'expression qui donne une fausse confiance |
+| `C-38` | **Tout identifiant est en ASCII strict et en `snake_case`** : ni accent, ni symbole grec, ni majuscule. | Deux identifiants visuellement identiques peuvent différer par leur normalisation Unicode — `C-01` ne les rapproche pas et `--tracer` en perd un, sans que personne ne comprenne pourquoi |
 | `C-07` | **Aucune grandeur ne change d'unité** entre sa déclaration et son emploi sans conversion explicite. | Erreur d'un facteur 3,6 — ou 13 quand elle passe au carré |
 
 > **Lire un avertissement `C-01` ou `C-02`.** Le contrôle cherche le nom exact du champ

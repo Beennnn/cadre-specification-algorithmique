@@ -234,7 +234,7 @@ Le calcul se déroule en deux phases :
 > **C'est le faux ami central de cette spécification, et il est contre-intuitif.**
 >
 > Ajouter le lait **tôt** puis attendre, ou attendre puis ajouter le lait **tard**, ne
-> donne pas la même température finale — alors que la quantité de lait, sa température
+> donne pas la même température finale — alors que la quantite_commandee de lait, sa température
 > et la durée totale sont identiques. Le cas `CT-02` le chiffre : à 15 minutes,
 > l'ajout immédiat donne **55,18 °C** et l'ajout différé **54,52 °C**. Ajouter le lait
 > tout de suite laisse donc la boisson **plus chaude**.
@@ -417,7 +417,7 @@ lait `0,0300 × 3,900 = 0,1170 kJ·K⁻¹` ; total `0,9530 kJ·K⁻¹`.
 | Mélange (`RG-030`) | `(0,8360 × 61,4458 + 0,1170 × 5) ÷ 0,9530` | **54,5160 °C** |
 
 > **Écart : 0,6673 °C, en faveur de l'ajout immédiat.** Mêmes ingrédients, même durée,
-> même quantité de lait — deux résultats. C'est exactement ce qu'une spécification doit
+> même quantite_commandee de lait — deux résultats. C'est exactement ce qu'une spécification doit
 > trancher, et c'est exactement ce qu'un développeur ne peut pas deviner.
 >
 > Ce cas de test est aussi un excellent **détecteur d'implémentation paresseuse** :

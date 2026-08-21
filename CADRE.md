@@ -292,8 +292,8 @@ poids             : Poids(kg, 3 décimales, ≥ 0)
 taux_remise       : Taux(0,0000 .. 1,0000, 4 décimales)
 date_commande     : Horodatage(fuseau Europe/Paris)
 date_effet        : Date(calendrier grégorien)
-quantité          : Entier(≥ 1)
-référence_produit : Identifiant(texte, 3 à 20 caractères, unique)
+quantite_commandee          : Entier(≥ 1)
+reference_produit : Identifiant(texte, 3 à 20 caractères, unique)
 zone_livraison    : Énuméré { FRANCE_METRO, UE, HORS_UE }
 ```
 
@@ -348,16 +348,16 @@ Ce que cela rapporte, et c'est plus que de la propreté :
 
 #### Une grandeur n'est jamais un nombre nu
 
-Dans les règles, une grandeur est une **quantité** : une valeur **et** son unité,
+Dans les règles, une grandeur est une **quantite_commandee** : une valeur **et** son unité,
 indissociables. Il en découle une petite algèbre, qui se vérifie sans rien connaître au
 métier :
 
 | Opération | Ce qui est permis |
 |---|---|
-| Addition, soustraction, comparaison | **uniquement entre quantités de même dimension** |
+| Addition, soustraction, comparaison | **uniquement entre quantite_commandees de même dimension** |
 | Multiplication, division | toujours permises — elles **produisent une nouvelle dimension** |
 | Élévation à une puissance | permise ; la dimension est élevée à la même puissance |
-| Fonction transcendante (exponentielle, logarithme, trigonométrie) | **uniquement sur une quantité sans dimension** |
+| Fonction transcendante (exponentielle, logarithme, trigonométrie) | **uniquement sur une quantite_commandee sans dimension** |
 
 La dernière ligne est celle qui attrape le plus d'erreurs : `exp(−k × t)` n'a de sens que
 si `k × t` est sans dimension, donc si `k` est l'inverse d'un temps. Écrire un coefficient
@@ -377,12 +377,12 @@ vitesse_praticable : Flottant(m·s⁻¹ ▸ km/h, 6 chiffres significatifs, > 0)
                      accepte { m/s, km/h, mph }
 ```
 
-Ce que cela engage : la fonction reçoit une **quantité** — une valeur accompagnée de son
+Ce que cela engage : la fonction reçoit une **quantite_commandee** — une valeur accompagnée de son
 unité — et la convertit vers l'unité pivot **à l'entrée**, une fois. Elle produit
 symétriquement ses sorties dans l'unité d'usage demandée. Refuser une unité non déclarée
 est un cas d'erreur métier, pas une exception technique.
 
-> **Ce que la spécification ne dit pas** : comment les quantités sont représentées, si la
+> **Ce que la spécification ne dit pas** : comment les quantite_commandees sont représentées, si la
 > conversion est faite par une bibliothèque ou à la main, si le typage du langage porte
 > l'unité. Elle dit **quelles unités doivent être acceptées**, et que la conversion a lieu
 > une seule fois, au bord.
@@ -520,6 +520,65 @@ grandeur produite et consommée **à l'intérieur d'une même étape** ne figure
 table — elle est dans la boîte. C'est ce qui distingue `force_totale`, qui passe d'une
 étape à l'autre, de `force_aerodynamique`, qui n'existe qu'au sein de `ET-01`.
 
+#### La forme des identifiants
+
+**`snake_case`, en ASCII strict.** Deux décisions, deux raisons distinctes.
+
+**1. ASCII strict — pas d'accent, pas de symbole grec.**
+
+| Ce qu'on écrit | Ce qu'on n'écrit pas |
+|---|---|
+| `reduction_fidelite_ttc` | `réduction_fidélité_ttc` |
+| `alpha`, `rho`, `sigma` | `α`, `ρ`, `σ` |
+| `delta_temperature` | `Δtemperature` |
+
+Trois raisons, dont la première est décisive :
+
+- **Deux identifiants visuellement identiques peuvent différer.** `é` s'écrit soit en un
+  point de code, soit en deux (`e` + accent combinant). Deux noms indiscernables à l'œil et
+  distincts pour la machine : `C-01` ne les rapproche pas, `--tracer` en perd un, et
+  personne ne comprend pourquoi.
+- **Les homoglyphes grecs sont pires** : `α` et `a`, `ρ` et `p`, `ν` et `v` se confondent
+  dans presque toutes les polices.
+- **L'ASCII traverse toute la chaîne** sans incident : recherche, comparaison, noms de
+  tests, chemins de fichiers, journaux, terminaux.
+
+> **Le corps du texte reste en français accentué**, évidemment. La contrainte ne porte que
+> sur les **identifiants** — ce qui est cité, tracé et comparé mécaniquement. Une règle
+> peut parfaitement expliquer que `alpha` est l'angle de la pente en radians.
+
+**2. `snake_case`, et non la convention du langage cible.**
+
+C'est une vraie question, puisque l'une des implémentations est en Java et qu'on pourrait
+en reprendre les conventions. **Trois arguments s'y opposent, et le dernier est décisif :**
+
+- La spécification **survit au langage**. `SPEC-NRG-001` déclare une durée de vie de
+  quinze ans ; adopter la convention d'un langage, c'est y faire entrer une décision
+  technique par la fenêtre — exactement ce que le §1.4 interdit.
+- Elle a des **lecteurs qui ne codent pas** : métier, audit, conformité. `montant_net_ht`
+  se lit mieux que `montantNetHt` pour eux.
+- **Il y a deux cibles.** Le fil rouge est implémenté en C embarqué **et** côté serveur.
+  Adopter la convention de l'une privilégie une équipe et impose une traduction à
+  l'autre. Le jour où une troisième cible apparaît, la question se rouvre.
+
+**L'état de l'art donne la même réponse**, et il a un précédent solide : les langages de
+description d'interface — *protobuf* en tête — imposent `snake_case` dans le fichier de
+définition, **et chaque générateur applique ensuite la convention de son langage**. C'est
+exactement notre situation, et c'est une pratique éprouvée à grande échelle.
+
+**La correspondance est mécanique et fait partie du dossier de passation :**
+
+| Spécification | Java | C | Python | C# |
+|---|---|---|---|---|
+| `montant_net_ht` | `montantNetHt` | `montant_net_ht` | `montant_net_ht` | `MontantNetHt` |
+| `calculer_montant_a_payer` | `calculerMontantAPayer()` | `calculer_montant_a_payer()` | `calculer_montant_a_payer()` | `CalculerMontantAPayer()` |
+| `P-07` plafond de remise | `PLAFOND_REMISE` | `PLAFOND_REMISE` | `PLAFOND_REMISE` | `PlafondRemise` |
+
+> **La règle de correspondance est déclarée une fois, par cible, et elle est
+> systématique.** C'est ce qui permet à la traçabilité de tenir : partant de
+> `montant_net_ht` dans la spécification, on retrouve `montantNetHt` dans le code Java
+> sans avoir à chercher.
+
 #### Faut-il encoder la portée, le type et l'unité dans le nom ?
 
 La question se pose, et elle mérite mieux qu'une préférence. **Réponse : non pour les
@@ -552,7 +611,7 @@ encoder ce que rien ne vérifie peut être utile.**
 >
 > **Mais le suffixe d'unité résout un problème que nous avons résolu autrement, et mieux.**
 > Là où un nom ne peut que *signaler* l'unité, notre notation la **déclare** (§2.3),
-> l'algèbre des quantités interdit d'additionner deux dimensions différentes, et la
+> l'algèbre des quantite_commandees interdit d'additionner deux dimensions différentes, et la
 > conversion est confinée à la frontière. Ajouter le suffixe reviendrait à porter la même
 > information à deux endroits — dont l'un se périmerait le jour où l'unité pivot change.
 
@@ -561,7 +620,7 @@ moitié de la hongroise applicative : **le stade de transformation**, que ni le 
 l'unité ne distinguent.
 
 ```
-remise_panier_brute  →  remise_panier_retenue  →  remise_panier_ligne_ajustée
+remise_panier_brute  →  remise_panier_retenue  →  remise_panier_ligne_ajustee
 ```
 
 Ces trois grandeurs ont la même famille, la même unité, la même plage. **Rien d'autre
@@ -582,7 +641,7 @@ exactement le cas d'usage que Spolsky défend, et c'est déjà notre règle d'im
 ✓  remise_panier_brute    = 5,00
    remise_panier_retenue  = remise_panier_brute − écrêtement
    remise_panier_ligne    = remise_panier_retenue × part
-   remise_panier_ligne_ajustée = remise_panier_ligne + résidu
+   remise_panier_ligne_ajustee = remise_panier_ligne + résidu
 ```
 
 Ce que cela coûte : quelques noms de plus. Ce que cela rapporte, et c'est sans commune
@@ -1022,7 +1081,7 @@ pas, parce que lui n'est pas vérifiable.
 Sur la section 6, une précision qui a des conséquences architecturales lourdes :
 
 > **Un paramètre n'est pas une règle.** Une règle dit « on applique une remise de
-> quantité au-delà d'un certain seuil ». Un paramètre dit « ce seuil vaut 3 unités
+> quantite_commandee au-delà d'un certain seuil ». Un paramètre dit « ce seuil vaut 3 unités
 > depuis le 1er janvier ». Les deux ne changent ni à la même fréquence, ni par les
 > mêmes personnes, ni selon le même circuit d'approbation. Les mélanger, c'est
 > transformer chaque décision commerciale en projet informatique.
@@ -1379,7 +1438,7 @@ et non l'habitude du développeur.
 | | [SPEC-PRX-001](exemples/SPEC-PRX-001-montant-a-payer.md) — gestion | [SPEC-THM-001](exemples/SPEC-THM-001-refroidissement.md) — scientifique |
 |---|---|---|
 | Le calcul | Le montant à payer d'une commande | La température d'une boisson qui refroidit |
-| Grandeurs | Montants, taux, quantités | Températures, durées, masses |
+| Grandeurs | Montants, taux, quantite_commandees | Températures, durées, masses |
 | Exigence d'exactitude | **Exacte au centime** | **Tolérance relative** |
 | Type numérique qui en découle | **Décimal exact obligatoire** | **Double précision binaire suffisante** |
 | Critère d'acceptation | Égalité stricte | Reproductibilité 10⁻⁹, justesse 10⁻⁶, validité ± 2 °C (§2.8) |

@@ -56,7 +56,7 @@ Un écart entre ces trois moments est un incident de niveau 1.
 | **Prix catalogue** | Prix de vente hors taxes de référence d'une référence produit. |
 | **Prix promotionnel** | Prix de vente hors taxes temporaire, avec une date de début et une date de fin d'effet. |
 | **Prix unitaire retenu** | Le prix effectivement utilisé pour le calcul (voir `RG-010`). |
-| **Montant brut** | Prix unitaire retenu × quantité, avant toute remise. |
+| **Montant brut** | Prix unitaire retenu multiplié par la quantité commandée, avant toute remise. |
 | **Remise de quantité** | Remise accordée sur une ligne du fait de la quantité commandée. |
 | **Remise panier** | Remise accordée sur l'ensemble du panier, généralement via un code promotionnel. |
 | **Montant net** | Montant hors taxes après toutes les remises. |
@@ -72,15 +72,15 @@ panier :
     date_commande        : Horodatage(fuseau Europe/Paris)
     zone_livraison       : Énuméré { FRANCE_METRO, UE }
     code_promotionnel    : Identifiant(texte, 4 à 20 caractères) — facultatif
-    points_fidélité_utilisés : Entier(≥ 0)
+    points_fidelite_utilises : Entier(≥ 0)
     lignes               : liste non vide de Ligne
 
 Ligne :
-    référence_produit    : Identifiant(texte, 3 à 20 caractères)
-    quantité             : Entier(≥ 1)
+    reference_produit    : Identifiant(texte, 3 à 20 caractères)
+    quantite_commandee             : Entier(≥ 1)
     prix_catalogue_ht    : Montant(EUR, 2 décimales, > 0)
     prix_promotionnel_ht : Montant(EUR, 2 décimales, > 0) — facultatif
-    promotion_début      : Date — obligatoire si prix_promotionnel_ht est présent
+    promotion_debut      : Date — obligatoire si prix_promotionnel_ht est présent
     promotion_fin        : Date — obligatoire si prix_promotionnel_ht est présent
     taux_tva             : Taux(0,000 .. 1,000, 3 décimales)
     poids_unitaire       : Poids(kg, 3 décimales, > 0)
@@ -89,7 +89,7 @@ Ligne :
 **Préconditions** — si l'une n'est pas satisfaite, le calcul n'est pas effectué et
 l'erreur correspondante du §9 est signalée :
 - Le panier contient au moins une ligne.
-- Chaque quantité est un entier strictement positif.
+- La `quantite_commandee` de chaque ligne est un entier strictement positif.
 - La zone de livraison est desservie.
 - Le nombre de points de fidélité utilisés est inférieur ou égal au solde du client.
 
@@ -103,20 +103,20 @@ résultat :
     montant_net_ht           : Montant(EUR, 2 décimales, ≥ 0)
     frais_livraison_ht       : Montant(EUR, 2 décimales, ≥ 0)
     tva_par_taux             : liste de (taux : Taux, assiette : Montant, montant : Montant)
-    réduction_fidélité_ttc   : Montant(EUR, 2 décimales, ≥ 0)
-    points_fidélité_débités  : Entier(≥ 0)
-    détail_par_ligne         : liste de DétailLigne
+    reduction_fidelite_ttc   : Montant(EUR, 2 décimales, ≥ 0)
+    points_fidelite_debites  : Entier(≥ 0)
+    detail_par_ligne         : liste de DétailLigne
 
 DétailLigne :
-    référence_produit  : Identifiant
+    reference_produit  : Identifiant
     prix_unitaire_retenu : Montant(EUR, 2 décimales)
     montant_brut_ht    : Montant(EUR, 2 décimales)
-    remise_quantité_ht : Montant(EUR, 2 décimales, ≥ 0)
+    remise_quantite_ht : Montant(EUR, 2 décimales, ≥ 0)
     remise_panier_ht   : Montant(EUR, 2 décimales, ≥ 0)
     montant_net_ht     : Montant(EUR, 2 décimales, ≥ 0)
 ```
 
-> Le `détail_par_ligne` n'est pas un confort d'affichage : il est **exigé** par la
+> Le `detail_par_ligne` n'est pas un confort d'affichage : il est **exigé** par la
 > contrainte d'auditabilité et d'explicabilité (§11). Il fait partie du résultat, au
 > même titre que le montant.
 
@@ -147,7 +147,7 @@ Ces valeurs **ne sont pas des règles**. Elles changent sans que la logique chan
 Pour chaque ligne :
 
   SI prix_promotionnel_ht est présent
-     ET que promotion_début ≤ date_commande ≤ promotion_fin
+     ET que promotion_debut ≤ date_commande ≤ promotion_fin
   ALORS
      prix_unitaire_retenu = le plus petit de prix_catalogue_ht
                             et de prix_promotionnel_ht
@@ -163,7 +163,7 @@ Pour chaque ligne :
 ### RG-020 — Montant brut
 
 ```
-SOIT montant_brut_ligne = prix_unitaire_retenu × quantité      (par ligne)
+SOIT montant_brut_ligne = prix_unitaire_retenu × quantite_commandee      (par ligne)
 SOIT montant_brut_ht    = SOMME DES montant_brut_ligne DES lignes
 ```
 
@@ -171,14 +171,14 @@ SOIT montant_brut_ht    = SOMME DES montant_brut_ligne DES lignes
 
 ```
 Pour chaque ligne :
-  SI quantité ≥ P-05 ALORS
-     remise_quantité_ligne = ARRONDIR(montant_brut_ligne × P-06, 2, P-09)
+  SI quantite_commandee ≥ P-05 ALORS
+     remise_quantite_ligne = ARRONDIR(montant_brut_ligne × P-06, 2, P-09)
   SINON
-     remise_quantité_ligne = 0,00
+     remise_quantite_ligne = 0,00
   FIN SI
 ```
 
-La comparaison est **au sens large** : une quantité égale à `P-05` déclenche la remise.
+La comparaison est **au sens large** : une quantite_commandee égale à `P-05` déclenche la remise.
 
 ### RG-040 — Éligibilité de la remise panier
 
@@ -206,7 +206,7 @@ détail par ligne indique une remise panier nulle.
 ### RG-050 — Montant de la remise panier
 
 ```
-SOIT assiette_panier = SOMME DES (montant_brut_ligne − remise_quantité_ligne) DES lignes
+SOIT assiette_panier = SOMME DES (montant_brut_ligne − remise_quantite_ligne) DES lignes
 
 SELON le type du code promotionnel :
   — taux    : remise_panier_brute = ARRONDIR(assiette_panier × taux, 2, P-09)
@@ -218,20 +218,20 @@ La remise panier ne s'applique **jamais** aux frais de livraison.
 ### RG-060 — Plafond global de remise
 
 ```
-SOIT total_remises_demandées = SOMME DES remise_quantité_ligne
+SOIT total_remises_demandees = SOMME DES remise_quantite_ligne
                              + remise_panier_brute
 SOIT plafond = ARRONDIR(montant_brut_ht × P-07, 2, P-09)
 
-SI total_remises_demandées > plafond ALORS
-   remise_panier_écrêtée  = remise_panier_brute − (total_remises_demandées − plafond)
-   remise_panier_retenue  = le plus grand de remise_panier_écrêtée et de 0,00
+SI total_remises_demandees > plafond ALORS
+   remise_panier_ecretee  = remise_panier_brute − (total_remises_demandees − plafond)
+   remise_panier_retenue  = le plus grand de remise_panier_ecretee et de 0,00
 SINON
    remise_panier_retenue  = remise_panier_brute
 FIN SI
 ```
 
 > L'écrêtement porte sur la remise panier, jamais sur la remise de quantité : la remise
-> de quantité est un droit acquis lié au volume commandé.
+> de quantite_commandee est un droit acquis lié au volume commandé.
 > Le cas où la seule remise de quantité dépasse déjà le plafond est théoriquement
 > possible si `P-06` et `P-07` sont mal réglés ; la remise panier est alors nulle et la
 > remise de quantité est conservée telle quelle. Ce n'est pas une erreur.
@@ -239,22 +239,22 @@ FIN SI
 ### RG-085 — Répartition de la remise panier et centime résiduel
 
 La remise panier est répartie sur les lignes **au prorata de leur montant après remise
-de quantité**, afin de pouvoir calculer la TVA par taux.
+de quantite_commandee**, afin de pouvoir calculer la TVA par taux.
 
 ```
 Pour chaque ligne :
-   part = (montant_brut_ligne − remise_quantité_ligne) ÷ assiette_panier
+   part = (montant_brut_ligne − remise_quantite_ligne) ÷ assiette_panier
    remise_panier_ligne = ARRONDIR(remise_panier_retenue × part, 2, P-09)
 
-SOIT écart = remise_panier_retenue − SOMME DES remise_panier_ligne
+SOIT ecart_residuel = remise_panier_retenue − SOMME DES remise_panier_ligne
 
-remise_panier_ligne_ajustée = remise_panier_ligne, sauf pour une ligne :
+remise_panier_ligne_ajustee = remise_panier_ligne, sauf pour une ligne :
 
-SI écart ≠ 0,00 ALORS
+SI ecart_residuel ≠ 0,00 ALORS
    l'écart est ajouté en totalité à la remise_panier_ligne de la ligne dont le montant
    après remise de quantité est le plus élevé ; en cas d'égalité, à celle dont
-   `référence_produit` est alphabétiquement la plus petite. Le résultat est
-   remise_panier_ligne_ajustée pour cette ligne.
+   `reference_produit` est alphabétiquement la plus petite. Le résultat est
+   remise_panier_ligne_ajustee pour cette ligne.
 FIN SI
 ```
 
@@ -268,22 +268,22 @@ FIN SI
 
 ```
 Pour chaque ligne :
-   montant_net_ligne = montant_brut_ligne − remise_quantité_ligne
-                     − remise_panier_ligne_ajustée
+   montant_net_ligne = montant_brut_ligne − remise_quantite_ligne
+                     − remise_panier_ligne_ajustee
 SOIT montant_net_ht = SOMME DES montant_net_ligne DES lignes
 ```
 
 ### RG-095 — Détail restitué et agrégats
 
 ```
-détail_par_ligne = pour chaque ligne, prise dans l'ordre croissant de
-                   référence_produit :
-    ( référence_produit, prix_unitaire_retenu, montant_brut_ligne,
-      remise_quantité_ligne, remise_panier_ligne_ajustée, montant_net_ligne )
+detail_par_ligne = pour chaque ligne, prise dans l'ordre croissant de
+                   reference_produit :
+    ( reference_produit, prix_unitaire_retenu, montant_brut_ligne,
+      remise_quantite_ligne, remise_panier_ligne_ajustee, montant_net_ligne )
 
-SOIT remise_quantité_ht = SOMME DES remise_quantité_ligne DES lignes
-SOIT remise_panier_ht   = SOMME DES remise_panier_ligne_ajustée DES lignes
-SOIT total_remises_ht   = remise_quantité_ht + remise_panier_ht
+SOIT remise_quantite_ht = SOMME DES remise_quantite_ligne DES lignes
+SOIT remise_panier_ht   = SOMME DES remise_panier_ligne_ajustee DES lignes
+SOIT total_remises_ht   = remise_quantite_ht + remise_panier_ht
 ```
 
 > **L'ordre de restitution est une règle, pas un détail d'affichage.** Sans lui, deux
@@ -296,7 +296,7 @@ SOIT total_remises_ht   = remise_quantité_ht + remise_panier_ht
 SI montant_net_ht ≥ P-01 ALORS
    frais_livraison_ht = 0,00
 SINON
-   SOIT poids_total = SOMME DES (poids_unitaire × quantité) DES lignes
+   SOIT poids_total = SOMME DES (poids_unitaire × quantite_commandee) DES lignes
    frais_livraison_ht = la tranche de P-02 ou P-03 (selon zone_livraison)
                         correspondant à poids_total
 FIN SI
@@ -329,16 +329,16 @@ l'agrégation par taux qui fait foi (règle comptable).
 ```
 SOIT montant_articles_ttc = montant_net_ht + SOMME DES tva de chaque taux
 SOIT montant_port_ttc     = frais_livraison_ht + tva_livraison
-SOIT montant_avant_fidélité_ttc = montant_articles_ttc + montant_port_ttc
+SOIT montant_avant_fidelite_ttc = montant_articles_ttc + montant_port_ttc
 ```
 
 ### RG-130 — Imputation des points de fidélité
 
 ```
-SOIT réduction_demandée = ARRONDIR(points_fidélité_utilisés × P-08, 2, P-09)
+SOIT reduction_demandee = ARRONDIR(points_fidelite_utilises × P-08, 2, P-09)
 
-réduction_fidélité_ttc = le plus petit de réduction_demandée et montant_articles_ttc
-points_fidélité_débités = réduction_fidélité_ttc ÷ P-08          (nombre entier)
+reduction_fidelite_ttc = le plus petit de reduction_demandee et montant_articles_ttc
+points_fidelite_debites = reduction_fidelite_ttc ÷ P-08          (nombre entier)
 ```
 
 Les points sont débités du compte de `client_identifiant`. Ils s'imputent sur le
@@ -349,7 +349,7 @@ sont pas débités** et restent acquis au client.
 ### RG-140 — Montant à payer
 
 ```
-montant_a_payer_ttc = montant_avant_fidélité_ttc − réduction_fidélité_ttc
+montant_a_payer_ttc = montant_avant_fidelite_ttc − reduction_fidelite_ttc
 ```
 
 ## 8. Invariants
@@ -363,14 +363,14 @@ montant_a_payer_ttc = montant_avant_fidélité_ttc − réduction_fidélité_ttc
 | `INV-05` | Le calcul est **déterministe** : deux exécutions sur les mêmes entrées, à la même date de commande, donnent des résultats identiques au centime |
 | `INV-06` | Le calcul est **idempotent** : recalculer un panier inchangé ne change aucun montant |
 | `INV-07` | Ajouter une ligne à un panier ne peut jamais diminuer `montant_brut_ht` |
-| `INV-08` | `points_fidélité_débités × P-08 = réduction_fidélité_ttc` |
+| `INV-08` | `points_fidelite_debites × P-08 = reduction_fidelite_ttc` |
 
 ## 9. Cas d'erreur métier
 
 | Code | Condition | Conséquence | Message destiné au client |
 |---|---|---|---|
 | `E-PANIER-001` | Le panier ne contient aucune ligne | Aucun montant retourné | « Votre panier est vide. » |
-| `E-QTE-001` | Une quantité est nulle ou négative | Aucun montant retourné | « La quantité demandée n'est pas valide. » |
+| `E-QTE-001` | Une quantite_commandee est nulle ou négative | Aucun montant retourné | « La quantite_commandee demandée n'est pas valide. » |
 | `E-ZONE-001` | La zone de livraison n'est pas desservie | Aucun montant retourné | « Nous ne livrons pas encore à cette adresse. » |
 | `E-PROMO-001` | Le code promotionnel n'existe pas | Aucun montant retourné | « Ce code promotionnel n'existe pas. » |
 | `E-PROMO-002` | Le code existe mais n'est pas en vigueur à la date de commande | Aucun montant retourné | « Ce code promotionnel n'est plus valable. » |
@@ -465,7 +465,7 @@ Assiette panier (`RG-050`) : `36,00 + 12,50 + 13,00` = **61,50**
 **Étape 4 — `RG-050` remise panier** : code à montant fixe → `min(5,00 ; 61,50)` = **5,00**
 
 **Étape 5 — `RG-060` plafond global**
-`total_remises_demandées = 4,00 + 5,00 = 9,00`
+`total_remises_demandees = 4,00 + 5,00 = 9,00`
 `plafond = 65,50 × 0,60 = 39,30` → `9,00 ≤ 39,30` → **pas d'écrêtement**
 
 **Étape 6 — `RG-085` répartition et centime résiduel**
@@ -551,10 +551,10 @@ code promotionnel à montant fixe de `1,00` EUR, 0 point.
 
 ### CT-05 — Écrêtement par le plafond global
 
-Un article `REF-LUX` à `100,00` HT, quantité 1, TVA 20 %, poids `0,800 kg`, code
+Un article `REF-LUX` à `100,00` HT, quantite_commandee 1, TVA 20 %, poids `0,800 kg`, code
 promotionnel `MEGA80` (taux de 80 %, cumulable).
 
-- Brut : `100,00`. Remise de quantité : `0,00` (quantité 1).
+- Brut : `100,00`. Remise de quantité : `0,00` (quantite_commandee 1).
 - Remise panier brute : `100,00 × 0,80` = `80,00`.
 - Plafond : `100,00 × 0,60` = `60,00`. `80,00 > 60,00` → remise retenue = **60,00**.
 - Net HT : `40,00` → inférieur à 60,00 → port dû ; `0,800 kg` → **4,90**.
@@ -579,7 +579,7 @@ Panier de `CT-01` (articles TTC `15,00`, port TTC `5,88`), `10 000` points utili
 
 ### CT-08 — Quantité exactement au seuil de la remise
 
-Un article à `10,00` HT, quantité **3**, TVA 20 %, poids `0,300 kg`.
+Un article à `10,00` HT, quantite_commandee **3**, TVA 20 %, poids `0,300 kg`.
 
 - Brut : `30,00`. `3 ≥ P-05` → remise de quantité `3,00`. Net : `27,00`.
 - Port : `27,00 < 60,00` → poids `0,900 kg` → `4,90`.
@@ -686,7 +686,7 @@ invisible au client et visible en rapprochement comptable. Décision `Q-05`, tra
 | Fonction | Élément | Nature | Détail | Compatibilité |
 |---|---|---|---|---|
 | `FN-021` | `tva_par_taux` | **modification** | le contenu change de sémantique : une entrée par taux distinct, agrégée, au lieu d'une entrée par ligne. Type et unité inchangés | **rupture silencieuse** |
-| `FN-021` | `détail_par_ligne` | *(inchangé)* | la TVA n'y figurait pas | — |
+| `FN-021` | `detail_par_ligne` | *(inchangé)* | la TVA n'y figurait pas | — |
 
 > **La rupture est silencieuse, et c'est ce qui la rend dangereuse.** Le type de
 > `tva_par_taux` ne change pas ; un consommateur qui sommait naïvement ses éléments
@@ -718,7 +718,7 @@ invisible au client et visible en rapprochement comptable. Décision `Q-05`, tra
 | « 90 % des appels sont des recalculs d'affichage » | Le calcul doit être **pur** (mêmes entrées → mêmes sorties, aucun effet de bord), ce qui rend le recalcul systématique acceptable et rend la mise en cache légitime |
 | Paramètres modifiés **hebdomadairement par le marketing**, sans livraison | Les paramètres `P-01` à `P-08` vivent dans un **référentiel externe versionné et daté**, avec une interface d'administration et un circuit de validation. Les règles `RG-xxx`, qui changent 1 à 2 fois par an, restent en code |
 | Rejouabilité à 10 ans, règles et paramètres de l'époque | **Capture immuable** du jeu de paramètres et des prix applicables au moment de la commande, conservée avec la commande ; le code embarque un numéro de version de spécification. Un rejeu ne relit jamais les paramètres courants |
-| Auditabilité et explicabilité | Le `détail_par_ligne` est **une sortie de premier rang**, pas un journal technique : il est persisté avec la commande et restitué sur la facture |
+| Auditabilité et explicabilité | Le `detail_par_ligne` est **une sortie de premier rang**, pas un journal technique : il est persisté avec la commande et restitué sur la facture |
 | Mode dégradé fidélité | Le service de fidélité est une **dépendance isolée** : délai d'attente court, disjoncteur, et repli explicite sur « aucun point imputé, aucun point débité », remonté au client — jamais un échec de la commande |
 | « aucune donnée personnelle dans le calcul » | Le service ne reçoit qu'un identifiant client et une zone : il peut être déployé et journalisé sans contrainte de données personnelles, ce qui simplifie considérablement son exploitation |
 | Durée de vie > 10 ans, 1 à 2 changements de règle par an | L'investissement dans les tests issus du §10 et dans les tests de propriété issus du §8 est rentable : ils constituent le **filet de sécurité de dix ans de modifications** |
@@ -782,9 +782,9 @@ seule ligne de ce document ne bouge — et c'est exactement le but.
 | `INV-05` | `ffa99612-cb13-465f-aea2-28cf0f155914` | invariant | Le calcul est **déterministe** : deux exécutions sur les mêmes entrées |
 | `INV-06` | `5cc02d04-0db9-4bad-95d5-88ad2e76f355` | invariant | Le calcul est **idempotent** : recalculer un panier inchangé ne change |
 | `INV-07` | `b2230afc-f9c4-47e4-b39a-5f99b5dbbc81` | invariant | Ajouter une ligne à un panier ne peut jamais diminuer `montant_brut_ht |
-| `INV-08` | `30bc5c0f-c236-42d7-9b52-2c291b83c01c` | invariant | `points_fidélité_débités × P-08 = réduction_fidélité_ttc` |
+| `INV-08` | `30bc5c0f-c236-42d7-9b52-2c291b83c01c` | invariant | `points_fidelite_debites × P-08 = reduction_fidelite_ttc` |
 | `E-PANIER-001` | `160a73f5-67a8-4357-8847-714ac56b9ca1` | cas d'erreur | Le panier ne contient aucune ligne |
-| `E-QTE-001` | `55073c8c-6521-49d5-bf01-0fbd403894be` | cas d'erreur | Une quantité est nulle ou négative |
+| `E-QTE-001` | `55073c8c-6521-49d5-bf01-0fbd403894be` | cas d'erreur | Une quantite_commandee est nulle ou négative |
 | `E-ZONE-001` | `369ef972-0a24-472d-9938-7598f59c505c` | cas d'erreur | La zone de livraison n'est pas desservie |
 | `E-PROMO-001` | `54348f2a-1608-43c4-9711-8a4fd18920e2` | cas d'erreur | Le code promotionnel n'existe pas |
 | `E-PROMO-002` | `8c33f74e-f22d-4987-9157-a0d458574a80` | cas d'erreur | Le code existe mais n'est pas en vigueur à la date de commande |
