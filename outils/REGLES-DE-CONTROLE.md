@@ -24,7 +24,7 @@ passer un cas, et il est classé en avertissement à ce titre.
 qu'un identifiant contenant un `_` : c'est la convention `snake_case` (`C-38`) qui le
 distingue du français ordinaire entourant le pseudo-code, faute de quoi « ligne » ou
 « que » seraient signalés. Un fantôme nommé d'un seul mot lui échappe donc. Un nom est
-tenu pour déclaré s'il est introduit dans les règles — `SOIT`, `POUR CHAQUE`, ou membre
+tenu pour déclaré s'il est introduit dans les règles — `LET`, `FOR EACH`, ou membre
 gauche d'une affectation, champ compris — ou s'il apparaît ailleurs dans le document.
 
 > **Ce contrôle a fait ses preuves le jour où il a été écrit.** Passé sur nos propres
@@ -52,7 +52,7 @@ le plus souvent : personne ne vérifie spontanément que le vingt-troisième par
 |---|---|---|
 | `C-01` | **Toute entrée déclarée est employée** dans au moins une règle. | Une entrée **morte** : déclarée sans emploi. Soit une règle manque, soit l'entrée est inutile — et on demande à l'appelant de fournir une donnée pour rien |
 | `C-02` | **Toute sortie déclarée est produite** par au moins une règle. | Une promesse non tenue : le contrat annonce un résultat que rien ne calcule |
-| `C-03` | **Toute grandeur employée dans une règle est déclarée** quelque part : entrée, sortie, paramètre, ou variable locale introduite par `SOIT`. | Un **fantôme** circule : une grandeur employée que rien ne déclare, dont le développeur devra inventer l'origine. **L'inverse de `C-01`** — voir l'encadré ci-dessous |
+| `C-03` | **Toute grandeur employée dans une règle est déclarée** quelque part : entrée, sortie, paramètre, ou variable locale introduite par `LET`. | Un **fantôme** circule : une grandeur employée que rien ne déclare, dont le développeur devra inventer l'origine. **L'inverse de `C-01`** — voir l'encadré ci-dessous |
 | `C-04` | **Tout paramètre `P-xx` déclaré est employé** dans au moins une règle. | Un paramètre mort : il sera maintenu, documenté, versionné, pour rien — et un jour quelqu'un le changera en croyant agir |
 | `C-05` | **Toute valeur littérale dans une règle est justifiée** : soit c'est un paramètre `P-xx`, soit une constante mathématique nommée, soit sa présence est expliquée sur place. | Une valeur magique. Personne ne saura jamais s'il faut la changer ni qui a le droit de le faire |
 | `C-06` | **Toute grandeur déclare sa famille de type, sa précision et sa plage** ; toute grandeur dimensionnée déclare en outre sa dimension, son **unité pivot** et son **unité d'usage**. | La cause la plus fréquente d'écarts, et la plus tardive à se découvrir |
@@ -89,7 +89,7 @@ le plus souvent : personne ne vérifie spontanément que le vingt-troisième par
 
 | Id | Règle | Ce qu'un échec révèle |
 |---|---|---|
-| `C-08` | **Tout `SI` a son `SINON`.** | Le comportement du cas non traité est décidé par le compilateur |
+| `C-08` | **Tout `IF` a son `ELSE`.** | Le comportement du cas non traité est décidé par le compilateur |
 | `C-09` | **Toute table de décision est complète et non redondante** : chaque combinaison des entrées apparaît dans exactement une ligne. | Incomplète, elle laisse un trou ; redondante, elle se contredit |
 | `C-10` | **Tout arrondi précise** le nombre de décimales, le sens, et l'étape à laquelle il intervient. | Deux implémentations correctes divergent d'un centime |
 | `C-11` | **Tout superlatif a une règle de départage** : « le plus petit », « le meilleur », « le premier » — et s'il y en a deux ? | Le résultat dépend de l'ordre de lecture des données, donc de l'implémentation |
@@ -139,7 +139,7 @@ Ce que seul un lecteur peut juger. Une IA peut les pré-instruire et signaler de
 | `H-04` | **Les hypothèses du modèle sont-elles explicites ?** | Ce que le modèle ne représente pas doit être écrit, sinon on le découvrira en production |
 | `H-05` | **Le cas riche du jeu d'essai est-il suivable de bout en bout**, à la calculatrice, sans rien deviner ? | On le refait |
 | `H-06` | **Les règles sont-elles celles que l'organisation veut appliquer ?** | Seul le valideur métier peut répondre. C'est la seule question que ni script ni IA n'approchera jamais |
-| `H-07` | **L'immutabilité est-elle respectée ?** Un nom valorisé est-il réaffecté plus loin, au lieu qu'un nouveau nom porte la transformation ? | Se lit, ne se mécanise pas : deux branches d'un même `SI` qui affectent le même nom sont légitimes, une réaffectation séquentielle ne l'est pas. **C'est le contrôle où la passe IA apporte le plus** — un modèle lit correctement la structure des branches, un script non |
+| `H-07` | **L'immutabilité est-elle respectée ?** Un nom valorisé est-il réaffecté plus loin, au lieu qu'un nouveau nom porte la transformation ? | Se lit, ne se mécanise pas : deux branches d'un même `IF` qui affectent le même nom sont légitimes, une réaffectation séquentielle ne l'est pas. **C'est le contrôle où la passe IA apporte le plus** — un modèle lit correctement la structure des branches, un script non |
 
 ---
 

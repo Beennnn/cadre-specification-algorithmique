@@ -49,7 +49,7 @@ Il vérifie ce qui est **mécanisable** : `C-01` à `C-04`, `C-14` à `C-17`, `C
 une lecture du pseudo-langage que le script ne fait pas, et les contrôles `H-xx` demandent
 un jugement.
 
-`H-07` (immutabilité) est le cas le plus net : deux branches d'un même `SI` qui affectent
+`H-07` (immutabilité) est le cas le plus net : deux branches d'un même `IF` qui affectent
 le même nom sont légitimes, une réaffectation séquentielle ne l'est pas. Un modèle lit
 correctement la structure des branches ; un script non. **C'est là que la passe IA apporte
 le plus.**

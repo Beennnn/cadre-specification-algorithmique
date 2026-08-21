@@ -177,7 +177,7 @@ l'absence d'une troisième. Un trou ne se voit que s'il a des bords.
 
 | Étage | Qui relit | Ce qu'on y cherche | Exemple de ce qui est attrapé |
 |---|---|---|---|
-| **1** | Un **script**, puis une **IA** | Les incohérences **formelles** — celles qui se constatent sans rien connaître au métier | Une entrée déclarée qu'aucune règle n'emploie ; un `SI` sans `SINON` ; un numéro de version qui ne correspond pas à l'historique |
+| **1** | Un **script**, puis une **IA** | Les incohérences **formelles** — celles qui se constatent sans rien connaître au métier | Une entrée déclarée qu'aucune règle n'emploie ; un `IF` sans `ELSE` ; un numéro de version qui ne correspond pas à l'historique |
 | **2** | Le **métier** et le **test** | La **justesse et la complétude** des règles | Une règle **impeccablement écrite mais fausse** : le document dit que la remise démarre à 3 articles, la politique commerciale en vigueur dit 4. Ou un cas que le métier connaît et que personne n'a pensé à écrire |
 | **3** | Un **développeur extérieur** au domaine et à l'écriture | La **capacité à implémenter**, par oui ou par non | Une question à laquelle le document ne répond pas, et qu'il trancherait donc **seul, sans mandat** : « deux lignes ont exactement le même montant — sur laquelle j'impute le centime restant ? » |
 
@@ -253,7 +253,7 @@ Il lit les spécifications du dépôt et rend deux services : il **contrôle**, 
 | Famille | Exemples de ce qu'il attrape |
 |---|---|
 | **Cohérence du contrat** | une entrée déclarée que personne n'emploie (*morte*) ; une grandeur employée que rien ne déclare (*fantôme*) ; un paramètre jamais utilisé ; une grandeur sans unité, sans plage ou sans famille de type |
-| **Complétude logique** | un `SI` sans `SINON` ; un `ARRONDIR` sans mode ni décimales ; un superlatif sans règle de départage ; un `TANT QUE` sans nombre maximal d'itérations |
+| **Complétude logique** | un `IF` sans `ELSE` ; un `ROUND` sans mode ni décimales ; un superlatif sans règle de départage ; un `WHILE` sans nombre maximal d'itérations |
 | **Traçabilité et version** | une règle absente de la table de couverture ; un cas de test cité qui n'existe pas ; un identifiant défini deux fois ; un en-tête de version qui contredit l'historique ; un impact déclaré sur les résultats sans incrément majeur ; une identité manquante ou partagée par deux objets |
 | **Cohérence de la chaîne** | une grandeur consommée par une étape qui n'est ni entrée, ni paramètre, ni produite en amont ; un produit que rien ne consomme et que le contrat n'annonce pas |
 

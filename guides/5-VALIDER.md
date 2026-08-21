@@ -80,7 +80,7 @@ Ce qu'elles attrapent, réparti en quatre familles :
 | `C-06` | une grandeur **sans unité**, sans échelle ou sans domaine |
 | `C-07` | une donnée qui **change d'unité** entre sa déclaration et son emploi |
 
-**Complétude logique** — `C-08` à `C-13` : un `SI` sans `SINON`, une table de décision
+**Complétude logique** — `C-08` à `C-13` : un `IF` sans `ELSE`, une table de décision
 incomplète, un arrondi sans sens, un « le plus petit » sans départage, une entrée
 facultative sans comportement d'absence, une itération sans critère d'arrêt.
 

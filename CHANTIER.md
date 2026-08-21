@@ -62,7 +62,7 @@ sans comportement d'absence), et ceux qui demandent un jugement.
 | F | **Protéger `main`** en exigeant une revue, et créer un label `question-ouverte` | cohérence : le dépôt doit s'appliquer à lui-même sa propre gouvernance (`CADRE.md` §6.3) |
 | G | **Une version diaporama** pour présenter la démarche en interne | évoqué, non commencé |
 | ~~H~~ | ~~Mécaniser `C-05` à `C-13`~~ — **fait pour `C-08`, `C-10`, `C-11`, `C-13`**, ainsi que `C-35`/`C-36` dans la passe globale. Restent `C-05`, `C-09`, `C-12` | partiellement fait |
-| H2 | ~~Mécaniser `C-05` à `C-13`~~ (ancienne ligne) (valeur magique, `SI` sans `SINON`, arrondi sans sens, superlatif sans départage) — demande une analyse du pseudo-langage, pas seulement du markdown | à construire |
+| H2 | ~~Mécaniser `C-05` à `C-13`~~ (ancienne ligne) (valeur magique, `IF` sans `ELSE`, arrondi sans sens, superlatif sans départage) — demande une analyse du pseudo-langage, pas seulement du markdown | à construire |
 | I | ~~Les avertissements `C-01`/`C-02`~~ — **tranché** : le vocabulaire des règles a été aligné sur les identifiants du contrat. Zéro avertissement | fait |
 | J | **Mécaniser `C-25`** (orthographe identique entre contrat et règles) — proche de `C-01`, réalisable | à construire |
 | ~~O~~ | ~~Un corpus de défauts connus~~ — **fait** : `outils/jeu-d-essai/`, verdict figé à 19 échecs et 3 avertissements | fait |

@@ -322,47 +322,53 @@ fort en théorie, effectivement tenu en pratique.
 Le pseudo-langage tient en **une trentaine de mots**. C'est délibéré : un lexique qu'on ne
 peut pas mémoriser en une lecture n'est pas adopté.
 
-> **Le lexique est fermé.** Tout mot qui n'y figure pas est du français ordinaire, pas un
-> mot-clé. On n'en ajoute un que si son absence a causé une ambiguïté réelle — jamais par
-> confort.
+> **Les mots-clés sont en anglais, la prose dans la langue de l'équipe.** Le pseudo-code
+> et les noms de grandeurs traversent la frontière métier / technique et finissent lus par
+> des développeurs, des relecteurs et des outils qui, eux, travaillent en anglais. Le
+> commentaire qui explique *pourquoi* une règle est ainsi reste, lui, dans la langue où on
+> le pense le mieux.
+
+> **Le lexique est fermé.** Tout mot qui n'y figure pas n'est pas un mot-clé. On n'en
+> ajoute un que si son absence a causé une ambiguïté réelle — jamais par confort.
 
 #### Structure
 
 | Mot-clé | Rôle |
 |---|---|
-| `DÉFINIR nom(param : Type) : Type` | déclarer une fonction |
-| `ENTRÉES` · `SORTIES` | le contrat |
-| `PRÉCONDITIONS` · `POSTCONDITIONS` · `INVARIANTS` | ce qu'on exige, garantit, maintient |
-| `SOIT nom = …` | **introduire** un nom — jamais le réaffecter (§2.4) |
-| `RETOURNER …` | produire le résultat |
-| `SIGNALER ERREUR E-xxx « … »` | signaler une erreur **métier** |
+| `DEFINE name(param : Type) : Type` | déclarer une fonction |
+| `INPUTS` · `OUTPUTS` | le contrat |
+| `PRECONDITIONS` · `POSTCONDITIONS` · `INVARIANTS` | ce qu'on exige, garantit, maintient |
+| `LET name = …` | **introduire** un nom — jamais le réaffecter (§2.4) |
+| `RETURN …` | produire le résultat |
+| `RAISE ERROR E-xxx "…"` | signaler une erreur **métier** |
 
 #### Conditions
 
 | Mot-clé | Rôle |
 |---|---|
-| `SI … ALORS` · `SINON SI … ALORS` · `SINON` · `FIN SI` | l'alternative |
+| `IF … THEN` · `ELSE IF … THEN` · `ELSE` · `END IF` | l'alternative |
 
-Un `SI` a **toujours** son `SINON` (`C-08`). Au-delà de deux conditions combinées, on
+Un `IF` a **toujours** son `ELSE` (`C-08`). Au-delà de deux conditions combinées, on
 n'imbrique pas : on écrit une **table de décision** (§2.6).
 
 #### Itération
 
 | Mot-clé | Rôle |
 |---|---|
-| `POUR CHAQUE x DANS c … FIN POUR` | parcourir sans indice |
-| `TANT QUE cond … FIN TANT QUE` | itérer — **à justifier**, avec critère d'arrêt, maximum d'itérations et comportement en cas de non-convergence (`C-13`) |
+| `FOR EACH x IN c … END FOR` | parcourir sans indice |
+| `WHILE cond … END WHILE` | itérer — **à justifier**, avec critère d'arrêt, maximum d'itérations et comportement en cas de non-convergence (`C-13`) |
 
 #### Ensembles — le style à préférer
 
 | Mot-clé | Rôle |
 |---|---|
-| `SOMME` · `MOYENNE` · `MINIMUM` · `MAXIMUM` · `NOMBRE DE` | agréger |
-| `FILTRER c OÙ cond` | restreindre |
-| `TRIER c PAR a CROISSANT \| DÉCROISSANT` | ordonner, avec départage explicite |
-| `REGROUPER c PAR critère` | partitionner |
-| `LE PREMIER` · `LE DERNIER` | extraire d'une collection **ordonnée** |
-| `IL EXISTE` · `AUCUN` · `TOUS` | quantifier |
+| `SUM` · `MEAN` · `MINIMUM` · `MAXIMUM` · `COUNT` | agréger |
+| `SUM OF x OVER c` | agréger une grandeur sur une collection |
+| `FILTER c WHERE cond` | restreindre |
+| `SORT c BY a ASCENDING \| DESCENDING` | ordonner, avec départage explicite |
+| `GROUP c BY criterion` | partitionner |
+| `THE FIRST` · `THE LAST` | extraire d'une collection **ordonnée** |
+| `THERE EXISTS` · `NONE` · `ALL` | quantifier |
 
 **Chaque fois qu'une opération d'ensemble remplace une boucle, on la préfère** : elle
 décrit un résultat et laisse le développeur libre de son chemin (§2.5).
@@ -372,11 +378,11 @@ décrit un résultat et laisse le développeur libre de son chemin (§2.5).
 | | |
 |---|---|
 | Arithmétique | `+` `−` `×` `÷` `^` |
-| Comparaison | `=` `≠` `<` `≤` `>` `≥` · `ENTRE a ET b` |
-| Logique | `ET` · `OU` · `NON` |
-| Appartenance | `DANS` |
-| Valeurs | `VRAI` · `FAUX` · `ABSENT` |
-| Fonction imposée | `ARRONDIR(valeur, décimales, mode)` |
+| Comparaison | `=` `≠` `<` `≤` `>` `≥` · `BETWEEN a AND b` |
+| Logique | `AND` · `OR` · `NOT` |
+| Appartenance | `IN` |
+| Valeurs | `TRUE` · `FALSE` · `ABSENT` |
+| Fonction imposée | `ROUND(value, decimals, mode)` |
 
 `ABSENT` désigne **l'absence métier** d'une valeur facultative. Ce n'est pas un `null`
 technique : son traitement est une décision métier, déclarée (`C-12`).
@@ -388,11 +394,11 @@ tangente — s'écrivent avec leur notation habituelle et ne sont pas des mots-c
 
 | Absent | À la place | Pourquoi |
 |---|---|---|
-| `SELON` / `CAS` | une **table de décision** | elle rend la complétude vérifiable, un `SELON` non |
-| `SORTIR` · `CONTINUER` · `ALLER À` | un critère d'arrêt déclaré | une sortie anticipée cache une condition qui n'a pas été écrite |
+| `SWITCH` / `CASE` | une **table de décision** | elle rend la complétude vérifiable, un `SWITCH` non |
+| `BREAK` · `CONTINUE` · `GOTO` | un critère d'arrêt déclaré | une sortie anticipée cache une condition qui n'a pas été écrite |
 | `NULL` · `NIL` | `ABSENT` | l'absence est une notion métier, pas une valeur technique |
 | `+=` · `++` · toute réaffectation | un **nouveau nom** | l'immutabilité (§2.4) |
-| `ESSAYER` / `ATTRAPER` | `SIGNALER ERREUR` | la spécification dit **quelle erreur métier**, pas comment elle se propage |
+| `TRY` / `CATCH` | `RAISE ERROR` | la spécification dit **quelle erreur métier**, pas comment elle se propage |
 | Fonctions anonymes, pointeurs, généricité, héritage | rien | ce sont des moyens d'implémentation |
 
 ### 2.3 Types, unités, domaines
@@ -791,7 +797,7 @@ l'architecture**.
 
 | ✗ On impose un parcours | ✓ On décrit un résultat |
 |---|---|
-| `POUR i DE 1 À n : total = total + ligne[i].montant` | `SOIT total = SOMME DES montant DES lignes` |
+| `POUR i DE 1 À n : total = total + ligne[i].montant` | `LET total = SUM OF montant DES lignes` |
 | « on parcourt les offres et on garde la meilleure » | « l'offre retenue est celle de prix minimal ; en cas d'égalité, celle de référence alphabétiquement la plus petite » |
 | « on boucle tant qu'il reste du budget » | « on retient le plus grand sous-ensemble de commandes dont la somme n'excède pas le budget, par ordre de priorité décroissante » |
 
@@ -808,7 +814,7 @@ l'atteint.
 
 ### 2.6 Les tables de décision
 
-Dès qu'une règle combine plus de deux conditions, on abandonne les `SI` imbriqués pour
+Dès qu'une règle combine plus de deux conditions, on abandonne les `IF` imbriqués pour
 une table. Une table de décision a une propriété que le texte n'a pas : **on voit tout
 de suite s'il manque une ligne**.
 
@@ -1588,7 +1594,7 @@ avec ses deux étages : contrôles mécaniques outillés, puis relecture qualit�
 **Prêt à développer** (la spécification peut partir en développement) :
 - [ ] Toutes les entrées et sorties sont typées, avec unité et domaine
 - [ ] Chaque règle a un identifiant et est écrite en pseudo-langage
-- [ ] Chaque `SI` a son `SINON`, chaque table de décision est complète
+- [ ] Chaque `IF` a son `ELSE`, chaque table de décision est complète
 - [ ] Les arrondis, les départages et le traitement des valeurs absentes sont explicites
 - [ ] Le jeu d'essai existe, avec résultats calculés à la main, et couvre chaque règle
 - [ ] La fiche de contraintes est chiffrée
@@ -1672,7 +1678,7 @@ revient.
 | **Le pseudo-code déguisé** | `import`, `try/except`, `for i in range`, des types techniques | L'auteur pense encore dans son langage ; il transmet ses choix d'implémentation comme s'ils étaient des règles |
 | **Le « etc. »** | « les autres cas se traitent de la même façon », « on gère les cas particuliers » | Le développeur devra deviner — et il devinera |
 | **La valeur magique** | `0,85` sans nom, sans source, sans personne habilitée à la changer | Personne ne saura jamais s'il faut la changer, ni qui a le droit de le faire |
-| **Le `SI` sans `SINON`** | Une condition sans branche complémentaire | Le comportement dans le cas non traité est décidé par le compilateur |
+| **Le `IF` sans `ELSE`** | Une condition sans branche complémentaire | Le comportement dans le cas non traité est décidé par le compilateur |
 | **La grandeur nue** | Une température sans son échelle (`20` en °C ou en K ?), un angle sans son unité (degrés ou radians ?), une altitude sans son référentiel | Cause classique d'écarts, découverts tard et cher |
 | **La performance en prose** | « il faut que ce soit rapide », « éviter les traitements lourds » | Non vérifiable, non actionnable → à remplacer par un chiffre dans la fiche de contraintes |
 | **La spécification qui impose la technique** | « stocker dans une table », « utiliser un cache » | Le métier sort de son mandat et empêche des solutions meilleures |
@@ -1800,27 +1806,28 @@ fallait.
 
 ```
 STRUCTURE
-  DÉFINIR nom(param : Type) : Type
-  ENTRÉES · SORTIES · PRÉCONDITIONS · POSTCONDITIONS · INVARIANTS
-  SOIT x = ...            (on introduit un nom, on ne le réaffecte jamais)
-  RETOURNER x
-  SIGNALER ERREUR E-XXX « message »
+  DEFINE name(param : Type) : Type
+  INPUTS · OUTPUTS · PRECONDITIONS · POSTCONDITIONS · INVARIANTS
+  LET x = ...             (on introduit un nom, on ne le réaffecte jamais)
+  RETURN x
+  RAISE ERROR E-XXX "message"
 
-CONDITIONS          SI ... ALORS / SINON SI ... ALORS / SINON / FIN SI
+CONDITIONS          IF ... THEN / ELSE IF ... THEN / ELSE / END IF
                     (au-delà de deux conditions : table de décision)
 
-ITÉRATION           POUR CHAQUE x DANS c ... FIN POUR
-                    TANT QUE cond ... FIN TANT QUE   (à justifier)
+ITÉRATION           FOR EACH x IN c ... END FOR
+                    WHILE cond ... END WHILE          (à justifier)
 
-ENSEMBLES           SOMME · MOYENNE · MINIMUM · MAXIMUM · NOMBRE DE
-                    FILTRER c OÙ cond · REGROUPER c PAR critère
-                    TRIER c PAR a CROISSANT|DÉCROISSANT
-                    LE PREMIER · LE DERNIER · IL EXISTE · AUCUN · TOUS
+ENSEMBLES           SUM · MEAN · MINIMUM · MAXIMUM · COUNT
+                    SUM OF x OVER c
+                    FILTER c WHERE cond · GROUP c BY criterion
+                    SORT c BY a ASCENDING|DESCENDING
+                    THE FIRST · THE LAST · THERE EXISTS · NONE · ALL
 
-OPÉRATEURS          + − × ÷ ^     = ≠ < ≤ > ≥     ENTRE a ET b
-                    ET · OU · NON · DANS
-VALEURS             VRAI · FAUX · ABSENT
-IMPOSÉE             ARRONDIR(valeur, décimales, mode)
+OPÉRATEURS          + − × ÷ ^     = ≠ < ≤ > ≥     BETWEEN a AND b
+                    AND · OR · NOT · IN
+VALEURS             TRUE · FALSE · ABSENT
+IMPOSÉE             ROUND(value, decimals, mode)
 
 TYPES               <nom> : <Famille>(<unité pivot> ▸ <unité d'usage>,
                                       <précision>, <plage>)
@@ -1835,7 +1842,7 @@ IDENTIFIANTS
 
 LES 8 QUESTIONS À SE POSER AVANT DE DIRE « C'EST FINI »
   1. Chaque grandeur porte-t-elle ce qui la rend interprétable — unité, échelle, référentiel ?
-  2. Chaque SI a-t-il son SINON ? Chaque table est-elle complète ?
+  2. Chaque IF a-t-il son ELSE ? Chaque table est-elle complète ?
   3. Où arrondit-on, à combien, dans quel sens, et où va le résidu ?
   4. Que fait-on des ex æquo ?
   5. Que fait-on d'une donnée absente, nulle, négative, aberrante ?

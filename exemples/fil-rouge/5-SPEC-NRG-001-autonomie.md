@@ -220,9 +220,9 @@ energie_mecanique    : Flottant(J, 6 chiffres significatifs)          — signé
 ### RG-010 — Bilan des forces sur un segment
 
 ```
-SOIT masse   = masse_a_vide + masse_transportee                          (kg)
-SOIT v       = vitesse_praticable ÷ 3,6                                  (m·s⁻¹)
-SOIT alpha   = arctangente( pente ÷ 100 )                                (rad)
+LET masse   = masse_a_vide + masse_transportee                          (kg)
+LET v       = vitesse_praticable ÷ 3,6                                  (m·s⁻¹)
+LET alpha   = arctangente( pente ÷ 100 )                                (rad)
 
     force_aerodynamique  = ½ × P-02 × surface_frontale_cx × v²                        (N)
     force_roulement  = coefficient_roulement × masse × P-01 × cosinus(alpha)      (N)
@@ -243,7 +243,7 @@ linéaire.
 ### RG-020 — Énergie mécanique du segment
 
 ```
-SOIT d = distance × 1000                                                 (m)
+LET d = distance × 1000                                                 (m)
 
     energie_mecanique = force_totale × d                                           (J)
 ```
@@ -251,11 +251,11 @@ SOIT d = distance × 1000                                                 (m)
 ### RG-030 — Traction et récupération
 
 ```
-SI energie_mecanique > 0 ALORS
+IF energie_mecanique > 0 THEN
     energie_traction = energie_mecanique ÷ rendement_traction                        (J, positif)
-SINON
+ELSE
     energie_traction = energie_mecanique × rendement_recuperation                    (J, négatif)
-FIN SI
+END IF
 ```
 
 > **C'est la seule non-linéarité du modèle, et elle est essentielle.** En traction, les
@@ -267,7 +267,7 @@ FIN SI
 ### RG-040 — Auxiliaires
 
 ```
-SOIT duree = d ÷ v                                                       (s)
+LET duree = d ÷ v                                                       (s)
 
     energie_auxiliaires = puissance_auxiliaires × duree                        (J)
 ```
@@ -348,25 +348,25 @@ possible.
 On parcourt les segments dans l'ordre. Pour un segment donné, l'énergie déjà
 consommée à son entrée est celle de tous les segments qui le précèdent :
 
-    SOIT energie_cumulee_avant = SOMME DES energie_segment DES segments
+    LET energie_cumulee_avant = SUM OF energie_segment OVER segments
                                  qui précèdent le segment courant
 
 Pour le premier segment tel que
     energie_cumulee_avant + energie_segment ≥ budget_utilisable
-   ET energie_segment > 0 :
+   AND energie_segment > 0 :
 
-    SOIT fraction = ( budget_utilisable − energie_cumulee_avant ) ÷ energie_segment
+    LET fraction = ( budget_utilisable − energie_cumulee_avant ) ÷ energie_segment
     point_autonomie = distance cumulée avant ce segment + fraction × distance du segment
     autonomie_atteinte = vrai
 
-SI aucun segment ne satisfait cette condition ALORS
+IF aucun segment ne satisfait cette condition THEN
     autonomie_atteinte = faux
     point_autonomie n'est pas produit
     energie_restante_arrivee = budget_utilisable − energie_totale
-SINON
+ELSE
     autonomie_atteinte = vrai
     energie_restante_arrivee n'est pas produite
-FIN SI
+END IF
 ```
 
 Deux points que la formulation tranche explicitement :

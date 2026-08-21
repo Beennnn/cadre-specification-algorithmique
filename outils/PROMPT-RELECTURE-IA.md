@@ -28,7 +28,7 @@ connaissent pas le domaine. Ton rôle est de trouver ce qui les obligerait à DE
 Applique une par une les règles du catalogue fourni. Porte une attention
 particulière à quatre familles :
 
-  — la COHÉRENCE ENTRÉES/SORTIES du contrat (C-01 à C-04) : entrée déclarée
+  — la COHÉRENCE INPUTS/OUTPUTS du contrat (C-01 à C-04) : entrée déclarée
     jamais employée, sortie promise que rien ne produit, grandeur employée
     jamais déclarée, paramètre mort ;
   — la COMPLÉTUDE LOGIQUE (C-08 à C-13) ;

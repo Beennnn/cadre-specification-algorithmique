@@ -30,7 +30,7 @@ pas de vérifier que le vingt-troisième paramètre sert à quelque chose.
 | Une **grandeur sans unité, sans plage, sans précision** | La cause la plus fréquente d'écarts, et la plus tardive à se découvrir |
 | Une **incohérence de vocabulaire** entre le contrat, les règles et le glossaire | Le lecteur cherche une nuance qui n'existe pas, et finit par en inventer une |
 
-**Sur la complétude logique :** un `SI` sans `SINON`, une table de décision incomplète, un
+**Sur la complétude logique :** un `IF` sans `ELSE`, une table de décision incomplète, un
 arrondi sans sens déclaré, un superlatif sans règle de départage, une entrée facultative
 dont l'absence n'est pas traitée, une itération sans nombre maximal.
 
@@ -58,7 +58,7 @@ Puis la consigne prête à l'emploi : [`outils/PROMPT-RELECTURE-IA.md`](../outil
 |---|---|---|
 | **2–3 Découper, nommer** | Proposer un découpage candidat à partir de documents existants ; repérer les verbes fourre-tout (« gérer », « traiter ») et les noms qui désignent un endroit plutôt qu'un résultat ; proposer des termes de glossaire | Le métier — elle ignore qui décide de quoi dans l'organisation |
 | **3 Données** | Repérer les données citées sans source, sans unité, sans comportement d'absence | Le métier |
-| **4 Écrire** | Reformuler de la prose en pseudo-langage ; transformer des `SI` imbriqués en table de décision ; signaler une boucle qui pourrait être une opération d'ensemble | Le métier — **elle ne fournit jamais la règle** |
+| **4 Écrire** | Reformuler de la prose en pseudo-langage ; transformer des `IF` imbriqués en table de décision ; signaler une boucle qui pourrait être une opération d'ensemble | Le métier — **elle ne fournit jamais la règle** |
 | **5 Jeu d'essai** | **Proposer les cas aux limites qu'on n'a pas pensés** : zéro, vide, un seul élément, valeur exactement au seuil, ex æquo, demi-centime, bascule de date, dépassement de plafond. Calculer les résultats attendus | Le métier — les résultats restent des **candidats jusqu'à examen** |
 | **7–8 Valider** | Tout ce qui précède, en une passe exhaustive | Les trois relecteurs |
 | **10 Coder et tester** | Produire une implémentation candidate ; appliquer les **règles de codage** de l'équipe ; écrire **commentaires et documentation** ; poser les **annotations de traçabilité** vers la spécification et en vérifier la cohérence ; transformer chaque `CT-xx` en test nommé ; dériver des tests de propriété depuis les invariants — voir ci-dessous | Le développeur, qui assume l'architecture, la qualité dans la durée et ce qu'il livre |
@@ -151,7 +151,7 @@ d'une troisième dont personne n'a jamais parlé.
 
 | | |
 |---|---|
-| **Un trou avec des bords — elle le voit** | Un `SI` sans `SINON` : le `SI` est écrit, son incomplétude est visible dans le texte. Une entrée déclarée qu'aucune règle n'emploie : les deux bouts sont là, c'est leur rapport qui cloche |
+| **Un trou avec des bords — elle le voit** | Un `IF` sans `ELSE` : le `IF` est écrit, son incomplétude est visible dans le texte. Une entrée déclarée qu'aucune règle n'emploie : les deux bouts sont là, c'est leur rapport qui cloche |
 | **Un trou sans bords — elle ne le voit pas** | Personne ne s'est jamais demandé *« et si deux produits ont exactement le même prix ? »*. Alors aucune règle ne parle d'égalité, le glossaire n'a pas de terme pour ça, aucun cas de test n'en approche. **Le document est parfaitement cohérent** — il lui manque simplement une question que personne n'a posée |
 
 C'est structurel, et aucun progrès des modèles n'y changera rien : **on ne peut pas

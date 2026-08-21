@@ -80,7 +80,7 @@ qu'à ce qu'eux ne savent pas voir — voir [guide 5](../guides/5-VALIDER.md).
 - [ ] **Aucun** nom de langage, de bibliothèque, de base de données, de structure de
       données technique n'apparaît dans le document.
 - [ ] Aucune performance exprimée en prose : tout est chiffré au §11.
-- [ ] Chaque `SI` a son `SINON` ; chaque table de décision couvre toutes les
+- [ ] Chaque `IF` a son `ELSE` ; chaque table de décision couvre toutes les
       combinaisons, et chacune exactement une fois.
 - [ ] Les boucles explicites sont justifiées, avec critère d'arrêt et nombre maximal
       d'itérations. Partout ailleurs, la spécification décrit un résultat, pas un parcours.

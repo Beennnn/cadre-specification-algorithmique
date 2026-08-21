@@ -38,27 +38,27 @@
 ### RG-010 — Montant toutes taxes
 
 ```
-SI montant_ht > 0,00 ALORS
-   montant_ttc = ARRONDIR(montant_ht × (1 + P-01), 2)
-FIN SI
+IF montant_ht > 0,00 THEN
+   montant_ttc = ROUND(montant_ht × (1 + P-01), 2)
+END IF
 ```
 
 ### RG-020 — Règle définie deux fois
 
 ```
-SOIT x = montant_ht
+LET x = montant_ht
 ```
 
 ### RG-020 — Règle définie deux fois
 
 ```
-SOIT y = montant_ht
+LET y = montant_ht
 ```
 
 ### RG-030 — Grandeur fantôme
 
 ```
-SOIT z = montant_ht × taux_inconnu
+LET z = montant_ht × taux_inconnu
 ```
 
 ## 10. Jeu d'essai

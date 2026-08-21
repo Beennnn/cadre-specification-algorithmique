@@ -1,8 +1,11 @@
-// Contrôles mécaniques d'une spécification fonctionnelle — implémentation Java.
+// Contrôles mécaniques d'une spécification fonctionnelle.
 //
-// Seconde implémentation du catalogue REGLES-DE-CONTROLE.md, à côté de verifier.py.
-// Les deux doivent s'accorder sur le même corpus : c'est le test de la double
-// implémentation appliqué à l'outillage lui-même.
+// Met en œuvre les règles mécanisables du catalogue REGLES-DE-CONTROLE.md, qui reste
+// l'actif : ceci n'en est qu'une implémentation. Toute autre doit retrouver le verdict
+// figé dans jeu-d-essai/ATTENDU.md sur le corpus de défauts connus.
+//
+// Le pseudo-langage reconnu est à mots-clés anglais (IF/THEN/ELSE, LET, FOR EACH,
+// WHILE, SUM OF ... OVER, ROUND) — voir CADRE.md §2.2.
 //
 // Programme à fichier unique : aucune dépendance, aucune construction préalable.
 //     java outils/Verifier.java                  # tout le dépôt
@@ -251,7 +254,7 @@ public class Verifier {
         // la convention snake_case (C-38) les distingue du français ordinaire qui
         // entoure le pseudo-code, et cette restriction évite de prendre « ligne » ou
         // « que » pour des grandeurs. Un nom est réputé déclaré s'il est introduit
-        // dans les règles (SOIT, POUR CHAQUE, affectation) ou s'il apparaît ailleurs
+        // dans les règles (LET, FOR EACH, affectation) ou s'il apparaît ailleurs
         // dans le document — contrat, paramètres, glossaire, jeu d'essai.
         StringBuilder codeRegles = new StringBuilder();
         Matcher mFantome = Pattern.compile("^###\\s+(RG-\\d+)[^\\n]*\\n(.*?)(?=\\n###\\s|\\Z)",
@@ -263,15 +266,15 @@ public class Verifier {
         Set<String> employes = new TreeSet<>(
                 trouverTout("\\b([a-z][a-z0-9]*(?:_[a-z0-9]+)+)\\b", codeRg, 0));
         Set<String> introduits = new HashSet<>();
-        introduits.addAll(trouverTout("\\bSOIT\\s+([a-z][a-z0-9_]*)", codeRg, 0));
-        introduits.addAll(trouverTout("\\bPOUR\\s+CHAQUE\\s+([a-z][a-z0-9_]*)", codeRg, 0));
+        introduits.addAll(trouverTout("\\bLET\\s+([a-z][a-z0-9_]*)", codeRg, 0));
+        introduits.addAll(trouverTout("\\bFOR\\s+EACH\\s+([a-z][a-z0-9_]*)", codeRg, 0));
         // Une affectation introduit son membre gauche. « = » est aussi l'opérateur de
         // comparaison (§2.2) : on écarte donc les lignes de condition, et on tolère un
         // préfixe (branche de table de décision, puce) devant le nom affecté. Le nom
         // est celui qui précède le premier « = », champ éventuel retiré :
         // « boisson_melangee.masse = … » introduit « boisson_melangee ».
         Pattern conditionnelle = Pattern.compile(
-                "\\s*(SI|SINON|TANT QUE|FILTRER|OÙ|POUR|IL EXISTE|AUCUN|TOUS)\\b");
+                "\\s*(IF|ELSE|WHILE|FILTER|WHERE|FOR|THERE EXISTS|NONE|ALL)\\b");
         Pattern membreGauche = Pattern.compile("([a-z][a-z0-9_]*)(?:\\.[a-z][a-z0-9_]*)?\\s*$");
         for (String ligne : codeRg.split("\n", -1)) {
             if (conditionnelle.matcher(ligne).lookingAt()) continue;
@@ -385,30 +388,30 @@ public class Verifier {
         while (mr.find()) {
             String titre = mr.group(1), bloc = mr.group(2);
             for (String code : blocsCode(bloc)) {
-                long si = code.lines().filter(l -> l.matches("\\s*SI\\b.*")
-                        && !l.matches(".*\\bFIN SI\\b.*")).count();
-                long sinon = code.lines().filter(l -> l.matches("\\s*SINON\\b.*")
-                        && !l.matches("\\s*SINON SI\\b.*")).count();
+                long si = code.lines().filter(l -> l.matches("\\s*IF\\b.*")
+                        && !l.matches(".*\\bEND IF\\b.*")).count();
+                long sinon = code.lines().filter(l -> l.matches("\\s*ELSE\\b.*")
+                        && !l.matches("\\s*ELSE IF\\b.*")).count();
                 if (si > sinon)
                     constat("ÉCHEC", "C-08", chemin,
-                            titre + " : " + si + " bloc(s) SI pour " + sinon + " SINON");
-                Matcher ma = Pattern.compile("ARRONDIR\\(([^()]*(?:\\([^()]*\\)[^()]*)*)\\)")
+                            titre + " : " + si + " bloc(s) IF pour " + sinon + " ELSE");
+                Matcher ma = Pattern.compile("ROUND\\(([^()]*(?:\\([^()]*\\)[^()]*)*)\\)")
                         .matcher(code);
                 while (ma.find())
                     if (compter(ma.group(1), ",") != 2)
-                        constat("ÉCHEC", "C-10", chemin, titre + " : ARRONDIR("
+                        constat("ÉCHEC", "C-10", chemin, titre + " : ROUND("
                                 + tronquer(ma.group(1).trim(), 40)
                                 + ") — il faut valeur, décimales et mode");
-                if (code.contains("TANT QUE") && !Pattern.compile("it[ée]ration",
+                if (code.contains("WHILE") && !Pattern.compile("it[ée]ration",
                         Pattern.CASE_INSENSITIVE).matcher(bloc).find())
                     constat("ÉCHEC", "C-13", chemin,
-                            titre + " : TANT QUE sans nombre maximal d'itérations déclaré");
+                            titre + " : WHILE sans nombre maximal d'itérations déclaré");
             }
             boolean superlatif = Pattern.compile(
                     "le plus (petit|grand|élevé|faible)|le meilleur|\\bMINIMUM\\b|\\bMAXIMUM\\b|le premier",
                     Pattern.CASE_INSENSITIVE).matcher(bloc).find();
             boolean collection = Pattern.compile(
-                    "\\bDES\\b|\\bDANS\\b|\\bTRIER\\b|\\bFILTRER\\b|lignes|segments|bornes|la ligne dont|celle dont")
+                    "\\bOVER\\b|\\bIN\\b|\\bSORT\\b|\\bFILTER\\b|lignes|segments|bornes|la ligne dont|celle dont")
                     .matcher(bloc).find();
             boolean departage = Pattern.compile("égalit|ex æquo|départage|alphabétiq|le plus précoce",
                     Pattern.CASE_INSENSITIVE).matcher(bloc).find();

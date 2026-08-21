@@ -96,7 +96,7 @@ Trois lignes du §11 pèsent plus que toutes les préférences d'équipe :
 - **Citez l'identifiant de règle en commentaire** à l'endroit qui l'implémente. C'est ce
   qui rend possible, plus tard, de répondre en dix secondes à « où est implémentée cette
   règle ? ».
-- Les règles écrites en **opérations d'ensemble** (`SOMME DES`, `FILTRER`, `REGROUPER
+- Les règles écrites en **opérations d'ensemble** (`SUM OF`, `FILTER`, `REGROUPER
   PAR`) vous laissent explicitement libres : agrégation en mémoire, requête en base,
   vectorisation. Rien de tout cela ne peut trahir la règle.
 - **Faites contrôler les citations dans votre intégration continue**, dans les deux sens :

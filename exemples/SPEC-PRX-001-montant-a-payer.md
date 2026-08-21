@@ -368,7 +368,7 @@ montant_a_payer_ttc = montant_avant_fidelite_ttc − reduction_fidelite_ttc
 | `INV-01` | `montant_a_payer_ttc ≥ 0,00` |
 | `INV-02` | La somme des `montant_net_ligne` est exactement égale à `montant_net_ht` |
 | `INV-03` | La somme des `remise_panier_ligne` est exactement égale à la remise panier retenue |
-| `INV-04` | `total_remises_ht ≤ ARRONDIR(montant_brut_ht × P-07, 2)` — sauf dépassement par la seule remise de quantité (voir `RG-060`) |
+| `INV-04` | `total_remises_ht ≤ ROUND(montant_brut_ht × P-07, 2)` — sauf dépassement par la seule remise de quantité (voir `RG-060`) |
 | `INV-05` | Le calcul est **déterministe** : deux exécutions sur les mêmes entrées, à la même date de commande, donnent des résultats identiques au centime |
 | `INV-06` | Le calcul est **idempotent** : recalculer un panier inchangé ne change aucun montant |
 | `INV-07` | Ajouter une ligne à un panier ne peut jamais diminuer `montant_brut_ht` |
@@ -801,7 +801,7 @@ seule ligne de ce document ne bouge — et c'est exactement le but.
 | `INV-01` | `ff99a737-8a9d-4e04-9e4e-85c6b49d6e75` | invariant | `montant_a_payer_ttc ≥ 0,00` |
 | `INV-02` | `3b6cfc1f-2f63-4de6-a6b2-aca95ace6fa4` | invariant | La somme des `montant_net_ligne` est exactement égale à `montant_net_h |
 | `INV-03` | `1ec68056-a9f4-40ba-ad26-a7c5322c9f7a` | invariant | La somme des `remise_panier_ligne` est exactement égale à la remise pa |
-| `INV-04` | `420df46d-6575-464c-af29-6669b968cddd` | invariant | `total_remises_ht ≤ ARRONDIR(montant_brut_ht × P-07, 2)` — sauf dépass |
+| `INV-04` | `420df46d-6575-464c-af29-6669b968cddd` | invariant | `total_remises_ht ≤ ROUND(montant_brut_ht × P-07, 2)` — sauf dépass |
 | `INV-05` | `ffa99612-cb13-465f-aea2-28cf0f155914` | invariant | Le calcul est **déterministe** : deux exécutions sur les mêmes entrées |
 | `INV-06` | `5cc02d04-0db9-4bad-95d5-88ad2e76f355` | invariant | Le calcul est **idempotent** : recalculer un panier inchangé ne change |
 | `INV-07` | `b2230afc-f9c4-47e4-b39a-5f99b5dbbc81` | invariant | Ajouter une ligne à un panier ne peut jamais diminuer `montant_brut_ht |

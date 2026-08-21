@@ -151,9 +151,9 @@ resultat :
 ### RG-010 — Le modèle de refroidissement
 
 ```
-SOIT k           = coefficient_refroidissement
-SOIT T_ambiante  = temperature_ambiante
-SOIT T(0)        = boisson.temperature_initiale
+LET k           = coefficient_refroidissement
+LET T_ambiante  = temperature_ambiante
+LET T(0)        = boisson.temperature_initiale
 
 La température de la boisson suit la loi de refroidissement de Newton :
 
@@ -199,8 +199,8 @@ Si `instant_demande` dépasse `P-04`, la valeur n'est pas produite et
 Lors d'un ajout, la température résultante est celle qui conserve l'énergie
 thermique de l'ensemble :
 
-SOIT capacite_boisson = boisson.masse × boisson.capacite_massique
-SOIT capacite_ajout   = ajout.masse   × ajout.capacite_massique
+LET capacite_boisson = boisson.masse × boisson.capacite_massique
+LET capacite_ajout   = ajout.masse   × ajout.capacite_massique
 
     temperature_apres_ajout =
         ( capacite_boisson × T(ajout.instant) + capacite_ajout × ajout.temperature )
@@ -216,7 +216,7 @@ Le mélange ne modifie pas la boisson : il en produit une nouvelle.
 
 Si `ajout.masse = 0`, la formule laisse la boisson inchangée : le cas est **couvert par la règle
 générale**, il n'a pas besoin d'être traité à part. Une spécification qui ajoute une
-branche `SI masse = 0 ALORS ...` pour un cas déjà couvert crée deux chemins là où un
+branche `IF masse = 0 THEN ...` pour un cas déjà couvert crée deux chemins là où un
 seul suffit — et un jour, ils divergeront.
 
 ### RG-040 — Ordre des opérations : quand l'ajout a lieu
@@ -255,18 +255,18 @@ L'instant d'atteinte est le PLUS PETIT t ≥ 0 tel que T(t) ≤ temperature_cibl
 
 Conditions d'existence, évaluées dans cet ordre :
 
-  SI boisson.temperature_initiale ≤ temperature_cible ALORS
+  IF boisson.temperature_initiale ≤ temperature_cible THEN
      instant_atteinte_cible = 0,00 ; cible_deja_atteinte = vrai ; on s'arrête
 
-  SINON SI temperature_cible ≤ temperature_ambiante + P-07 ALORS
+  ELSE IF temperature_cible ≤ temperature_ambiante + P-07 THEN
      cible_inatteignable = vrai ; aucun instant n'est produit ; on s'arrête
 
-  SINON SI l'instant d'atteinte est supérieur à P-04 ALORS
+  ELSE IF l'instant d'atteinte est supérieur à P-04 THEN
      cible_hors_horizon = vrai ; aucun instant n'est produit
 
-  SINON
+  ELSE
      instant_atteinte_cible est produit, à P-05 près
-  FIN SI
+  END IF
 ```
 
 > **Pourquoi la marge `P-07` et non une comparaison à la température ambiante seule.**
@@ -284,12 +284,12 @@ Si l'implémentation résout `RG-050` par une méthode itérative :
 Le calcul s'arrête lorsque l'encadrement de l'instant est inférieur à P-05,
 ou après P-06 itérations.
 
-SI P-06 itérations sont atteintes sans satisfaire P-05 ALORS
-   SIGNALER ERREUR E-CONV-001
+IF P-06 itérations sont atteintes sans satisfaire P-05 THEN
+   RAISE ERROR E-CONV-001
    aucun instant n'est produit
-SINON
+ELSE
    instant_atteinte_cible est produit, et le nombre d'itérations utilisées est rapporté
-FIN SI
+END IF
 
 Le nombre d'itérations réellement utilisées est rapporté.
 Une implémentation qui résout RG-050 exactement rapporte 0 itération.

@@ -14,8 +14,8 @@ conformité de toute réimplémentation — dans un autre langage, ou après une
 | `LIEN` | 1 | lien cassé vers `CE-FICHIER-N-EXISTE-PAS.md` |
 | `C-03` | 1 | `taux_inconnu` employé dans `RG-030`, déclaré nulle part (**fantôme**) |
 | `C-04` | 1 | `P-02` déclaré mais employé nulle part |
-| `C-08` | 1 | `RG-010` : un bloc `SI` pour zéro `SINON` |
-| `C-10` | 1 | `RG-010` : `ARRONDIR` à deux arguments au lieu de trois |
+| `C-08` | 1 | `RG-010` : un bloc `IF` pour zéro `ELSE` |
+| `C-10` | 1 | `RG-010` : `ROUND` à deux arguments au lieu de trois |
 | `C-14` | 2 | `RG-020` et `RG-030` absents de la table de couverture |
 | `C-17` | 1 | `RG-020` défini plusieurs fois — **une seule fois**, pas une par occurrence |
 | `C-19` | 1 | en-tête `1.4.0` ≠ dernière ligne d'historique `1.3.0` |
