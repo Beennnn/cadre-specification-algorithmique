@@ -30,9 +30,9 @@ le plus souvent : personne ne vérifie spontanément que le vingt-troisième par
 
 | Id | Règle | Ce qu'un échec révèle |
 |---|---|---|
-| `C-01` | **Toute entrée déclarée est employée** dans au moins une règle. | Une entrée morte : soit une règle manque, soit l'entrée est inutile — et on demande à l'appelant de fournir une donnée pour rien |
+| `C-01` | **Toute entrée déclarée est employée** dans au moins une règle. | Une entrée **morte** : déclarée sans emploi. Soit une règle manque, soit l'entrée est inutile — et on demande à l'appelant de fournir une donnée pour rien |
 | `C-02` | **Toute sortie déclarée est produite** par au moins une règle. | Une promesse non tenue : le contrat annonce un résultat que rien ne calcule |
-| `C-03` | **Toute grandeur employée dans une règle est déclarée** : entrée, sortie, paramètre, ou variable locale introduite par `SOIT`. | Un paramètre fantôme circule dans l'algorithme. Le développeur devra inventer d'où il vient |
+| `C-03` | **Toute grandeur employée dans une règle est déclarée** quelque part : entrée, sortie, paramètre, ou variable locale introduite par `SOIT`. | Un **fantôme** circule : une grandeur employée que rien ne déclare, dont le développeur devra inventer l'origine. **L'inverse de `C-01`** — voir l'encadré ci-dessous |
 | `C-04` | **Tout paramètre `P-xx` déclaré est employé** dans au moins une règle. | Un paramètre mort : il sera maintenu, documenté, versionné, pour rien — et un jour quelqu'un le changera en croyant agir |
 | `C-05` | **Toute valeur littérale dans une règle est justifiée** : soit c'est un paramètre `P-xx`, soit une constante mathématique nommée, soit sa présence est expliquée sur place. | Une valeur magique. Personne ne saura jamais s'il faut la changer ni qui a le droit de le faire |
 | `C-06` | **Toute grandeur déclare sa famille de type, sa précision et sa plage** ; toute grandeur dimensionnée déclare en outre sa dimension, son **unité pivot** et son **unité d'usage**. | La cause la plus fréquente d'écarts, et la plus tardive à se découvrir |
@@ -44,6 +44,19 @@ le plus souvent : personne ne vérifie spontanément que le vingt-troisième par
 | `C-32` | **Un résultat n'est pas restitué avec plus de chiffres significatifs que son incertitude n'en autorise.** | `106,017 km ± 3 km` est une faute d'expression qui donne une fausse confiance |
 | `C-38` | **Tout identifiant est en ASCII strict et en `snake_case`** : ni accent, ni symbole grec, ni majuscule. | Deux identifiants visuellement identiques peuvent différer par leur normalisation Unicode — `C-01` ne les rapproche pas et `--tracer` en perd un, sans que personne ne comprenne pourquoi |
 | `C-07` | **Aucune grandeur ne change d'unité** entre sa déclaration et son emploi sans conversion explicite. | Erreur d'un facteur 3,6 — ou 13 quand elle passe au carré |
+
+> **Deux défauts opposés, à ne pas confondre — c'est la confusion la plus courante à la
+> lecture du catalogue.**
+>
+> | | **Déclaré, mais jamais employé** | **Employé, mais jamais déclaré** |
+> |---|---|---|
+> | Le nom | **mort** — entrée morte (`C-01`), sortie morte (`C-02`), paramètre mort (`C-04`) | **fantôme** (`C-03`) |
+> | Ce qu'on lit | le contrat annonce quelque chose dont aucune règle ne se sert | une règle se sert de quelque chose que le contrat n'annonce pas |
+> | Ce que ça révèle | soit une règle manque, soit la donnée est inutile — on fait fournir pour rien | le développeur devra **inventer d'où elle vient** |
+> | Où se trouve le défaut | plutôt dans les **règles**, qui sont incomplètes | plutôt dans le **contrat**, qui est incomplet |
+>
+> Moyen mnémotechnique : **mort = déclaré sans emploi ; fantôme = employé sans
+> déclaration.** Le premier est un poids inutile, le second est un trou.
 
 > **Lire un avertissement `C-01` ou `C-02`.** Le contrôle cherche le nom exact du champ
 > dans les règles. Deux causes possibles à un signalement, et elles appellent des

@@ -25,7 +25,7 @@ pas de vérifier que le vingt-troisième paramètre sert à quelque chose.
 |---|---|
 | Une **entrée déclarée qu'aucune règle n'emploie** | Soit une règle manque, soit on fait fournir une donnée pour rien |
 | Une **sortie promise que rien ne produit** | Le contrat annonce un résultat que le calcul ne fabrique pas |
-| Une **grandeur employée et déclarée nulle part** | Un paramètre fantôme circule : le développeur devra inventer d'où il vient |
+| Une **grandeur employée que rien ne déclare** | Un fantôme circule : le développeur devra inventer d'où il vient. C'est l'inverse exact du cas précédent — là on déclare sans employer, ici on emploie sans déclarer |
 | Un **paramètre déclaré et jamais employé** | Maintenu, versionné, documenté — pour rien. Et un jour quelqu'un le changera en croyant agir |
 | Une **grandeur sans unité, sans plage, sans précision** | La cause la plus fréquente d'écarts, et la plus tardive à se découvrir |
 | Une **incohérence de vocabulaire** entre le contrat, les règles et le glossaire | Le lecteur cherche une nuance qui n'existe pas, et finit par en inventer une |

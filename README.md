@@ -152,8 +152,8 @@ dynamique.
 ## La place de l'IA
 
 Elle intervient à presque toutes les étapes et **ne décide à aucune**. Son terrain le plus
-rentable est la **cohérence du contrat** : entrée déclarée jamais employée, sortie promise
-que rien ne produit, paramètre fantôme, unité absente, contrainte d'implémentation glissée
+rentable est la **cohérence du contrat** : entrée déclarée que personne n'emploie, sortie promise
+que rien ne produit, grandeur employée que rien ne déclare, unité absente, contrainte d'implémentation glissée
 dans une règle, formulation qui repousse la décision. Un travail exhaustif et fastidieux
 que l'humain fait mal — non par incompétence, mais parce qu'il fatigue.
 

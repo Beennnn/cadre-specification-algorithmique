@@ -74,7 +74,7 @@ Ce qu'elles attrapent, réparti en quatre familles :
 |---|---|
 | `C-01` | une entrée déclarée que **aucune règle n'emploie** — entrée morte |
 | `C-02` | une sortie déclarée que **aucune règle ne produit** |
-| `C-03` | une grandeur employée dans une règle et **déclarée nulle part** — le paramètre fantôme qui circule |
+| `C-03` | une grandeur **employée que rien ne déclare** — le fantôme qui circule. L'inverse de `C-01` : là une donnée est fournie pour rien, ici une donnée sort de nulle part |
 | `C-04` | un paramètre `P-xx` déclaré et **jamais employé** |
 | `C-05` | une **valeur littérale** au milieu d'une règle : soit c'est un paramètre, soit c'est une valeur magique |
 | `C-06` | une grandeur **sans unité**, sans devise ou sans domaine |

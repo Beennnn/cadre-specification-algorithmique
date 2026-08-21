@@ -12,6 +12,8 @@ chaque équipe produit pour son propre métier ([guide 2](guides/2-GLOSSAIRE.md)
 | **Contrat** | Les entrées et sorties d'une fonction, typées avec leur unité, leur précision et leur domaine de validité. Niveau 3 de l'échelle de maturité. |
 | **Découpage** | L'opération qui identifie et nomme les fonctions d'un périmètre. Précède toute écriture de règle. |
 | **Étendue** | La taille d'un axe : fixe (`4`), bornée (`1 .. 3 000`), ou liée à une autre grandeur. Une étendue non bornée est un défaut, jamais une souplesse. |
+| **Fantôme** | Une grandeur **employée par une règle que rien ne déclare** : elle sort de nulle part, et le développeur devra inventer son origine. Le contrat est incomplet. Inverse du **mort**. |
+| **Mort** (entrée, sortie, paramètre) | Un élément **déclaré au contrat qu'aucune règle n'emploie** : on le maintient, on le versionne, on le fait fournir — pour rien. Les règles sont incomplètes, ou l'élément est inutile. Inverse du **fantôme**. |
 | **Faux ami** | Un point qui *ressemble* à une décision technique et qui est une décision métier : arrondi, ordre des opérations, départage d'ex æquo, valeur absente, borne, mode dégradé. Cause majoritaire des écarts entre deux implémentations honnêtes. |
 | **Fiche de contraintes** | La section d'une spécification qui exprime, **en unités métier et chiffrées**, les volumes, la latence, l'exactitude, la rejouabilité, la fréquence de changement. C'est elle qui permet à l'IT de choisir le langage et l'architecture. |
 | **Fiche de fonction** | Le document qui décrit une fonction : nom, rôle, valideur métier, contrat, niveau de maturité. Aux niveaux 0 à 2, c'est le seul document existant. |
