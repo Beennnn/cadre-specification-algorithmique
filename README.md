@@ -243,17 +243,72 @@ qu'un programme l'a produit, sans l'examiner**.
 
 ## L'outillage
 
+### Ce que fait le vérificateur
+
+Il lit les spécifications du dépôt et rend deux services : il **contrôle**, et il
+**donne à voir**.
+
+**Il contrôle** — 31 des 41 règles du catalogue, réparties en quatre familles :
+
+| Famille | Exemples de ce qu'il attrape |
+|---|---|
+| **Cohérence du contrat** | une entrée déclarée que personne n'emploie (*morte*) ; une grandeur employée que rien ne déclare (*fantôme*) ; un paramètre jamais utilisé ; une grandeur sans unité, sans plage ou sans famille de type |
+| **Complétude logique** | un `SI` sans `SINON` ; un `ARRONDIR` sans mode ni décimales ; un superlatif sans règle de départage ; un `TANT QUE` sans nombre maximal d'itérations |
+| **Traçabilité et version** | une règle absente de la table de couverture ; un cas de test cité qui n'existe pas ; un identifiant défini deux fois ; un en-tête de version qui contredit l'historique ; un impact déclaré sur les résultats sans incrément majeur ; une identité manquante ou partagée par deux objets |
+| **Cohérence de la chaîne** | une grandeur consommée par une étape qui n'est ni entrée, ni paramètre, ni produite en amont ; un produit que rien ne consomme et que le contrat n'annonce pas |
+
+**Il donne à voir** — des vues qu'aucune lecture ne fournit :
+
 ```bash
-python3 outils/verifier.py                    # 30 des 38 contrôles, sur tout le dépôt
-python3 outils/verifier.py --chaine <spec>    # qui crée / qui utilise, fils d'exécution, vue groupée
-python3 outils/verifier.py --tracer <nom>     # où passe cette grandeur
+python3 outils/verifier.py                    # tous les contrôles, sur tout le dépôt
+python3 outils/verifier.py --chaine <spec>    # qui crée / qui utilise chaque grandeur,
+                                              # fils d'exécution, chemin critique, vue groupée
+python3 outils/verifier.py --tracer <nom>     # où passe cette grandeur, dans tout le corpus
 python3 outils/identites.py --registre        # le registre des identités durables
 ```
 
 Sans dépendance, code de retour `1` sur échec — utilisable en intégration continue tel
-quel. Les règles sont écrites **une fois** dans
-[`REGLES-DE-CONTROLE.md`](outils/REGLES-DE-CONTROLE.md), pour trois lecteurs : un humain
-qui les applique, le script qui les exécute, une IA à qui on les donne en consigne.
+quel.
+
+### Pourquoi c'est possible : le formalisme
+
+Le vérificateur ne fait aucun miracle. **Il ne peut contrôler que ce que le formalisme rend
+contrôlable** — et c'est précisément la raison d'être des conventions de l'étape 1.
+
+| La convention | Ce qu'elle rend vérifiable |
+|---|---|
+| Les contrats sont déclarés en blocs, avec une **grammaire** : `nom : Famille(unité pivot ▸ unité d'usage, précision, plage)` | Comparer ce qui est **déclaré** à ce qui est **employé** — d'où les morts, les fantômes, les unités manquantes |
+| Les identifiants ont des **préfixes fixes** : `RG-`, `P-`, `CT-`, `D-`, `ET-`… | Suivre une règle du contrat jusqu'au cas de test, et détecter les doublons |
+| Les tables ont des **colonnes fixes** | Lire les paramètres, les questions ouvertes, l'historique de version |
+| La chaîne de traitement est une **table**, pas un dessin | Dériver le graphe, les fils d'exécution, les produits morts |
+| Les identités vivent dans une **annexe normalisée** | Garantir qu'aucun objet n'en manque et qu'aucune n'est partagée |
+
+> Chacune de ces conventions ressemble, à la lecture, à une contrainte de rédaction. Ce
+> sont en réalité des **points d'accroche pour une machine**. Sans elles, le document
+> resterait compréhensible par un humain et **totalement opaque à un outil**.
+
+**Le compromis est assumé, et il explique le chiffre.** On a choisi la lisibilité par le
+métier — donc un formalisme **léger** : du markdown et des conventions, pas un langage
+dédié. Donc un contrôle **partiel** : 31 règles sur 41. Un formalisme plus strict — une
+grammaire formelle, un schéma — permettrait d'en mécaniser davantage, au prix de ce qui
+compte le plus : que le métier puisse écrire et relire lui-même.
+
+### Les vues globales, et celles que le code peut produire
+
+Les vues ci-dessus sont produites **à partir des spécifications** : elles disent ce qui est
+décrit. Une seconde famille de vues se produit **à partir du code**, en moissonnant les
+citations `RG-xxx` que les développeurs y ont posées ([guide 9](guides/9-L-APPORT-DE-L-IA.md)) :
+
+| Ce qu'on obtient | Ce que ça révèle |
+|---|---|
+| Quelles règles sont implémentées, et où | La carte de couverture réelle |
+| Quelles règles ne sont citées **nulle part** | Une règle non implémentée, ou implémentée sans être reconnue |
+| Quelles citations pointent vers une règle **qui n'existe plus** | Une citation périmée, après abrogation ou renommage |
+| Quelle version de spécification chaque composant déclare | Un composant resté sur une version antérieure |
+
+> **Cette seconde famille vit du côté du code, dans son intégration continue** — jamais
+> dans la spécification, qui ignore l'existence du dépôt de code. C'est la règle de
+> direction : le code cite la spécification, jamais l'inverse.
 
 ---
 

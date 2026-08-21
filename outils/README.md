@@ -28,6 +28,18 @@ Code de retour `1` si au moins un **échec** — utilisable tel quel en intégra
 | **ÉCHEC** | Un défaut mécanique certain. Il bloque le passage en développement |
 | **AVERTIR** | Un signalement à trancher à la main. Il n'est jamais « faux » : ou bien le défaut est réel, ou bien il révèle une divergence de vocabulaire entre le contrat et les règles |
 
+## Ce qui rend ces contrôles possibles
+
+Le vérificateur ne peut contrôler **que ce que le formalisme rend contrôlable**. La
+grammaire des contrats, les préfixes d'identifiants, les colonnes fixes des tables, la
+chaîne écrite en table et l'annexe des identités ne sont pas des contraintes de rédaction
+gratuites : ce sont les **points d'accroche** qui permettent à une machine de lire ce
+document.
+
+Le compromis est assumé : formalisme **léger** — markdown et conventions — pour que le
+métier puisse écrire et relire, donc contrôle **partiel** — 31 règles sur 41. Le détail
+est dans le [README du dépôt](../README.md).
+
 ## Ce que le script ne fait pas
 
 Il vérifie ce qui est **mécanisable** : `C-01` à `C-04`, `C-14` à `C-17`, `C-19` à `C-21`,
