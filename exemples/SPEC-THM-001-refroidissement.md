@@ -565,3 +565,53 @@ diffère, et c'est elle qui produira deux implémentations.
 résolution, le format des paramètres, la stratégie de mise en cache. Deux équipes ont
 implémenté ce document de deux façons opposées, et **les deux sont conformes** — c'est
 la meilleure preuve que la frontière a été tracée au bon endroit.
+
+## Annexe — Identités
+
+*Chaque objet porte un UUID attribué une fois et jamais modifié. L'identifiant lisible et le libellé sont des étiquettes : ils peuvent changer, l'identité non. Voir [CADRE.md §2.8](../CADRE.md).*
+
+| Identifiant | UUID | Nature | Libellé |
+|---|---|---|---|
+| `SPEC-THM-001` | `8416d9a7-cdb6-4116-bc37-a9538d3ff520` | document | SPEC-THM-001 — Prévision du refroidissement d'une boisson chaude |
+| `RG-010` | `944cf16e-090c-4191-a688-c1696c65cad4` | règle | Le modèle de refroidissement |
+| `RG-020` | `a5b55277-3455-44c9-82d8-c7c98d8d1ff3` | règle | Température à un instant donné |
+| `RG-030` | `378cb511-d51c-4f98-8ef1-b5f414836038` | règle | Mélange de deux liquides |
+| `RG-040` | `dc39074f-2f6b-4c19-a81b-9fc68185e56d` | règle | Ordre des opérations : quand l'ajout a lieu |
+| `RG-050` | `a2f67f9d-5d0f-4b38-b3a6-afd875065ea6` | règle | Instant d'atteinte de la température cible |
+| `RG-060` | `ea136394-b2ab-4c96-8cd8-794b0601a8b8` | règle | Convergence |
+| `CT-01` | `4b06688f-6465-4532-aa52-0db400bee2f4` | cas de test | Refroidissement simple |
+| `CT-02` | `cfd6fbbf-0aad-4bc7-8951-4c3a53e87223` | cas de test | Ordre des opérations : le cas central |
+| `CT-03` | `0fbe682c-8776-4e0b-8379-ae7aa9658f96` | cas de test | Cible inatteignable |
+| `CT-04` | `b4ee9744-60d3-4131-86d6-bd96fe9c3416` | cas de test | Cible déjà atteinte |
+| `CT-05` | `37fcab9a-65f1-40e5-920f-e411021411df` | cas de test | Cible hors horizon |
+| `CT-06` | `4d6f1ab4-7ded-4604-b857-b74f36df9407` | cas de test | Invariance d'échelle (kelvins) |
+| `CT-07` | `1645cc91-0461-4d1f-9226-2800a352d859` | cas de test | Masse ajoutée nulle |
+| `CT-08` | `7f647fe8-a8cc-4ad3-9d4c-5b3cf790b824` | cas de test | Coefficient négatif |
+| `P-01` | `96718c6e-7ebb-45a8-becc-7dacb44b8db6` | paramètre | Coefficient de refroidissement — tasse en céramique ouverte |
+| `P-02` | `6fa6e358-eac1-4052-9fe7-8057f5fa79d8` | paramètre | Coefficient de refroidissement — mug isotherme fermé |
+| `P-03` | `87cb7eb4-c0f7-44bd-90b4-9e00c395c621` | paramètre | Température cible de dégustation par défaut |
+| `P-04` | `1b4f0d75-6953-45a5-9134-d3e656c3759c` | paramètre | Horizon de prévision |
+| `P-05` | `75cfe6fc-7213-4967-a81f-f4e80c55c727` | paramètre | Tolérance de convergence sur l'instant |
+| `P-06` | `6ea114e2-f73a-4512-8cd4-9656c42c8060` | paramètre | Nombre maximal d'itérations |
+| `P-07` | `6f2b55b1-5c6a-451a-a794-963a915f7b63` | paramètre | Écart minimal à la température ambiante pour que la cible soit réputée |
+| `EX-01` | `47db7e61-d39c-4d07-ab94-810c0e0032fd` | exigence | Le calcul embarqué **n'émet aucune requête réseau** : il fonctionne ho |
+| `EX-02` | `b21a02b4-bdc9-4b4b-af4e-31fdda02e7b7` | exigence | Le fichier de paramètres téléchargé est **signé**, et une signature in |
+| `EX-03` | `e8c9de71-4877-459f-8946-f1ebfd76f1d8` | exigence | Le code respecte le **standard de codage interne** `STD-DEV-2` |
+| `INV-01` | `b11ac534-4ee3-4ae5-8395-6f6b65dca68d` | invariant | Si `T(0) > T_ambiante`, alors `T(t)` est strictement décroissante |
+| `INV-02` | `7c52110c-fc9a-4bad-8b2e-30511a8b1751` | invariant | `T(t)` reste strictement comprise entre `T_ambiante` et `T(0)` |
+| `INV-03` | `53836c25-75aa-4f5c-882f-2a05f28f1882` | invariant | `T(t)` tend vers `T_ambiante` quand `t` croît, sans jamais l'atteindre |
+| `INV-04` | `cdc085b1-e472-43e3-be7b-2d28930aeed1` | invariant | Invariance par changement d'origine de l'échelle** : ajouter une const |
+| `INV-05` | `6b37cd54-28a1-49d2-a574-60c454308e15` | invariant | Encadrement du mélange** : `T_melange` est comprise entre les deux tem |
+| `INV-06` | `67c240de-37c7-4d40-a6cc-330545759eb9` | invariant | Monotonie vis-à-vis de `k`** : à conditions égales, un `k` plus grand  |
+| `INV-07` | `3e382a1c-177b-47e7-bb99-0a700f03541a` | invariant | Monotonie vis-à-vis de la cible** : une cible plus basse donne un inst |
+| `INV-08` | `c3221013-33d7-482b-bb07-98fa142945ca` | invariant | Le calcul est déterministe : deux exécutions sur la même entrée donnen |
+| `E-PARAM-001` | `b19ad839-f72a-4446-a9ec-f02a8aa522a1` | cas d'erreur | `coefficient_refroidissement ≤ 0` |
+| `E-PARAM-002` | `b757d637-570b-4594-bad2-040776993e62` | cas d'erreur | Une masse ou une capacité massique de la boisson est nulle ou négative |
+| `E-ENTREE-001` | `ef5edef2-6e13-4c75-83e6-e4d82f6dfe6a` | cas d'erreur | Ni `instant_demande` ni `temperature_cible` n'est fourni |
+| `E-HORIZON-001` | `089406dd-f578-4bef-8d4b-3acbefc50e82` | cas d'erreur | `instant_demande > P-04` |
+| `E-CONV-001` | `1b5551ba-9d1b-44e3-beb3-89aac7d2fb26` | cas d'erreur | `P-06` itérations sans convergence à `P-05` près |
+| `Q-01` | `c048bd3f-7a20-4669-b9c7-2b29d366394c` | question | Faut-il ajouter un terme de rayonnement et d'évaporation pour les temp |
+| `Q-02` | `6819e7f2-3111-47f1-bc56-070aa8d47524` | question | L'usage laboratoire demande une température ambiante variable dans le  |
+| `Q-03` | `cf4f641d-263d-421b-84fa-4869d01a6a03` | question | `RG-060` (non-convergence) et `E-HORIZON-001` ne sont couverts par auc |
+| `Q-04` | `aec32bd5-c60a-44a3-9485-5f4187d080fd` | question | `P-07` vaut 0,10 °C. Cette marge devrait-elle dépendre de l'écart init |
+| `Q-05` | `cb226d98-6d59-4412-9083-0b7dfb034ca7` | question | Tranchée le 2025-12-10 :* l'instant d'ajout doit-il avoir une valeur p |

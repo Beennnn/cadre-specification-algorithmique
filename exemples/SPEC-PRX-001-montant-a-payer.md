@@ -727,3 +727,70 @@ invisible au client et visible en rapprochement comptable. Décision `Q-05`, tra
 format de stockage, le protocole d'appel, le mécanisme de cache, le découpage en
 services, la stratégie de déploiement. Chacun de ces choix peut changer sans qu'une
 seule ligne de ce document ne bouge — et c'est exactement le but.
+
+## Annexe — Identités
+
+*Chaque objet porte un UUID attribué une fois et jamais modifié. L'identifiant lisible et le libellé sont des étiquettes : ils peuvent changer, l'identité non. Voir [CADRE.md §2.8](../CADRE.md).*
+
+| Identifiant | UUID | Nature | Libellé |
+|---|---|---|---|
+| `SPEC-PRX-001` | `1f1edc75-ec58-4635-85db-c1c215e5db87` | document | SPEC-PRX-001 — Calcul du montant à payer d'une commande |
+| `RG-010` | `64a2790a-3a7d-44e5-80f1-1b6b3996dc2e` | règle | Prix unitaire retenu |
+| `RG-020` | `19681b90-918a-4f0d-aac2-1ad23860432e` | règle | Montant brut |
+| `RG-030` | `54a68829-f56c-4687-8d37-9cbde6eba04c` | règle | Remise de quantité |
+| `RG-040` | `49f74a92-4624-4341-b206-0162921f965b` | règle | Éligibilité de la remise panier |
+| `RG-045` | `06363a73-1abe-4669-a672-e45e4ad67149` | règle | Non-cumul |
+| `RG-050` | `a7edbeea-794d-42a5-a825-b6164189a821` | règle | Montant de la remise panier |
+| `RG-060` | `c39cc17d-bc64-47fe-a83a-f8659e9bb002` | règle | Plafond global de remise |
+| `RG-085` | `8783cdb2-f825-4649-9997-805d65f7eb77` | règle | Répartition de la remise panier et centime résiduel |
+| `RG-090` | `8433118f-b428-4af9-be34-952e9c6b9845` | règle | Montant net |
+| `RG-095` | `b93a0666-396c-4169-86f2-c6a57f8c72d2` | règle | Détail restitué et agrégats |
+| `RG-100` | `1112d490-6f36-497e-867a-57d8ca28ce2a` | règle | Frais de livraison |
+| `RG-110` | `d9c56240-eadb-4bcf-a76c-9021b8de684e` | règle | TVA |
+| `RG-120` | `70d09edd-c6b6-4e15-b56b-314d32f1e701` | règle | Montant avant fidélité |
+| `RG-130` | `a7f84257-5354-476e-8bce-f7d68ff791e0` | règle | Imputation des points de fidélité |
+| `RG-140` | `073745cb-8b22-40b1-a9f6-ffd483dba43b` | règle | Montant à payer |
+| `CT-01` | `eeaea60f-91a9-4da8-99a0-f50801347ce4` | cas de test | Cas nominal minimal |
+| `CT-02` | `68db3600-1087-4e9c-a860-23f0b039607b` | cas de test | Franchise de port au seuil exact |
+| `CT-03` | `dd5abdf4-aaaf-417d-9557-3c011c7adc43` | cas de test | Cas riche (trace de calcul complète) |
+| `CT-04` | `0ed327d0-6ba4-4f09-bfa4-1007512990c7` | cas de test | Centime résiduel et départage d'ex æquo |
+| `CT-05` | `ec61da74-4c5b-4885-863a-f10a2acc5db0` | cas de test | Écrêtement par le plafond global |
+| `CT-06` | `73ec9c34-fad6-4d43-a363-74c26c0df25a` | cas de test | Code promotionnel expiré |
+| `CT-07` | `f513ee13-2211-4f3c-8bd4-79f3bcc86369` | cas de test | Points de fidélité supérieurs au montant des articles |
+| `CT-08` | `0351aeb0-aae6-4c3d-bd8b-b8356e85983f` | cas de test | Quantité exactement au seuil de la remise |
+| `CT-09` | `17612e04-2f6a-45c2-95e3-4ea4004b17f0` | cas de test | Panier vide |
+| `FN-021` | `73dda1ef-f363-4a40-ab0f-b49ef6a3dc4b` | fonction | `tva_par_taux` |
+| `P-01` | `6d2f2e8d-1a8b-448f-a167-439ecdf18f5d` | paramètre | Seuil de franchise de port |
+| `P-02` | `4ce49af5-b5fe-4447-8a9a-b59f3fd74dc7` | paramètre | Barème de port — FRANCE_METRO |
+| `P-03` | `0bb6635a-2f9e-4e8d-af4c-a23f0f37e775` | paramètre | Barème de port — UE |
+| `P-04` | `97af403e-e44a-4e9c-9de4-24de01c1c165` | paramètre | Taux de TVA des frais de livraison |
+| `P-05` | `078b86e5-10bd-41e5-99a3-7396aedfe183` | paramètre | Quantité déclenchant la remise de quantité |
+| `P-06` | `40a60496-d220-4a4f-9c5e-af1440a5a8f4` | paramètre | Taux de la remise de quantité |
+| `P-07` | `9efdc67f-eae4-4f97-ba59-03dcdade2106` | paramètre | Plafond global de remise |
+| `P-08` | `3c8fea47-f2c9-4272-9d49-28616412edd6` | paramètre | Valeur d'un point de fidélité |
+| `P-09` | `d91c1a67-357e-4e68-95c9-94722c7880b1` | paramètre | Mode d'arrondi par défaut |
+| `EX-01` | `1d343eb6-10db-4c90-9785-83703a1c3fa2` | exigence | Aucune donnée de paiement** n'entre dans le périmètre de ce calcul. Se |
+| `EX-02` | `63c7afeb-e6ef-4ef8-bb84-059d38b332ac` | exigence | Les données du calcul sont **classées P1 (interne)** et n'ont pas à êt |
+| `EX-03` | `0bf9108f-3ec0-4e58-a5a7-fb30f9778d54` | exigence | Le traitement et le stockage se font **dans l'Union européenne |
+| `EX-04` | `8df88a08-b098-463c-b407-89c2fd4f07e4` | exigence | Le langage retenu appartient à la **liste technique approuvée** et dis |
+| `EX-05` | `2030c329-e4d0-4bc7-a084-75069c76df61` | exigence | Le code respecte le **standard de codage interne** `STD-DEV-2`, avec a |
+| `EX-06` | `6fd83548-f6f4-451c-9819-94905d64f925` | exigence | La **couverture de branches** des règles de calcul atteint au moins 95 |
+| `INV-01` | `ff99a737-8a9d-4e04-9e4e-85c6b49d6e75` | invariant | `montant_a_payer_ttc ≥ 0,00` |
+| `INV-02` | `3b6cfc1f-2f63-4de6-a6b2-aca95ace6fa4` | invariant | La somme des `montant_net_ligne` est exactement égale à `montant_net_h |
+| `INV-03` | `1ec68056-a9f4-40ba-ad26-a7c5322c9f7a` | invariant | La somme des `remise_panier_ligne` est exactement égale à la remise pa |
+| `INV-04` | `420df46d-6575-464c-af29-6669b968cddd` | invariant | `total_remises_ht ≤ ARRONDIR(montant_brut_ht × P-07, 2)` — sauf dépass |
+| `INV-05` | `ffa99612-cb13-465f-aea2-28cf0f155914` | invariant | Le calcul est **déterministe** : deux exécutions sur les mêmes entrées |
+| `INV-06` | `5cc02d04-0db9-4bad-95d5-88ad2e76f355` | invariant | Le calcul est **idempotent** : recalculer un panier inchangé ne change |
+| `INV-07` | `b2230afc-f9c4-47e4-b39a-5f99b5dbbc81` | invariant | Ajouter une ligne à un panier ne peut jamais diminuer `montant_brut_ht |
+| `INV-08` | `30bc5c0f-c236-42d7-9b52-2c291b83c01c` | invariant | `points_fidélité_débités × P-08 = réduction_fidélité_ttc` |
+| `E-PANIER-001` | `160a73f5-67a8-4357-8847-714ac56b9ca1` | cas d'erreur | Le panier ne contient aucune ligne |
+| `E-QTE-001` | `55073c8c-6521-49d5-bf01-0fbd403894be` | cas d'erreur | Une quantité est nulle ou négative |
+| `E-ZONE-001` | `369ef972-0a24-472d-9938-7598f59c505c` | cas d'erreur | La zone de livraison n'est pas desservie |
+| `E-PROMO-001` | `54348f2a-1608-43c4-9711-8a4fd18920e2` | cas d'erreur | Le code promotionnel n'existe pas |
+| `E-PROMO-002` | `8c33f74e-f22d-4987-9157-a0d458574a80` | cas d'erreur | Le code existe mais n'est pas en vigueur à la date de commande |
+| `E-FIDELITE-001` | `426f747b-a486-4102-a7f8-7a6f9cd7b087` | cas d'erreur | Les points utilisés dépassent le solde du client |
+| `Q-01` | `a0391457-4a04-42d3-b931-780a69c17f9a` | question | Faut-il indiquer au client le montant manquant pour atteindre la franc |
+| `Q-02` | `73c4fe25-37f9-40b8-a0ac-7374ce755d79` | question | Quand un prix promotionnel est supérieur au prix catalogue (`RG-010`), |
+| `Q-03` | `8f0b79f2-bce6-4cb0-b02e-0c6949f9ea5b` | question | Les points de fidélité doivent-ils pouvoir s'imputer sur les frais de  |
+| `Q-04` | `dbc6d14b-3c1c-4ad2-b19d-dc861b9507c7` | question | Aucun cas de test ne couvre `RG-045` (non-cumul). Quel code promotionn |
+| `Q-05` | `420b6323-83c5-4fc4-b7c3-80e639109cee` | question | Tranchée le 2026-05-12 :* la TVA est-elle calculée par taux agrégé ou  |

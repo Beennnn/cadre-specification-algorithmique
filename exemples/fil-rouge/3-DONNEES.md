@@ -118,3 +118,21 @@ Trois constats, dont aucun n'était visible depuis les règles :
 
 > Le cheminement des données ne produit aucune règle. Il produit des **questions que les
 > règles ne posent pas** — et, ici, il a réorienté un trimestre de travail.
+
+## Annexe — Identités
+
+*Chaque objet porte un UUID attribué une fois et jamais modifié. L'identifiant lisible et le libellé sont des étiquettes : ils peuvent changer, l'identité non. Voir [CADRE.md §2.8](../../CADRE.md).*
+
+| Identifiant | UUID | Nature | Libellé |
+|---|---|---|---|
+| `D-001` | `fee8faa0-b9ce-4143-bf50-e8088a7e549e` | donnée | Distance d'un segment |
+| `D-002` | `cf84a1fd-0456-49e1-aa02-8d3e5a0c82c8` | donnée | Pente d'un segment |
+| `D-003` | `6a2ac0bf-7a08-4a12-a6ff-e4d1d6c6ca33` | donnée | Vitesse praticable |
+| `D-004` | `4fe93e69-adf6-4259-83a4-f512ac0dab4a` | donnée | Température de la batterie |
+| `D-005` | `d872a024-bb34-49c3-ac45-ea1f6850cbe6` | donnée | État de charge |
+| `D-006` | `cfa60adb-865a-4d05-a90e-2ef41dccff91` | donnée | Capacité nominale |
+| `D-007` | `020f3f05-1312-4958-afab-3f7ab05141e2` | donnée | Barème de facteur de température |
+| `D-008` | `8ba5f8ea-5633-4d47-86c9-f86b974a2b33` | donnée | Masse transportée |
+| `D-009` | `09a35c99-8e7e-4d1d-b1e2-7dfe9b61926c` | donnée | Puissance des auxiliaires |
+| `D-010` | `2562f4ae-0906-4c4b-b7ba-8c65f0796de4` | donnée | Réserve de sécurité |
+| `D-011` | `c471ab89-7df3-4389-9749-a08abdeadc30` | donnée | Bornes : position, puissance, standard |

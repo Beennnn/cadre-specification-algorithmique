@@ -18,15 +18,15 @@ Le jalon a trois effets, et le troisième est le plus important :
 3. Il **force la relecture à avoir lieu**. Un document qui doit être validé est un
    document qui est lu.
 
-## La validation se fait en deux étages
+## La validation se fait en trois étages
 
-| | **Étage 1 — les contrôles mécaniques** | **Étage 2 — la relecture qualité** |
-|---|---|---|
-| Qui | un script, ou une IA relectrice | des humains, trois casquettes |
-| Ce qu'on cherche | des incohérences **formelles** : orphelins, doublons, oublis | de la compréhensibilité et de la justesse métier |
-| Verdict | binaire, reproductible | argumenté |
-| Coût | quelques secondes | quelques heures |
-| Quand | **avant** l'étage 2, à chaque modification | une fois l'étage 1 vert |
+| | **Étage 1 — contrôles mécaniques** | **Étage 2 — relecture qualité métier** | **Étage 3 — relecture qualité technique** |
+|---|---|---|---|
+| Qui | un script, puis une IA | le métier et le test | **un développeur qui ne connaît pas le domaine** |
+| La question | y a-t-il des incohérences formelles ? | les règles sont-elles justes et complètes ? | **puis-je coder cela sans reposer de question ?** |
+| Verdict | binaire, reproductible | argumenté | **binaire** |
+| Coût | quelques secondes | quelques heures | une à deux heures |
+| Quand | à chaque modification | une fois l'étage 1 vert | **en dernier**, une fois l'étage 2 clos |
 
 > **L'ordre n'est pas négociable.** Faire relire par des humains un document qui contient
 > encore un paramètre déclaré et jamais utilisé, c'est gaspiller la ressource la plus
@@ -86,6 +86,76 @@ transverses** qui font le cœur de la relecture qualité :
 
 > `H-01` mérite d'être pris au pied de la lettre : **on compte**. « J'aurais deviné trois
 > fois » est un verdict utilisable ; « ça me paraît clair » n'en est pas un.
+
+## Étage 3 — la relecture qualité technique
+
+C'est le dernier verrou, et le seul qui mesure directement ce que la démarche promet.
+
+**Qui.** Un développeur **qui n'a pas participé à l'écriture** et **qui ne connaît pas le
+domaine**. Les deux conditions comptent : quelqu'un qui a assisté aux ateliers comblera
+sans s'en rendre compte les trous avec ce qu'il a entendu.
+
+**Le protocole.** Il lit la spécification **seule**, sans discussion, sans accès à
+l'auteur, sans le code existant. Puis il répond à une seule question :
+
+> **« Ai-je toutes les informations pour coder cela, sans reposer de question à
+> personne ? »**
+
+**Le verdict est binaire.** Pas « globalement oui », pas « à quelques détails près ». Si
+la réponse est non, il produit **la liste exacte des questions qu'il aurait dû poser** —
+et chacune devient soit une correction immédiate, soit une [suggestion de
+modification](#les-suggestions-de-modification) `SM-xxx`.
+
+**Le critère de sortie est zéro question.** Pas « peu de questions ». Une seule question
+restante, c'est une décision que le développeur prendra seul, sans mandat — exactement ce
+que toute la démarche cherche à éviter.
+
+### Ce qu'on en mesure
+
+Sur les premières spécifications, **on compte les questions**. C'est l'indicateur de
+maturité le plus honnête dont on dispose, et il doit décroître d'une spécification à
+l'autre.
+
+| Ce qu'on observe | Ce que ça dit |
+|---|---|
+| 15 questions sur la première, 3 sur la cinquième | la démarche s'installe |
+| Un nombre stable d'une spécification à l'autre | la liste de vérification ne couvre pas ce qui manque : **il faut l'enrichir** |
+| Zéro question dès la première | le relecteur connaissait le domaine, ou n'a pas lu |
+| Les mêmes questions qui reviennent | un manque du modèle de spécification, pas des auteurs |
+
+**L'épreuve ultime**, quand l'enjeu le justifie : le relecteur **code effectivement** la
+fonction, en boîte noire, et on compare au jeu d'essai. C'est le [test de la double
+implémentation](../CADRE.md) exécuté pour de vrai. Coûteux, à réserver aux premières
+spécifications de l'organisation — mais c'est lui qui convainc, là où aucun discours n'y
+parvient.
+
+## Les suggestions de modification
+
+Le développement voit des choses que la relecture ne voit pas : une règle impossible à
+tenir dans la contrainte de latence, une entrée qui n'existe pas dans les données réelles,
+un cas que le jeu d'essai ne couvre pas. **Ces retours ne doivent pas se perdre dans une
+conversation.**
+
+Chaque proposition porte un identifiant `SM-xxx` et vit dans la spécification, au §12.2.
+
+| Statut | Ce qu'il signifie | Ce qui est obligatoire |
+|---|---|---|
+| **En attente** | soumise, pas encore arbitrée | un décideur et une échéance |
+| **Acceptée** | la spécification est modifiée comme suggéré | la version qui l'intègre |
+| **Acceptée avec adaptation** | modifiée, mais autrement | **la description de ce qui a été retenu, et pourquoi ça diffère** |
+| **Refusée** | la spécification ne change pas | **un motif écrit** |
+
+> **Une suggestion n'est jamais fermée sans motif écrit.** C'est la règle qui fait vivre
+> la boucle : un développeur dont les suggestions disparaissent sans réponse cesse d'en
+> faire au bout de trois, et l'organisation perd son meilleur capteur de défauts de
+> spécification.
+
+Une suggestion **acceptée** devient un changement comme un autre : si elle a un impact,
+elle porte une [notice `N-<version>`](7-VERSIONNER.md).
+
+Le sens de circulation reste celui du cadre : **le développeur propose, le propriétaire de
+la règle dispose.** Une suggestion n'est pas une modification, et elle ne s'applique jamais
+directement au document par celui qui la propose.
 
 ## Faire relire par une IA
 
@@ -206,7 +276,10 @@ Au moment où la validation est prononcée :
 ## Les conditions de passage
 
 - [ ] **Étage 1 vert** — `C-01` à `C-22`, aucun échec
-- [ ] **Étage 2** — les trois casquettes ont relu, `H-01` à `H-05` traitées
+- [ ] **Étage 2** — les casquettes métier et test ont relu, `H-01` à `H-07` traitées
+- [ ] **Étage 3** — un développeur extérieur au domaine répond **oui** à « puis-je coder
+      sans reposer de question ? », et **aucune question ne subsiste**
+- [ ] Les suggestions `SM-xxx` ouvertes sont arbitrées, ou explicitement reportées
 - [ ] Aucune **question ouverte bloquante** ne subsiste
 - [ ] Le **jeu d'essai** est complet, calculé à la main, et couvre chaque règle
 - [ ] La **fiche de contraintes** est chiffrée et jugée réaliste par le développement

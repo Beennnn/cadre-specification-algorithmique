@@ -135,6 +135,88 @@ ProfilSegment :
 
 ## 7. Règles
 
+### 7.1 La chaîne de traitement
+
+Le calcul se lit comme dix boîtes qui s'enchaînent. Les six premières s'appliquent **à
+chaque segment**, les quatre dernières **au trajet entier**.
+
+| Étape | Consomme | Produit | Règles |
+|---|---|---|---|
+| `ET-01` Bilan des forces | `distance`, `vitesse_praticable`, `pente`, `masse_a_vide`, `masse_transportee`, `surface_frontale_cx`, `coefficient_roulement` | `force_totale` | `RG-010` |
+| `ET-02` Énergie mécanique | `force_totale`, `distance` | `energie_mecanique` | `RG-020` |
+| `ET-03` Traction et récupération | `energie_mecanique`, `rendement_traction`, `rendement_recuperation` | `energie_traction` | `RG-030` |
+| `ET-04` Auxiliaires | `distance`, `vitesse_praticable`, `puissance_auxiliaires` | `duree`, `energie_auxiliaires` | `RG-040` |
+| `ET-05` Énergie du segment | `energie_traction`, `energie_auxiliaires` | `energie_segment` | `RG-050` |
+| `ET-06` Énergie disponible | `capacite_nominale`, `etat_de_charge`, `temperature_batterie` | `facteur_temperature`, `energie_disponible` | `RG-060` |
+| `ET-07` Budget utilisable | `energie_disponible`, `reserve_securite` | `budget_utilisable` | `RG-070` |
+| `ET-08` Profil cumulé | `energie_segment` | `index`, `energie_cumulee` | `RG-080` |
+| `ET-09` Point d'autonomie | `energie_cumulee`, `budget_utilisable`, `distance` | `point_autonomie`, `autonomie_atteinte`, `energie_restante_arrivee` | `RG-090` |
+| `ET-10` Restitution | `energie_segment`, `energie_cumulee`, `duree` | `energie_totale`, `consommation_moyenne`, `profil` | `RG-100` |
+
+### Vue de niveau supérieur
+
+Dix boîtes, c'est déjà trop pour une conversation. On les regroupe :
+
+| Groupe | Étapes | Rôle |
+|---|---|---|
+| `GR-1` Consommation d'un segment | `ET-01` `ET-02` `ET-03` `ET-04` `ET-05` | ce que coûte un segment |
+| `GR-2` Capital énergétique | `ET-06` `ET-07` | ce dont on dispose |
+| `GR-3` Synthèse du trajet | `ET-08` `ET-09` `ET-10` | où l'on s'arrête, et ce qu'on restitue |
+
+Un groupe est une **vue**, pas une fonction : il n'ajoute aucune règle et n'impose aucun
+découpage du code. Ce qu'il consomme et produit vis-à-vis de l'extérieur se **déduit** de
+ses étapes — les grandeurs qui ne servent qu'à l'intérieur du groupe disparaissent de la
+vue, et c'est tout l'intérêt : `force_aerodynamique` ou `energie_mecanique` n'ont aucune
+raison d'apparaître dans une discussion d'architecture.
+
+```bash
+python3 outils/verifier.py --chaine exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md
+```
+
+produit la table « qui crée / qui utilise » de chaque grandeur, contrôle `C-35` et `C-36`,
+et engendre la vue groupée.
+
+### Vue détaillée
+
+```mermaid
+flowchart LR
+    ET01[ET-01<br/>forces] --> ET02[ET-02<br/>énergie mécanique] --> ET03[ET-03<br/>traction / récup.]
+    ET03 --> ET05[ET-05<br/>énergie du segment]
+    ET04[ET-04<br/>auxiliaires] --> ET05
+    ET05 --> ET08[ET-08<br/>profil cumulé] --> ET09[ET-09<br/>point d'autonomie]
+    ET06[ET-06<br/>énergie disponible] --> ET07[ET-07<br/>budget] --> ET09
+    ET05 --> ET10[ET-10<br/>restitution]
+    ET08 --> ET10
+```
+
+> **Ce que la chaîne autorise, et qui ne se voit pas dans les règles.** `ET-06` et `ET-07`
+> ne consomment rien de ce que produisent `ET-01` à `ET-05` : le budget peut donc se
+> calculer **avant, après ou pendant** le parcours des segments, voire une seule fois pour
+> tout le trajet au lieu d'une fois par segment. C'est une latitude d'implémentation
+> réelle, et elle est ici **démontrée** plutôt que supposée.
+
+### 7.2 Grandeurs internes
+
+Résultats intermédiaires visibles **uniquement dans le corps de cette fonction**. Elles ne
+figurent ni au contrat, ni au catalogue des données, ni dans la chaîne inter-étapes —
+mais elles sont décrites avec la même rigueur.
+
+```
+masse                : Flottant(kg, 6 chiffres significatifs, > 0)
+v                    : Flottant(m·s⁻¹, 6 chiffres significatifs, > 0)
+alpha                : Flottant(rad, 6 chiffres significatifs, −0,30 .. 0,30)
+d                    : Flottant(m, 6 chiffres significatifs, > 0)
+force_aerodynamique  : Flottant(N, 6 chiffres significatifs, ≥ 0)
+force_roulement      : Flottant(N, 6 chiffres significatifs, ≥ 0)
+force_pente          : Flottant(N, 6 chiffres significatifs)          — signée
+energie_mecanique    : Flottant(J, 6 chiffres significatifs)          — signée
+```
+
+> `force_pente` et `energie_mecanique` sont **signées**, et c'est ce signe qui porte toute
+> la récupération (`RG-030`). Une plage déclarée `≥ 0` par distraction rendrait le modèle
+> incapable de représenter une descente — le genre d'erreur qu'on ne trouve qu'en
+> déclarant les internes.
+
 ### RG-010 — Bilan des forces sur un segment
 
 ```
@@ -142,14 +224,14 @@ SOIT masse   = masse_a_vide + masse_transportee                          (kg)
 SOIT v       = vitesse_praticable ÷ 3,6                                  (m·s⁻¹)
 SOIT alpha   = arctangente( pente ÷ 100 )                                (rad)
 
-    F_aero  = ½ × P-02 × surface_frontale_cx × v²                        (N)
-    F_roul  = coefficient_roulement × masse × P-01 × cosinus(alpha)      (N)
-    F_pente = masse × P-01 × sinus(alpha)                                (N)
+    force_aerodynamique  = ½ × P-02 × surface_frontale_cx × v²                        (N)
+    force_roulement  = coefficient_roulement × masse × P-01 × cosinus(alpha)      (N)
+    force_pente = masse × P-01 × sinus(alpha)                                (N)
 
-    F_totale = F_aero + F_roul + F_pente                                 (N)
+    force_totale = force_aerodynamique + force_roulement + force_pente                                 (N)
 ```
 
-`F_pente` est **signée** : négative en descente. C'est ce signe qui rend le modèle
+`force_pente` est **signée** : négative en descente. C'est ce signe qui rend le modèle
 capable de représenter la récupération, et c'est lui qui fait de `RG-030` une règle non
 linéaire.
 
@@ -163,7 +245,7 @@ linéaire.
 ```
 SOIT d = distance × 1000                                                 (m)
 
-    energie_mecanique = F_totale × d                                           (J)
+    energie_mecanique = force_totale × d                                           (J)
 ```
 
 ### RG-030 — Traction et récupération
@@ -404,10 +486,10 @@ suffit à les refaire.
 | Étape | Calcul | Résultat |
 |---|---|---|
 | `v` | `110,0 ÷ 3,6` | 30,5556 m·s⁻¹ |
-| `F_aero` | `0,5 × 1,225 × 0,640 × 30,5556²` | 365,99 N |
-| `F_roul` | `0,0100 × 1800 × 9,81 × cos(0)` | 176,58 N |
-| `F_pente` | `1800 × 9,81 × sin(0)` | 0,00 N |
-| `F_totale` | | **542,57 N** |
+| `force_aerodynamique` | `0,5 × 1,225 × 0,640 × 30,5556²` | 365,99 N |
+| `force_roulement` | `0,0100 × 1800 × 9,81 × cos(0)` | 176,58 N |
+| `force_pente` | `1800 × 9,81 × sin(0)` | 0,00 N |
+| `force_totale` | | **542,57 N** |
 | `energie_mecanique` | `542,57 × 100 000` | 54,2568 MJ |
 | `energie_traction` | `54,2568 ÷ 0,900` | 60,2853 MJ → **16,7459 kWh** |
 | `duree` | `100 000 ÷ 30,5556` | 3 272,7 s |
@@ -416,7 +498,7 @@ suffit à les refaire.
 
 **Les quatre segments :**
 
-| # | `F_aero` | `F_roul` | `F_pente` | `F_totale` | `energie_traction` | `energie_auxiliaires` | **`energie_segment`** | `energie_cumulee` |
+| # | `force_aerodynamique` | `force_roulement` | `force_pente` | `force_totale` | `energie_traction` | `energie_auxiliaires` | **`energie_segment`** | `energie_cumulee` |
 |---|---|---|---|---|---|---|---|---|
 | 1 | 365,99 | 176,58 | 0,00 | 542,57 | 16,7459 | 0,4545 | **17,2005** | 17,2005 |
 | 2 | 245,00 | 176,50 | +529,50 | 951,00 | 2,9352 | 0,0556 | **2,9907** | 20,1912 |
@@ -436,8 +518,8 @@ Segment 3 isolé — 10,000 km à 90,0 km/h, pente −3,00 % :
 | Étape | Calcul | Résultat |
 |---|---|---|
 | `alpha` | `arctan(−0,03)` | −0,029991 rad |
-| `F_pente` | `1800 × 9,81 × sin(−0,029991)` | −529,50 N |
-| `F_totale` | `245,00 + 176,50 − 529,50` | **−108,00 N** |
+| `force_pente` | `1800 × 9,81 × sin(−0,029991)` | −529,50 N |
+| `force_totale` | `245,00 + 176,50 − 529,50` | **−108,00 N** |
 | `energie_mecanique` | `−108,00 × 10 000` | −1,0800 MJ |
 | `energie_traction` | `energie_mecanique ≤ 0` → **on multiplie** : `−1,0800 × 0,600` | −0,6480 MJ → **−0,1800 kWh** |
 | `energie_auxiliaires` | `500,0 × 400,0` | **+0,0556 kWh** |
@@ -664,3 +746,64 @@ les appelants n'ont rien à faire.
 segments, la stratégie de mise en cache, le format du fichier de paramètres, la façon
 dont le profil est journalisé. Rien de tout cela ne peut trahir une règle — et tout cela
 changera au moins une fois dans les quinze ans de vie du véhicule.
+
+## Annexe — Identités
+
+*Chaque objet porte un UUID attribué une fois et jamais modifié. L'identifiant lisible et le libellé sont des étiquettes : ils peuvent changer, l'identité non. Voir [CADRE.md §2.8](../../CADRE.md).*
+
+| Identifiant | UUID | Nature | Libellé |
+|---|---|---|---|
+| `SPEC-NRG-001` | `9888723b-beee-4e1a-85ad-b631de8753be` | document | SPEC-NRG-001 — Estimer l'autonomie sur un trajet |
+| `RG-010` | `980c488b-daf2-4834-b00e-c8d45668671a` | règle | Bilan des forces sur un segment |
+| `RG-020` | `aeb9bd4f-38b4-4a27-8c60-28fc5d8141e7` | règle | Énergie mécanique du segment |
+| `RG-030` | `069a2362-2dfb-4a2b-9e2e-f25e55c33516` | règle | Traction et récupération |
+| `RG-040` | `947eb789-a60f-4267-8b78-dbca001441a8` | règle | Auxiliaires |
+| `RG-050` | `0a2c8c35-e90b-4e9a-a67a-84796f979fc0` | règle | Énergie d'un segment |
+| `RG-060` | `2eb8fe40-e628-4405-aa72-116729d70ba0` | règle | Énergie disponible et facteur de température |
+| `RG-070` | `6a56299f-1c41-47be-bfa9-02bedc1ac609` | règle | Budget utilisable |
+| `RG-080` | `bebe83a6-bc21-4e69-9933-58259b8e74b1` | règle | Profil cumulé |
+| `RG-090` | `6c28457c-2b40-43aa-9c83-a3ace089ccdc` | règle | Point d'autonomie |
+| `RG-100` | `ebf7bf69-d50b-4715-bfc6-03cf50323ef9` | règle | Arrondis et sens des arrondis |
+| `CT-01` | `263cbebd-9441-4b74-9c57-846a2f5a389b` | cas de test | Bilan complet, segment par segment |
+| `CT-02` | `2cabdb36-4f9e-4af5-8a6e-812b673be478` | cas de test | La récupération |
+| `CT-03` | `45b15e7c-d7b2-4c2e-b929-f91928f6e003` | cas de test | Point d'autonomie, interpolation dans le segment 2 |
+| `CT-04` | `d53a1d67-9713-4cac-ae1a-aeadd35ce458` | cas de test | Le même trajet par −5 °C |
+| `CT-05` | `0dccee30-3ba4-447f-871f-2f844c974226` | cas de test | Autonomie jamais atteinte |
+| `CT-06` | `6c3d7b34-250c-4744-809c-e4b8043d05da` | cas de test | La vitesse de consommation minimale |
+| `CT-07` | `b6a9cb5c-3772-4221-bd2b-81426d0491aa` | cas de test | Température indisponible |
+| `CT-08` | `c31484ce-4b11-467b-9cf5-8d3eaf5dd241` | cas de test | Trajet vide |
+| `FN-001` | `43b0691e-1348-4088-99c5-86c584a90c42` | fonction | comportement |
+| `FN-011` | `f54e3523-e7d6-420e-ba89-c7ac8028e666` | fonction | comportement |
+| `FN-004` | `ed9194c2-f465-458b-a68a-5bc2461be15d` | fonction | aucun |
+| `FN-007` | `56568916-bbd1-44d2-86fc-12416f98676c` | fonction | aucun |
+| `P-01` | `6573a577-9067-4cd6-861d-b257b71803d5` | paramètre | Accélération de la pesanteur |
+| `P-02` | `cce939a5-46cd-4eb3-a512-5c3f3de13dc7` | paramètre | Masse volumique de l'air de référence |
+| `P-03` | `ea5e594b-7ea7-4cff-9304-bbb3e4f25f72` | paramètre | Facteur de température — barème |
+| `P-04` | `4ea5c434-9869-4176-975d-1813cecfa836` | paramètre | Facteur de température retenu si la mesure est indisponible |
+| `EX-01` | `f25aa050-8a85-4e55-b202-b31cb0a683b8` | exigence | Le logiciel du calculateur est écrit dans le sous-ensemble **MISRA C:2 |
+| `EX-02` | `d1f9aa40-7f4f-4ad1-a341-57f5064ff4f6` | exigence | Aucune allocation dynamique de mémoire** après la phase d'initialisati |
+| `EX-03` | `c4b092be-6904-473d-ab88-3132570724b1` | exigence | Le temps d'exécution **pire cas** est borné, mesuré sur cible, et docu |
+| `EX-04` | `874a1ca9-d14a-43d5-9daf-865e9b8b7fc0` | exigence | La fonction s'exécute dans la **partition non critique** du calculateu |
+| `EX-05` | `d2d7839d-11dd-4f4e-a4e6-1c0aa842c169` | exigence | La fonction dispose d'au plus **512 Ko de mémoire vive** et ne suppose |
+| `EX-06` | `d6310e36-7c2f-4ec2-9173-abc13fcc309b` | exigence | Le **trajet est une donnée personnelle de catégorie C2** : il ne quitt |
+| `EX-07` | `fca54b2f-b68d-4a52-98d9-83f4f907b530` | exigence | Les données de la partition non critique et celles de la partition de  |
+| `EX-08` | `d34bba90-81e0-4566-a9b5-afcf17b81d19` | exigence | Le service serveur emploie un langage de la **liste technique approuvé |
+| `EX-09` | `e607e38d-b669-4ace-ba48-3098e6763c09` | exigence | La **couverture des tests** du code embarqué atteint 100 % des branche |
+| `INV-01` | `5afa3fa9-13fd-455a-90f9-a7d6a105894e` | invariant | Sur un segment de pente positive ou nulle, `energie_segment > 0` |
+| `INV-02` | `8cd75e36-1a32-4cbe-be56-1fa572e468ef` | invariant | Additivité** : découper un segment en deux moitiés de mêmes vitesse et |
+| `INV-03` | `e9dd2410-9fb4-485a-b8c6-b7966b7dc047` | invariant | Homogénéité** : à vitesse et pente égales, doubler la distance double  |
+| `INV-04` | `faf499ce-6b1c-4b8e-af2d-1396d49bc513` | invariant | Symétrie de la pente** : un aller-retour sur un même segment consomme  |
+| `INV-05` | `21267255-1108-4c13-adf6-5832b0069bde` | invariant | Monotonie vis-à-vis de la vitesse, au-delà de la vitesse de consommati |
+| `INV-06` | `683ae5b4-21f5-4841-80c6-d1e5fa76fffa` | invariant | `point_autonomie`, s'il existe, est compris entre 0 et la longueur tot |
+| `INV-07` | `cabb4a7c-3cc6-4b7f-840b-fa14ee4d0f4a` | invariant | Le calcul est déterministe : mêmes entrées, mêmes sorties, profil comp |
+| `INV-08` | `52d43b49-e236-4a5c-9835-ebe75ef1aecf` | invariant | Le calcul est **pur** : aucun appel successif ne dépend d'un appel pré |
+| `E-TRAJET-001` | `13e307f4-1b7a-444c-8829-d186c50601e9` | cas d'erreur | Le trajet ne contient aucun segment |
+| `E-TRAJET-002` | `fe15e79b-a26e-4641-b826-8b0e35466f73` | cas d'erreur | Un segment a une distance ou une vitesse nulle ou négative |
+| `E-VEHIC-001` | `3edc5a91-74d0-4ebc-aba7-6eb8e7e3352e` | cas d'erreur | Un rendement est hors de l'intervalle `]0 ; 1[` |
+| `E-RESERVE-001` | `e8eccfd9-d2cf-4434-9773-91abb263881f` | cas d'erreur | La réserve de sécurité est supérieure ou égale à l'énergie disponible |
+| `Q-01` | `41dea1ff-81d5-42cc-a782-0da8ba4473eb` | question | Le barème de température procède par paliers (`RG-060`). Un dixième de |
+| `Q-02` | `3cc439b5-c892-4f1b-9b73-404b674cf47f` | question | La masse volumique de l'air (`P-02`) est fixe. Faut-il la corriger de  |
+| `Q-03` | `e00a269d-7baf-4009-8412-13e4ccb848e8` | question | `H-2` suppose l'absence de vent. Les prévisions météorologiques sont d |
+| `Q-04` | `9e5fa8d2-ece3-4239-a3f5-6e034f7cbcfd` | question | `E-VEHIC-001` et `E-RESERVE-001` ne sont couverts par aucun cas de tes |
+| `Q-06` | `1ffdcc6b-2965-4ac9-a517-25affafc0b44` | question | `EX-08` impose une liste technique approuvée côté serveur, alors que ` |
+| `Q-05` | `0c21b3f5-6dd0-46d4-bc12-cd24d35a5f10` | question | Tranchée le 2026-03-12 :* le point d'autonomie s'arrondit-il au plus p |

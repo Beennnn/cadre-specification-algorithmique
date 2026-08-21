@@ -79,6 +79,27 @@ MODE D'EMPLOI
 
 ## 7. Règles
 
+### 7.1 Chaîne de traitement
+<!-- Le calcul vu comme une suite de boîtes. Chaque étape déclare ce qu'elle
+     consomme, ce qu'elle produit (des noms NOUVEAUX, par immutabilité) et les
+     règles qui la réalisent. Contrôlé par C-35 et C-36.
+     Regrouper en `GR-xx` pour une vue de plus haut niveau.
+     python3 outils/verifier.py --chaine <ce fichier> -->
+
+| Étape | Consomme | Produit | Règles |
+|---|---|---|---|
+| `ET-01` <nom> | | | `RG-010` |
+
+### 7.2 Grandeurs internes
+<!-- Portée INTERNE : visibles dans le corps de cette fonction seulement.
+     Jamais au contrat, jamais au catalogue des données. Décrites avec la même
+     rigueur : famille de type, unité pivot, précision, plage.
+     L'unicité du SENS reste globale : un nom ne désigne jamais deux notions. -->
+
+```
+<nom> : <Famille>(<unité pivot>, <précision>, <plage>)
+```
+
 ### RG-010 — <titre de la règle>
 
 ```

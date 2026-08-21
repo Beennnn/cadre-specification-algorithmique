@@ -203,45 +203,83 @@ Trois qualités à tenir, dans cet ordre :
 > spécification que le métier ne peut pas relire est une spécification que le métier
 > n'écrit pas.
 
-### 2.2 Structures autorisées
+### 2.2 Le lexique
 
-```
-DÉFINIR <nom_de_la_fonction>(<paramètre> : <type>, ...) : <type de retour>
+Le pseudo-langage tient en **une trentaine de mots**. C'est délibéré : un lexique qu'on ne
+peut pas mémoriser en une lecture n'est pas adopté.
 
-ENTRÉES        — la liste typée de ce qui entre
-SORTIES        — la liste typée de ce qui sort
-PRÉCONDITIONS  — ce qui est supposé vrai en entrée (sinon → erreur)
-POSTCONDITIONS — ce qui est garanti vrai en sortie
-INVARIANTS     — ce qui est vrai à tout instant
+> **Le lexique est fermé.** Tout mot qui n'y figure pas est du français ordinaire, pas un
+> mot-clé. On n'en ajoute un que si son absence a causé une ambiguïté réelle — jamais par
+> confort.
 
-SOIT <nom> = <expression>                    (nommer un résultat intermédiaire)
+#### Structure
 
-SI <condition> ALORS
-    ...
-SINON SI <condition> ALORS
-    ...
-SINON
-    ...
-FIN SI
+| Mot-clé | Rôle |
+|---|---|
+| `DÉFINIR nom(param : Type) : Type` | déclarer une fonction |
+| `ENTRÉES` · `SORTIES` | le contrat |
+| `PRÉCONDITIONS` · `POSTCONDITIONS` · `INVARIANTS` | ce qu'on exige, garantit, maintient |
+| `SOIT nom = …` | **introduire** un nom — jamais le réaffecter (§2.4) |
+| `RETOURNER …` | produire le résultat |
+| `SIGNALER ERREUR E-xxx « … »` | signaler une erreur **métier** |
 
-POUR CHAQUE <élément> DANS <collection>      (parcours sans indice)
-    ...
-FIN POUR
+#### Conditions
 
-RETOURNER <expression>
-SIGNALER ERREUR <CODE-ERREUR> « message destiné au métier »
-```
+| Mot-clé | Rôle |
+|---|---|
+| `SI … ALORS` · `SINON SI … ALORS` · `SINON` · `FIN SI` | l'alternative |
 
-Opérations ensemblistes, à privilégier systématiquement :
+Un `SI` a **toujours** son `SINON` (`C-08`). Au-delà de deux conditions combinées, on
+n'imbrique pas : on écrit une **table de décision** (§2.6).
 
-```
-FILTRER <collection> OÙ <condition>
-REGROUPER <collection> PAR <critère>
-TRIER <collection> PAR <critère> CROISSANT|DÉCROISSANT, PUIS PAR <critère> ...
-SOMME / MOYENNE / MINIMUM / MAXIMUM / NOMBRE DE ... DANS <collection>
-LE PREMIER / LE DERNIER <élément> DE <collection triée>
-ARRONDIR(<valeur>, <décimales>, <mode>)
-```
+#### Itération
+
+| Mot-clé | Rôle |
+|---|---|
+| `POUR CHAQUE x DANS c … FIN POUR` | parcourir sans indice |
+| `TANT QUE cond … FIN TANT QUE` | itérer — **à justifier**, avec critère d'arrêt, maximum d'itérations et comportement en cas de non-convergence (`C-13`) |
+
+#### Ensembles — le style à préférer
+
+| Mot-clé | Rôle |
+|---|---|
+| `SOMME` · `MOYENNE` · `MINIMUM` · `MAXIMUM` · `NOMBRE DE` | agréger |
+| `FILTRER c OÙ cond` | restreindre |
+| `TRIER c PAR a CROISSANT \| DÉCROISSANT` | ordonner, avec départage explicite |
+| `REGROUPER c PAR critère` | partitionner |
+| `LE PREMIER` · `LE DERNIER` | extraire d'une collection **ordonnée** |
+| `IL EXISTE` · `AUCUN` · `TOUS` | quantifier |
+
+**Chaque fois qu'une opération d'ensemble remplace une boucle, on la préfère** : elle
+décrit un résultat et laisse le développeur libre de son chemin (§2.5).
+
+#### Opérateurs et valeurs
+
+| | |
+|---|---|
+| Arithmétique | `+` `−` `×` `÷` `^` |
+| Comparaison | `=` `≠` `<` `≤` `>` `≥` · `ENTRE a ET b` |
+| Logique | `ET` · `OU` · `NON` |
+| Appartenance | `DANS` |
+| Valeurs | `VRAI` · `FAUX` · `ABSENT` |
+| Fonction imposée | `ARRONDIR(valeur, décimales, mode)` |
+
+`ABSENT` désigne **l'absence métier** d'une valeur facultative. Ce n'est pas un `null`
+technique : son traitement est une décision métier, déclarée (`C-12`).
+
+Les fonctions mathématiques usuelles — racine, exponentielle, logarithme, sinus, arc
+tangente — s'écrivent avec leur notation habituelle et ne sont pas des mots-clés.
+
+#### Ce que le lexique n'a pas, et pourquoi
+
+| Absent | À la place | Pourquoi |
+|---|---|---|
+| `SELON` / `CAS` | une **table de décision** | elle rend la complétude vérifiable, un `SELON` non |
+| `SORTIR` · `CONTINUER` · `ALLER À` | un critère d'arrêt déclaré | une sortie anticipée cache une condition qui n'a pas été écrite |
+| `NULL` · `NIL` | `ABSENT` | l'absence est une notion métier, pas une valeur technique |
+| `+=` · `++` · toute réaffectation | un **nouveau nom** | l'immutabilité (§2.4) |
+| `ESSAYER` / `ATTRAPER` | `SIGNALER ERREUR` | la spécification dit **quelle erreur métier**, pas comment elle se propage |
+| Fonctions anonymes, pointeurs, généricité, héritage | rien | ce sont des moyens d'implémentation |
 
 ### 2.3 Types, unités, domaines
 
@@ -259,9 +297,161 @@ référence_produit : Identifiant(texte, 3 à 20 caractères, unique)
 zone_livraison    : Énuméré { FRANCE_METRO, UE, HORS_UE }
 ```
 
-On ne se sert **jamais** de types techniques (`int32`, `float`, `varchar(50)`,
-`timestamp`) : ce sont des décisions du développeur, et elles découlent du domaine
-qu'on vient de décrire — pas l'inverse.
+#### La ligne exacte entre le type et sa représentation
+
+Il faut être précis ici, parce que la formule courante « pas de types techniques dans une
+spécification » est **trop large** et fait perdre de l'information utile.
+
+| Obligatoire dans la spécification | Interdit dans la spécification |
+|---|---|
+| La **famille de type** : entier, flottant, décimal exact, chaîne, booléen, énuméré, horodatage, durée | La **représentation machine** : `int32`, `float64`, `varchar(50)`, `NUMBER(10,2)` |
+| La **précision** : nombre de décimales, de chiffres significatifs, de caractères | Le nombre d'octets, l'encodage, l'ordre des octets |
+| La **plage** de valeurs admissibles | La valeur sentinelle choisie pour l'absence |
+| La **dimension** physique, quand il y en a une | La bibliothèque de calcul retenue |
+| L'**unité pivot** et l'**unité d'usage** | Le format de sérialisation |
+
+> **Le discriminant : la famille de type est une propriété du domaine ; la
+> représentation est un choix du développeur.**
+>
+> « Un entier entre 1 et 999 » est une affirmation métier — c'est le domaine qui dit qu'on
+> ne commande pas 2,5 articles ni 10 000. « `int16` » est une décision d'implémentation.
+> De même, « décimal exact à 2 décimales » est métier — le [§4](#4-la-fiche-de-contraintes--ce-qui-permet-de-choisir-le-langage-et-larchitecture)
+> montre que cette seule ligne peut éliminer des langages entiers ; « `BigDecimal` » est technique.
+
+#### Dimension, unité pivot, unité d'usage
+
+Une grandeur physique porte **trois informations distinctes**, et les confondre est la
+première cause d'erreurs d'unité.
+
+| | Ce que c'est | Exemple |
+|---|---|---|
+| **La dimension** | ce qu'on mesure, indépendamment de toute unité | une vitesse est une **longueur ÷ temps** |
+| **L'unité pivot** | celle dans laquelle la valeur circule et se calcule | `m·s⁻¹` |
+| **L'unité d'usage** | celle dans laquelle on la saisit et on l'affiche | `km/h` |
+
+*« Pivot » au sens où tout converge vers elle : toute valeur entrante y est convertie une
+fois, tout calcul s'y fait, toute valeur sortante en repart. « Usage » au sens de ce que
+les gens du métier écrivent et lisent réellement.*
+
+**Règle : l'unité pivot est l'unité SI de la dimension**, sauf décision contraire
+**explicitement déclarée** — la température en `°C` plutôt qu'en `K` est l'exception
+classique, légitime quand tout le domaine et toutes les références sont en Celsius.
+
+Ce que cela rapporte, et c'est plus que de la propreté :
+
+- **La conversion se fait une fois, à la frontière** — jamais au milieu d'une règle. Un
+  `÷ 3,6` qui traîne dans un calcul est une erreur qui attend son tour.
+- **La dimension se vérifie.** Une énergie qui serait obtenue en additionnant une force et
+  une distance est détectable sans rien connaître au métier.
+- **L'affichage cesse d'être une décision d'implémentation.** L'unité d'usage est
+  écrite, donc discutée, donc assumée par le métier.
+
+#### Une grandeur n'est jamais un nombre nu
+
+Dans les règles, une grandeur est une **quantité** : une valeur **et** son unité,
+indissociables. Il en découle une petite algèbre, qui se vérifie sans rien connaître au
+métier :
+
+| Opération | Ce qui est permis |
+|---|---|
+| Addition, soustraction, comparaison | **uniquement entre quantités de même dimension** |
+| Multiplication, division | toujours permises — elles **produisent une nouvelle dimension** |
+| Élévation à une puissance | permise ; la dimension est élevée à la même puissance |
+| Fonction transcendante (exponentielle, logarithme, trigonométrie) | **uniquement sur une quantité sans dimension** |
+
+La dernière ligne est celle qui attrape le plus d'erreurs : `exp(−k × t)` n'a de sens que
+si `k × t` est sans dimension, donc si `k` est l'inverse d'un temps. Écrire un coefficient
+de refroidissement « 0,03 » sans unité laisse passer l'erreur ; écrire `0,03 min⁻¹` la rend
+impossible.
+
+**La conversion se fait à la frontière, jamais dans une règle.** Un `÷ 3,6` au milieu d'un
+calcul est une erreur qui attend son tour : le jour où l'unité d'usage change, il subsiste.
+
+#### La capacité de conversion est une clause du contrat
+
+Une fonction doit pouvoir **accepter et produire les unités d'usage attendues par ses
+appelants**. Cette capacité n'est pas un détail d'interface : elle se déclare.
+
+```
+vitesse_praticable : Flottant(m·s⁻¹ ▸ km/h, 6 chiffres significatifs, > 0)
+                     accepte { m/s, km/h, mph }
+```
+
+Ce que cela engage : la fonction reçoit une **quantité** — une valeur accompagnée de son
+unité — et la convertit vers l'unité pivot **à l'entrée**, une fois. Elle produit
+symétriquement ses sorties dans l'unité d'usage demandée. Refuser une unité non déclarée
+est un cas d'erreur métier, pas une exception technique.
+
+> **Ce que la spécification ne dit pas** : comment les quantités sont représentées, si la
+> conversion est faite par une bibliothèque ou à la main, si le typage du langage porte
+> l'unité. Elle dit **quelles unités doivent être acceptées**, et que la conversion a lieu
+> une seule fois, au bord.
+
+#### La notation
+
+```
+<nom> : <Famille>(<unité pivot>[ ▸ <unité d'usage>], <précision>, <plage>)
+        [accepte { <unités admises> }]
+        [incertitude <valeur ou loi>]
+```
+
+```
+vitesse_praticable   : Flottant(m·s⁻¹ ▸ km/h, 6 chiffres significatifs, > 0)
+montant_net_ht       : Décimal(EUR, 2 décimales, ≥ 0,00)
+quantite             : Entier(sans dimension, 1 .. 999)
+taux_remise          : Flottant(sans dimension, 4 décimales, 0,0000 .. 1,0000)
+reference_produit    : Chaîne(3 .. 20 caractères, alphanumérique majuscule)
+zone_livraison       : Énuméré{ FRANCE_METRO, UE }
+date_commande        : Horodatage(UTC ▸ Europe/Paris, à la seconde)
+tronque              : Booléen
+```
+
+#### Les symboles structurés : listes, tables, matrices
+
+Un symbole structuré n'est jamais déclaré « une liste » tout court. Il déclare **le type
+de ses éléments** et, pour chaque axe, **son étendue** et **ce que son indice signifie**.
+
+> **Précision de vocabulaire, imposée par notre propre règle sur les homonymes**
+> ([guide 2](guides/2-GLOSSAIRE.md)) : « dimension » est déjà pris par la dimension
+> physique. Pour les structures, on dit **rang** (le nombre d'axes) et **axe**, et chaque
+> axe a une **étendue** (sa taille). Une matrice de rang 2 a deux axes, chacun d'étendue
+> déclarée.
+
+```
+lignes        : Liste[Ligne](1 .. 200, ordre significatif, sans doublon de référence)
+trajet        : Liste[Segment](1 .. 3 000, ordre significatif)
+profil        : Liste[ProfilSegment](= étendue de trajet)
+bareme_port   : Table[TrancheDePoids → Décimal(EUR, 2 décimales)](3 entrées, clés disjointes)
+sensibilite   : Matrice[Flottant(sans dimension, 6 chiffres significatifs)]
+                axe 1 = paramètre   (étendue 4, ordre du §6)
+                axe 2 = observation (étendue = étendue de trajet)
+```
+
+Cinq déclarations obligatoires, et chacune correspond à une erreur classique :
+
+| Ce qu'on déclare | L'erreur que ça évite |
+|---|---|
+| **Le type des éléments** | une liste hétérogène dont personne ne sait ce qu'elle contient |
+| **L'étendue de chaque axe** — fixe, bornée, ou liée à une autre grandeur | l'impossibilité de dimensionner, et le risque d'épuisement mémoire sur une entrée hostile |
+| **La signification de chaque indice** | une transposition qui passe inaperçue : `sensibilite[i][j]` et `sensibilite[j][i]` se ressemblent beaucoup |
+| **L'ordre** : significatif ou non | un tri « d'optimisation » qui change le résultat |
+| **Les doublons** : admis ou non | deux lignes de même référence, traitées deux fois ou fusionnées selon l'implémentation |
+
+Deux conventions posées une fois pour toutes, valables dans tout le cadre :
+
+- **L'indexation commence à 1**, sauf déclaration contraire explicite.
+- Pour une matrice, l'écriture est **ligne × colonne** ; le **stockage** — par lignes, par
+  colonnes, creux, dense — reste un choix du développeur et ne figure jamais.
+
+> **Une étendue non bornée est un défaut**, pas une souplesse. « Une liste de segments »
+> sans borne supérieure interdit de dimensionner, empêche de tenir une contrainte de
+> latence, et laisse une entrée hostile épuiser la mémoire. Si le métier ne sait pas
+> borner, c'est une question ouverte, pas une omission.
+
+Toute spécification manipulant des grandeurs physiques porte en outre une **table des
+dimensions**, qui donne pour chacune sa dimension, son unité pivot, son unité
+privilégiée et le facteur de conversion. C'est elle qu'on ouvre quand un chiffre semble
+faux d'un facteur rond.
 
 **Les règles emploient les identifiants du contrat, écrits à l'identique.** Si le contrat
 déclare `prix_catalogue_ht`, la règle écrit `prix_catalogue_ht` — pas « le prix
@@ -302,6 +492,84 @@ structure à l'autre, on écrit le chemin complet : `boisson.masse`, `ajout.mass
 C'est cette règle qui rend **le parcours d'une grandeur suivable de bout en bout** : on
 peut demander « où passe `montant_net_ht` ? » et obtenir une réponse, parce que le nom ne
 change pas en route.
+
+#### Deux portées, et une seule règle d'unicité
+
+| Portée | Où le nom est visible | Où il est déclaré |
+|---|---|---|
+| **Périmètre** | dans toutes les fonctions du périmètre | le contrat (§4, §5) ou le [catalogue des données](guides/3-DONNEES.md) |
+| **Interne** | dans le corps d'une seule fonction | un bloc **Grandeurs internes**, en tête des règles |
+
+Une **grandeur interne** est un résultat intermédiaire qui ne traverse aucune frontière :
+`energie_mecanique`, `assiette_panier`, `force_aerodynamique`. Elle **n'apparaît jamais**
+dans un contrat, ni dans une sortie, ni dans une fiche de donnée — ces artefacts ne
+décrivent que ce qui franchit une frontière.
+
+> **Elle est décrite exactement comme les autres.** Nom, famille de type, unité pivot,
+> précision, plage. La rigueur ne se relâche pas sous prétexte que la grandeur est
+> interne : c'est souvent là que les erreurs d'unité se logent, précisément parce que
+> personne ne les regarde.
+
+**Et l'unicité du sens reste globale.** La portée restreint la *visibilité*, pas le
+*sens* : un même nom ne désigne jamais deux notions différentes, fût-ce dans deux
+fonctions qui ne se parlent pas. Sans cela, `--tracer` mentirait et le glossaire perdrait
+son autorité.
+
+Conséquence pratique sur la [chaîne de traitement](#32-la-chaîne-de-traitement) : une
+grandeur produite et consommée **à l'intérieur d'une même étape** ne figure pas dans la
+table — elle est dans la boîte. C'est ce qui distingue `force_totale`, qui passe d'une
+étape à l'autre, de `force_aerodynamique`, qui n'existe qu'au sein de `ET-01`.
+
+#### Faut-il encoder la portée, le type et l'unité dans le nom ?
+
+La question se pose, et elle mérite mieux qu'une préférence. **Réponse : non pour les
+trois — et pour trois raisons différentes.**
+
+**Ce que dit l'état de l'art.** La notation hongroise, due à Charles Simonyi, existe en
+deux versions que tout le monde confond :
+
+| | Ce que le préfixe encode | Verdict |
+|---|---|---|
+| **Hongroise « système »** | la **représentation** : `dwCount`, `lpszName`, `iIndex` | condamnée sans appel. Elle duplique ce que le type déclare déjà, et **se périme dès que le type change** — les recommandations de conception .NET l'interdisent explicitement |
+| **Hongroise « applicative »** | la **nature** que le typage ne distingue pas : `usName` (chaîne non sûre) vs `sName` (sûre), `rwPosition` vs `colPosition` | défendue, notamment par Joel Spolsky (*Making Wrong Code Look Wrong*, 2005) : elle rend **visible à l'œil** un mélange que rien d'autre n'attrape — `rw = col` saute aux yeux |
+
+La leçon est nette : **encoder ce qui est déjà déclaré et vérifiable est nuisible ;
+encoder ce que rien ne vérifie peut être utile.**
+
+**Notre arbitrage, point par point :**
+
+| | Décision | Pourquoi |
+|---|---|---|
+| **La portée** | **non** | Elle est déjà **structurelle** : une grandeur est au contrat, ou dans le bloc des grandeurs internes. C'est sans ambiguïté et mécaniquement vérifiable (`C-37`). L'encoder en plus obligerait à **renommer** une grandeur interne promue en sortie — or un renommage doit être un événement décidé, pas un effet de bord de refactorisation |
+| **Le type** | **non** | C'est exactement la hongroise « système ». La déclaration porte la famille, la précision et la plage ; un préfixe les duplique et se périme. Et dans une spécification, il n'y a aucun compilateur pour resynchroniser les deux |
+| **L'unité** | **non — et ici c'est particulier** | Écrire `vitesse_kmh` **mentirait** : la grandeur circule en unité **pivot** (`m·s⁻¹`), et `km/h` n'est que son unité d'**usage**, qui varie selon le contexte d'affichage. Le nom porterait une information vraie à un seul endroit du parcours |
+
+> Ce dernier point mérite qu'on s'y arrête, parce qu'il va **contre** une pratique
+> répandue et fondée : suffixer les unités (`timeout_ms`, `distance_km`) est
+> recommandé en logiciel scientifique, et l'histoire des confusions d'unités — jusqu'à la
+> perte d'une sonde en 1999 pour un mélange entre livres-force-seconde et newtons-seconde —
+> justifie amplement cette prudence.
+>
+> **Mais le suffixe d'unité résout un problème que nous avons résolu autrement, et mieux.**
+> Là où un nom ne peut que *signaler* l'unité, notre notation la **déclare** (§2.3),
+> l'algèbre des quantités interdit d'additionner deux dimensions différentes, et la
+> conversion est confinée à la frontière. Ajouter le suffixe reviendrait à porter la même
+> information à deux endroits — dont l'un se périmerait le jour où l'unité pivot change.
+
+**Ce qui, en revanche, mérite pleinement de figurer dans le nom** — et c'est la bonne
+moitié de la hongroise applicative : **le stade de transformation**, que ni le type ni
+l'unité ne distinguent.
+
+```
+remise_panier_brute  →  remise_panier_retenue  →  remise_panier_ligne_ajustée
+```
+
+Ces trois grandeurs ont la même famille, la même unité, la même plage. **Rien d'autre
+qu'un nom ne peut les distinguer** — et les confondre change le montant facturé. C'est
+exactement le cas d'usage que Spolsky défend, et c'est déjà notre règle d'immutabilité.
+
+> **En résumé : on ne code dans le nom que ce qui n'est déclaré nulle part ailleurs.** Ce
+> qui est déclaré — portée, type, unité — reste déclaré, à un seul endroit, vérifiable.
 
 #### Une fois valorisé, un nom ne change plus
 
@@ -429,6 +697,52 @@ Un identifiant n'est **jamais recyclé**. Une règle supprimée reste dans le do
 barrée, avec sa date de fin d'effet — parce qu'un calcul rejoué sur une période
 antérieure doit pouvoir s'y référer.
 
+#### Trois couches d'identité, et une seule est durable
+
+`RG-010` est lisible, mais il n'est unique que **dans son document**. Deux périmètres
+emploient tous deux `RG-010` ; le jour où ils fusionnent, ou qu'une règle passe de l'un à
+l'autre, la référence casse. Le libellé, lui, change encore plus souvent.
+
+| Couche | Exemple | Change-t-elle ? | À quoi elle sert |
+|---|---|---|---|
+| **Le libellé** | « Prix unitaire retenu » | souvent | à lire |
+| **L'identifiant lisible** | `RG-010` | au déplacement, à la fusion | à citer entre humains |
+| **L'identité** | `980c488b-daf2-4834-b00e-c8d45668671a` | **jamais** | à référencer de façon sûre |
+
+> **Tout objet identifié porte un UUID, attribué une fois et jamais modifié** — ni au
+> renommage, ni au déplacement, ni au changement d'identifiant lisible. Un UUID n'est
+> **jamais réattribué**, même après suppression de l'objet : une référence ancienne doit
+> rester résoluble.
+
+Le UUID n'a **aucune sémantique**. On n'y lit ni date, ni auteur, ni ordre de création :
+toute tentative de l'interpréter est un défaut.
+
+**Où il vit.** Dans une **annexe « Identités »** en fin de document, pour que le corps du
+texte reste lisible. Le [registre](outils/) global — `registre.json` — est **généré** à
+partir des annexes, jamais tenu à la main : un registre entretenu manuellement diverge.
+
+```bash
+python3 outils/identites.py --attribuer      # complète les identités manquantes
+python3 outils/identites.py --registre       # produit registre.json
+```
+
+**Ce que cela change concrètement, et c'est considérable :**
+
+| Sans identité durable | Avec |
+|---|---|
+| Renommer un champ ressemble à une **suppression suivie d'un ajout** — deux ruptures de contrat | Le UUID prouve que c'est **le même objet** : un renommage, pas une rupture |
+| Déplacer une règle d'une spécification à une autre casse toutes les citations | La citation par UUID survit au déplacement |
+| Deux équipes qui fusionnent doivent renuméroter — et perdre l'historique | Les identités ne collisionnent pas |
+| « Est-ce la règle dont on parlait l'an dernier ? » se répond de mémoire | Se répond par une comparaison |
+
+Et un bénéfice qu'on n'attendait pas : **le registre étant versionné, sa comparaison entre
+deux versions dit exactement ce qui a été ajouté, renommé, déplacé ou supprimé.** C'est la
+matière première de la [notice de changement](guides/7-VERSIONNER.md), produite
+mécaniquement plutôt que de mémoire.
+
+Les contrôles `C-28` et `C-29` vérifient que tout objet a une identité et qu'aucune n'est
+partagée.
+
 ### 2.9 Adapter le cadre au calcul scientifique
 
 Le cadre s'applique tel quel à un algorithme scientifique, mais trois points demandent
@@ -485,6 +799,43 @@ Trois faux amis s'ajoutent à ceux du §1.5, et ils sont propres au calcul scien
   entrées de la spécification**, au même titre que les données. Ce n'est pas un détail
   technique : la reproductibilité d'un résultat publié en dépend.
 
+**4. Distinguer la résolution de l'incertitude, et déclarer la propagation attendue.**
+
+« Précision » désigne couramment deux choses sans rapport, et les confondre produit des
+résultats affichés avec dix décimales dont deux sont vraies.
+
+| | Ce que c'est | Exemple |
+|---|---|---|
+| **La résolution** | le pas de la valeur — une propriété de **représentation** | une température stockée à 0,1 °C près |
+| **L'incertitude** | l'écart dans lequel se trouve la vraie valeur — une propriété **métrologique** | cette même température connue à ± 2 °C |
+
+Une valeur peut parfaitement avoir une résolution de 0,1 °C et une incertitude de 2 °C :
+la seconde ne se déduit pas de la première.
+
+Dès qu'un résultat doit être accompagné de sa précision, **la spécification déclare quatre
+choses** — et pas la méthode de propagation :
+
+| Ce que la spécification déclare | Pourquoi c'est indispensable |
+|---|---|
+| **L'incertitude de chaque entrée**, avec sa nature (étendue, écart-type, loi) | sans elle, rien ne se propage |
+| **Les corrélations entre entrées** | deux grandeurs issues du même capteur ne sont pas indépendantes ; les traiter comme telles **sous-estime** l'incertitude du résultat. C'est l'oubli le plus fréquent |
+| **Le niveau de confiance exigé** en sortie | « ± 3 km » ne veut rien dire sans dire à quel niveau de confiance |
+| **Ce qu'on fait quand l'incertitude dépasse un seuil** | refuser, dégrader, avertir — c'est une **décision métier** |
+
+Et elle **ne dit pas comment propager**. Propagation analytique par dérivées partielles,
+simulation de Monte-Carlo, arithmétique d'intervalles : le choix appartient au
+développement, dès lors que le résultat respecte la tolérance déclarée. C'est exactement
+le même partage que pour le lissage ou l'intégrateur — spécifier l'effet, pas la méthode.
+
+> Le cadre de référence est le **GUM** — *Guide to the expression of uncertainty in
+> measurement*, JCGM 100 — et son supplément 1 pour la méthode de Monte-Carlo. On lui
+> emprunte le vocabulaire (incertitude-type, incertitude élargie, facteur d'élargissement)
+> et la discipline sur les corrélations, pas son appareil complet.
+
+**Une règle de restitution, qui va de soi et qu'on oublie toujours :** un résultat n'est
+jamais affiché avec plus de chiffres significatifs que son incertitude n'en autorise.
+`106,017 km ± 3 km` est une faute ; `106 km ± 3 km` est un résultat.
+
 Enfin, une propriété de forme spécifique au scientifique : les **invariants de symétrie**
 (§5) y sont particulièrement rentables — invariance par translation de l'origine des
 temps, homogénéité vis-à-vis d'un changement d'unité, invariance par permutation des
@@ -514,6 +865,36 @@ Voici le rôle de chaque section — et pourquoi aucune n'est facultative.
 | 11 | **Fiche de contraintes** — volumes, latence, précision, rejouabilité… (§4) | Permettre le choix du langage et de l'architecture | L'IT devine, et se trompe d'un facteur 100 |
 | 12 | **Questions ouvertes** — `Q-xx`, décideur, échéance | Rendre l'incertitude visible au lieu de la laisser se résoudre en silence | Le développeur tranche à la place du métier |
 | 13 | **Historique** — versions, ce qui a changé, impact sur les résultats | Traçabilité réglementaire et comptable | Impossible d'expliquer un écart entre deux exercices |
+
+### 3.0 Le triptyque : rôle, contrat, algorithme
+
+Quel que soit son niveau de maturité, une fonction se décrit par **trois choses, dans cet
+ordre**.
+
+| | Ce que ça dit | La question à laquelle ça répond |
+|---|---|---|
+| **1. Le rôle** | à quoi elle sert, et **ce qu'elle produit** | *pourquoi elle existe* |
+| **2. Le contrat** | ce qu'elle exige, ce qu'elle garantit (§3.1) | *ce qu'elle promet* |
+| **3. L'algorithme** | les règles `RG-xxx`, en pseudo-langage | *ce qui est calculé* |
+
+**L'ordre n'est pas décoratif** : chacun se lit sans le suivant. On doit pouvoir
+comprendre le rôle sans lire le contrat, et le contrat sans lire l'algorithme. Une
+fonction dont le rôle ne s'explique qu'en déroulant ses règles est mal découpée.
+
+**Le rôle tient en deux phrases** : ce qu'elle produit, et à partir de quoi. Sans « comment ».
+
+| ✗ | ✓ |
+|---|---|
+| « Parcourt les segments et cumule l'énergie jusqu'à épuisement du budget » | « Répond à *jusqu'où puis-je aller sur ce trajet ?* — elle produit l'énergie consommée et la distance à laquelle la réserve est atteinte » |
+
+Le premier décrit un parcours, et il devient faux dès qu'on change d'implémentation. Le
+second décrit un résultat, et il tiendra quinze ans.
+
+**Le triptyque est exactement ce que gradue l'échelle de maturité**
+([guide 1](guides/1-DECOUPER.md)) : le niveau 1 remplit le rôle, le niveau 3 y ajoute le
+contrat, le niveau 4 y ajoute l'algorithme. Un niveau n'est donc pas un pourcentage
+d'avancement, c'est **une part du triptyque qui est renseignée** — et chacune est utile
+seule.
 
 ### 3.1 Le contrat — la notion centrale
 
@@ -572,6 +953,69 @@ débats « c'est ton défaut / c'est le mien » par une lecture de deux lignes.
 **Ce qu'un contrat n'est pas** : une structure de données, une signature de fonction, un
 schéma d'échange. Ceux-là dérivent du contrat, dans un langage donné, et changeront
 plusieurs fois pendant que le contrat, lui, tiendra.
+
+### 3.2 La chaîne de traitement
+
+Un calcul un peu long cesse d'être lisible comme une suite de règles. Il se lit alors
+comme **une suite de boîtes qui s'enchaînent** — et cette vue se place **avant** les
+règles, parce qu'elle dit de quoi on va parler.
+
+Chaque boîte est une **étape** `ET-xx`. Elle déclare exactement trois choses :
+
+| | |
+|---|---|
+| **Ce qu'elle consomme** | les identifiants des grandeurs qu'elle lit |
+| **Ce qu'elle produit** | les identifiants des grandeurs qu'elle écrit — **des noms nouveaux**, par immutabilité (§2.4) |
+| **Ce qui la réalise** | la ou les règles `RG-xxx` |
+
+```
+| Étape | Consomme | Produit | Règles |
+|---|---|---|---|
+| `ET-02` Énergie mécanique | force_totale, distance | energie_mecanique | RG-020 |
+| `ET-03` Traction et récupération | energie_mecanique, rendement_traction, rendement_recuperation | energie_traction | RG-030 |
+```
+
+**Ce que cette vue apporte, et qu'aucune autre ne donne :**
+
+1. **Elle se vérifie mécaniquement.** Toute grandeur consommée est soit une entrée du
+   contrat, soit un paramètre, soit produite par une étape antérieure — sinon elle sort de
+   nulle part (`C-35`). Toute grandeur produite est soit consommée plus loin, soit une
+   sortie du contrat — sinon c'est un **produit mort** (`C-36`). Ces deux contrôles
+   attrapent une classe entière d'erreurs de conception que la relecture ne voit pas.
+2. **Elle rend le chaînage explicite.** Le produit d'une boîte est le consommable d'une
+   autre : la chaîne se lit d'un bout à l'autre, sans dérouler les formules.
+3. **Elle borne ce que le développeur peut réordonner et paralléliser.** Deux étapes dont
+   aucune ne consomme ce que l'autre produit sont indépendantes. En dérivant les
+   **niveaux** du graphe, on obtient les **fils** : ce qui peut s'exécuter de front, et le
+   **chemin critique** qui borne la latence quel que soit le nombre de processeurs.
+
+   > **La spécification dit ce qui est indépendant ; elle ne dit pas de paralléliser.**
+   > La décision reste au développement — et la contrainte de déterminisme du §4 peut
+   > parfaitement l'interdire. Ce que la chaîne apporte, c'est qu'on ne parallélise plus
+   > *en espérant* que c'est sûr : on sait lesquelles le sont.
+4. **Elle rejoint le parcours des grandeurs.** `--tracer` répond « où passe cette
+   grandeur ? » ; la chaîne répond « **qui la crée et qui l'utilise** ».
+5. **Elle s'abstrait.** Des étapes interconnectées se regroupent en boîtes `GR-xx` ; ce
+   qu'un groupe échange avec l'extérieur se **déduit** de ses membres, les grandeurs
+   purement internes disparaissant de la vue. Dix boîtes deviennent trois, sans qu'on ait
+   rien à réécrire — et sans qu'aucune règle ne bouge, puisqu'un groupe est une vue et
+   non une fonction.
+
+```bash
+python3 outils/verifier.py --chaine <spécification>
+```
+
+produit d'un seul coup : la table « qui crée / qui utilise » de chaque grandeur, les
+contrôles `C-35` et `C-36`, les fils d'exécution avec leur chemin critique, et la vue
+groupée.
+
+> **Elle n'impose aucun découpage d'implémentation.** Une boîte n'est pas une fonction du
+> code, ni un service, ni une étape d'exécution : c'est une **unité de lecture**. Rien
+> n'interdit de tout calculer en un seul passage — la chaîne dit ce qui dépend de quoi,
+> pas dans quel ordre exécuter.
+
+Un diagramme accompagne utilement la table quand la chaîne se ramifie ; il ne la remplace
+pas, parce que lui n'est pas vérifiable.
 
 ---
 
@@ -1031,33 +1475,42 @@ fallait.
 
 ## Annexe A — Aide-mémoire du pseudo-langage
 
-À imprimer et à garder à côté du clavier.
+À imprimer et à garder à côté du clavier. **Tout le lexique tient ici.**
 
 ```
 STRUCTURE
-  DÉFINIR nom(param : Type, ...) : Type
-  ENTRÉES / SORTIES / PRÉCONDITIONS / POSTCONDITIONS / INVARIANTS
-  SOIT x = ...
-  SI ... ALORS ... SINON SI ... ALORS ... SINON ... FIN SI
-  POUR CHAQUE x DANS collection ... FIN POUR
+  DÉFINIR nom(param : Type) : Type
+  ENTRÉES · SORTIES · PRÉCONDITIONS · POSTCONDITIONS · INVARIANTS
+  SOIT x = ...            (on introduit un nom, on ne le réaffecte jamais)
   RETOURNER x
   SIGNALER ERREUR E-XXX « message »
 
-ENSEMBLES (à préférer aux boucles)
-  FILTRER c OÙ cond          REGROUPER c PAR critère
-  TRIER c PAR a CROISSANT, PUIS PAR b CROISSANT
-  SOMME / MOYENNE / MINIMUM / MAXIMUM / NOMBRE DE ... DANS c
-  ARRONDIR(x, 2, COMMERCIAL | INFÉRIEUR | SUPÉRIEUR | AU_PAIR)
+CONDITIONS          SI ... ALORS / SINON SI ... ALORS / SINON / FIN SI
+                    (au-delà de deux conditions : table de décision)
 
-TYPES (toujours avec unité et domaine)
-  Montant(EUR, 2 décimales)      Taux(0..1, 4 décimales)
-  Poids(kg, 3 décimales, ≥ 0)    Entier(≥ 1)
-  Horodatage(fuseau …)           Date(…)
-  Énuméré { A, B, C }            Identifiant(texte, n..m caractères)
+ITÉRATION           POUR CHAQUE x DANS c ... FIN POUR
+                    TANT QUE cond ... FIN TANT QUE   (à justifier)
+
+ENSEMBLES           SOMME · MOYENNE · MINIMUM · MAXIMUM · NOMBRE DE
+                    FILTRER c OÙ cond · REGROUPER c PAR critère
+                    TRIER c PAR a CROISSANT|DÉCROISSANT
+                    LE PREMIER · LE DERNIER · IL EXISTE · AUCUN · TOUS
+
+OPÉRATEURS          + − × ÷ ^     = ≠ < ≤ > ≥     ENTRE a ET b
+                    ET · OU · NON · DANS
+VALEURS             VRAI · FAUX · ABSENT
+IMPOSÉE             ARRONDIR(valeur, décimales, mode)
+
+TYPES               <nom> : <Famille>(<unité pivot> ▸ <unité d'usage>,
+                                      <précision>, <plage>)
+  Familles : Entier · Flottant · Décimal · Chaîne · Booléen · Énuméré
+             Horodatage · Durée · Liste[…] · Table[…] · Matrice[…]
 
 IDENTIFIANTS
-  RG-xxx règle   P-xx paramètre   E-xxx erreur
-  INV-xx invariant   CT-xx cas de test   Q-xx question ouverte
+  FN fonction · SPEC spécification · RG règle · P paramètre · D donnée
+  EX exigence · ET étape · GR groupe · INV invariant · CT cas de test
+  E erreur · Q question · SM suggestion · N notice · C/H contrôle
+  + un UUID par objet, attribué une fois, jamais réattribué
 
 LES 8 QUESTIONS À SE POSER AVANT DE DIRE « C'EST FINI »
   1. Chaque grandeur a-t-elle son unité, sa devise, son fuseau ?

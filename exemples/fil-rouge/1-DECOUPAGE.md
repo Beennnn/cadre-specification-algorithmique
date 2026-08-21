@@ -105,3 +105,22 @@ confirmation qu'on aime avoir.
 | Monter `FN-004` au niveau 4 | Expérience client + R&D Batterie | prochain lot |
 | Ancrer `FN-005` à `FN-008` dans le code existant (niveau 2) | les développeurs | en continu |
 | Trancher : `FN-009` doit-elle exister, ou est-ce une amélioration de `FN-001` ? | R&D Énergie | avant le prochain lot |
+
+## Annexe — Identités
+
+*Chaque objet porte un UUID attribué une fois et jamais modifié. L'identifiant lisible et le libellé sont des étiquettes : ils peuvent changer, l'identité non. Voir [CADRE.md §2.8](../../CADRE.md).*
+
+| Identifiant | UUID | Nature | Libellé |
+|---|---|---|---|
+| `FN-001` | `11ce095c-f267-40b0-84cb-49c18037bc46` | fonction | Estimer l'autonomie sur un trajet |
+| `FN-002` | `51de9dec-e41d-41e1-8ad8-33bde74395ba` | fonction | Estimer l'énergie disponible dans la batterie |
+| `FN-003` | `ebcb0e0e-c74f-4ca2-9f0a-a61e481287db` | fonction | Estimer la vitesse praticable sur un segment |
+| `FN-004` | `1e231894-98ee-40ef-a339-9ef41e368d51` | fonction | Planifier les arrêts de recharge |
+| `FN-005` | `fbbac3a2-7aff-45d4-b0eb-01e0b507504f` | fonction | Estimer la durée d'une recharge |
+| `FN-006` | `5f56cc79-2938-4faa-a6fe-10aa2b53d021` | fonction | Sélectionner les bornes candidates |
+| `FN-007` | `a40abaf1-3b00-415d-85a0-60d6d269158d` | fonction | Décider du déclenchement d'une alerte d'autonomie |
+| `FN-008` | `2d2ea0de-a006-4f2c-ad7e-79142b49f4da` | fonction | Estimer la consommation des auxiliaires |
+| `FN-009` | `0746de64-53c0-4dce-a2d9-6c5f094f735e` | fonction | Corriger l'estimation par l'historique du conducteur |
+| `FN-010` | `bc161b8d-1cb1-4f60-b57f-905bcc8384fe` | fonction | Déterminer la réserve de sécurité applicable |
+| `FN-011` | `1205e307-b8b1-42a2-89af-adc518ad33a5` | fonction | Estimer l'autonomie affichée au tableau de bord |
+| `FN-012` | `07708766-4c4c-4a21-88b9-947393dbf754` | fonction | Décider de la stabilité d'un plan recalculé |

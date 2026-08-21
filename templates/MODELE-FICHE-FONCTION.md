@@ -25,10 +25,17 @@ Si vous ne pouvez pas remplacer « gérer » par un verbe précis, c'est un paqu
 de plusieurs fonctions : rouvrez-le.
 -->
 
-## 1. Description
+## 1. Rôle
 
-<!-- Une phrase : ce que la fonction produit, à partir de quoi.
-     Test : « peut-on nommer ce que ça produit, sans dire comment ? » -->
+<!-- Deux phrases : à quoi elle sert, et CE QU'ELLE PRODUIT. Jamais « comment ».
+     Test : « peut-on nommer ce que ça produit, sans dire comment ? »
+     Le rôle doit se lire SANS le contrat, et le contrat SANS l'algorithme.
+     Une fonction dont le rôle ne s'explique qu'en déroulant ses règles est
+     mal découpée — voir CADRE.md §3.0. -->
+
+**À quoi elle sert** —
+
+**Ce qu'elle produit** —
 
 ## 2. Contrat
 <!-- Niveau 3 et au-delà. Même notation que les §4 et §5 du modèle de spécification :
@@ -78,7 +85,13 @@ sorties :
 |---|---|
 | | |
 
-## 7. Spécification
+## 7. Algorithme
+
+<!-- Niveau 4 uniquement. Les règles vivent dans le SPEC-xxx correspondant :
+     cette section n'en porte que le lien. Le triptyque est alors complet —
+     rôle (§1), contrat (§2), algorithme (§7). -->
+
+## 8. Spécification
 <!-- Niveau 4 uniquement : lien vers le SPEC-xxx correspondant. -->
 
 *(aucune — cette fonction est au niveau <n>)*

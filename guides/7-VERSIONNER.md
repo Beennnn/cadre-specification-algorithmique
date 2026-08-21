@@ -109,6 +109,7 @@ entrée ou d'une sortie.
 | Restriction d'un domaine d'entrée | **rupture** |
 | Élargissement d'un domaine d'entrée | compatible |
 | **Changement de sens** d'un nom, à type inchangé | **rupture silencieuse** — la pire de toutes : rien ne casse, et tout devient faux |
+| **Renommage** d'un champ, à sens et type inchangés | **compatible**, à condition que les références passent par l'identité durable ([CADRE §2.8](../CADRE.md)). Sans UUID, un renommage est indistinguable d'une suppression suivie d'un ajout : **deux ruptures pour un changement d'étiquette** |
 
 ### Deux axes indépendants, qu'on confond toujours
 
@@ -120,6 +121,25 @@ entrée ou d'une sortie.
 Le numéro de version suit la règle du **résultat**. La notice porte, en plus, le verdict
 de **compatibilité** — parce qu'un ajout de sortie ne change aucun résultat et oblige
 pourtant les consommateurs à se mettre à jour pour en profiter.
+
+### La notice se prépare mécaniquement
+
+Le registre des identités étant versionné, sa comparaison entre deux versions donne
+directement la matière de la notice :
+
+```bash
+python3 outils/identites.py --registre && git diff registre.json
+```
+
+| Ce que montre la comparaison | Ce qu'on en déduit |
+|---|---|
+| Une entrée **nouvelle** | un ajout |
+| Une entrée dont le **libellé ou l'identifiant** change, UUID identique | un **renommage** — pas une suppression |
+| Une entrée dont le **document** change, UUID identique | un **déplacement** |
+| Une entrée passée en « retiré » | une suppression |
+
+C'est le seul moyen fiable de distinguer un renommage d'une suppression suivie d'un ajout.
+De mémoire, six mois plus tard, personne n'y arrive.
 
 ### 4. Les conséquences
 
@@ -224,3 +244,14 @@ Et le [glossaire du fil rouge](../exemples/fil-rouge/2-GLOSSAIRE.md) est passé 
 **`2.0.0`** parce qu'un terme en a été **retiré** — ce qui a forcé la reprise de deux
 règles de la spécification. Un glossaire qui passe en majeur, c'est une spécification qui
 bouge.
+
+## Annexe — Identités
+
+*Chaque objet porte un UUID attribué une fois et jamais modifié. L'identifiant lisible et le libellé sont des étiquettes : ils peuvent changer, l'identité non. Voir [CADRE.md §2.8](../CADRE.md).*
+
+| Identifiant | UUID | Nature | Libellé |
+|---|---|---|---|
+| `FN-001` | `e4d8a75d-7fd9-4d69-af3f-606974ae99be` | fonction | comportement |
+| `FN-004` | `6b1bee5a-76dd-47f0-8a3a-4517eb13bd91` | fonction | contrat |
+| `FN-011` | `0e341e9d-e746-4d42-b831-5e31f3f9a6fb` | fonction | aucun |
+| `FN-002` | `5a2012a7-8dc7-40df-8f81-b8ba67b1884a` | fonction | `facteur_temperature_brut` |

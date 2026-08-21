@@ -26,7 +26,13 @@ le plus souvent : personne ne vérifie spontanément que le vingt-troisième par
 | `C-03` | **Toute grandeur employée dans une règle est déclarée** : entrée, sortie, paramètre, ou variable locale introduite par `SOIT`. | Un paramètre fantôme circule dans l'algorithme. Le développeur devra inventer d'où il vient |
 | `C-04` | **Tout paramètre `P-xx` déclaré est employé** dans au moins une règle. | Un paramètre mort : il sera maintenu, documenté, versionné, pour rien — et un jour quelqu'un le changera en croyant agir |
 | `C-05` | **Toute valeur littérale dans une règle est justifiée** : soit c'est un paramètre `P-xx`, soit une constante mathématique nommée, soit sa présence est expliquée sur place. | Une valeur magique. Personne ne saura jamais s'il faut la changer ni qui a le droit de le faire |
-| `C-06` | **Toute grandeur porte son unité**, sa devise ou son domaine de validité. | La cause la plus fréquente d'écarts, et la plus tardive à se découvrir |
+| `C-06` | **Toute grandeur déclare sa famille de type, sa précision et sa plage** ; toute grandeur dimensionnée déclare en outre sa dimension, son **unité pivot** et son **unité d'usage**. | La cause la plus fréquente d'écarts, et la plus tardive à se découvrir |
+| `C-30` | **Tout symbole structuré déclare le type de ses éléments et l'étendue de chaque axe**, ainsi que la signification de chaque indice. | Une étendue non bornée interdit de dimensionner et ouvre un risque d'épuisement ; un indice non défini rend une transposition invisible |
+| `C-31` | **Toute entrée d'un calcul devant restituer une précision déclare son incertitude, et les corrélations entre entrées sont explicites.** | Traiter comme indépendantes deux grandeurs issues du même capteur **sous-estime** l'incertitude — l'erreur va toujours dans le sens optimiste |
+| `C-35` | **Toute grandeur consommée par une étape est une entrée du contrat, un paramètre, ou le produit d'une étape antérieure.** | Une grandeur qui sort de nulle part : le développeur devra inventer d'où elle vient |
+| `C-37` | **Aucune grandeur de portée interne n'apparaît dans un contrat, dans une sortie, dans le catalogue des données, ni dans la chaîne inter-étapes.** | Une grandeur interne exposée est une fuite d'implémentation dans le contrat : elle sera consommée, puis on ne pourra plus la changer |
+| `C-36` | **Toute grandeur produite par une étape est consommée plus loin ou déclarée en sortie.** | Un produit mort : du calcul fait pour rien, ou une sortie oubliée au contrat |
+| `C-32` | **Un résultat n'est pas restitué avec plus de chiffres significatifs que son incertitude n'en autorise.** | `106,017 km ± 3 km` est une faute d'expression qui donne une fausse confiance |
 | `C-07` | **Aucune grandeur ne change d'unité** entre sa déclaration et son emploi sans conversion explicite. | Erreur d'un facteur 3,6 — ou 13 quand elle passe au carré |
 
 > **Lire un avertissement `C-01` ou `C-02`.** Le contrôle cherche le nom exact du champ
@@ -69,6 +75,8 @@ le plus souvent : personne ne vérifie spontanément que le vingt-troisième par
 | `C-24` | **Toute ligne d'historique déclarant un impact renvoie à une notice de changement `N-<version>` présente dans le document.** | On sait qu'il y a eu un changement, on ne sait ni pourquoi, ni qui est touché, ni ce que les contrats sont devenus |
 | `C-25` | **Chaque nom employé dans une règle apparaît sous la même orthographe dans le contrat**, chemin complet compris. | Le lien entre contrat et règles cesse d'être vérifiable, et le vocabulaire diverge |
 | `C-26` | **Toute exigence de réalisation `EX-xxx` porte un énoncé, une source, un propriétaire et un moyen de vérification.** | Sans source, c'est une préférence d'équipe déguisée en exigence. Sans vérification, c'est décoratif |
+| `C-28` | **Tout objet identifié figure dans l'annexe « Identités » avec un UUID valide.** | Sans identité durable, un renommage ou un déplacement casse toutes les références |
+| `C-29` | **Aucun UUID n'est porté par deux objets**, dans tout le dépôt. | Deux objets confondus : la traçabilité devient fausse au lieu d'être absente, ce qui est pire |
 | `C-27` | **Une passe de relecture par une IA déclarée porte un opérateur nommé**, la date, et le nombre de constats retenus et écartés. | Sans opérateur nommé, personne n'assume : on a produit un fusible, pas une validation ([guide 5](../guides/5-VALIDER.md)) |
 
 ## Contrôles humains

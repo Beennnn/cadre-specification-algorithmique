@@ -86,6 +86,14 @@ caractérisent, elle est mal découpée.**
 Ordre de grandeur utile : un périmètre bien découpé compte typiquement **quelques
 dizaines de fonctions**, pas trois et pas huit cents.
 
+## Le triptyque, et ce que l'échelle en gradue
+
+Toute fonction se décrit par **trois choses** : son **rôle** (à quoi elle sert, ce qu'elle
+produit), son **contrat** (ce qu'elle exige et garantit), son **algorithme** (les règles).
+
+Chacune se lit sans la suivante — et l'échelle de maturité ci-dessous n'est rien d'autre
+que **la part du triptyque qui est renseignée**. Voir [CADRE.md §3.0](../CADRE.md).
+
 ## L'échelle de maturité
 
 C'est ce qui rend la démarche applicable à un système existant : **on ne monte pas
@@ -94,10 +102,10 @@ toutes les fonctions au même niveau.**
 | Niveau | Ce qui est acquis | Coût typique |
 |---|---|---|
 | **0** | La fonction existe et porte un nom | minutes |
-| **1** | + une description en une phrase et un propriétaire métier | minutes |
+| **1** | + le **rôle** — à quoi elle sert, ce qu'elle produit — et un propriétaire | minutes |
 | **2** | + un ancrage dans le code existant | dizaines de minutes |
-| **3** | + un contrat typé d'entrées / sorties | heures |
-| **4** | + une spécification complète : règles, contraintes, jeu d'essai | jours |
+| **3** | + le **contrat** typé d'entrées / sorties | heures |
+| **4** | + l'**algorithme** : règles, contraintes, jeu d'essai | jours |
 
 On peut cartographier deux cents fonctions au **niveau 1** en une semaine, et ne monter
 au **niveau 4** que les dix qui le méritent — celles qui ont un impact financier,

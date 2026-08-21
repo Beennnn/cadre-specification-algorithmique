@@ -16,11 +16,16 @@
 
 ---
 
-## 1. Description
+## 1. Rôle
 
-À partir d'un trajet, de l'état du véhicule et des bornes disponibles, proposer la suite
-d'arrêts de recharge qui permet d'atteindre la destination **en un temps total minimal**,
-sans jamais entamer la réserve de sécurité.
+**À quoi elle sert** — répondre à la question du conducteur *« où dois-je m'arrêter, et
+combien de temps ? »*, une fois qu'il sait qu'il n'arrivera pas d'une traite.
+
+**Ce qu'elle produit** — une suite ordonnée d'arrêts, chacun désignant une borne, un état
+de charge visé et une durée ; et la durée totale du trajet qui en résulte.
+
+*(Rôle et contrat sont renseignés ; l'algorithme ne l'est pas — c'est ce que signifie le
+niveau 3. Voir [CADRE.md §3.0](../../CADRE.md).)*
 
 ## 2. Contrat
 
@@ -109,3 +114,15 @@ plus petit dans l'ordre lexicographique.
 | `FN-005` — estimer la durée d'une recharge | |
 | `FN-006` — sélectionner les bornes candidates | |
 | `FN-010` — déterminer la réserve de sécurité | |
+
+## Annexe — Identités
+
+*Chaque objet porte un UUID attribué une fois et jamais modifié. L'identifiant lisible et le libellé sont des étiquettes : ils peuvent changer, l'identité non. Voir [CADRE.md §2.8](../../CADRE.md).*
+
+| Identifiant | UUID | Nature | Libellé |
+|---|---|---|---|
+| `FN-004` | `f70a8d6f-84c8-406c-b40d-d662df8bb5f6` | document | FN-004 — Planifier les arrêts de recharge |
+| `Q-04-1` | `e95e0c6c-6009-4388-a415-d41c76dac652` | question | La puissance de charge décroît par paliers avec l'état de charge. Il e |
+| `Q-04-2` | `05ea43e3-893a-4bda-9086-8739be1e83d6` | question | Que fait-on lorsqu'**aucun plan recevable n'existe** ? On renvoie `fai |
+| `Q-04-3` | `730f2923-d586-400b-9248-83ac8d297acf` | question | La puissance réellement délivrée par une borne peut être inférieure à  |
+| `Q-04-4` | `19326885-4fa0-498d-923f-d1b44998f662` | question | Un temps de trajet strictement minimal peut proposer un arrêt de 4 min |

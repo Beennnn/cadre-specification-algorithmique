@@ -192,6 +192,52 @@ formellement une fonction et d'employer cette méthode pour les quarante autres.
 
 ---
 
+## Les conventions de nommage
+
+> **Charles Simonyi, notation hongroise** ; et **Joel Spolsky, « Making Wrong Code Look
+> Wrong », 2005**, qui distingue la version « système » — le préfixe encode la
+> représentation — de la version « applicative » — il encode une nature que le typage ne
+> distingue pas.
+
+**Ce qu'on emprunte** : l'idée que **rendre visible à l'œil un mélange que rien ne
+vérifie** a de la valeur. C'est ce que fait notre règle d'immutabilité, où le nom porte le
+**stade de transformation** : `remise_panier_brute` / `_retenue` / `_ligne_ajustée` ont
+même type et même unité, et seul le nom les distingue.
+
+**Ce qu'on écarte** : encoder dans le nom la portée, le type ou l'unité. Ils sont déjà
+déclarés, à un seul endroit, et vérifiables ; les dupliquer les périme. Sur l'unité, notre
+décision va **contre** la pratique répandue du suffixe (`distance_km`) — elle est justifiée
+au [CADRE §2.4](CADRE.md) par la distinction entre unité pivot et unité d'usage, qui rend
+un tel suffixe faux dès qu'on quitte le point d'affichage.
+
+**Ce qu'on note au passage** : les systèmes de types porteurs d'unités — unités de mesure
+de F#, Boost.Units, JSR-385, `pint` — font mieux qu'une convention de nommage, puisqu'ils
+font vérifier la dimension par le compilateur. Rien n'interdit à une implémentation d'y
+recourir ; c'est même ce que la déclaration de dimension du §2.3 lui permet de faire.
+
+---
+
+## L'expression de l'incertitude
+
+> **JCGM 100 — *Guide to the expression of uncertainty in measurement* (GUM), et son
+> supplément 1 (JCGM 101) pour la méthode de Monte-Carlo.**
+> Le cadre de référence international pour exprimer et propager l'incertitude d'une
+> mesure : incertitude-type, incertitude élargie, facteur d'élargissement, traitement des
+> corrélations.
+
+**Ce qu'on emprunte** : le vocabulaire, la distinction entre **résolution** et
+**incertitude**, et surtout la discipline sur les **corrélations** — deux grandeurs issues
+du même capteur ne sont pas indépendantes, et les traiter comme telles sous-estime
+l'incertitude du résultat. C'est l'oubli le plus fréquent, et il va toujours dans le sens
+optimiste.
+
+**Ce qu'on écarte** : l'appareil complet et la classification des incertitudes en types A
+et B, trop lourds pour la plupart des spécifications. On garde l'exigence : déclarer les
+incertitudes d'entrée, les corrélations, et le niveau de confiance attendu en sortie — puis
+**laisser le développement choisir la méthode de propagation**.
+
+---
+
 ## L'humain aux commandes
 
 > **Groupe d'experts de haut niveau de la Commission européenne, *Ethics Guidelines for

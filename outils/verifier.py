@@ -16,7 +16,11 @@ import re
 import sys
 
 RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import identites  # noqa: E402  — même dossier
+
 constats = []
+_uuids_vus = {}
 
 
 def constat(niveau, regle, fichier, message):
@@ -164,6 +168,18 @@ def verifier_spec(chemin):
                         "%s « %s » déclarée mais employée dans aucune règle"
                         % (quoi, champ))
 
+    # --- C-28 / C-29 : identités durables
+    table = identites.annexe_existante(texte)
+    for ident, nature, _ in identites.objets(texte):
+        if ident not in table:
+            constat("ÉCHEC", "C-28", chemin,
+                    "%s (%s) n'a pas d'identité dans l'annexe" % (ident, nature))
+    for ident, uid in table.items():
+        if uid in _uuids_vus and _uuids_vus[uid] != (chemin, ident):
+            constat("ÉCHEC", "C-29", chemin,
+                    "UUID %s déjà porté par %s" % (uid[:8], _uuids_vus[uid][1]))
+        _uuids_vus[uid] = (chemin, ident)
+
     # --- C-26 : exigence de réalisation sans source, propriétaire ou vérification
     for ligne in re.findall(r"^\|\s*`(EX-[\d-]+)`\s*\|(.*)$",
                             sec.get("contraintes", ""), re.M):
@@ -188,7 +204,11 @@ def verifier_spec(chemin):
 
 def verifier_liens(chemin):
     dossier = os.path.dirname(chemin)
-    for m in re.finditer(r"\]\(([^)#][^)]*)\)", open(chemin, encoding="utf-8").read()):
+    texte = open(chemin, encoding="utf-8").read()
+    # les blocs de code contiennent des notations du type Liste[X](1 .. 200)
+    # qui ressemblent à des liens sans en être
+    texte = re.sub(r"```.*?```", "", texte, flags=re.S)
+    for m in re.finditer(r"\]\(([^)#][^)]*)\)", texte):
         cible = m.group(1).split("#")[0]
         if not cible or cible.startswith("http"):
             continue
@@ -197,6 +217,137 @@ def verifier_liens(chemin):
 
 
 # ---------------------------------------------------------------- exécution
+def lire_chaine(texte):
+    """Étapes et groupes déclarés dans le document."""
+    etapes, groupes = [], []
+    for ident, nom, cons, prod, regles in re.findall(
+            r"^\|\s*`(ET-\d+)`\s*([^|]*)\|([^|]*)\|([^|]*)\|([^|]*)\|",
+            texte, re.M):
+        jetons = lambda c: [x for x in re.findall(r"`([^`]+)`", c)]
+        etapes.append({"id": ident, "nom": nom.strip(),
+                       "consomme": jetons(cons), "produit": jetons(prod),
+                       "regles": jetons(regles)})
+    for ident, nom, membres, role in re.findall(
+            r"^\|\s*`(GR-\d+)`\s*([^|]*)\|([^|]*)\|([^|]*)\|", texte, re.M):
+        groupes.append({"id": ident, "nom": nom.strip(),
+                        "membres": re.findall(r"ET-\d+", membres),
+                        "role": role.strip()})
+    return etapes, groupes
+
+
+def frontiere(membres, etapes):
+    """Ce qu'un ensemble d'étapes consomme et produit vis-à-vis de l'extérieur."""
+    dedans = [e for e in etapes if e["id"] in membres]
+    produit_interne = {g for e in dedans for g in e["produit"]}
+    consomme = sorted({g for e in dedans for g in e["consomme"]} - produit_interne)
+    consomme_interne = {g for e in dedans for g in e["consomme"]}
+    externe = {g for e in etapes if e["id"] not in membres for g in e["consomme"]}
+    produit = sorted(g for g in produit_interne
+                     if g in externe or g not in consomme_interne)
+    return consomme, produit
+
+
+def chaine(chemin):
+    texte = open(chemin, encoding="utf-8").read()
+    etapes, groupes = lire_chaine(texte)
+    if not etapes:
+        print("Aucune chaîne de traitement déclarée dans ce document.")
+        return 2
+    sec = sections(texte)
+    connus = set(champs(sec.get("entrees", ""))) | set(
+        re.findall(r"^\|\s*`(P-\d+)`", sec.get("parametres", ""), re.M))
+    sorties = set(champs(sec.get("sorties", "")))
+
+    print("Chaîne de %s — %d étape(s), %d groupe(s)\n"
+          % (os.path.basename(chemin), len(etapes), len(groupes)))
+
+    # --- qui crée, qui utilise
+    cree, utilise = {}, {}
+    for e in etapes:
+        for g in e["produit"]:
+            cree.setdefault(g, []).append(e["id"])
+        for g in e["consomme"]:
+            utilise.setdefault(g, []).append(e["id"])
+    print("%-30s %-14s %s" % ("GRANDEUR", "CRÉÉE PAR", "UTILISÉE PAR"))
+    for g in sorted(set(cree) | set(utilise)):
+        origine = ", ".join(cree.get(g, [])) or ("contrat" if g in connus else "?")
+        print("%-30s %-14s %s" % (g[:30], origine,
+                                  ", ".join(utilise.get(g, [])) or
+                                  ("sortie" if g in sorties else "—")))
+
+    # --- C-35 / C-36
+    print()
+    disponibles = set(connus)
+    for e in etapes:
+        for g in e["consomme"]:
+            if g not in disponibles:
+                print("ÉCHEC C-35  %s consomme « %s » qui n'est ni entrée, "
+                      "ni paramètre, ni produit d'une étape antérieure" % (e["id"], g))
+        disponibles |= set(e["produit"])
+    for g, origines in cree.items():
+        if g not in utilise and g not in sorties:
+            print("ÉCHEC C-36  « %s » produit par %s n'est ni consommé "
+                  "ni déclaré en sortie" % (g, ", ".join(origines)))
+
+    # --- fils d'exécution
+    niveau, producteur = {}, {}
+    for e in etapes:
+        for g in e["produit"]:
+            producteur[g] = e["id"]
+    for e in etapes:
+        amont = [niveau.get(producteur[g], 0) for g in e["consomme"]
+                 if g in producteur]
+        niveau[e["id"]] = 1 + max(amont or [0])
+    vagues = {}
+    for ident, n in niveau.items():
+        vagues.setdefault(n, []).append(ident)
+    print("\nFils d'exécution — %d niveau(x)\n" % len(vagues))
+    for n in sorted(vagues):
+        etiquettes = sorted(vagues[n])
+        marque = "  ← indépendantes, parallélisables" if len(etiquettes) > 1 else ""
+        print("  niveau %d : %s%s" % (n, ", ".join(etiquettes), marque))
+    # chemin critique
+    precedent = {}
+    for e in etapes:
+        amont = [(niveau.get(producteur[g], 0), producteur[g]) for g in e["consomme"]
+                 if g in producteur]
+        if amont:
+            precedent[e["id"]] = max(amont)[1]
+    fin = max(niveau, key=lambda k: niveau[k])
+    chemin, courant = [fin], fin
+    while courant in precedent:
+        courant = precedent[courant]
+        chemin.append(courant)
+    print("\n  chemin critique : %s  (%d étapes)"
+          % (" → ".join(reversed(chemin)), len(chemin)))
+    print("\n  La spécification dit ce qui est INDÉPENDANT, pas ce qu'il faut")
+    print("  paralléliser. La contrainte de déterminisme (§11) peut l'interdire.")
+
+    # --- vue groupée
+    if groupes:
+        print("\nVue de niveau supérieur\n")
+        print("```mermaid\nflowchart LR")
+        for gr in groupes:
+            c, pr = frontiere(gr["membres"], etapes)
+            print("    %s[\"%s %s<br/><small>%s</small>\"]"
+                  % (gr["id"].replace("-", ""), gr["id"], gr["nom"], gr["role"]))
+            print("    %%%% consomme : %s" % ", ".join(c))
+            print("    %%%% produit  : %s" % ", ".join(pr))
+        for a in groupes:
+            _, pa = frontiere(a["membres"], etapes)
+            for b in groupes:
+                if a is b:
+                    continue
+                cb, _ = frontiere(b["membres"], etapes)
+                liens = sorted(set(pa) & set(cb))
+                if liens:
+                    print("    %s -->|%s| %s" % (a["id"].replace("-", ""),
+                                                 ", ".join(liens),
+                                                 b["id"].replace("-", "")))
+        print("```")
+    return 0
+
+
 def tracer(nom, fichiers):
     """Parcours d'une grandeur : où elle est déclarée, produite, consommée."""
     motif = re.compile(r"\b%s\b" % re.escape(nom))
@@ -228,6 +379,11 @@ def tracer(nom, fichiers):
 
 def main():
     cibles = sys.argv[1:]
+    if cibles and cibles[0] == "--chaine":
+        if len(cibles) < 2:
+            print("usage : verifier.py --chaine <fichier>")
+            return 2
+        return chaine(os.path.abspath(cibles[1]))
     if cibles and cibles[0] == "--tracer":
         if len(cibles) < 2:
             print("usage : verifier.py --tracer <nom de grandeur>")
