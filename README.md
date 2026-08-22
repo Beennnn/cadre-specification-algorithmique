@@ -10,6 +10,10 @@ Les spécifications que vous produirez vivent **dans le dépôt de votre produit
 code** — c'est ce qui leur permet d'être versionnées, relues en demande de fusion, et de
 rester vraies.
 
+> **Pressé ?** Ouvrez **[le plus petit exemple](exemples/average-speed/)** : deux fonctions,
+> trois règles, six cas de test, et la méthode entière déroulée en petit. Cinq minutes
+> suffisent à décider si la démarche vous parle.
+
 ---
 
 ## Le problème
@@ -378,10 +382,13 @@ justesse numérique et validité du modèle : **[CADRE §1.3 et §2.9](CADRE.md)
 
 ## Par où commencer
 
-1. Lisez **[CADRE.md](CADRE.md)** une fois, en entier. C'est le seul document long.
+1. Ouvrez **[le plus petit exemple](exemples/average-speed/)** — la vitesse moyenne d'un
+   trajet. Deux fonctions, trois règles, six cas de test. Vous verrez la méthode entière,
+   en petit, avant d'en lire la moindre page de théorie.
 2. Lisez **[le cas métier du fil rouge](exemples/fil-rouge/0-LE-CAS-METIER.md)** — la page à
    montrer à quelqu'un qui n'a que dix minutes.
-3. Parcourez le reste du [fil rouge](exemples/fil-rouge/) pour voir la méthode déroulée.
+3. Alors seulement, lisez **[CADRE.md](CADRE.md)**, une fois, en entier. C'est le seul
+   document long, et le seul qu'on n'ouvre qu'une fois.
 4. Faites l'**exercice d'étalonnage** : prenez un algorithme existant, connu, moyennement
    complexe, écrivez-en la spécification *a posteriori*, et faites-la implémenter par
    quelqu'un qui ne connaît pas le domaine. Les écarts constatés convainquent — le

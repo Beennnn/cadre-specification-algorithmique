@@ -50,20 +50,3 @@ never from the implementation.*
 | `P-02` | Maximum tolerated residual, in balance steps | yes |
 
 **All reference cases pass, and every required item is covered.**
-
-## Annexe — Identités
-
-*Chaque objet porte un UUID attribué une fois et jamais modifié. L'identifiant lisible et le libellé sont des étiquettes : ils peuvent changer, l'identité non. Voir [CADRE.md §2.8](../../../CADRE.md).*
-
-| Identifiant | UUID | Nature | Libellé |
-|---|---|---|---|
-| `P-01` | `84e3b343-fe5d-40da-8a6c-db7b2fbdac0a` | paramètre | Rounding mode for doses |
-| `P-02` | `c8ab49b6-bd36-4fcf-a062-0b46832ea9b4` | paramètre | Maximum tolerated residual, in balance steps |
-| `INV-01` | `a29f6f25-9b35-4910-81b2-2e73ed821394` | invariant | `SUM OF dispensed_mass OVER dispensed = target_batch_mass`… |
-| `INV-02` | `4d1245d7-31a4-44f0-b365-596462c64ded` | invariant | Every `dispensed_mass` is an integer multiple of `balance_… |
-| `INV-03` | `3073c520-8afd-4ffd-b539-43a860054895` | invariant | Every `dispensed_mass` is `≥ 0`. A negative residual canno… |
-| `INV-04` | `9c27f91f-dc4e-4ac4-99a0-78e15e8add07` | invariant | The result is **invariant under permutation** of the compo… |
-| `E-MAS-001` | `b617192a-d5e7-477a-8168-de6041ed64af` | cas d'erreur | The target fractions do not add up to exactly 1 |
-| `E-MAS-002` | `c4a5fdb9-e4ad-465b-8d19-e0aa0b3c27bd` | cas d'erreur | The residual exceeds `P-02` balance steps |
-| `E-MAS-003` | `6834f3f6-4068-4ef4-9b6b-42dee8544d45` | cas d'erreur | Two components carry the same `component_id` |
-| `E-MAS-004` | `97974c68-4e55-4ee8-bb92-24629bcef6c9` | cas d'erreur | `target_batch_mass` is not a multiple of `balance_step` |

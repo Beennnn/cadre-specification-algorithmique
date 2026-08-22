@@ -28,7 +28,8 @@ illustrée de bout en bout par un fil rouge dont tous les chiffres sont vérifi�
 | Deux vignettes de contraste | ✅ `exemples/mass-balance/`, `exemples/cooling/` |
 | Une chaîne complète besoin → code → écarts | ✅ `exemples/mass-balance/`, code exécutable et qualifié |
 | **Six exemples, trois jusqu'au code** | ✅ `average-speed`, `mass-balance`, `weather-summary` en structure de projet — `spec/`, `tests/`, `code/` Maven, `reports/` |
-| **Un document par cas de test** | ✅ 23 documents sur les trois exemples outillés |
+| **Un document par cas de test** | ✅ 23 documents sur les trois exemples outillés — une page courte par cas sur `average-speed`, plus détaillées sur les deux autres |
+| **Un exemple simplissime et complet** | ✅ `average-speed` : 260 lignes de spécification, six pages de cas, un harnais sans machinerie. C'est le point d'entrée du dépôt, et il doit le rester |
 | **Rapport de couverture spec ↔ code** | ✅ `outils/Couverture.java`, liens dans les deux sens |
 | **Toutes les specs en deux langues** | ✅ six documents `.en.md` normatifs, six traductions `.fr.md`, `C-42` garde la dérive |
 
@@ -44,6 +45,7 @@ dans nos propres documents, et aucun par relecture :
 | `SPEC-WTH-001` | `CT-04` énonçait des lectures que `RG-010` écarte : les tours publiés ne pouvaient pas se produire | l'écriture du code |
 | `SPEC-WTH-001` | `EX-01` déclarait la double précision suffisante. Elle ne l'est pas pour un nombre **arrondi** : `CT-07` publiait 0,2 ou 0,3 selon l'ordre d'arrivée | la propriété de permutation **et** le cas sur l'égalité |
 | `SPEC-THM-001` | une grandeur restée en français après renommage | `C-03` |
+| `Identites.java` | l'outil attribuait des identités **dans les rapports engendrés** et dans les blocs de code qui les citent : 15 UUID fantômes, réémis à chaque exécution | le registre, dont le compte a baissé sans raison |
 
 > **Le motif est constant : ce sont les paramètres qui échappent.** Une règle non couverte
 > se voit ; un paramètre validé, daté, implémenté et **arbitré par rien** ne se voit pas.

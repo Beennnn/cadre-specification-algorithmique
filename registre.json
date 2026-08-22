@@ -231,13 +231,6 @@
     "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
-    "uuid": "22a6a616-0600-4cb1-91db-f8545a02acd5",
-    "identifiant": "INV-02",
-    "nature": "invariant",
-    "libelle": "Before rounding, `average_speed × total_duration = total_dis…",
-    "document": "exemples/average-speed/reports/TEST-REPORT.md"
-  },
-  {
     "uuid": "245000d6-c226-4d14-b56a-8ff7be643e9c",
     "identifiant": "EX-02",
     "nature": "exigence",
@@ -320,13 +313,6 @@
     "nature": "règle",
     "libelle": "Available energy and temperature factor",
     "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
-  },
-  {
-    "uuid": "3073c520-8afd-4ffd-b539-43a860054895",
-    "identifiant": "INV-03",
-    "nature": "invariant",
-    "libelle": "Every `dispensed_mass` is `≥ 0`. A negative residual canno…",
-    "document": "exemples/mass-balance/reports/TEST-REPORT.md"
   },
   {
     "uuid": "30c1c2f2-56d3-49e1-bf5d-869e1dff4936",
@@ -488,13 +474,6 @@
     "nature": "paramètre",
     "libelle": "Rounding mode for doses",
     "document": "exemples/mass-balance/spec/SPEC-MAS-001.en.md"
-  },
-  {
-    "uuid": "4d1245d7-31a4-44f0-b365-596462c64ded",
-    "identifiant": "INV-02",
-    "nature": "invariant",
-    "libelle": "Every `dispensed_mass` is an integer multiple of `balance_…",
-    "document": "exemples/mass-balance/reports/TEST-REPORT.md"
   },
   {
     "uuid": "4d6f1ab4-7ded-4604-b857-b74f36df9407",
@@ -679,13 +658,6 @@
     "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
-    "uuid": "6834f3f6-4068-4ef4-9b6b-42dee8544d45",
-    "identifiant": "E-MAS-003",
-    "nature": "cas d'erreur",
-    "libelle": "Two components carry the same `component_id`",
-    "document": "exemples/mass-balance/reports/TEST-REPORT.md"
-  },
-  {
     "uuid": "683ae5b4-21f5-4841-80c6-d1e5fa76fffa",
     "identifiant": "INV-06",
     "nature": "invariant",
@@ -847,13 +819,6 @@
     "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
-    "uuid": "7e952f80-9a2d-4a8d-8870-fc4e72428d70",
-    "identifiant": "P-01",
-    "nature": "paramètre",
-    "libelle": "Rounding mode of the published speed",
-    "document": "exemples/average-speed/reports/TEST-REPORT.md"
-  },
-  {
     "uuid": "7f647fe8-a8cc-4ad3-9d4c-5b3cf790b824",
     "identifiant": "CT-08",
     "nature": "cas de test",
@@ -887,13 +852,6 @@
     "nature": "document",
     "libelle": "SPEC-THM-001 — Cooling forecast for a hot drink",
     "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
-  },
-  {
-    "uuid": "84e3b343-fe5d-40da-8a6c-db7b2fbdac0a",
-    "identifiant": "P-01",
-    "nature": "paramètre",
-    "libelle": "Rounding mode for doses",
-    "document": "exemples/mass-balance/reports/TEST-REPORT.md"
   },
   {
     "uuid": "871209e3-ca46-4ea2-8f77-455f0575b2f4",
@@ -1015,13 +973,6 @@
     "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
-    "uuid": "97974c68-4e55-4ee8-bb92-24629bcef6c9",
-    "identifiant": "E-MAS-004",
-    "nature": "cas d'erreur",
-    "libelle": "`target_batch_mass` is not a multiple of `balance_step`",
-    "document": "exemples/mass-balance/reports/TEST-REPORT.md"
-  },
-  {
     "uuid": "980c488b-daf2-4834-b00e-c8d45668671a",
     "identifiant": "RG-010",
     "nature": "règle",
@@ -1057,13 +1008,6 @@
     "document": "exemples/weather-summary/spec/SPEC-WTH-001.en.md"
   },
   {
-    "uuid": "9c27f91f-dc4e-4ac4-99a0-78e15e8add07",
-    "identifiant": "INV-04",
-    "nature": "invariant",
-    "libelle": "The result is **invariant under permutation** of the compo…",
-    "document": "exemples/mass-balance/reports/TEST-REPORT.md"
-  },
-  {
     "uuid": "9cb4442a-f5c1-411c-a953-cbabd98bdcbb",
     "identifiant": "CT-09",
     "nature": "cas de test",
@@ -1092,13 +1036,6 @@
     "document": "exemples/mass-balance/spec/SPEC-MAS-001.en.md"
   },
   {
-    "uuid": "a29f6f25-9b35-4910-81b2-2e73ed821394",
-    "identifiant": "INV-01",
-    "nature": "invariant",
-    "libelle": "`SUM OF dispensed_mass OVER dispensed = target_batch_mass`…",
-    "document": "exemples/mass-balance/reports/TEST-REPORT.md"
-  },
-  {
     "uuid": "a2f67f9d-5d0f-4b38-b3a6-afd875065ea6",
     "identifiant": "RG-050",
     "nature": "règle",
@@ -1111,13 +1048,6 @@
     "nature": "cas de test",
     "libelle": "Tromsø, polar day",
     "document": "exemples/sunrise/spec/SPEC-AST-001.en.md"
-  },
-  {
-    "uuid": "a3ce427d-6fe3-4285-b69e-5cba6e95d07e",
-    "identifiant": "E-SPD-001",
-    "nature": "cas d'erreur",
-    "libelle": "A leg has a speed `≤ 0`",
-    "document": "exemples/average-speed/reports/TEST-REPORT.md"
   },
   {
     "uuid": "a40abaf1-3b00-415d-85a0-60d6d269158d",
@@ -1253,13 +1183,6 @@
     "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
-    "uuid": "b617192a-d5e7-477a-8168-de6041ed64af",
-    "identifiant": "E-MAS-001",
-    "nature": "cas d'erreur",
-    "libelle": "The target fractions do not add up to exactly 1",
-    "document": "exemples/mass-balance/reports/TEST-REPORT.md"
-  },
-  {
     "uuid": "b660aa4f-dd37-4cd9-b967-798a11586fd2",
     "identifiant": "CT-03",
     "nature": "cas de test",
@@ -1386,13 +1309,6 @@
     "document": "exemples/fil-rouge/3-DONNEES.md"
   },
   {
-    "uuid": "c4a5fdb9-e4ad-465b-8d19-e0aa0b3c27bd",
-    "identifiant": "E-MAS-002",
-    "nature": "cas d'erreur",
-    "libelle": "The residual exceeds `P-02` balance steps",
-    "document": "exemples/mass-balance/reports/TEST-REPORT.md"
-  },
-  {
     "uuid": "c4b092be-6904-473d-ab88-3132570724b1",
     "identifiant": "EX-03",
     "nature": "exigence",
@@ -1414,25 +1330,11 @@
     "document": "exemples/sunrise/spec/SPEC-AST-001.en.md"
   },
   {
-    "uuid": "c8ab49b6-bd36-4fcf-a062-0b46832ea9b4",
-    "identifiant": "P-02",
-    "nature": "paramètre",
-    "libelle": "Maximum tolerated residual, in balance steps",
-    "document": "exemples/mass-balance/reports/TEST-REPORT.md"
-  },
-  {
     "uuid": "c971327c-6b5f-4696-815e-ce1ee4479bb7",
     "identifiant": "CT-08",
     "nature": "cas de test",
     "libelle": "Target mass not a multiple of the step",
     "document": "exemples/mass-balance/spec/SPEC-MAS-001.en.md"
-  },
-  {
-    "uuid": "ca1243bc-4b2e-4a16-a9ab-beb4c0f9d5fc",
-    "identifiant": "P-02",
-    "nature": "paramètre",
-    "libelle": "Decimals of the published speed",
-    "document": "exemples/average-speed/reports/TEST-REPORT.md"
   },
   {
     "uuid": "cabb4a7c-3cc6-4b7f-840b-fa14ee4d0f4a",
@@ -1769,13 +1671,6 @@
     "nature": "document",
     "libelle": "FN-004 — Planifier les arrêts de recharge",
     "document": "exemples/fil-rouge/4-FN-004-planifier-les-recharges.md"
-  },
-  {
-    "uuid": "f80965fb-ffa5-488e-8137-91bc6993970c",
-    "identifiant": "INV-01",
-    "nature": "invariant",
-    "libelle": "`average_speed` lies between the **slowest** and the **faste…",
-    "document": "exemples/average-speed/reports/TEST-REPORT.md"
   },
   {
     "uuid": "f9ce6fbe-3f85-4bb0-8a4d-f7ec0d535568",

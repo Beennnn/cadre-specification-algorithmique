@@ -17,7 +17,6 @@ import method.spec.ImplementsSpec;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.math.RoundingMode;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -128,37 +127,10 @@ public final class AverageSpeedTest {
         BigDecimal naive = BigDecimal.ZERO;
         for (AverageSpeed.Leg l : legs) naive = naive.add(l.speed());
         naive = naive.divide(BigDecimal.valueOf(legs.size()), 1, AverageSpeed.P_01_ROUNDING_MODE);
-        StringBuilder note = new StringBuilder(naive.compareTo(expected) == 0
+        String note = naive.compareTo(expected) == 0
                 ? "**does not discriminate** — the naive mean gives the same answer"
-                : "discriminates: the naive mean would give " + naive + " km/h");
-
-        // A parameter is only verified by a case whose result would CHANGE if the
-        // parameter changed. Most cases decide neither: their quotient is exact.
-        for (String[] d : decided(r, expected)) {
-            exercised.add(d[0]);
-            note.append(" · decides `").append(d[0]).append("` — ").append(d[1]);
-        }
+                : "discriminates: the naive mean would give " + naive + " km/h";
         pass(id, r.averageSpeed() + " km/h · " + note);
-    }
-
-    /**
-     * Which rounding parameters this case actually decides. `P-01` is decided only when
-     * the unrounded quotient falls on a tie; `P-02` only when it has more decimals than
-     * we publish. A case that decides neither leaves both parameters unverified — which
-     * is exactly what the reference set looked like before CT-06.
-     */
-    @ImplementsSpec({"P-01", "P-02"})
-    static List<String[]> decided(AverageSpeed.Result r, BigDecimal published) {
-        List<String[]> found = new ArrayList<>();
-        BigDecimal otherMode = r.totalDistance().divide(
-                r.totalDuration(), AverageSpeed.P_02_DECIMALS, RoundingMode.HALF_UP);
-        if (otherMode.compareTo(published) != 0)
-            found.add(new String[]{"P-01", "`HALF_UP` would publish " + otherMode});
-        BigDecimal oneMore = r.totalDistance().divide(
-                r.totalDuration(), AverageSpeed.P_02_DECIMALS + 1, AverageSpeed.P_01_ROUNDING_MODE);
-        if (oneMore.compareTo(published) != 0)
-            found.add(new String[]{"P-02", "one more decimal would publish " + oneMore});
-        return found;
     }
 
     /** INV-01 — the average lies between the slowest and the fastest leg. */
@@ -227,8 +199,6 @@ public final class AverageSpeedTest {
         collect(required, text, "^###\\s+(RG-\\d+)\\s+—\\s+(.+)$", Pattern.MULTILINE);
         collect(required, text, ANCRE + "`(INV-\\d+)`\\s*\\|\\s*([^|]+)", Pattern.MULTILINE);
         collect(required, text, ANCRE + "`(E-[A-Z]+-\\d+)`\\s*\\|\\s*([^|]+)", Pattern.MULTILINE);
-        Map<String, String> parametres = new LinkedHashMap<>();
-        collect(parametres, text, ANCRE + "`(P-\\d+)`\\s*\\|\\s*([^|]+)", Pattern.MULTILINE);
 
         say("");
         say("## Coverage of what the specification requires");
@@ -247,17 +217,6 @@ public final class AverageSpeedTest {
             say("");
             say("**" + uncovered + " item(s) of the specification are exercised by no test.**");
         }
-
-        // A parameter appearing in the code is not a parameter under test. It is under
-        // test only if some case would publish a different number were it changed.
-        say("");
-        say("## Parameters, and whether any case decides them");
-        say("");
-        say("| Parameter | Statement | Decided by a case |");
-        say("|---|---|---|");
-        for (var e : parametres.entrySet())
-            say("| `" + e.getKey() + "` | " + truncate(e.getValue(), 50) + " | "
-                    + (exercised.contains(e.getKey()) ? "yes" : "**no — its value is never arbitrated**") + " |");
     }
 
     static void collect(Map<String, String> into, String text, String regex, int flags) {

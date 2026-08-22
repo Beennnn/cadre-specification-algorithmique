@@ -135,9 +135,8 @@ average_speed = ROUND( total_distance ÷ total_duration, P-02, P-01 )
 | `RG-020` | CT-01, CT-02, CT-03, CT-04, CT-06 |
 | `RG-030` | CT-01, CT-02, CT-03, CT-04, CT-06 |
 
-`P-01` and `P-02` are arbitrated by **CT-06 alone**: it is the only case whose unrounded
-quotient falls on a tie. Every other case publishes the same number whatever the rounding
-mode — which is why the parameters were, until v1.1.0, verified by nothing.
+`P-01` and `P-02` are decided by **CT-06 alone**: it is the only case whose unrounded
+quotient falls on a tie.
 
 ---
 
@@ -233,7 +232,7 @@ would give 13.5 km/h.
 |---|---|
 | **Provenance** | Computed by hand in exact decimal arithmetic, independently of any implementation |
 | **How they were examined** | Each duration, total and quotient was recomputed, and each case was compared with the arithmetic mean of the speeds to check whether it discriminates |
-| **What the examination produced** | CT-02 was added **because** it does *not* discriminate: without it, nobody would see that passing three cases proves nothing. CT-06 was added when the examination showed that `P-01` was decided by no case at all — CT-04, whose title said "rounding", has an exact quotient |
+| **What the examination produced** | CT-02 was added **because** it does *not* discriminate: without it, nobody would see that passing three cases proves nothing. CT-06 was added when the examination showed that no case decided `P-01` at all |
 | **One document per case** | [`../tests/`](../tests/) — what each case exists to catch, and what it would let through |
 | **Where they live** | [`../code/src/test/resources/reference-data.csv`](../code/src/test/resources/reference-data.csv) |
 | **Approved by** | Fleet operations manager, 2026-08-22 |

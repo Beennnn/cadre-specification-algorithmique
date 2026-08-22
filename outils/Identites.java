@@ -50,6 +50,25 @@ public class Identites {
         return i < 0 ? texte : texte.substring(0, i);
     }
 
+    /**
+     * Le texte débarrassé de ses blocs de code, en conservant les numéros de ligne.
+     *
+     * Une page qui CITE un rapport recopie ses tableaux dans un bloc de code — et
+     * « | `P-04` | rounding mode … | » y ressemble trait pour trait à la déclaration
+     * d'un paramètre. Sans ce filtre, un README récolte des identités qui n'existent
+     * pas, avec des UUID neufs à chaque exécution.
+     */
+    static String horsCode(String texte) {
+        StringBuilder b = new StringBuilder();
+        boolean dansUnBloc = false;
+        for (String ligne : texte.split("\n", -1)) {
+            if (ligne.stripLeading().startsWith("```")) dansUnBloc = !dansUnBloc;
+            b.append(dansUnBloc || ligne.stripLeading().startsWith("```") ? "" : ligne)
+             .append('\n');
+        }
+        return b.toString();
+    }
+
     /** Objets identifiés du document, hors annexe, dans l'ordre d'apparition. */
     static List<Objet> objets(String texte) {
         List<Objet> trouves = new ArrayList<>();
@@ -61,7 +80,7 @@ public class Identites {
             trouves.add(new Objet(m.group(1), "document", t.find() ? t.group(1) : ""));
             vus.add(m.group(1));
         }
-        String c = corps(texte);
+        String c = horsCode(corps(texte));
         for (String[] motif : MOTIFS) {
             Matcher mm = Pattern.compile(motif[0], Pattern.MULTILINE).matcher(c);
             while (mm.find()) {
@@ -170,6 +189,10 @@ public class Identites {
                     .filter(p -> !p.toString().contains(".git"))
                     .filter(p -> !p.toString().contains("templates"))
                     .filter(p -> !p.toString().contains("jeu-d-essai"))
+                    // Les rapports sont ENGENDRÉS : leurs tables ressemblent à des
+                    // déclarations d'objets, et y attribuer des identités produit des
+                    // UUID neufs à chaque exécution — l'exact contraire d'une identité.
+                    .filter(p -> !p.toString().contains("reports"))
                     .sorted().toList();
         }
         for (Path chemin : fichiers) {
@@ -229,6 +252,10 @@ public class Identites {
                             .filter(p -> !p.toString().contains(".git"))
                             .filter(p -> !p.toString().contains("templates"))
                             .filter(p -> !p.toString().contains("jeu-d-essai"))
+                    // Les rapports sont ENGENDRÉS : leurs tables ressemblent à des
+                    // déclarations d'objets, et y attribuer des identités produit des
+                    // UUID neufs à chaque exécution — l'exact contraire d'une identité.
+                    .filter(p -> !p.toString().contains("reports"))
                             .sorted().toList();
                 }
             }

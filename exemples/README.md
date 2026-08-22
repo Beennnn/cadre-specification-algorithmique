@@ -10,16 +10,34 @@ là-dessus, pas sur le domaine.*
 
 | Exemple | Taille | Jusqu'où il va | Ce qu'il montre et que les autres ne montrent pas |
 |---|---|---|---|
-| **[La vitesse moyenne d'un trajet](average-speed/)** | ~170 l. | spec → **un doc par cas** → code → rapports | La **prise en main**. Deux fonctions, deux paramètres, trois règles |
-| **[Le relevé d'une station météo](weather-summary/)** | ~450 l. | spec → **un doc par cas** → code → rapports | **Tout le pseudo-langage**, une **boucle qui peut s'épuiser**, et le seul défaut que ni un invariant ni un jeu de cas n'auraient trouvé seuls |
-| **[Le bilan de masse d'un lot](mass-balance/)** | ~470 l. | besoin → spec → contrat → **un doc par cas** → code → rapports → **écarts** | La **chaîne complète**, jusqu'à l'analyse des écarts |
-| **[Le refroidissement d'une boisson](cooling/)** | ~630 l. | spec, deux langues | Le **continu et l'approché** : équation différentielle, incertitude |
-| **[Le lever du Soleil](sunrise/)** | ~510 l. | spec, deux langues | Une **équation sans solution** hors des cercles polaires |
-| **[L'autonomie d'un véhicule](fil-rouge/)** | ~840 l. | besoin → découpage → glossaire → données → spec, deux langues | Le **passage à l'échelle** : douze fonctions, dix étapes |
+| **[La vitesse moyenne d'un trajet](average-speed/)** | **260 l.** | spec → un doc par cas → code → rapports | La **prise en main**. Deux fonctions, deux paramètres, trois règles |
+| **[Le bilan de masse d'un lot](mass-balance/)** | 450 l. | besoin → spec → contrat → cas → code → rapports → **écarts** | La **chaîne complète**, jusqu'à l'analyse des écarts |
+| **[Le relevé d'une station météo](weather-summary/)** | 540 l. | spec → un doc par cas → code → rapports | **Tout le pseudo-langage**, et une **boucle qui peut s'épuiser** |
+| **[Le lever du Soleil](sunrise/)** | 465 l. | spec, deux langues | Une **équation sans solution** hors des cercles polaires |
+| **[Le refroidissement d'une boisson](cooling/)** | 580 l. | spec, deux langues | Le **continu et l'approché** : équation différentielle, incertitude |
+| **[L'autonomie d'un véhicule](fil-rouge/)** | 770 l. | besoin → découpage → glossaire → données → spec | Le **passage à l'échelle** : douze fonctions, dix étapes |
 
-**Par où commencer** : la vitesse moyenne si vous découvrez la méthode, le relevé météo si
-vous voulez voir le pseudo-langage au travail, le bilan de masse si vous voulez voir ce que
-le document devient une fois passé aux développeurs.
+---
+
+## Commencez par la vitesse moyenne
+
+**C'est le plus petit exemple du dépôt, et il est complet.** Deux fonctions, deux
+paramètres, trois règles, six cas de test. La spécification se lit en cinq minutes ; chaque
+cas tient sur une page courte ; le code s'exécute en deux commandes.
+
+Il est minuscule et porte quand même un vrai faux ami : **la vitesse moyenne n'est pas la
+moyenne des vitesses.** 60 km à 30 km/h puis 60 km à 60 km/h donnent 40 km/h, pas 45 — on
+passe deux heures sur le segment lent et une sur le rapide, donc le lent pèse deux fois plus.
+
+Deux détails valent le détour, et ils tiennent en deux phrases :
+
+- **`CT-02` est gardé bien qu'il ne discrimine pas.** Il montre qu'une implémentation fausse
+  passe un test plausible — et le rapport de test le dit, cas par cas.
+- **`CT-06` a été ajouté parce qu'aucun cas ne décidait le mode d'arrondi.** `P-01` était
+  validé, daté, implémenté, déclaré couvert — et vérifié par rien.
+
+> **Si vous ne lisez qu'un exemple, lisez celui-là.** Les cinq autres ajoutent chacun un
+> régime que celui-ci ne montre pas ; aucun ne le remplace comme point d'entrée.
 
 ---
 
@@ -94,25 +112,7 @@ sur l'égalité, seul endroit où cette propriété a des dents.
 
 ---
 
-## Les cinq autres, et ce qu'ils apportent
-
-### La vitesse moyenne — la prise en main
-
-Deux fonctions, trois règles, lu en cinq minutes. Il est minuscule et porte quand même un
-vrai faux ami : **la vitesse moyenne n'est pas la moyenne des vitesses**. 60 km à 30 km/h
-puis 60 km à 60 km/h donnent 40 km/h, pas 45.
-
-Son détail le plus instructif : `CT-02` est gardé **bien qu'il ne discrimine pas**. Il
-montre qu'une implémentation fausse passe un test plausible, et le rapport de test le dit
-cas par cas. C'est aussi le seul exemple avec un **rapport de couverture outillé**, qui
-relie chaque point de la spec au fichier et à la ligne qui l'implémentent.
-
-C'est enfin le seul qui porte **[un document par cas de test](average-speed/tests/)**,
-avec pour chacun ce qu'il attrape *et ce qu'il laisse passer*. Écrire ces six documents a
-produit un défaut : `CT-04` s'appelait « Arrondi » et son quotient est exact — le mode
-d'arrondi `P-01` était validé, implémenté, déclaré couvert, et **arbitré par aucun cas**.
-`CT-06` a été ajouté pour cela, et le harnais rapporte désormais, cas par cas, quels
-paramètres chacun décide réellement.
+## Les quatre autres, et ce qu'ils apportent
 
 ### Le bilan de masse — la chaîne complète
 
@@ -121,16 +121,10 @@ référence, et l'étape 5 conclut que **le code est conforme et que la spécifi
 défaut** : un composant reçoit +180 % de sa part visée alors que la conservation de la
 masse est parfaite. La correction remonte au document, versionnée.
 
-Il porte aussi **[un document par cas de test](mass-balance/tests/)** et un rapport de
-couverture outillé. Les écrire a produit deux cas qui manquaient : `E-MAS-002` — le rejet
-d'un résidu trop grand — n'était exercé par aucun cas, et aucune masse nominale ne tombait
-jamais sur un demi-pas, si bien que le mode d'arrondi `P-01` était **arbitré par rien**.
-
-> **Ce que ces deux cas montrent, et qu'aucun autre exemple ne montre.** `CT-03` et `CT-10`
-> sont passés par `INV-01` à `INV-04` **alors que les masses pesées sont fausses** : une
-> allocation dépendante de l'ordre et un mauvais mode d'arrondi conservent tous deux la
-> masse. Ce qui les attrape, ce sont les **masses validées par le métier**. Un invariant ne
-> remplace pas un jeu de référence, et réciproquement.
+> **Il montre aussi qu'un invariant ne remplace pas un jeu de référence.** `CT-03` et
+> `CT-10` sont passés par les quatre invariants **alors que les masses pesées sont
+> fausses** : une allocation dépendante de l'ordre et un mauvais mode d'arrondi conservent
+> tous deux la masse. Ce qui les attrape, ce sont les masses validées par le métier.
 
 ### Le refroidissement — le continu et l'approché
 
@@ -174,7 +168,7 @@ Le bilan de masse et le refroidissement traitent des grandeurs de nature opposé
 
 | | |
 |---|---|
-| **Deux langues** | `<nom>.en.md` fait foi, `<nom>.fr.md` est la traduction. `C-42` vérifie qu'elles portent les mêmes objets et les mêmes identités. Les **cinq specs** du dépôt la respectent |
+| **Deux langues** | `<nom>.en.md` fait foi, `<nom>.fr.md` est la traduction. `C-42` vérifie qu'elles portent les mêmes objets et les mêmes identités. Les **six specs** du dépôt la respectent |
 | **Une seule langue pour le reste** | jeu de données, code, tests, rapports : **anglais**. Ce sont des artefacts d'exécution, pas de relecture |
 | **Deux vues du même calcul** | l'algorithme intégré, qui se juge d'un coup, et les règles numérotées, qui sont adressables |
 | **Des chiffres vérifiés** | tout résultat publié a été recalculé indépendamment de toute implémentation |

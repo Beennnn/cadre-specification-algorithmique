@@ -142,10 +142,8 @@ average_speed = ROUND( total_distance ÷ total_duration, P-02, P-01 )
 | `RG-020` | CT-01, CT-02, CT-03, CT-04, CT-06 |
 | `RG-030` | CT-01, CT-02, CT-03, CT-04, CT-06 |
 
-`P-01` et `P-02` sont arbitrés par **CT-06 seul** : c'est le seul cas dont le quotient non
-arrondi tombe pile sur une égalité. Tous les autres publient le même nombre quel que soit
-le mode d'arrondi — c'est pourquoi ces paramètres n'étaient, jusqu'en v1.1.0, vérifiés par
-rien.
+`P-01` et `P-02` sont décidés par **CT-06 seul** : c'est le seul cas dont le quotient non
+arrondi tombe pile sur une égalité.
 
 ---
 
@@ -242,7 +240,7 @@ aussi contre la moyenne naïve, qui donnerait 13,5 km/h.
 |---|---|
 | **Provenance** | Calculés à la main en arithmétique décimale exacte, indépendamment de toute implémentation |
 | **Comment ils ont été examinés** | Chaque durée, total et quotient a été recalculé, et chaque cas confronté à la moyenne arithmétique des vitesses pour savoir s'il discrimine |
-| **Ce que l'examen a produit** | CT-02 a été ajouté **parce qu'il ne discrimine pas** : sans lui, personne ne verrait que passer trois cas ne prouve rien. CT-06 a été ajouté quand l'examen a montré qu'aucun cas ne décidait `P-01` — CT-04, dont le titre disait « arrondi », a un quotient exact |
+| **Ce que l'examen a produit** | CT-02 a été ajouté **parce qu'il ne discrimine pas** : sans lui, personne ne verrait que passer trois cas ne prouve rien. CT-06 a été ajouté quand l'examen a montré qu'aucun cas ne décidait `P-01` |
 | **Un document par cas** | [`../tests/`](../tests/) — ce que chaque cas existe pour attraper, et ce qu'il laisserait passer |
 | **Où ils vivent** | [`../code/src/test/resources/reference-data.csv`](../code/src/test/resources/reference-data.csv) |
 | **Validé par** | Responsable exploitation de flotte, 2026-08-22 |

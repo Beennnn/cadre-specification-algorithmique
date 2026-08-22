@@ -12,7 +12,7 @@ never from the implementation.*
 | `CT-03` | OK | 80.0 km/h · **does not discriminate** — the naive mean gives the same answer |
 | `CT-04` | OK | 9.1 km/h · discriminates: the naive mean would give 10.0 km/h |
 | `CT-05` | OK | rejected as expected — `E-SPD-001` |
-| `CT-06` | OK | 9.2 km/h · discriminates: the naive mean would give 13.5 km/h · decides `P-01` — `HALF_UP` would publish 9.3 · decides `P-02` — one more decimal would publish 9.25 |
+| `CT-06` | OK | 9.2 km/h · discriminates: the naive mean would give 13.5 km/h |
 
 ## Property tested on generated inputs
 
@@ -31,23 +31,4 @@ never from the implementation.*
 | `INV-02` | Before rounding, `average_speed × total_duration = total_dis… | yes |
 | `E-SPD-001` | A leg has a speed `≤ 0` | yes |
 
-## Parameters, and whether any case decides them
-
-| Parameter | Statement | Decided by a case |
-|---|---|---|
-| `P-01` | Rounding mode of the published speed | yes |
-| `P-02` | Decimals of the published speed | yes |
-
 **All reference cases pass, and every required item is covered.**
-
-## Annexe — Identités
-
-*Chaque objet porte un UUID attribué une fois et jamais modifié. L'identifiant lisible et le libellé sont des étiquettes : ils peuvent changer, l'identité non. Voir [CADRE.md §2.8](../../../CADRE.md).*
-
-| Identifiant | UUID | Nature | Libellé |
-|---|---|---|---|
-| `P-01` | `7e952f80-9a2d-4a8d-8870-fc4e72428d70` | paramètre | Rounding mode of the published speed |
-| `P-02` | `ca1243bc-4b2e-4a16-a9ab-beb4c0f9d5fc` | paramètre | Decimals of the published speed |
-| `INV-01` | `f80965fb-ffa5-488e-8137-91bc6993970c` | invariant | `average_speed` lies between the **slowest** and the **faste… |
-| `INV-02` | `22a6a616-0600-4cb1-91db-f8545a02acd5` | invariant | Before rounding, `average_speed × total_duration = total_dis… |
-| `E-SPD-001` | `a3ce427d-6fe3-4285-b69e-5cba6e95d07e` | cas d'erreur | A leg has a speed `≤ 0` |
