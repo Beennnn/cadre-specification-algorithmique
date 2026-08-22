@@ -479,7 +479,10 @@ public class Verifier {
                             + " itérations dans une même règle — décrire un résultat plutôt"
                             + " qu'un parcours (§2.5)");
 
-                if (code.contains("WHILE") && !Pattern.compile("it[ée]ration",
+                // Le maximum peut être déclaré en français comme en anglais, et le mot
+                // employé dépend du domaine : itérations, tours, passes.
+                if (code.contains("WHILE") && !Pattern.compile(
+                        "it[ée]ration|\\btours?\\b|\\brounds?\\b|\\bpasses?\\b|\\bsweeps?\\b",
                         Pattern.CASE_INSENSITIVE).matcher(bloc).find())
                     constat("ÉCHEC", "C-13", chemin,
                             titre + " : WHILE sans nombre maximal d'itérations déclaré");

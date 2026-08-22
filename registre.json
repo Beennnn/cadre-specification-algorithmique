@@ -140,6 +140,13 @@
     "document": "exemples/mass-balance/2-SPEC-MAS-001.en.md"
   },
   {
+    "uuid": "154eba7a-a195-45cd-85ce-a25c6488c7f8",
+    "identifiant": "RG-005",
+    "nature": "règle",
+    "libelle": "What the summary identifies",
+    "document": "exemples/weather-summary/spec/SPEC-WTH-001.en.md"
+  },
+  {
     "uuid": "1645cc91-0461-4d1f-9226-2800a352d859",
     "identifiant": "CT-07",
     "nature": "cas de test",
@@ -187,6 +194,13 @@
     "nature": "cas d'erreur",
     "libelle": "`P-06` itérations sans convergence à `P-05` près",
     "document": "exemples/SPEC-THM-001-refroidissement.md"
+  },
+  {
+    "uuid": "1d9ad939-2231-4a94-8e2a-01b72c5d94f8",
+    "identifiant": "RG-050",
+    "nature": "règle",
+    "libelle": "Frost episodes",
+    "document": "exemples/weather-summary/spec/SPEC-WTH-001.en.md"
   },
   {
     "uuid": "1e231894-98ee-40ef-a339-9ef41e368d51",
@@ -392,6 +406,20 @@
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
   },
   {
+    "uuid": "45f29eca-fd22-4d17-8b9d-e9817c3f52f8",
+    "identifiant": "CT-04",
+    "nature": "cas de test",
+    "libelle": "Non-convergence",
+    "document": "exemples/weather-summary/spec/SPEC-WTH-001.en.md"
+  },
+  {
+    "uuid": "4784e57e-41d9-4424-bd92-2d7fa1cf0152",
+    "identifiant": "CT-03",
+    "nature": "cas de test",
+    "libelle": "Not enough usable readings",
+    "document": "exemples/weather-summary/spec/SPEC-WTH-001.en.md"
+  },
+  {
     "uuid": "47db7e61-d39c-4d07-ab94-810c0e0032fd",
     "identifiant": "EX-01",
     "nature": "exigence",
@@ -432,6 +460,13 @@
     "nature": "paramètre",
     "libelle": "Facteur de température retenu si la mesure est indisponible",
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+  },
+  {
+    "uuid": "4fe6018e-437e-401b-b4e1-30cb153b7788",
+    "identifiant": "RG-040",
+    "nature": "règle",
+    "libelle": "Statistics",
+    "document": "exemples/weather-summary/spec/SPEC-WTH-001.en.md"
   },
   {
     "uuid": "4fe93e69-adf6-4259-83a4-f512ac0dab4a",
@@ -714,6 +749,13 @@
     "document": "exemples/mass-balance/2-SPEC-MAS-001.en.md"
   },
   {
+    "uuid": "830ed5d0-0f38-4489-a084-42d3a5e7f00a",
+    "identifiant": "RG-030",
+    "nature": "règle",
+    "libelle": "Iterative outlier rejection",
+    "document": "exemples/weather-summary/spec/SPEC-WTH-001.en.md"
+  },
+  {
     "uuid": "8416d9a7-cdb6-4116-bc37-a9538d3ff520",
     "identifiant": "SPEC-THM-001",
     "nature": "document",
@@ -754,6 +796,13 @@
     "nature": "donnée",
     "libelle": "Masse transportée",
     "document": "exemples/fil-rouge/3-DONNEES.md"
+  },
+  {
+    "uuid": "8c70a047-add6-44ca-be32-bde0cfe2ae3f",
+    "identifiant": "RG-010",
+    "nature": "règle",
+    "libelle": "Usable readings",
+    "document": "exemples/weather-summary/spec/SPEC-WTH-001.en.md"
   },
   {
     "uuid": "8cad23b6-1739-4778-899a-8b3d7c2958fd",
@@ -880,6 +929,13 @@
     "nature": "règle",
     "libelle": "Température à un instant donné",
     "document": "exemples/SPEC-THM-001-refroidissement.md"
+  },
+  {
+    "uuid": "a6b6ce38-a651-4269-bdb2-3bea51583d09",
+    "identifiant": "CT-02",
+    "nature": "cas de test",
+    "libelle": "No outlier",
+    "document": "exemples/weather-summary/spec/SPEC-WTH-001.en.md"
   },
   {
     "uuid": "a8bf6497-965d-4777-a9f9-f3d2a35cec8c",
@@ -1057,6 +1113,13 @@
     "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
   },
   {
+    "uuid": "bf599ac6-916a-4a89-b7b4-8985a6d093b6",
+    "identifiant": "CT-01",
+    "nature": "cas de test",
+    "libelle": "One outlier, converges, one frost episode",
+    "document": "exemples/weather-summary/spec/SPEC-WTH-001.en.md"
+  },
+  {
     "uuid": "c048bd3f-7a20-4669-b9c7-2b29d366394c",
     "identifiant": "Q-01",
     "nature": "question",
@@ -1197,6 +1260,13 @@
     "document": "exemples/SPEC-THM-001-refroidissement.md"
   },
   {
+    "uuid": "d016ba2f-3f89-4b82-92cc-e30124eb547f",
+    "identifiant": "SPEC-WTH-001",
+    "nature": "document",
+    "libelle": "SPEC-WTH-001 — Daily summary of a weather station",
+    "document": "exemples/weather-summary/spec/SPEC-WTH-001.en.md"
+  },
+  {
     "uuid": "d1f9aa40-7f4f-4ad1-a341-57f5064ff4f6",
     "identifiant": "EX-02",
     "nature": "exigence",
@@ -1244,6 +1314,13 @@
     "nature": "donnée",
     "libelle": "État de charge",
     "document": "exemples/fil-rouge/3-DONNEES.md"
+  },
+  {
+    "uuid": "d94a065b-1bf3-4a0e-bc6e-488713d5da24",
+    "identifiant": "RG-020",
+    "nature": "règle",
+    "libelle": "Minimum number of readings",
+    "document": "exemples/weather-summary/spec/SPEC-WTH-001.en.md"
   },
   {
     "uuid": "dbccfecf-777b-4959-a321-7cb6555461cf",
@@ -1384,6 +1461,13 @@
     "nature": "cas d'erreur",
     "libelle": "Ni `instant_demande` ni `temperature_cible` n'est fourni",
     "document": "exemples/SPEC-THM-001-refroidissement.md"
+  },
+  {
+    "uuid": "efe07b5d-a903-4138-860d-bd0f6005a17d",
+    "identifiant": "RG-060",
+    "nature": "règle",
+    "libelle": "Quality label",
+    "document": "exemples/weather-summary/spec/SPEC-WTH-001.en.md"
   },
   {
     "uuid": "f12f64b6-8041-4729-91ec-92cdee0b1e71",
