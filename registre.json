@@ -24,8 +24,8 @@
     "uuid": "069a2362-2dfb-4a2b-9e2e-f25e55c33516",
     "identifiant": "RG-030",
     "nature": "règle",
-    "libelle": "Traction et récupération",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "Traction and regeneration",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "0746de64-53c0-4dce-a2d9-6c5f094f735e",
@@ -59,8 +59,8 @@
     "uuid": "0a2c8c35-e90b-4e9a-a67a-84796f979fc0",
     "identifiant": "RG-050",
     "nature": "règle",
-    "libelle": "Énergie d'un segment",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "Energy of a segment",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "0bd9840e-b26b-4f5c-8fb1-942cf27adb3c",
@@ -73,15 +73,15 @@
     "uuid": "0c21b3f5-6dd0-46d4-bc12-cd24d35a5f10",
     "identifiant": "Q-05",
     "nature": "question",
-    "libelle": "Tranchée le 2026-03-12 :* le point d'autonomie s'arrondit-il au plus proche ou vers le bas ? → **vers le bas**, sans exception (`RG-100`)",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "Settled on 2026-03-12:* does the range point round to nearest or downwards? → **downwards**, without exception (`RG-100`)",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "0dccee30-3ba4-447f-871f-2f844c974226",
     "identifiant": "CT-05",
     "nature": "cas de test",
-    "libelle": "Autonomie jamais atteinte",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "Range never reached",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "0e341e9d-e746-4d42-b831-5e31f3f9a6fb",
@@ -129,8 +129,8 @@
     "uuid": "13e307f4-1b7a-444c-8829-d186c50601e9",
     "identifiant": "E-TRAJET-001",
     "nature": "cas d'erreur",
-    "libelle": "Le trajet ne contient aucun segment",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "The route contains no segment",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "14aa1bd5-f615-42c4-a9cb-3d2c078c1e0b",
@@ -220,15 +220,15 @@
     "uuid": "1ffdcc6b-2965-4ac9-a517-25affafc0b44",
     "identifiant": "Q-06",
     "nature": "question",
-    "libelle": "`EX-08` impose une liste technique approuvée côté serveur, alors que `EX-01` impose du C MISRA à bord. La reproductibilité de 10⁻⁹ entre les deux implémentations (§8.2) est-elle tenable avec tous les langages de la liste, ou faut-il restreindre celle-ci pour cette fonction ?",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "`EX-08` imposes an approved technical list on the server side, while `EX-01` imposes MISRA C on board. Is the 10⁻⁹ reproducibility between the two implementations (§8.2) achievable with every language on the list, or must it be restricted for this function?",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "21267255-1108-4c13-adf6-5832b0069bde",
     "identifiant": "INV-05",
     "nature": "invariant",
-    "libelle": "Monotonie vis-à-vis de la vitesse, au-delà de la vitesse de consommation minimale** : voir la note ci-dessous",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "Monotonicity in speed, above the minimum-consumption speed**: see the note below",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "22a6a616-0600-4cb1-91db-f8545a02acd5",
@@ -262,8 +262,8 @@
     "uuid": "263cbebd-9441-4b74-9c57-846a2f5a389b",
     "identifiant": "CT-01",
     "nature": "cas de test",
-    "libelle": "Bilan complet, segment par segment",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "Full balance, segment by segment",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "289af665-16cb-4113-86ea-9ff53ce1a4c5",
@@ -304,8 +304,8 @@
     "uuid": "2cabdb36-4f9e-4af5-8a6e-812b673be478",
     "identifiant": "CT-02",
     "nature": "cas de test",
-    "libelle": "La récupération",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "Regeneration",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "2d2ea0de-a006-4f2c-ad7e-79142b49f4da",
@@ -318,8 +318,8 @@
     "uuid": "2eb8fe40-e628-4405-aa72-116729d70ba0",
     "identifiant": "RG-060",
     "nature": "règle",
-    "libelle": "Énergie disponible et facteur de température",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "Available energy and temperature factor",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "3073c520-8afd-4ffd-b539-43a860054895",
@@ -374,8 +374,8 @@
     "uuid": "3cc439b5-c892-4f1b-9b73-404b674cf47f",
     "identifiant": "Q-02",
     "nature": "question",
-    "libelle": "La masse volumique de l'air (`P-02`) est fixe. Faut-il la corriger de l'altitude, connue du trajet ? Gain estimé : 3 à 4 % en montagne",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "The air density (`P-02`) is fixed. Should it be corrected for altitude, which the route knows? Estimated gain: 3 to 4 % in the mountains",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "3dd144ed-ae0c-4122-a8e9-6cfe601315c0",
@@ -395,8 +395,8 @@
     "uuid": "3edc5a91-74d0-4ebc-aba7-6eb8e7e3352e",
     "identifiant": "E-VEHIC-001",
     "nature": "cas d'erreur",
-    "libelle": "Un rendement est hors de l'intervalle `]0 ; 1[`",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "An efficiency is outside the interval `]0 ; 1[`",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "3f8c34ce-99ef-485f-8fc6-2e9609889fa8",
@@ -409,8 +409,8 @@
     "uuid": "41dea1ff-81d5-42cc-a782-0da8ba4473eb",
     "identifiant": "Q-01",
     "nature": "question",
-    "libelle": "Le barème de température procède par paliers (`RG-060`). Un dixième de degré peut faire varier l'autonomie de plusieurs kilomètres, ce qui peut heurter la contrainte de **stabilité** du §11. Faut-il interpoler, ou introduire une hystérésis ?",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "The temperature scale works in steps (`RG-060`). A tenth of a degree can move the range by several kilometres, which may clash with the **stability** constraint of §11. Should it be interpolated, or should hysteresis be introduced?",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "428e65ae-0ed5-4a6b-8eb4-e41d0215211a",
@@ -423,8 +423,8 @@
     "uuid": "43b0691e-1348-4088-99c5-86c584a90c42",
     "identifiant": "FN-001",
     "nature": "fonction",
-    "libelle": "comportement",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "behaviour",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "453d1761-dec3-4e0b-bdb4-23d908e52130",
@@ -437,8 +437,8 @@
     "uuid": "45b15e7c-d7b2-4c2e-b929-f91928f6e003",
     "identifiant": "CT-03",
     "nature": "cas de test",
-    "libelle": "Point d'autonomie, interpolation dans le segment 2",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "Range point, interpolation inside segment 2",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "45f1832b-1beb-40a2-a8b2-c88c2449d8ec",
@@ -507,8 +507,8 @@
     "uuid": "4ea5c434-9869-4176-975d-1813cecfa836",
     "identifiant": "P-04",
     "nature": "paramètre",
-    "libelle": "Facteur de température retenu si la mesure est indisponible",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "Temperature factor used when the measurement is unavailable",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "4fe6018e-437e-401b-b4e1-30cb153b7788",
@@ -542,8 +542,8 @@
     "uuid": "52d43b49-e236-4a5c-9835-ebe75ef1aecf",
     "identifiant": "INV-08",
     "nature": "invariant",
-    "libelle": "Le calcul est **pur** : aucun appel successif ne dépend d'un appel précédent",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "The calculation is **pure**: no successive call depends on a previous one",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "53654d26-cf42-4131-9b28-a5eb4a831652",
@@ -577,8 +577,8 @@
     "uuid": "56568916-bbd1-44d2-86fc-12416f98676c",
     "identifiant": "FN-007",
     "nature": "fonction",
-    "libelle": "aucun",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "none",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "5a2012a7-8dc7-40df-8f81-b8ba67b1884a",
@@ -591,8 +591,8 @@
     "uuid": "5afa3fa9-13fd-455a-90f9-a7d6a105894e",
     "identifiant": "INV-01",
     "nature": "invariant",
-    "libelle": "Sur un segment de pente positive ou nulle, `energie_segment > 0`",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "On a segment with a positive or zero gradient, `segment_energy > 0`",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "5b432b90-2b5c-482f-a032-922be7159f4e",
@@ -640,8 +640,8 @@
     "uuid": "6573a577-9067-4cd6-861d-b257b71803d5",
     "identifiant": "P-01",
     "nature": "paramètre",
-    "libelle": "Accélération de la pesanteur",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "Acceleration of gravity",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "658ca7f7-95c5-4968-a548-68297db0fd34",
@@ -689,8 +689,8 @@
     "uuid": "683ae5b4-21f5-4841-80c6-d1e5fa76fffa",
     "identifiant": "INV-06",
     "nature": "invariant",
-    "libelle": "`point_autonomie`, s'il existe, est compris entre 0 et la longueur totale du trajet",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "`range_point`, if it exists, lies between 0 and the total length of the route",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "68ad3237-3c15-4f58-a8d6-ee9383bf46e2",
@@ -717,8 +717,8 @@
     "uuid": "6a56299f-1c41-47be-bfa9-02bedc1ac609",
     "identifiant": "RG-070",
     "nature": "règle",
-    "libelle": "Budget utilisable",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "Usable budget",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "6a936d8a-f897-4ada-883b-4d430c07ad49",
@@ -752,15 +752,15 @@
     "uuid": "6c28457c-2b40-43aa-9c83-a3ace089ccdc",
     "identifiant": "RG-090",
     "nature": "règle",
-    "libelle": "Point d'autonomie",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "Range point",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "6c3d7b34-250c-4744-809c-e4b8043d05da",
     "identifiant": "CT-06",
     "nature": "cas de test",
-    "libelle": "La vitesse de consommation minimale",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "The minimum-consumption speed",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "6e9e8cc6-857f-497c-8fa7-6e034a83fb04",
@@ -906,8 +906,8 @@
     "uuid": "874a1ca9-d14a-43d5-9daf-865e9b8b7fc0",
     "identifiant": "EX-04",
     "nature": "exigence",
-    "libelle": "La fonction s'exécute dans la **partition non critique** du calculateur ; elle ne peut ni lire ni écrire dans la partition de commande",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "The function runs in the **non-critical partition** of the computer; it can neither read nor write in the control partition",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "87b0a976-8188-4f50-bded-49672142f3ae",
@@ -969,8 +969,8 @@
     "uuid": "8cd75e36-1a32-4cbe-be56-1fa572e468ef",
     "identifiant": "INV-02",
     "nature": "invariant",
-    "libelle": "Additivité** : découper un segment en deux moitiés de mêmes vitesse et pente donne exactement la même énergie que le segment entier",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "Additivity**: splitting a segment into two halves of the same speed and gradient gives exactly the same energy as the whole segment",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "8f627688-ce42-47d8-a4b5-0e55eb8d1571",
@@ -1004,8 +1004,8 @@
     "uuid": "947eb789-a60f-4267-8b78-dbca001441a8",
     "identifiant": "RG-040",
     "nature": "règle",
-    "libelle": "Auxiliaires",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "Auxiliaries",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "96718c6e-7ebb-45a8-becc-7dacb44b8db6",
@@ -1025,15 +1025,15 @@
     "uuid": "980c488b-daf2-4834-b00e-c8d45668671a",
     "identifiant": "RG-010",
     "nature": "règle",
-    "libelle": "Bilan des forces sur un segment",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "Force balance on a segment",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "9888723b-beee-4e1a-85ad-b631de8753be",
     "identifiant": "SPEC-NRG-001",
     "nature": "document",
-    "libelle": "SPEC-NRG-001 — Estimer l'autonomie sur un trajet",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "SPEC-NRG-001 — Estimating the range over a route",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "98d1b468-0e1f-4082-9f1a-43a47d0f1802",
@@ -1074,8 +1074,8 @@
     "uuid": "9e5fa8d2-ece3-4239-a3f5-6e034f7cbcfd",
     "identifiant": "Q-04",
     "nature": "question",
-    "libelle": "`E-VEHIC-001` et `E-RESERVE-001` ne sont couverts par aucun cas de test",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "`E-VEHIC-001` and `E-RESERVE-001` are covered by no test case",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "9eb759d5-63d4-4b94-8f80-dd07b8d47340",
@@ -1179,8 +1179,8 @@
     "uuid": "aeb9bd4f-38b4-4a27-8c60-28fc5d8141e7",
     "identifiant": "RG-020",
     "nature": "règle",
-    "libelle": "Énergie mécanique du segment",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "Mechanical energy of the segment",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "aec32bd5-c60a-44a3-9485-5f4187d080fd",
@@ -1270,8 +1270,8 @@
     "uuid": "b6a9cb5c-3772-4221-bd2b-81426d0491aa",
     "identifiant": "CT-07",
     "nature": "cas de test",
-    "libelle": "Température indisponible",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "Temperature unavailable",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "b757d637-570b-4594-bad2-040776993e62",
@@ -1326,8 +1326,8 @@
     "uuid": "bebe83a6-bc21-4e69-9933-58259b8e74b1",
     "identifiant": "RG-080",
     "nature": "règle",
-    "libelle": "Profil cumulé",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "Cumulative profile",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "beef87a2-3576-4109-91f9-89d9fc288add",
@@ -1368,8 +1368,8 @@
     "uuid": "c31484ce-4b11-467b-9cf5-8d3eaf5dd241",
     "identifiant": "CT-08",
     "nature": "cas de test",
-    "libelle": "Trajet vide",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "Empty route",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "c3221013-33d7-482b-bb07-98fa142945ca",
@@ -1396,8 +1396,8 @@
     "uuid": "c4b092be-6904-473d-ab88-3132570724b1",
     "identifiant": "EX-03",
     "nature": "exigence",
-    "libelle": "Le temps d'exécution **pire cas** est borné, mesuré sur cible, et documenté",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "The **worst-case** execution time is bounded, measured on target, and documented",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "c55d71da-977b-4b31-93a3-66c3370a00a1",
@@ -1438,8 +1438,8 @@
     "uuid": "cabb4a7c-3cc6-4b7f-840b-fa14ee4d0f4a",
     "identifiant": "INV-07",
     "nature": "invariant",
-    "libelle": "Le calcul est déterministe : mêmes entrées, mêmes sorties, profil compris",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "The calculation is deterministic: same inputs, same outputs, profile included",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "caf14734-10f4-4794-92ac-b92659005d00",
@@ -1459,8 +1459,8 @@
     "uuid": "cce939a5-46cd-4eb3-a512-5c3f3de13dc7",
     "identifiant": "P-02",
     "nature": "paramètre",
-    "libelle": "Masse volumique de l'air de référence",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "Reference air density",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "cd6b8a1b-c171-4083-aa90-16fbfbffba9b",
@@ -1515,29 +1515,29 @@
     "uuid": "d1f9aa40-7f4f-4ad1-a341-57f5064ff4f6",
     "identifiant": "EX-02",
     "nature": "exigence",
-    "libelle": "Aucune allocation dynamique de mémoire** après la phase d'initialisation",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "No dynamic memory allocation** after the initialisation phase",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "d2d7839d-11dd-4f4e-a4e6-1c0aa842c169",
     "identifiant": "EX-05",
     "nature": "exigence",
-    "libelle": "La fonction dispose d'au plus **512 Ko de mémoire vive** et ne suppose aucun ramasse-miettes",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "The function has at most **512 KB of RAM** and assumes no garbage collector",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "d34bba90-81e0-4566-a9b5-afcf17b81d19",
     "identifiant": "EX-08",
     "nature": "exigence",
-    "libelle": "Le service serveur emploie un langage de la **liste technique approuvée** `LTA-2026`",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "The server service uses a language from the **approved technical list** `LTA-2026`",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "d53a1d67-9713-4cac-ae1a-aeadd35ce458",
     "identifiant": "CT-04",
     "nature": "cas de test",
-    "libelle": "Le même trajet par −5 °C",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "The same route at −5 °C",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "d609f740-a23b-4a73-a66e-59a20ebc5702",
@@ -1550,8 +1550,8 @@
     "uuid": "d6310e36-7c2f-4ec2-9173-abc13fcc309b",
     "identifiant": "EX-06",
     "nature": "exigence",
-    "libelle": "Le **trajet est une donnée personnelle de catégorie C2** : il ne quitte pas le véhicule sans consentement explicite, et n'est jamais journalisé sous forme non agrégée",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "The **route is category C2 personal data**: it does not leave the vehicle without explicit consent, and is never logged in non-aggregated form",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "d872a024-bb34-49c3-ac45-ea1f6850cbe6",
@@ -1606,8 +1606,8 @@
     "uuid": "e00a269d-7baf-4009-8412-13e4ccb848e8",
     "identifiant": "Q-03",
     "nature": "question",
-    "libelle": "`H-2` suppose l'absence de vent. Les prévisions météorologiques sont disponibles côté serveur, pas à bord. Introduire le vent créerait **deux résultats différents** pour les deux usages — ce que le §8.2 interdit aujourd'hui",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "`H-2` assumes no wind. Weather forecasts are available on the server side, not on board. Introducing wind would create **two different results** for the two uses — which §8.2 forbids today",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "e4d8a75d-7fd9-4d69-af3f-606974ae99be",
@@ -1620,8 +1620,8 @@
     "uuid": "e607e38d-b669-4ace-ba48-3098e6763c09",
     "identifiant": "EX-09",
     "nature": "exigence",
-    "libelle": "La **couverture des tests** du code embarqué atteint 100 % des branches sur les fonctions de calcul",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "The **test coverage** of the embedded code reaches 100 % of branches on the calculation functions",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "e629651e-8b0d-416e-b97a-fd9cd4ceea3a",
@@ -1641,8 +1641,8 @@
     "uuid": "e8eccfd9-d2cf-4434-9773-91abb263881f",
     "identifiant": "E-RESERVE-001",
     "nature": "cas d'erreur",
-    "libelle": "La réserve de sécurité est supérieure ou égale à l'énergie disponible",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "The safety reserve is greater than or equal to the available energy",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "e95e0c6c-6009-4388-a415-d41c76dac652",
@@ -1662,8 +1662,8 @@
     "uuid": "e9dd2410-9fb4-485a-b8c6-b7966b7dc047",
     "identifiant": "INV-03",
     "nature": "invariant",
-    "libelle": "Homogénéité** : à vitesse et pente égales, doubler la distance double `energie_traction` et `energie_auxiliaires`",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "Homogeneity**: at equal speed and gradient, doubling the distance doubles `traction_energy` and `auxiliary_energy`",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "ea136394-b2ab-4c96-8cd8-794b0601a8b8",
@@ -1683,8 +1683,8 @@
     "uuid": "ea5e594b-7ea7-4cff-9304-bbb3e4f25f72",
     "identifiant": "P-03",
     "nature": "paramètre",
-    "libelle": "Facteur de température — barème",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "Temperature factor — scale",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "ebcb0e0e-c74f-4ca2-9f0a-a61e481287db",
@@ -1697,8 +1697,8 @@
     "uuid": "ebf7bf69-d50b-4715-bfc6-03cf50323ef9",
     "identifiant": "RG-100",
     "nature": "règle",
-    "libelle": "Arrondis et sens des arrondis",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "Rounding and rounding directions",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "ed9131d6-4472-4d21-b75d-fba1122da558",
@@ -1711,8 +1711,8 @@
     "uuid": "ed9194c2-f465-458b-a68a-5bc2461be15d",
     "identifiant": "FN-004",
     "nature": "fonction",
-    "libelle": "aucun",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "none",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "ef5edef2-6e13-4c75-83e6-e4d82f6dfe6a",
@@ -1739,8 +1739,8 @@
     "uuid": "f25aa050-8a85-4e55-b202-b31cb0a683b8",
     "identifiant": "EX-01",
     "nature": "exigence",
-    "libelle": "Le logiciel du calculateur est écrit dans le sous-ensemble **MISRA C:2012**, catégories obligatoires et requises",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "The computer software is written in the **MISRA C:2012** subset, mandatory and required categories",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "f265a3a3-f970-41c9-81ca-f27bb0b129cb",
@@ -1760,8 +1760,8 @@
     "uuid": "f54e3523-e7d6-420e-ba89-c7ac8028e666",
     "identifiant": "FN-011",
     "nature": "fonction",
-    "libelle": "comportement",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "behaviour",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "f70a8d6f-84c8-406c-b40d-d662df8bb5f6",
@@ -1795,8 +1795,8 @@
     "uuid": "faf499ce-6b1c-4b8e-af2d-1396d49bc513",
     "identifiant": "INV-04",
     "nature": "invariant",
-    "libelle": "Symétrie de la pente** : un aller-retour sur un même segment consomme strictement plus que deux fois le même segment à plat — la récupération ne compense jamais la montée",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "Gradient symmetry**: a round trip over the same segment consumes strictly more than twice the same segment on the flat — regeneration never compensates the climb",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "fbbac3a2-7aff-45d4-b0eb-01e0b507504f",
@@ -1809,15 +1809,15 @@
     "uuid": "fca54b2f-b68d-4a52-98d9-83f4f907b530",
     "identifiant": "EX-07",
     "nature": "exigence",
-    "libelle": "Les données de la partition non critique et celles de la partition de commande sont **stockées séparément**, sans canal de communication autre que l'interface déclarée",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "The data of the non-critical partition and that of the control partition are **stored separately**, with no channel other than the declared interface",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "fe15e79b-a26e-4641-b826-8b0e35466f73",
     "identifiant": "E-TRAJET-002",
     "nature": "cas d'erreur",
-    "libelle": "Un segment a une distance ou une vitesse nulle ou négative",
-    "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+    "libelle": "A segment has a zero or negative distance or speed",
+    "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
     "uuid": "fee8faa0-b9ce-4143-bf50-e8088a7e549e",

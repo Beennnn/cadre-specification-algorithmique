@@ -215,7 +215,7 @@ chemin. Chacune impose un outil de méthode, et ces outils, eux, resservent part
 | **1** | Identifier et nommer les fonctions, désigner qui valide qu'elles sont justes | [1-DECOUPAGE.md](1-DECOUPAGE.md) |
 | **2** | Fixer le vocabulaire commun | [2-GLOSSAIRE.md](2-GLOSSAIRE.md) |
 | **3** | Voir une fonction arrêtée au niveau 3 — un état assumé, pas inachevé | [4-FN-004](4-FN-004-planifier-les-recharges.md) |
-| **4** | La spécification complète, celle que le développement reçoit | [5-SPEC-NRG-001](5-SPEC-NRG-001-autonomie.md) |
+| **4** | La spécification complète, celle que le développement reçoit | [5-SPEC-NRG-001](5-SPEC-NRG-001.en.md) |
 
 ## Ce qu'on obtient à l'arrivée
 

@@ -15,7 +15,7 @@ là-dessus, pas sur le domaine.*
 | **[Le bilan de masse d'un lot](mass-balance/)** | ~470 l. | besoin → spec → contrat → **un doc par cas** → code → rapports → **écarts** | La **chaîne complète**, jusqu'à l'analyse des écarts |
 | **[Le refroidissement d'une boisson](cooling/)** | ~630 l. | spec, deux langues | Le **continu et l'approché** : équation différentielle, incertitude |
 | **[Le lever du Soleil](sunrise/)** | ~510 l. | spec, deux langues | Une **équation sans solution** hors des cercles polaires |
-| **[L'autonomie d'un véhicule](fil-rouge/)** | ~840 l. | besoin → découpage → glossaire → données → spec | Le **passage à l'échelle** : douze fonctions, dix étapes |
+| **[L'autonomie d'un véhicule](fil-rouge/)** | ~840 l. | besoin → découpage → glossaire → données → spec, deux langues | Le **passage à l'échelle** : douze fonctions, dix étapes |
 
 **Par où commencer** : la vitesse moyenne si vous découvrez la méthode, le relevé météo si
 vous voulez voir le pseudo-langage au travail, le bilan de masse si vous voulez voir ce que

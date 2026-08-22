@@ -232,7 +232,7 @@ la version courante et que l'historique ne sert qu'à l'audit — à condition q
 
 ## Voir sur le fil rouge
 
-L'historique de [`SPEC-NRG-001`](../exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md)
+L'historique de [`SPEC-NRG-001`](../exemples/fil-rouge/5-SPEC-NRG-001.en.md)
 montre les trois incréments dans l'ordre :
 
 - `1.0.0` → **`2.0.0`** : l'arrondi du point d'autonomie passe vers le bas. Le résultat

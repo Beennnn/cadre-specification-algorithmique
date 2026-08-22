@@ -12,6 +12,12 @@
 | **Date d'effet** | 2026-04-01 |
 | **Glossaire de référence** | [Glossaire du domaine](2-GLOSSAIRE.md) v2.0.0 |
 | **Jeu de paramètres** | Référentiel de méthodes v2026.2 |
+| **Traduction de** | [5-SPEC-NRG-001.en.md](5-SPEC-NRG-001.en.md) |
+
+> **Version française, non normative.** La version qui fait foi est
+> [`5-SPEC-NRG-001.en.md`](5-SPEC-NRG-001.en.md) : c'est elle que le code suit et que les
+> outils vérifient. `C-42` contrôle que les deux portent les mêmes objets et les mêmes
+> identités durables.
 
 > Fonction centrale du fil rouge *[L'autonomie d'un véhicule électrique](README.md)*.
 > Le glossaire employé ici est celui du domaine : **[2-GLOSSAIRE.md](2-GLOSSAIRE.md)**.
@@ -63,57 +69,57 @@ s'équilibrent.
 ## 4. Entrées
 
 ```
-demande :
-    trajet : liste ordonnée d'au moins 1 Segment
-    vehicule :
-        masse_a_vide          : Masse(kg, > 0, 1 décimale)
-        masse_transportee     : Masse(kg, ≥ 0, 1 décimale)
-        surface_frontale_cx   : Aire(m², > 0, 3 décimales)   — le produit Cx × S
-        coefficient_roulement : Sansunité(> 0, 4 décimales)
-        rendement_traction    : Fraction(0,000 .. 1,000, 3 décimales)
-        rendement_recuperation: Fraction(0,000 .. 1,000, 3 décimales)
-        capacite_nominale     : Énergie(kWh, > 0, 2 décimales)
-    etat :
-        etat_de_charge        : Fraction(0,000 .. 1,000, 3 décimales)
-        temperature_batterie  : Température(°C, 1 décimale)
-        puissance_auxiliaires : Puissance(W, ≥ 0, 1 décimale)   — produite par FN-008
-    reserve_securite          : Énergie(kWh, ≥ 0, 2 décimales)  — produite par FN-010
+request :
+    route : liste ordonnée d'au moins 1 Segment
+    vehicle :
+        kerb_mass               : Masse(kg, > 0, 1 décimale)
+        payload_mass            : Masse(kg, ≥ 0, 1 décimale)
+        drag_area               : Aire(m², > 0, 3 décimales)   — le produit Cx × S
+        rolling_coefficient     : Sansunité(> 0, 4 décimales)
+        traction_efficiency     : Fraction(0,000 .. 1,000, 3 décimales)
+        regeneration_efficiency : Fraction(0,000 .. 1,000, 3 décimales)
+        nominal_capacity        : Énergie(kWh, > 0, 2 décimales)
+    state :
+        state_of_charge         : Fraction(0,000 .. 1,000, 3 décimales)
+        battery_temperature     : Température(°C, 1 décimale)
+        auxiliary_power         : Puissance(W, ≥ 0, 1 décimale)   — produite par FN-008
+    safety_reserve              : Énergie(kWh, ≥ 0, 2 décimales)  — produite par FN-010
 
 Segment :
     distance          : Distance(km, > 0, 3 décimales)
-    vitesse_praticable: Vitesse(km/h, > 0, 1 décimale)          — produite par FN-003
-    pente             : Pourcentage(%, signé, 2 décimales)      — positif en montée
+    practicable_speed : Vitesse(km/h, > 0, 1 décimale)          — produite par FN-003
+    gradient          : Pourcentage(%, signé, 2 décimales)      — positif en montée
 ```
 
 **Préconditions :**
 - Le trajet contient au moins un segment.
 - Les deux rendements sont strictement compris entre 0 et 1.
-- `reserve_securite` est inférieure à l'énergie disponible calculée en `RG-060`.
+- `safety_reserve` est inférieure à l'énergie disponible calculée en `RG-060`.
 
 ## 5. Sorties
 
 ```
-resultat :
-    energie_totale        : Énergie(kWh, 4 décimales)      — peut être négative sur un trajet de descente
-    consommation_moyenne  : Énergie(kWh/100 km, 3 décimales)
-    energie_disponible    : Énergie(kWh, 4 décimales)
-    budget_utilisable     : Énergie(kWh, 4 décimales)
-    facteur_temperature   : Fraction(3 décimales)
-    point_autonomie       : Distance(km, 3 décimales)      — absent si jamais atteint
-    autonomie_atteinte    : Booléen
-    energie_restante_arrivee : Énergie(kWh, 4 décimales)   — présent seulement si autonomie_atteinte est faux
-    profil                : liste de ProfilSegment
+result :
+    total_energy           : Énergie(kWh, 4 décimales)   — peut être négative sur un trajet de descente
+    average_consumption    : Énergie(kWh/100 km, 3 décimales)
+    available_energy       : Énergie(kWh, 4 décimales)
+    usable_budget          : Énergie(kWh, 4 décimales)
+    temperature_factor     : Fraction(3 décimales)
+    range_point            : Distance(km, 3 décimales)   — absent si jamais atteint
+    range_point_reached    : Booléen
+    energy_left_on_arrival : Énergie(kWh, 4 décimales)   — présent seulement si range_point_reached est faux
+    profile                : liste de SegmentProfile
 
-ProfilSegment :
-    index                 : Entier(≥ 1)
-    energie_traction      : Énergie(kWh, 4 décimales)      — négative en récupération
-    energie_auxiliaires   : Énergie(kWh, 4 décimales)
-    energie_segment       : Énergie(kWh, 4 décimales)
-    energie_cumulee       : Énergie(kWh, 4 décimales)
-    duree                 : Durée(s, 1 décimale)
+SegmentProfile :
+    index                  : Entier(≥ 1)
+    traction_energy        : Énergie(kWh, 4 décimales)   — négative en récupération
+    auxiliary_energy       : Énergie(kWh, 4 décimales)
+    segment_energy         : Énergie(kWh, 4 décimales)
+    cumulative_energy      : Énergie(kWh, 4 décimales)
+    duration               : Durée(s, 1 décimale)
 ```
 
-> Le `profil` est **une sortie de premier rang**, pas une trace de débogage. Il est exigé
+> Le `profile` est **une sortie de premier rang**, pas une trace de débogage. Il est exigé
 > par la contrainte d'explicabilité (§11) : quand un conducteur conteste une estimation,
 > on doit pouvoir lui montrer quel segment a consommé quoi.
 
@@ -121,10 +127,10 @@ ProfilSegment :
 
 | Id | Libellé | Valeur | Unité | Qui peut le changer | Circuit de validation | Fréquence | Date d'effet |
 |---|---|---|---|---|---|---|---|
-| `P-01` | Accélération de la pesanteur | 9,81 | m·s⁻² | *constante physique, non modifiable* | — | jamais | 2026-04-01 |
-| `P-02` | Masse volumique de l'air de référence | 1,225 | kg·m⁻³ | R&D Énergie | Validation Direction R&D | rare | 2026-04-01 |
-| `P-03` | Facteur de température — barème | voir `RG-060` | — | R&D Batterie | Comité modèles | 1 à 2 fois par an | 2026-04-01 |
-| `P-04` | Facteur de température retenu si la mesure est indisponible | 0,700 | — | R&D Batterie | Comité modèles | rare | 2026-04-01 |
+| <a id="p-01"></a>`P-01` | Accélération de la pesanteur | 9,81 | m·s⁻² | *constante physique, non modifiable* | — | jamais | 2026-04-01 |
+| <a id="p-02"></a>`P-02` | Masse volumique de l'air de référence | 1,225 | kg·m⁻³ | R&D Énergie | Validation Direction R&D | rare | 2026-04-01 |
+| <a id="p-03"></a>`P-03` | Facteur de température — barème | voir `RG-060` | — | R&D Batterie | Comité modèles | 1 à 2 fois par an | 2026-04-01 |
+| <a id="p-04"></a>`P-04` | Facteur de température retenu si la mesure est indisponible | 0,700 | — | R&D Batterie | Comité modèles | rare | 2026-04-01 |
 
 > `P-01` est une constante physique. Elle figure au tableau **précisément pour qu'on ne
 > la prenne pas pour une valeur ajustable**, et elle est marquée non modifiable.
@@ -142,16 +148,16 @@ chaque segment**, les quatre dernières **au trajet entier**.
 
 | Étape | Consomme | Produit | Règles |
 |---|---|---|---|
-| `ET-01` Bilan des forces | `distance`, `vitesse_praticable`, `pente`, `masse_a_vide`, `masse_transportee`, `surface_frontale_cx`, `coefficient_roulement` | `force_totale` | `RG-010` |
-| `ET-02` Énergie mécanique | `force_totale`, `distance` | `energie_mecanique` | `RG-020` |
-| `ET-03` Traction et récupération | `energie_mecanique`, `rendement_traction`, `rendement_recuperation` | `energie_traction` | `RG-030` |
-| `ET-04` Auxiliaires | `distance`, `vitesse_praticable`, `puissance_auxiliaires` | `duree`, `energie_auxiliaires` | `RG-040` |
-| `ET-05` Énergie du segment | `energie_traction`, `energie_auxiliaires` | `energie_segment` | `RG-050` |
-| `ET-06` Énergie disponible | `capacite_nominale`, `etat_de_charge`, `temperature_batterie` | `facteur_temperature`, `energie_disponible` | `RG-060` |
-| `ET-07` Budget utilisable | `energie_disponible`, `reserve_securite` | `budget_utilisable` | `RG-070` |
-| `ET-08` Profil cumulé | `energie_segment` | `index`, `energie_cumulee` | `RG-080` |
-| `ET-09` Point d'autonomie | `energie_cumulee`, `budget_utilisable`, `distance` | `point_autonomie`, `autonomie_atteinte`, `energie_restante_arrivee` | `RG-090` |
-| `ET-10` Restitution | `energie_segment`, `energie_cumulee`, `duree` | `energie_totale`, `consommation_moyenne`, `profil` | `RG-100` |
+| `ET-01` Bilan des forces | `distance`, `practicable_speed`, `gradient`, `kerb_mass`, `payload_mass`, `drag_area`, `rolling_coefficient` | `total_force` | `RG-010` |
+| `ET-02` Énergie mécanique | `total_force`, `distance` | `mechanical_energy` | `RG-020` |
+| `ET-03` Traction et récupération | `mechanical_energy`, `traction_efficiency`, `regeneration_efficiency` | `traction_energy` | `RG-030` |
+| `ET-04` Auxiliaires | `distance`, `practicable_speed`, `auxiliary_power` | `duration`, `auxiliary_energy` | `RG-040` |
+| `ET-05` Énergie du segment | `traction_energy`, `auxiliary_energy` | `segment_energy` | `RG-050` |
+| `ET-06` Énergie disponible | `nominal_capacity`, `state_of_charge`, `battery_temperature` | `temperature_factor`, `available_energy` | `RG-060` |
+| `ET-07` Budget utilisable | `available_energy`, `safety_reserve` | `usable_budget` | `RG-070` |
+| `ET-08` Profil cumulé | `segment_energy` | `index`, `cumulative_energy` | `RG-080` |
+| `ET-09` Point d'autonomie | `cumulative_energy`, `usable_budget`, `distance` | `range_point`, `range_point_reached`, `energy_left_on_arrival` | `RG-090` |
+| `ET-10` Restitution | `segment_energy`, `cumulative_energy`, `duration` | `total_energy`, `average_consumption`, `profile` | `RG-100` |
 
 ### Vue de niveau supérieur
 
@@ -166,11 +172,11 @@ Dix boîtes, c'est déjà trop pour une conversation. On les regroupe :
 Un groupe est une **vue**, pas une fonction : il n'ajoute aucune règle et n'impose aucun
 découpage du code. Ce qu'il consomme et produit vis-à-vis de l'extérieur se **déduit** de
 ses étapes — les grandeurs qui ne servent qu'à l'intérieur du groupe disparaissent de la
-vue, et c'est tout l'intérêt : `force_aerodynamique` ou `energie_mecanique` n'ont aucune
+vue, et c'est tout l'intérêt : `drag_force` ou `mechanical_energy` n'ont aucune
 raison d'apparaître dans une discussion d'architecture.
 
 ```bash
-java outils/Verifier.java --chaine exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md
+java outils/Verifier.java --chaine exemples/fil-rouge/5-SPEC-NRG-001.en.md
 ```
 
 produit la table « qui crée / qui utilise » de chaque grandeur, contrôle `C-35` et `C-36`,
@@ -202,17 +208,17 @@ figurent ni au contrat, ni au catalogue des données, ni dans la chaîne inter-�
 mais elles sont décrites avec la même rigueur.
 
 ```
-masse                : Flottant(kg, 6 chiffres significatifs, > 0)
+total_mass           : Flottant(kg, 6 chiffres significatifs, > 0)
 v                    : Flottant(m·s⁻¹, 6 chiffres significatifs, > 0)
 alpha                : Flottant(rad, 6 chiffres significatifs, −0,30 .. 0,30)
 d                    : Flottant(m, 6 chiffres significatifs, > 0)
-force_aerodynamique  : Flottant(N, 6 chiffres significatifs, ≥ 0)
-force_roulement      : Flottant(N, 6 chiffres significatifs, ≥ 0)
-force_pente          : Flottant(N, 6 chiffres significatifs)          — signée
-energie_mecanique    : Flottant(J, 6 chiffres significatifs)          — signée
+drag_force  : Flottant(N, 6 chiffres significatifs, ≥ 0)
+rolling_force      : Flottant(N, 6 chiffres significatifs, ≥ 0)
+gradient_force          : Flottant(N, 6 chiffres significatifs)          — signée
+mechanical_energy    : Flottant(J, 6 chiffres significatifs)          — signée
 ```
 
-> `force_pente` et `energie_mecanique` sont **signées**, et c'est ce signe qui porte toute
+> `gradient_force` et `mechanical_energy` sont **signées**, et c'est ce signe qui porte toute
 > la récupération (`RG-030`). Une plage déclarée `≥ 0` par distraction rendrait le modèle
 > incapable de représenter une descente — le genre d'erreur qu'on ne trouve qu'en
 > déclarant les internes.
@@ -220,22 +226,22 @@ energie_mecanique    : Flottant(J, 6 chiffres significatifs)          — signé
 ### RG-010 — Bilan des forces sur un segment
 
 ```
-LET masse   = masse_a_vide + masse_transportee                          (kg)
-LET v       = vitesse_praticable ÷ 3,6                                  (m·s⁻¹)
-LET alpha   = arctangente( pente ÷ 100 )                                (rad)
+LET total_mass = kerb_mass + payload_mass                          (kg)
+LET v       = practicable_speed ÷ 3,6                                  (m·s⁻¹)
+LET alpha   = arctangente( gradient ÷ 100 )                                (rad)
 
-    force_aerodynamique  = ½ × P-02 × surface_frontale_cx × v²                        (N)
-    force_roulement  = coefficient_roulement × masse × P-01 × cosinus(alpha)      (N)
-    force_pente = masse × P-01 × sinus(alpha)                                (N)
+    drag_force  = ½ × P-02 × drag_area × v²                        (N)
+    rolling_force  = rolling_coefficient × total_mass × P-01 × cosinus(alpha)      (N)
+    gradient_force = total_mass × P-01 × sinus(alpha)                                (N)
 
-    force_totale = force_aerodynamique + force_roulement + force_pente                                 (N)
+    total_force = drag_force + rolling_force + gradient_force                                 (N)
 ```
 
-`force_pente` est **signée** : négative en descente. C'est ce signe qui rend le modèle
+`gradient_force` est **signée** : négative en descente. C'est ce signe qui rend le modèle
 capable de représenter la récupération, et c'est lui qui fait de `RG-030` une règle non
 linéaire.
 
-> **Le piège d'unité.** `vitesse_praticable` est en km/h, `v` en m/s. Le facteur 3,6 est
+> **Le piège d'unité.** `practicable_speed` est en km/h, `v` en m/s. Le facteur 3,6 est
 > écrit explicitement dans la règle, et le jeu d'essai contient la vitesse dans les deux
 > unités (`CT-01`). Une confusion km/h ↔ m/s produit une erreur d'un facteur 13 sur la
 > traînée — assez grande pour être trouvée tout de suite, ce qui est une chance.
@@ -245,16 +251,16 @@ linéaire.
 ```
 LET d = distance × 1000                                                 (m)
 
-    energie_mecanique = force_totale × d                                           (J)
+    mechanical_energy = total_force × d                                           (J)
 ```
 
 ### RG-030 — Traction et récupération
 
 ```
-IF energie_mecanique > 0 THEN
-    energie_traction = energie_mecanique ÷ rendement_traction                        (J, positif)
+IF mechanical_energy > 0 THEN
+    traction_energy = mechanical_energy ÷ traction_efficiency                        (J, positif)
 ELSE
-    energie_traction = energie_mecanique × rendement_recuperation                    (J, négatif)
+    traction_energy = mechanical_energy × regeneration_efficiency                    (J, négatif)
 END IF
 ```
 
@@ -267,9 +273,9 @@ END IF
 ### RG-040 — Auxiliaires
 
 ```
-LET duree = d ÷ v                                                       (s)
+LET duration = d ÷ v                                                       (s)
 
-    energie_auxiliaires = puissance_auxiliaires × duree                        (J)
+    auxiliary_energy = auxiliary_power × duration                        (J)
 ```
 
 Les auxiliaires consomment **par unité de temps**, pas par unité de distance. Rouler plus
@@ -279,7 +285,7 @@ contre-intuitive.
 ### RG-050 — Énergie d'un segment
 
 ```
-    energie_segment = ( energie_traction + energie_auxiliaires ) ÷ 3 600 000               (kWh)
+    segment_energy = ( traction_energy + auxiliary_energy ) ÷ 3 600 000               (kWh)
 ```
 
 **Aucun arrondi n'est appliqué ici**, ni à aucune étape intermédiaire. Les arrondis
@@ -298,7 +304,7 @@ Le barème `P-03` s'applique par **paliers**, bornes supérieures incluses :
 | `T > 30,0 °C` | 0,950 |
 
 ```
-    energie_disponible = capacite_nominale × etat_de_charge × facteur_temperature
+    available_energy = nominal_capacity × state_of_charge × temperature_factor
 ```
 
 **Aucune interpolation entre paliers.** Une variation d'un dixième de degré peut donc
@@ -316,7 +322,7 @@ facteur le plus défavorable du barème** — voir §11, mode dégradé.
 ### RG-070 — Budget utilisable
 
 ```
-    budget_utilisable = energie_disponible − reserve_securite
+    usable_budget = available_energy − safety_reserve
 ```
 
 ### RG-080 — Profil cumulé
@@ -324,10 +330,10 @@ facteur le plus défavorable du barème** — voir §11, mode dégradé.
 ```
 index = rang du segment dans le trajet, à partir de 1
 
-    energie_cumulee(0) = 0
-    energie_cumulee(i) = energie_cumulee(i − 1) + energie_segment(i)
+    cumulative_energy(0) = 0
+    cumulative_energy(i) = cumulative_energy(i − 1) + segment_energy(i)
 
-L'accumulation est indexée, jamais écrasée : energie_cumulee(i) désigne une
+L'accumulation est indexée, jamais écrasée : cumulative_energy(i) désigne une
 valeur et une seule, pour toujours.
 ```
 
@@ -348,24 +354,24 @@ possible.
 On parcourt les segments dans l'ordre. Pour un segment donné, l'énergie déjà
 consommée à son entrée est celle de tous les segments qui le précèdent :
 
-    LET energie_cumulee_avant = SUM OF energie_segment OVER segments
+    LET cumulative_energy_before = SUM OF segment_energy OVER segments
                                  qui précèdent le segment courant
 
 Pour le premier segment tel que
-    energie_cumulee_avant + energie_segment ≥ budget_utilisable
-   AND energie_segment > 0 :
+    cumulative_energy_before + segment_energy ≥ usable_budget
+   AND segment_energy > 0 :
 
-    LET fraction = ( budget_utilisable − energie_cumulee_avant ) ÷ energie_segment
-    point_autonomie = distance cumulée avant ce segment + fraction × distance du segment
-    autonomie_atteinte = vrai
+    LET fraction = ( usable_budget − cumulative_energy_before ) ÷ segment_energy
+    range_point = distance cumulée avant ce segment + fraction × distance du segment
+    range_point_reached = vrai
 
 IF aucun segment ne satisfait cette condition THEN
-    autonomie_atteinte = faux
-    point_autonomie n'est pas produit
-    energie_restante_arrivee = budget_utilisable − energie_totale
+    range_point_reached = faux
+    range_point n'est pas produit
+    energy_left_on_arrival = usable_budget − total_energy
 ELSE
-    autonomie_atteinte = vrai
-    energie_restante_arrivee n'est pas produite
+    range_point_reached = vrai
+    energy_left_on_arrival n'est pas produite
 END IF
 ```
 
@@ -374,7 +380,7 @@ Deux points que la formulation tranche explicitement :
 - **« le premier »**, et non « celui où l'on finit en dessous ». Une descente ultérieure
   peut ramener l'énergie cumulée sous le budget ; **elle ne rend pas l'autonomie déjà
   consommée**. Le conducteur est passé sur sa réserve, le fait est acquis.
-- **`ET energie_segment > 0`** : sur un segment de récupération, l'énergie cumulée diminue ; il
+- **`ET segment_energy > 0`** : sur un segment de récupération, l'énergie cumulée diminue ; il
   ne peut pas contenir le point de franchissement, et l'interpolation y serait absurde.
 
 L'interpolation est **affine à l'intérieur du segment**, ce qui est cohérent avec
@@ -388,7 +394,7 @@ consomme uniformément avec la distance.
 | Énergies (`kWh`) | 4 | au plus proche |
 | Consommation moyenne (`kWh/100 km`) | 3 | au plus proche |
 | Durées (`s`) | 1 | au plus proche |
-| **`point_autonomie` (`km`)** | 3 | **vers le bas, toujours** |
+| **`range_point` (`km`)** | 3 | **vers le bas, toujours** |
 
 > **Le point d'autonomie s'arrondit vers le bas, jamais au plus proche.** Ce n'est pas
 > une convention de calcul : c'est une règle de sécurité. Une estimation optimiste de
@@ -404,14 +410,14 @@ consomme uniformément avec la distance.
 
 | Id | Propriété |
 |---|---|
-| `INV-01` | Sur un segment de pente positive ou nulle, `energie_segment > 0` |
-| `INV-02` | **Additivité** : découper un segment en deux moitiés de mêmes vitesse et pente donne exactement la même énergie que le segment entier |
-| `INV-03` | **Homogénéité** : à vitesse et pente égales, doubler la distance double `energie_traction` et `energie_auxiliaires` |
-| `INV-04` | **Symétrie de la pente** : un aller-retour sur un même segment consomme strictement plus que deux fois le même segment à plat — la récupération ne compense jamais la montée |
-| `INV-05` | **Monotonie vis-à-vis de la vitesse, au-delà de la vitesse de consommation minimale** : voir la note ci-dessous |
-| `INV-06` | `point_autonomie`, s'il existe, est compris entre 0 et la longueur totale du trajet |
-| `INV-07` | Le calcul est déterministe : mêmes entrées, mêmes sorties, profil compris |
-| `INV-08` | Le calcul est **pur** : aucun appel successif ne dépend d'un appel précédent |
+| <a id="inv-01"></a>`INV-01` | Sur un segment de pente positive ou nulle, `segment_energy > 0` |
+| <a id="inv-02"></a>`INV-02` | **Additivité** : découper un segment en deux moitiés de mêmes vitesse et pente donne exactement la même énergie que le segment entier |
+| <a id="inv-03"></a>`INV-03` | **Homogénéité** : à vitesse et pente égales, doubler la distance double `traction_energy` et `auxiliary_energy` |
+| <a id="inv-04"></a>`INV-04` | **Symétrie de la pente** : un aller-retour sur un même segment consomme strictement plus que deux fois le même segment à plat — la récupération ne compense jamais la montée |
+| <a id="inv-05"></a>`INV-05` | **Monotonie vis-à-vis de la vitesse, au-delà de la vitesse de consommation minimale** : voir la note ci-dessous |
+| <a id="inv-06"></a>`INV-06` | `range_point`, s'il existe, est compris entre 0 et la longueur totale du trajet |
+| <a id="inv-07"></a>`INV-07` | Le calcul est déterministe : mêmes entrées, mêmes sorties, profil compris |
+| <a id="inv-08"></a>`INV-08` | Le calcul est **pur** : aucun appel successif ne dépend d'un appel précédent |
 
 > **La subtilité de `INV-05`, et pourquoi elle est écrite.** On croit spontanément que
 > rouler moins vite consomme toujours moins. C'est faux : la traînée décroît avec la
@@ -444,10 +450,10 @@ consomme uniformément avec la distance.
 
 | Code | Condition | Conséquence | Message |
 |---|---|---|---|
-| `E-TRAJET-001` | Le trajet ne contient aucun segment | Aucun résultat | « Aucun trajet à analyser. » |
-| `E-TRAJET-002` | Un segment a une distance ou une vitesse nulle ou négative | Aucun résultat | « Le trajet contient un segment invalide. » |
-| `E-VEHIC-001` | Un rendement est hors de l'intervalle `]0 ; 1[` | Aucun résultat | « Les caractéristiques du véhicule sont invalides. » |
-| `E-RESERVE-001` | La réserve de sécurité est supérieure ou égale à l'énergie disponible | Aucun résultat | « L'énergie disponible ne permet pas de rouler. » |
+| <a id="e-trajet-001"></a>`E-TRAJET-001` | Le trajet ne contient aucun segment | Aucun résultat | « Aucun trajet à analyser. » |
+| <a id="e-trajet-002"></a>`E-TRAJET-002` | Un segment a une distance ou une vitesse nulle ou négative | Aucun résultat | « Le trajet contient un segment invalide. » |
+| <a id="e-vehic-001"></a>`E-VEHIC-001` | Un rendement est hors de l'intervalle `]0 ; 1[` | Aucun résultat | « Les caractéristiques du véhicule sont invalides. » |
+| <a id="e-reserve-001"></a>`E-RESERVE-001` | La réserve de sécurité est supérieure ou égale à l'énergie disponible | Aucun résultat | « L'énergie disponible ne permet pas de rouler. » |
 
 ## 10. Jeu d'essai
 
@@ -499,43 +505,43 @@ suffit à les refaire.
 | `CT-02` | La récupération en descente (`RG-030`) | segment 3 : **−0,1244 kWh** |
 | `CT-03` | Le point d'autonomie avec interpolation dans le segment 2 | **106,017 km** |
 | `CT-04` | L'effet de la température (`RG-060`) sur le même trajet | **82,555 km** |
-| `CT-05` | Autonomie jamais atteinte | `autonomie_atteinte = faux`, reste **1,4940 kWh** |
+| `CT-05` | Autonomie jamais atteinte | `range_point_reached = faux`, reste **1,4940 kWh** |
 | `CT-06` | La vitesse de consommation minimale (`INV-05`) | minimum à **≈ 29,9 km/h** |
 | `CT-07` | Température indisponible → facteur le plus défavorable | facteur **0,700** |
 | `CT-08` | Trajet vide | erreur `E-TRAJET-001` |
 
 ### CT-01 — Bilan complet, segment par segment
 
-`etat_de_charge = 1,000`, `temperature_batterie = 20,0 °C`.
+`state_of_charge = 1,000`, `battery_temperature = 20,0 °C`.
 
 **Segment 1** — 100,000 km à 110,0 km/h, pente nulle. Détail complet :
 
 | Étape | Calcul | Résultat |
 |---|---|---|
 | `v` | `110,0 ÷ 3,6` | 30,5556 m·s⁻¹ |
-| `force_aerodynamique` | `0,5 × 1,225 × 0,640 × 30,5556²` | 365,99 N |
-| `force_roulement` | `0,0100 × 1800 × 9,81 × cos(0)` | 176,58 N |
-| `force_pente` | `1800 × 9,81 × sin(0)` | 0,00 N |
-| `force_totale` | | **542,57 N** |
-| `energie_mecanique` | `542,57 × 100 000` | 54,2568 MJ |
-| `energie_traction` | `54,2568 ÷ 0,900` | 60,2853 MJ → **16,7459 kWh** |
-| `duree` | `100 000 ÷ 30,5556` | 3 272,7 s |
-| `energie_auxiliaires` | `500,0 × 3 272,7` | 1,6364 MJ → **0,4545 kWh** |
-| **`energie_segment`** | | **17,2005 kWh** |
+| `drag_force` | `0,5 × 1,225 × 0,640 × 30,5556²` | 365,99 N |
+| `rolling_force` | `0,0100 × 1800 × 9,81 × cos(0)` | 176,58 N |
+| `gradient_force` | `1800 × 9,81 × sin(0)` | 0,00 N |
+| `total_force` | | **542,57 N** |
+| `mechanical_energy` | `542,57 × 100 000` | 54,2568 MJ |
+| `traction_energy` | `54,2568 ÷ 0,900` | 60,2853 MJ → **16,7459 kWh** |
+| `duration` | `100 000 ÷ 30,5556` | 3 272,7 s |
+| `auxiliary_energy` | `500,0 × 3 272,7` | 1,6364 MJ → **0,4545 kWh** |
+| **`segment_energy`** | | **17,2005 kWh** |
 
 **Les quatre segments :**
 
-| # | `force_aerodynamique` | `force_roulement` | `force_pente` | `force_totale` | `energie_traction` | `energie_auxiliaires` | **`energie_segment`** | `energie_cumulee` |
+| # | `drag_force` | `rolling_force` | `gradient_force` | `total_force` | `traction_energy` | `auxiliary_energy` | **`segment_energy`** | `cumulative_energy` |
 |---|---|---|---|---|---|---|---|---|
 | 1 | 365,99 | 176,58 | 0,00 | 542,57 | 16,7459 | 0,4545 | **17,2005** | 17,2005 |
 | 2 | 245,00 | 176,50 | +529,50 | 951,00 | 2,9352 | 0,0556 | **2,9907** | 20,1912 |
 | 3 | 245,00 | 176,50 | −529,50 | −108,00 | −0,1800 | 0,0556 | **−0,1244** | 20,0668 |
 | 4 | 75,62 | 176,58 | 0,00 | 252,20 | 0,3892 | 0,0500 | **0,4392** | 20,5060 |
 
-- **`energie_totale` = 20,5060 kWh**
-- **`consommation_moyenne` = 16,405 kWh/100 km**
+- **`total_energy` = 20,5060 kWh**
+- **`average_consumption` = 16,405 kWh/100 km**
 
-> Notez la colonne `energie_cumulee` : elle **décroît** entre les segments 2 et 3. C'est
+> Notez la colonne `cumulative_energy` : elle **décroît** entre les segments 2 et 3. C'est
 > `RG-080` en action, et c'est ce qui interdit toute recherche dichotomique.
 
 ### CT-02 — La récupération
@@ -545,12 +551,12 @@ Segment 3 isolé — 10,000 km à 90,0 km/h, pente −3,00 % :
 | Étape | Calcul | Résultat |
 |---|---|---|
 | `alpha` | `arctan(−0,03)` | −0,029991 rad |
-| `force_pente` | `1800 × 9,81 × sin(−0,029991)` | −529,50 N |
-| `force_totale` | `245,00 + 176,50 − 529,50` | **−108,00 N** |
-| `energie_mecanique` | `−108,00 × 10 000` | −1,0800 MJ |
-| `energie_traction` | `energie_mecanique ≤ 0` → **on multiplie** : `−1,0800 × 0,600` | −0,6480 MJ → **−0,1800 kWh** |
-| `energie_auxiliaires` | `500,0 × 400,0` | **+0,0556 kWh** |
-| **`energie_segment`** | | **−0,1244 kWh** |
+| `gradient_force` | `1800 × 9,81 × sin(−0,029991)` | −529,50 N |
+| `total_force` | `245,00 + 176,50 − 529,50` | **−108,00 N** |
+| `mechanical_energy` | `−108,00 × 10 000` | −1,0800 MJ |
+| `traction_energy` | `mechanical_energy ≤ 0` → **on multiplie** : `−1,0800 × 0,600` | −0,6480 MJ → **−0,1800 kWh** |
+| `auxiliary_energy` | `500,0 × 400,0` | **+0,0556 kWh** |
+| **`segment_energy`** | | **−0,1244 kWh** |
 
 > **Le détecteur d'erreur.** Une implémentation qui diviserait par le rendement dans les
 > deux branches donnerait ici `−1,0800 ÷ 0,600 = −1,8000 MJ`, soit **−0,5000 kWh** : le
@@ -559,31 +565,31 @@ Segment 3 isolé — 10,000 km à 90,0 km/h, pente −3,00 % :
 
 ### CT-03 — Point d'autonomie, interpolation dans le segment 2
 
-`etat_de_charge = 0,400`, `temperature_batterie = 20,0 °C`, `reserve_securite = 5,00 kWh`.
+`state_of_charge = 0,400`, `battery_temperature = 20,0 °C`, `safety_reserve = 5,00 kWh`.
 
 | Étape | Calcul | Résultat |
 |---|---|---|
-| `facteur_temperature` | `10,0 < 20,0 ≤ 30,0` | 1,000 |
-| `energie_disponible` | `60,00 × 0,400 × 1,000` | 24,0000 kWh |
-| `budget_utilisable` | `24,0000 − 5,00` | **19,0000 kWh** |
+| `temperature_factor` | `10,0 < 20,0 ≤ 30,0` | 1,000 |
+| `available_energy` | `60,00 × 0,400 × 1,000` | 24,0000 kWh |
+| `usable_budget` | `24,0000 − 5,00` | **19,0000 kWh** |
 | Premier segment franchi | `17,2005 < 19,0000 ≤ 20,1912` | le **segment 2** |
 | `fraction` | `(19,0000 − 17,2005) ÷ 2,9907` = `1,7995 ÷ 2,9907` | 0,601702 |
-| **`point_autonomie`** | `100,000 + 0,601702 × 10,000` | **106,017 km** |
+| **`range_point`** | `100,000 + 0,601702 × 10,000` | **106,017 km** |
 
 *(arrondi vers le bas à 3 décimales, `RG-100` — la valeur exacte est 106,01702…)*
 
 ### CT-04 — Le même trajet par −5 °C
 
-Mêmes entrées que `CT-03`, mais `temperature_batterie = −5,0 °C`.
+Mêmes entrées que `CT-03`, mais `battery_temperature = −5,0 °C`.
 
 | Étape | Calcul | Résultat |
 |---|---|---|
-| `facteur_temperature` | `−10,0 < −5,0 ≤ 0,0` | **0,800** |
-| `energie_disponible` | `60,00 × 0,400 × 0,800` | 19,2000 kWh |
-| `budget_utilisable` | `19,2000 − 5,00` | **14,2000 kWh** |
+| `temperature_factor` | `−10,0 < −5,0 ≤ 0,0` | **0,800** |
+| `available_energy` | `60,00 × 0,400 × 0,800` | 19,2000 kWh |
+| `usable_budget` | `19,2000 − 5,00` | **14,2000 kWh** |
 | Premier segment franchi | `14,2000 ≤ 17,2005` | le **segment 1** |
 | `fraction` | `14,2000 ÷ 17,2005` | 0,825559 |
-| **`point_autonomie`** | `0,000 + 0,825559 × 100,000` | **82,555 km** |
+| **`range_point`** | `0,000 + 0,825559 × 100,000` | **82,555 km** |
 
 > **23,5 km perdus pour 25 degrés de moins**, sans que rien d'autre ne change. Tous les
 > conducteurs de véhicule électrique connaissent cet effet ; peu savent qu'il porte
@@ -592,16 +598,16 @@ Mêmes entrées que `CT-03`, mais `temperature_batterie = −5,0 °C`.
 
 ### CT-05 — Autonomie jamais atteinte
 
-Mêmes entrées que `CT-03`, mais `etat_de_charge = 0,450`.
+Mêmes entrées que `CT-03`, mais `state_of_charge = 0,450`.
 
 | Étape | Calcul | Résultat |
 |---|---|---|
-| `energie_disponible` | `60,00 × 0,450 × 1,000` | 27,0000 kWh |
-| `budget_utilisable` | `27,0000 − 5,00` | 22,0000 kWh |
+| `available_energy` | `60,00 × 0,450 × 1,000` | 27,0000 kWh |
+| `usable_budget` | `27,0000 − 5,00` | 22,0000 kWh |
 | Comparaison | `20,5060 < 22,0000` sur tout le trajet | jamais franchi |
-| `autonomie_atteinte` | | **faux** |
-| `point_autonomie` | | **non produit** |
-| `energie_restante_arrivee` | `22,0000 − 20,5060` | **1,4940 kWh** |
+| `range_point_reached` | | **faux** |
+| `range_point` | | **non produit** |
+| `energy_left_on_arrival` | `22,0000 − 20,5060` | **1,4940 kWh** |
 
 ### CT-06 — La vitesse de consommation minimale
 
@@ -616,8 +622,8 @@ Segment plat de 100 km, en faisant varier la seule vitesse praticable :
 | 60,0 km/h | 9,644 kWh/100 km |
 | 110,0 km/h | 17,200 kWh/100 km |
 
-La vitesse du minimum vaut `∛( rendement_traction × puissance_auxiliaires ÷
-( P-02 × surface_frontale_cx ) )` = **8,3106 m·s⁻¹ = 29,92 km/h**.
+La vitesse du minimum vaut `∛( traction_efficiency × auxiliary_power ÷
+( P-02 × drag_area ) )` = **8,3106 m·s⁻¹ = 29,92 km/h**.
 
 > Ce cas vérifie `INV-05` **et sa réserve**. Un test de propriété qui affirmerait « la
 > consommation croît avec la vitesse » échouerait entre 10 et 30 km/h — sur des entrées
@@ -625,9 +631,9 @@ La vitesse du minimum vaut `∛( rendement_traction × puissance_auxiliaires ÷
 
 ### CT-07 — Température indisponible
 
-`temperature_batterie` absente → `facteur_temperature = P-04 = 0,700`, **le plus
-défavorable du barème**. Avec `etat_de_charge = 0,400` : `energie_disponible = 16,8000
-kWh`, `budget_utilisable = 11,8000 kWh`, `point_autonomie = 68,602 km`.
+`battery_temperature` absente → `temperature_factor = P-04 = 0,700`, **le plus
+défavorable du barème**. Avec `state_of_charge = 0,400` : `available_energy = 16,8000
+kWh`, `usable_budget = 11,8000 kWh`, `range_point = 68,602 km`.
 
 > Le sens du repli est une décision métier explicite : **en l'absence d'information, on
 > choisit toujours l'hypothèse défavorable au véhicule.** Un repli sur 1,000 aurait été
@@ -665,7 +671,7 @@ au milliardième.
 | **Déterminisme** | Strict (`INV-07`), profil compris | identique |
 | **Stabilité** | **Deux calculs successifs séparés de 10 s, sur un véhicule qui a peu avancé, ne doivent pas produire un point d'autonomie qui varie de plus de 2 km.** Un affichage qui oscille est jugé défaillant par le conducteur, même s'il est juste | sans objet |
 | **Rejouabilité** | **5 ans.** Tout véhicule immobilisé faute d'énergie fait l'objet d'une analyse : entrées, paramètres et version de spécification doivent permettre de rejouer le calcul à l'identique | identique |
-| **Auditabilité** | Le `profil` complet est journalisé à bord pour les 100 derniers kilomètres | conservé avec le trajet |
+| **Auditabilité** | Le `profile` complet est journalisé à bord pour les 100 derniers kilomètres | conservé avec le trajet |
 | **Explicabilité** | Le conducteur doit pouvoir voir quel segment consomme quoi | identique |
 | **Criticité et mode dégradé** | **Température indisponible → facteur le plus défavorable `P-04`, et le conducteur en est informé.** Vitesse praticable indisponible sur un segment → on retient la limitation réglementaire. **Jamais de repli optimiste** | identique |
 | **Confidentialité** | Aucune donnée personnelle dans le calcul. Le trajet, lui, en est une : il ne sort pas du véhicule sans consentement — d'où l'existence même de la variante embarquée | le trajet est pseudonymisé |
@@ -682,15 +688,15 @@ le développement lira.
 
 | Id | Exigence | Source | Qui la valide | Vérification |
 |---|---|---|---|---|
-| `EX-01` | Le logiciel du calculateur est écrit dans le sous-ensemble **MISRA C:2012**, catégories obligatoires et requises | Politique de sûreté logicielle `DIR-SUR-004` | Direction Sûreté | Analyse statique **bloquante** en intégration continue |
-| `EX-02` | **Aucune allocation dynamique de mémoire** après la phase d'initialisation | `DIR-SUR-004` §4.2 | Direction Sûreté | Analyse statique + revue de conception |
-| `EX-03` | Le temps d'exécution **pire cas** est borné, mesuré sur cible, et documenté | `DIR-SUR-004` §6 | Direction Sûreté | Mesure sur banc, à chaque livraison |
-| `EX-04` | La fonction s'exécute dans la **partition non critique** du calculateur ; elle ne peut ni lire ni écrire dans la partition de commande | Architecture de sûreté `ARC-VEH-11` | Architecture véhicule | Revue d'architecture + test de cloisonnement |
-| `EX-05` | La fonction dispose d'au plus **512 Ko de mémoire vive** et ne suppose aucun ramasse-miettes | `ARC-VEH-11` §3 | Architecture véhicule | Mesure d'empreinte à chaque livraison |
-| `EX-06` | Le **trajet est une donnée personnelle de catégorie C2** : il ne quitte pas le véhicule sans consentement explicite, et n'est jamais journalisé sous forme non agrégée | Politique de protection des données `POL-DCP-2` | Protection des données | Revue de conformité annuelle + revue de code sur les points de journalisation |
-| `EX-07` | Les données de la partition non critique et celles de la partition de commande sont **stockées séparément**, sans canal de communication autre que l'interface déclarée | `ARC-VEH-11` §5 | Architecture véhicule | Test de cloisonnement |
-| `EX-08` | Le service serveur emploie un langage de la **liste technique approuvée** `LTA-2026` | Comité d'architecture | Architecture SI | Revue d'architecture avant mise en service |
-| `EX-09` | La **couverture des tests** du code embarqué atteint 100 % des branches sur les fonctions de calcul | `DIR-SUR-004` §7 | Direction Sûreté | Rapport de couverture, bloquant |
+| <a id="ex-01"></a>`EX-01` | Le logiciel du calculateur est écrit dans le sous-ensemble **MISRA C:2012**, catégories obligatoires et requises | Politique de sûreté logicielle `DIR-SUR-004` | Direction Sûreté | Analyse statique **bloquante** en intégration continue |
+| <a id="ex-02"></a>`EX-02` | **Aucune allocation dynamique de mémoire** après la phase d'initialisation | `DIR-SUR-004` §4.2 | Direction Sûreté | Analyse statique + revue de conception |
+| <a id="ex-03"></a>`EX-03` | Le temps d'exécution **pire cas** est borné, mesuré sur cible, et documenté | `DIR-SUR-004` §6 | Direction Sûreté | Mesure sur banc, à chaque livraison |
+| <a id="ex-04"></a>`EX-04` | La fonction s'exécute dans la **partition non critique** du calculateur ; elle ne peut ni lire ni écrire dans la partition de commande | Architecture de sûreté `ARC-VEH-11` | Architecture véhicule | Revue d'architecture + test de cloisonnement |
+| <a id="ex-05"></a>`EX-05` | La fonction dispose d'au plus **512 Ko de mémoire vive** et ne suppose aucun ramasse-miettes | `ARC-VEH-11` §3 | Architecture véhicule | Mesure d'empreinte à chaque livraison |
+| <a id="ex-06"></a>`EX-06` | Le **trajet est une donnée personnelle de catégorie C2** : il ne quitte pas le véhicule sans consentement explicite, et n'est jamais journalisé sous forme non agrégée | Politique de protection des données `POL-DCP-2` | Protection des données | Revue de conformité annuelle + revue de code sur les points de journalisation |
+| <a id="ex-07"></a>`EX-07` | Les données de la partition non critique et celles de la partition de commande sont **stockées séparément**, sans canal de communication autre que l'interface déclarée | `ARC-VEH-11` §5 | Architecture véhicule | Test de cloisonnement |
+| <a id="ex-08"></a>`EX-08` | Le service serveur emploie un langage de la **liste technique approuvée** `LTA-2026` | Comité d'architecture | Architecture SI | Revue d'architecture avant mise en service |
+| <a id="ex-09"></a>`EX-09` | La **couverture des tests** du code embarqué atteint 100 % des branches sur les fonctions de calcul | `DIR-SUR-004` §7 | Direction Sûreté | Rapport de couverture, bloquant |
 
 > **Un conflit à arbitrer.** `EX-08` renvoie à une liste approuvée qui contient
 > majoritairement des environnements à ramasse-miettes, tandis que la contrainte métier de
@@ -702,12 +708,12 @@ le développement lira.
 
 | Id | Question | Décideur | Échéance | Statut |
 |---|---|---|---|---|
-| `Q-01` | Le barème de température procède par paliers (`RG-060`). Un dixième de degré peut faire varier l'autonomie de plusieurs kilomètres, ce qui peut heurter la contrainte de **stabilité** du §11. Faut-il interpoler, ou introduire une hystérésis ? | R&D Batterie | 2026-06-30 | Ouverte |
-| `Q-02` | La masse volumique de l'air (`P-02`) est fixe. Faut-il la corriger de l'altitude, connue du trajet ? Gain estimé : 3 à 4 % en montagne | R&D Énergie | 2026-09-30 | Ouverte |
-| `Q-03` | `H-2` suppose l'absence de vent. Les prévisions météorologiques sont disponibles côté serveur, pas à bord. Introduire le vent créerait **deux résultats différents** pour les deux usages — ce que le §8.2 interdit aujourd'hui | Direction R&D | 2026-12-31 | Ouverte |
-| `Q-04` | `E-VEHIC-001` et `E-RESERVE-001` ne sont couverts par aucun cas de test | Auteur métier | 2026-05-31 | Ouverte |
-| `Q-06` | `EX-08` impose une liste technique approuvée côté serveur, alors que `EX-01` impose du C MISRA à bord. La reproductibilité de 10⁻⁹ entre les deux implémentations (§8.2) est-elle tenable avec tous les langages de la liste, ou faut-il restreindre celle-ci pour cette fonction ? | Architecture SI **et** Direction Sûreté | 2026-07-31 | Ouverte |
-| `Q-05` | *Tranchée le 2026-03-12 :* le point d'autonomie s'arrondit-il au plus proche ou vers le bas ? → **vers le bas**, sans exception (`RG-100`) | Expérience client | — | Fermée |
+| <a id="q-01"></a>`Q-01` | Le barème de température procède par paliers (`RG-060`). Un dixième de degré peut faire varier l'autonomie de plusieurs kilomètres, ce qui peut heurter la contrainte de **stabilité** du §11. Faut-il interpoler, ou introduire une hystérésis ? | R&D Batterie | 2026-06-30 | Ouverte |
+| <a id="q-02"></a>`Q-02` | La masse volumique de l'air (`P-02`) est fixe. Faut-il la corriger de l'altitude, connue du trajet ? Gain estimé : 3 à 4 % en montagne | R&D Énergie | 2026-09-30 | Ouverte |
+| <a id="q-03"></a>`Q-03` | `H-2` suppose l'absence de vent. Les prévisions météorologiques sont disponibles côté serveur, pas à bord. Introduire le vent créerait **deux résultats différents** pour les deux usages — ce que le §8.2 interdit aujourd'hui | Direction R&D | 2026-12-31 | Ouverte |
+| <a id="q-04"></a>`Q-04` | `E-VEHIC-001` et `E-RESERVE-001` ne sont couverts par aucun cas de test | Auteur métier | 2026-05-31 | Ouverte |
+| <a id="q-06"></a>`Q-06` | `EX-08` impose une liste technique approuvée côté serveur, alors que `EX-01` impose du C MISRA à bord. La reproductibilité de 10⁻⁹ entre les deux implémentations (§8.2) est-elle tenable avec tous les langages de la liste, ou faut-il restreindre celle-ci pour cette fonction ? | Architecture SI **et** Direction Sûreté | 2026-07-31 | Ouverte |
+| <a id="q-05"></a>`Q-05` | *Tranchée le 2026-03-12 :* le point d'autonomie s'arrondit-il au plus proche ou vers le bas ? → **vers le bas**, sans exception (`RG-100`) | Expérience client | — | Fermée |
 
 ## 13. Historique et notices de changement
 
@@ -716,7 +722,7 @@ le développement lira.
 | 1.0.0 | 2026-02-24 | Version initiale | — | — |
 | **2.0.0** | 2026-03-12 | `RG-100` : arrondi du point d'autonomie vers le bas (`Q-05`) | **Oui** — jusqu'à 1 m, toujours dans le sens prudent | `N-2.0.0` |
 | 2.0.1 | 2026-03-20 | Reprise de `RG-050` et `RG-090` : le terme *consommation moyenne* est remplacé par une formulation explicite de l'assiette, à la suite du retrait du terme au glossaire (v2.0.0) | Aucun — clarification de rédaction | — |
-| 2.0.2 | 2026-08-21 | `RG-090` : `energie_cumulee_avant` était employé sans avoir jamais été défini (fantôme relevé par `C-03`) ; la règle l'introduit désormais explicitement | Aucun — l'énoncé rend explicite ce qui était implicite | — |
+| 2.0.2 | 2026-08-21 | `RG-090` : `cumulative_energy_before` était employé sans avoir jamais été défini (fantôme relevé par `C-03`) ; la règle l'introduit désormais explicitement | Aucun — l'énoncé rend explicite ce qui était implicite | — |
 
 ### N-2.0.0 — L'arrondi du point d'autonomie passe vers le bas
 
@@ -730,7 +736,7 @@ conséquence sur un tableur ; il en a une sur une voie rapide. Décision `Q-05`,
 
 | Fonction | Nature de l'impact |
 |---|---|
-| `FN-001` | **comportement** — `point_autonomie` peut diminuer de 1 m au plus |
+| `FN-001` | **comportement** — `range_point` peut diminuer de 1 m au plus |
 | `FN-011` | **comportement** — l'autonomie affichée hérite du sens de l'arrondi |
 | `FN-004` | **aucun** — réexaminée : le plan de recharge s'appuie sur le budget énergétique, pas sur la distance arrondie |
 | `FN-007` | **aucun** — réexaminée : le seuil d'alerte porte sur l'énergie |
@@ -739,7 +745,7 @@ conséquence sur un tableur ; il en a une sur une voie rapide. Décision `Q-05`,
 
 | Fonction | Élément | Nature | Détail | Compatibilité |
 |---|---|---|---|---|
-| `FN-001` | `point_autonomie` | **modification** | le sens de l'arrondi passe de « au plus proche » à « vers le bas » ; type, unité et précision inchangés | compatible |
+| `FN-001` | `range_point` | **modification** | le sens de l'arrondi passe de « au plus proche » à « vers le bas » ; type, unité et précision inchangés | compatible |
 
 Aucun ajout, aucune suppression. Le contrat est **inchangé dans sa forme** — seule la
 sémantique de la valeur se resserre, dans le sens prudent. C'est le cas favorable :
@@ -817,12 +823,12 @@ changera au moins une fois dans les quinze ans de vie du véhicule.
 | `EX-07` | `fca54b2f-b68d-4a52-98d9-83f4f907b530` | exigence | Les données de la partition non critique et celles de la partition de  |
 | `EX-08` | `d34bba90-81e0-4566-a9b5-afcf17b81d19` | exigence | Le service serveur emploie un langage de la **liste technique approuvé |
 | `EX-09` | `e607e38d-b669-4ace-ba48-3098e6763c09` | exigence | La **couverture des tests** du code embarqué atteint 100 % des branche |
-| `INV-01` | `5afa3fa9-13fd-455a-90f9-a7d6a105894e` | invariant | Sur un segment de pente positive ou nulle, `energie_segment > 0` |
+| `INV-01` | `5afa3fa9-13fd-455a-90f9-a7d6a105894e` | invariant | Sur un segment de pente positive ou nulle, `segment_energy > 0` |
 | `INV-02` | `8cd75e36-1a32-4cbe-be56-1fa572e468ef` | invariant | Additivité** : découper un segment en deux moitiés de mêmes vitesse et |
 | `INV-03` | `e9dd2410-9fb4-485a-b8c6-b7966b7dc047` | invariant | Homogénéité** : à vitesse et pente égales, doubler la distance double  |
 | `INV-04` | `faf499ce-6b1c-4b8e-af2d-1396d49bc513` | invariant | Symétrie de la pente** : un aller-retour sur un même segment consomme  |
 | `INV-05` | `21267255-1108-4c13-adf6-5832b0069bde` | invariant | Monotonie vis-à-vis de la vitesse, au-delà de la vitesse de consommati |
-| `INV-06` | `683ae5b4-21f5-4841-80c6-d1e5fa76fffa` | invariant | `point_autonomie`, s'il existe, est compris entre 0 et la longueur tot |
+| `INV-06` | `683ae5b4-21f5-4841-80c6-d1e5fa76fffa` | invariant | `range_point`, s'il existe, est compris entre 0 et la longueur totale  |
 | `INV-07` | `cabb4a7c-3cc6-4b7f-840b-fa14ee4d0f4a` | invariant | Le calcul est déterministe : mêmes entrées, mêmes sorties, profil comp |
 | `INV-08` | `52d43b49-e236-4a5c-9835-ebe75ef1aecf` | invariant | Le calcul est **pur** : aucun appel successif ne dépend d'un appel pré |
 | `E-TRAJET-001` | `13e307f4-1b7a-444c-8829-d186c50601e9` | cas d'erreur | Le trajet ne contient aucun segment |

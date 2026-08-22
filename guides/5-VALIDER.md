@@ -93,7 +93,7 @@ un impact déclaré sur les résultats sans incrément majeur, une question ouve
 décideur, un statut « Acceptée » avec une question bloquante.
 
 ```bash
-java outils/Verifier.java exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md
+java outils/Verifier.java exemples/fil-rouge/5-SPEC-NRG-001.en.md
 ```
 
 ## Étage 2 — la relecture qualité

@@ -335,12 +335,12 @@ découpage](exemples/fil-rouge/1-DECOUPAGE.md) → [le
 glossaire](exemples/fil-rouge/2-GLOSSAIRE.md) → [le cheminement des
 données](exemples/fil-rouge/3-DONNEES.md) → [une fiche arrêtée au niveau
 2](exemples/fil-rouge/4-FN-004-planifier-les-recharges.md) → [la spécification
-complète](exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md)
+complète](exemples/fil-rouge/5-SPEC-NRG-001.en.md)
 
 **Deux vignettes** complètent l'illustration, gardées parce qu'elles aboutissent à des
 conclusions techniques **opposées** à partir de la même méthode :
 
-| | [Le bilan de masse d'un lot](exemples/mass-balance/spec/SPEC-MAS-001.en.md) | [Le refroidissement d'une boisson](exemples/cooling/spec/SPEC-THM-001.en.md) | [L'autonomie d'un véhicule](exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md) |
+| | [Le bilan de masse d'un lot](exemples/mass-balance/spec/SPEC-MAS-001.en.md) | [Le refroidissement d'une boisson](exemples/cooling/spec/SPEC-THM-001.en.md) | [L'autonomie d'un véhicule](exemples/fil-rouge/5-SPEC-NRG-001.en.md) |
 |---|---|---|---|
 | Exigence d'exactitude | exacte au centime | tolérance de 10⁻⁶ | reproductibilité de 10⁻⁹ entre deux implémentations |
 | **Type numérique qui en découle** | **décimal exact obligatoire** | **double précision confortable** | **double précision indispensable** |
