@@ -1,7 +1,7 @@
 # 3 — Le contrat, et son passage vers le code
 
 *Troisième étape. Le contrat existe déjà, aux §4 et §5 de la
-[spécification](2-SPEC-MAS-001-batch-mass-balance.md). Ce document ne le réécrit pas : il
+[spécification](2-SPEC-MAS-001.md). Ce document ne le réécrit pas : il
 montre **ce qu'un développeur en fait**, et pourquoi ce passage est mécanique.*
 
 ---

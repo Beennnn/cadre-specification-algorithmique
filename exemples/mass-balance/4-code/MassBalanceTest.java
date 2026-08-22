@@ -1,7 +1,7 @@
 // Qualification de l'implémentation contre les données de référence.
 //
 // Ce harnais ne contient AUCUNE valeur attendue en dur : il rejoue le fichier
-// donnees-de-reference.csv, qui est le §10 de la spécification. C'est ce qui en
+// reference-data.csv, qui est le §10 de la spécification. C'est ce qui en
 // fait une qualification et non un test écrit par celui qui a codé — un test dont
 // les valeurs attendues sortent de l'implémentation ne vérifie rien.
 //
@@ -31,7 +31,7 @@ public final class MassBalanceTest {
         System.setOut(new java.io.PrintStream(new java.io.FileOutputStream(
                 java.io.FileDescriptor.out), true, StandardCharsets.UTF_8));
 
-        Path donnees = Paths.get(args.length > 0 ? args[0] : "donnees-de-reference.csv");
+        Path donnees = Paths.get(args.length > 0 ? args[0] : "reference-data.csv");
         System.out.println("Qualification de MassBalance contre " + donnees + "\n");
 
         for (String ligne : Files.readAllLines(donnees, StandardCharsets.UTF_8)) {
@@ -45,7 +45,7 @@ public final class MassBalanceTest {
         if (echecs == 0) {
             System.out.println("Tous les cas de référence sont satisfaits.");
         } else {
-            System.out.println(echecs + " cas en écart — voir 5-ECARTS.md pour la conduite à tenir.");
+            System.out.println(echecs + " cas en écart — voir 5-DEVIATIONS.md pour la conduite à tenir.");
         }
         System.exit(echecs > 0 ? 1 : 0);
     }

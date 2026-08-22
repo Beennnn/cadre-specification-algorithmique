@@ -50,6 +50,20 @@ public class Verifier {
         TITRES.put("questions", "question"); TITRES.put("historique", "historique");
     }
 
+    /**
+     * Titres de section reconnus, en français ET en anglais. Les spécifications qui
+     * circulent hors francophonie sont rédigées en anglais ; l'outil doit lire les deux,
+     * sans quoi il ne trouve aucune section et signale des défauts qui n'existent pas.
+     */
+    static final LinkedHashMap<String, String> TITRES_EN = new LinkedHashMap<>();
+    static {
+        TITRES_EN.put("entrees", "input");       TITRES_EN.put("sorties", "output");
+        TITRES_EN.put("parametres", "parameter"); TITRES_EN.put("regles", "rule");
+        TITRES_EN.put("invariants", "invariant"); TITRES_EN.put("erreurs", "error");
+        TITRES_EN.put("essai", "test set");      TITRES_EN.put("contraintes", "constraint");
+        TITRES_EN.put("questions", "question");  TITRES_EN.put("historique", "history");
+    }
+
     static Map<String, String> sections(String texte) {
         Map<String, StringBuilder> trouvees = new HashMap<>();
         String courante = null;
@@ -59,6 +73,9 @@ public class Verifier {
                 courante = null;
                 for (var e : TITRES.entrySet())
                     if (titre.contains(e.getValue())) { courante = e.getKey(); break; }
+                if (courante == null)
+                    for (var e : TITRES_EN.entrySet())
+                        if (titre.contains(e.getValue())) { courante = e.getKey(); break; }
             } else if (courante != null) {
                 trouvees.computeIfAbsent(courante, k -> new StringBuilder())
                         .append(ligne).append('\n');
@@ -244,7 +261,7 @@ public class Verifier {
         }
 
         // C-23 : glossaire de référence
-        if (!texte.contains("**Glossaire de référence**"))
+        if (!texte.contains("**Glossaire de référence**") && !texte.contains("**Reference glossary**"))
             constat("AVERTIR", "C-23", chemin,
                     "l'en-tête ne nomme pas le glossaire de référence et sa version");
 
@@ -292,7 +309,8 @@ public class Verifier {
         }
 
         // C-39 : provenance et validation des résultats attendus
-        if (!sec.getOrDefault("essai", "").contains("Provenance et validation"))
+        if (!sec.getOrDefault("essai", "").contains("Provenance et validation")
+                && !sec.getOrDefault("essai", "").contains("Provenance and validation"))
             constat("ÉCHEC", "C-39", chemin,
                     "le jeu d'essai ne trace pas la provenance ni la validation de ses résultats attendus");
 
@@ -312,7 +330,7 @@ public class Verifier {
         for (String r : new TreeSet<>(definies))
             if (Collections.frequency(definies, r) > 1)
                 constat("ÉCHEC", "C-17", chemin, r + " défini plusieurs fois");
-        Matcher mc = Pattern.compile("###\\s+Table de couverture(.*?)(?=\\n##\\s|\\Z)",
+        Matcher mc = Pattern.compile("###\\s+(?:Table de couverture|Coverage table)(.*?)(?=\\n##\\s|\\Z)",
                 Pattern.DOTALL).matcher(texte);
         if (mc.find()) {
             String couverture = mc.group(1);
@@ -351,6 +369,7 @@ public class Verifier {
             String[] c = Arrays.stream(mq.group(2).split("\\|", -1)).map(String::trim)
                     .toArray(String[]::new);
             if (c.length >= 4 && !c[c.length - 2].toLowerCase().contains("fermée")
+                    && !c[c.length - 2].toLowerCase().contains("closed")
                     && (c[1].isEmpty() || c[2].isEmpty()))
                 constat("ÉCHEC", "C-21", chemin, mq.group(1) + " sans décideur ou sans échéance");
         }
@@ -411,12 +430,14 @@ public class Verifier {
                             titre + " : WHILE sans nombre maximal d'itérations déclaré");
             }
             boolean superlatif = Pattern.compile(
-                    "le plus (petit|grand|élevé|faible)|le meilleur|\\bMINIMUM\\b|\\bMAXIMUM\\b|le premier",
+                    "le plus (petit|grand|élevé|faible)|le meilleur|\\bMINIMUM\\b|\\bMAXIMUM\\b|le premier"
+                    + "|the (smallest|largest|highest|lowest|best|first)",
                     Pattern.CASE_INSENSITIVE).matcher(bloc).find();
             boolean collection = Pattern.compile(
                     "\\bOVER\\b|\\bIN\\b|\\bSORT\\b|\\bFILTER\\b|lignes|segments|bornes|la ligne dont|celle dont")
                     .matcher(bloc).find();
-            boolean departage = Pattern.compile("égalit|ex æquo|départage|alphabétiq|le plus précoce",
+            boolean departage = Pattern.compile("égalit|ex æquo|départage|alphabétiq|le plus précoce"
+                    + "|tie|tie-break|alphabetical|earliest",
                     Pattern.CASE_INSENSITIVE).matcher(bloc).find();
             if (superlatif && collection && !departage)
                 constat("AVERTIR", "C-11", chemin,

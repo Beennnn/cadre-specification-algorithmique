@@ -25,8 +25,8 @@ illustrée de bout en bout par un fil rouge dont tous les chiffres sont vérifi�
 | Fondements théoriques et sources | ✅ `REFERENCES.md` |
 | Objections fréquentes | ✅ `FAQ.md` |
 | Fil rouge complet | ✅ `exemples/fil-rouge/` — 6 documents |
-| Deux vignettes de contraste | ✅ `exemples/bilan-de-masse/`, `SPEC-THM-001` |
-| Une chaîne complète besoin → code → écarts | ✅ `exemples/bilan-de-masse/`, code exécutable et qualifié |
+| Deux vignettes de contraste | ✅ `exemples/mass-balance/`, `SPEC-THM-001` |
+| Une chaîne complète besoin → code → écarts | ✅ `exemples/mass-balance/`, code exécutable et qualifié |
 
 ## Priorité décidée pour la reprise
 

@@ -196,7 +196,7 @@ qu'un programme l'a produit, sans l'examiner**.
 | **[templates/](templates/)** | Les modèles vierges : [spécification](templates/MODELE-SPECIFICATION.md), [fiche de fonction](templates/MODELE-FICHE-FONCTION.md), [fiche de donnée](templates/MODELE-FICHE-DONNEE.md), [glossaire](templates/MODELE-GLOSSAIRE.md), [liste de vérification](templates/CHECKLIST-RELECTURE.md) |
 | **[outils/](outils/)** | Le catalogue des règles de contrôle, le vérificateur, la gestion des identités, la consigne de relecture par une IA |
 | **[exemples/](exemples/)** | Quatre exemples, et ce que chacun montre que les autres ne montrent pas |
-| **[exemples/bilan-de-masse/](exemples/bilan-de-masse/)** | La **chaîne complète** : besoin → spécification → contrat → code exécutable → analyse des écarts |
+| **[exemples/mass-balance/](exemples/mass-balance/)** | La **chaîne complète** : besoin → spécification → contrat → code exécutable → analyse des écarts |
 | **[exemples/fil-rouge/](exemples/fil-rouge/)** | Le fil rouge complet : *l'autonomie d'un véhicule électrique* |
 | **[GLOSSAIRE.md](GLOSSAIRE.md)** | Le vocabulaire de la méthode elle-même |
 | **[REFERENCES.md](REFERENCES.md)** | D'où viennent les idées, ce qu'on leur emprunte et ce qu'on écarte |
@@ -290,21 +290,21 @@ citations `RG-xxx` que les développeurs y ont posées ([guide 9](guides/9-L-APP
 ## La chaîne complète, de bout en bout
 
 **Un seul exemple va du besoin jusqu'au code exécuté** : *[le bilan de masse d'un
-lot](exemples/bilan-de-masse/)*. Doser les composants d'un lot sur une balance de
+lot](exemples/mass-balance/)*. Doser les composants d'un lot sur une balance de
 résolution finie — assez petit pour être lu en entier, assez piégeux pour porter cinq faux
 amis.
 
-[Le besoin](exemples/bilan-de-masse/1-BESOIN.md) → [la
-spécification](exemples/bilan-de-masse/2-SPEC-MAS-001-batch-mass-balance.md) → [le
-contrat](exemples/bilan-de-masse/3-CONTRAT.md) → [le
-code](exemples/bilan-de-masse/4-code/) → [les
-écarts](exemples/bilan-de-masse/5-ECARTS.md)
+[Le besoin](exemples/mass-balance/1-NEED.md) → [la
+spécification](exemples/mass-balance/2-SPEC-MAS-001.md) → [le
+contrat](exemples/mass-balance/3-CONTRACT.md) → [le
+code](exemples/mass-balance/4-code/) → [les
+écarts](exemples/mass-balance/5-DEVIATIONS.md)
 
 Le code s'exécute en deux commandes, sans dépendance, et se qualifie contre les données de
 référence de la spécification :
 
 ```bash
-cd exemples/bilan-de-masse/4-code
+cd exemples/mass-balance/4-code
 javac -d /tmp/mb *.java && java -cp /tmp/mb MassBalanceTest
 ```
 
@@ -312,7 +312,7 @@ Le harnais **ne contient aucune valeur attendue** : il rejoue le §10 de la spé
 C'est ce qui en fait une qualification et non un test écrit par celui qui a codé.
 
 Et il se termine par ce que la plupart des démarches oublient : [l'analyse des
-écarts](exemples/bilan-de-masse/5-ECARTS.md), qui conclut ici que **le code est conforme et
+écarts](exemples/mass-balance/5-DEVIATIONS.md), qui conclut ici que **le code est conforme et
 que la spécification est en défaut** — la correction remonte donc au document, versionnée
 et motivée.
 
@@ -338,7 +338,7 @@ complète](exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md)
 **Deux vignettes** complètent l'illustration, gardées parce qu'elles aboutissent à des
 conclusions techniques **opposées** à partir de la même méthode :
 
-| | [Le bilan de masse d'un lot](exemples/bilan-de-masse/2-SPEC-MAS-001-batch-mass-balance.md) | [Le refroidissement d'une boisson](exemples/SPEC-THM-001-refroidissement.md) | [L'autonomie d'un véhicule](exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md) |
+| | [Le bilan de masse d'un lot](exemples/mass-balance/2-SPEC-MAS-001.md) | [Le refroidissement d'une boisson](exemples/SPEC-THM-001-refroidissement.md) | [L'autonomie d'un véhicule](exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md) |
 |---|---|---|---|
 | Exigence d'exactitude | exacte au centime | tolérance de 10⁻⁶ | reproductibilité de 10⁻⁹ entre deux implémentations |
 | **Type numérique qui en découle** | **décimal exact obligatoire** | **double précision confortable** | **double précision indispensable** |

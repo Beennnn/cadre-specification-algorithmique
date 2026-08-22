@@ -14,11 +14,11 @@ amis.
 
 | | Document | Ce que l'étape produit | Qui la tient |
 |---|---|---|---|
-| **1** | [Le besoin](1-BESOIN.md) | Ce que le métier dit, dans ses mots, avant toute formalisation — et la liste des questions qu'il ne tranche pas encore | Métier |
-| **2** | [La spécification](2-SPEC-MAS-001-batch-mass-balance.md) | Chaque question reçoit une réponse numérotée, justifiée et versionnée. Contrat typé, règles, invariants, jeu d'essai calculé à la main | Métier, avec un co-auteur technique |
-| **3** | [Le contrat](3-CONTRAT.md) | Ce qu'un développeur déduit du contrat, et la correspondance vers Java — mécanique, déclarée une fois | Technique |
+| **1** | [Le besoin](1-NEED.md) | Ce que le métier dit, dans ses mots, avant toute formalisation — et la liste des questions qu'il ne tranche pas encore | Métier |
+| **2** | [La spécification](2-SPEC-MAS-001.md) | Chaque question reçoit une réponse numérotée, justifiée et versionnée. Contrat typé, règles, invariants, jeu d'essai calculé à la main | Métier, avec un co-auteur technique |
+| **3** | [Le contrat](3-CONTRACT.md) | Ce qu'un développeur déduit du contrat, et la correspondance vers Java — mécanique, déclarée une fois | Technique |
 | **4** | [Le code](4-code/) | L'implémentation annotée règle par règle, et le harnais qui la qualifie contre les données de référence | Technique |
-| **5** | [Les écarts](5-ECARTS.md) | Le métier juge les écarts au regard de ses tolérances — et décide ce qu'on en fait | Métier, avec le support de la technique |
+| **5** | [Les écarts](5-DEVIATIONS.md) | Le métier juge les écarts au regard de ses tolérances — et décide ce qu'on en fait | Métier, avec le support de la technique |
 
 ---
 
@@ -27,12 +27,12 @@ amis.
 Deux commandes, aucune dépendance, aucun gestionnaire de construction :
 
 ```bash
-cd exemples/bilan-de-masse/4-code
+cd exemples/mass-balance/4-code
 javac -d /tmp/mb *.java && java -cp /tmp/mb MassBalanceTest
 ```
 
 ```
-Qualification de MassBalance contre donnees-de-reference.csv
+Qualification de MassBalance contre reference-data.csv
 
   OK      CT-01    3 doses, résidu 0.001, INV-01 et INV-02 tenus
   OK      CT-02    3 doses, résidu -0.001, INV-01 et INV-02 tenus
@@ -57,7 +57,7 @@ C'est le passage que toute la méthode organise. À gauche ce que le métier éc
 ce que le développeur en fait — et rien de plus.
 
 **`RG-020` — arrondi au pas de la balance**, tel qu'il figure au §7 de la
-[spécification](2-SPEC-MAS-001-batch-mass-balance.md) :
+[spécification](2-SPEC-MAS-001.md) :
 
 ```
 FOR EACH component IN components
@@ -103,7 +103,7 @@ référence à pas fin ne le détecte.
 ## Les trois choses que cet exemple démontre
 
 **1. Le harnais ne contient aucune valeur attendue.** Il rejoue
-[`donnees-de-reference.csv`](4-code/donnees-de-reference.csv), qui est le §10 de la
+[`reference-data.csv`](4-code/reference-data.csv), qui est le §10 de la
 spécification transcrit sans interprétation. C'est ce qui en fait une **qualification** et
 non un test écrit par celui qui a codé : un test dont les valeurs attendues sortent de
 l'implémentation ne vérifie rien.
@@ -113,7 +113,7 @@ permutation — rejoue 200 ordres différents. C'est le contrôle qui attrape un
 implémentation ayant « oublié » le départage de `RG-050` : elle passe **tous** les cas
 nominaux et se trompe le jour où les composants arrivent dans un autre ordre.
 
-**3. Un écart n'est pas forcément un bogue.** L'analyse de [l'étape 5](5-ECARTS.md) conclut
+**3. Un écart n'est pas forcément un bogue.** L'analyse de [l'étape 5](5-DEVIATIONS.md) conclut
 que le code est conforme et que **la spécification est en défaut**. La correction remonte
 donc au document, versionnée et motivée — pas dans un correctif local.
 
