@@ -299,7 +299,10 @@ public class Verifier {
         // C-04 : paramètre déclaré et jamais employé
         String params = sec.getOrDefault("parametres", "");
         for (String p : trouverTout("^\\|\\s*`(P-\\d+)`", params, Pattern.MULTILINE)) {
-            int total = compter(texte, p), dansSection = compter(params, p);
+            // On compte hors ANNEXE DES IDENTITÉS : celle-ci cite tout objet identifié,
+            // y compris les paramètres, et suffirait à faire passer pour « employé » un
+            // paramètre qu'aucune règle n'utilise. C'est un faux négatif observé.
+            int total = compter(corps(texte), p), dansSection = compter(params, p);
             if (total - dansSection == 0)
                 constat("ÉCHEC", "C-04", chemin, p + " déclaré mais employé nulle part");
         }

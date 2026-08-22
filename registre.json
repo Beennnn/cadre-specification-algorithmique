@@ -14,6 +14,13 @@
     "document": "exemples/fil-rouge/4-FN-004-planifier-les-recharges.md"
   },
   {
+    "uuid": "062582ac-178f-486e-ab1e-94ccce05a0ca",
+    "identifiant": "INV-03",
+    "nature": "invariant",
+    "libelle": "`−23,44° ≤ declination ≤ +23,44°`, quelle que soit la date. Une valeur hors de cet intervalle signale une erreur de conversion d'angle — le symptôme le plus courant d'une confusion degrés / radians.",
+    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+  },
+  {
     "uuid": "069a2362-2dfb-4a2b-9e2e-f25e55c33516",
     "identifiant": "RG-030",
     "nature": "règle",
@@ -91,6 +98,13 @@
     "document": "exemples/SPEC-THM-001-refroidissement.md"
   },
   {
+    "uuid": "103ce181-d9a9-43da-8828-8b39052e7b99",
+    "identifiant": "P-01",
+    "nature": "paramètre",
+    "libelle": "Hauteur de référence `h₀`",
+    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+  },
+  {
     "uuid": "11ce095c-f267-40b0-84cb-49c18037bc46",
     "identifiant": "FN-001",
     "nature": "fonction",
@@ -124,6 +138,13 @@
     "nature": "cas de test",
     "libelle": "Masse ajoutée nulle",
     "document": "exemples/SPEC-THM-001-refroidissement.md"
+  },
+  {
+    "uuid": "16b13a55-55df-4eb7-b868-bc369b1138c0",
+    "identifiant": "RG-040",
+    "nature": "règle",
+    "libelle": "Midi solaire",
+    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
   },
   {
     "uuid": "19326885-4fa0-498d-923f-d1b44998f662",
@@ -245,6 +266,13 @@
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
   },
   {
+    "uuid": "3125ec69-b46f-4d89-b533-f5b6985a4e50",
+    "identifiant": "EX-03",
+    "nature": "exigence",
+    "libelle": "Le calcul est **rejouable à l'identique** : aucune dépendance à l'horloge courante ni au fuseau de la machine",
+    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+  },
+  {
     "uuid": "378cb511-d51c-4f98-8ef1-b5f414836038",
     "identifiant": "RG-030",
     "nature": "règle",
@@ -259,11 +287,32 @@
     "document": "exemples/SPEC-THM-001-refroidissement.md"
   },
   {
+    "uuid": "392ff06a-a1d6-4f50-9cb2-858811eb569b",
+    "identifiant": "Q-02",
+    "nature": "question",
+    "libelle": "Faut-il corriger de l'altitude de l'observateur ? L'effet atteint 4 minutes à 1 000 m",
+    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+  },
+  {
+    "uuid": "3b88e87e-2677-41d1-b5fc-c8c951311eca",
+    "identifiant": "RG-030",
+    "nature": "règle",
+    "libelle": "Déclinaison",
+    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+  },
+  {
     "uuid": "3cc439b5-c892-4f1b-9b73-404b674cf47f",
     "identifiant": "Q-02",
     "nature": "question",
     "libelle": "La masse volumique de l'air (`P-02`) est fixe. Faut-il la corriger de l'altitude, connue du trajet ? Gain estimé : 3 à 4 % en montagne",
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+  },
+  {
+    "uuid": "3dd144ed-ae0c-4122-a8e9-6cfe601315c0",
+    "identifiant": "INV-01",
+    "nature": "invariant",
+    "libelle": "Si `solar_regime = NORMAL`, alors `sunrise_time < sunset_time` — le lever précède toujours le coucher du même jour solaire.",
+    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
   },
   {
     "uuid": "3e382a1c-177b-47e7-bb99-0a700f03541a",
@@ -287,6 +336,13 @@
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
   },
   {
+    "uuid": "428e65ae-0ed5-4a6b-8eb4-e41d0215211a",
+    "identifiant": "SPEC-AST-001",
+    "nature": "document",
+    "libelle": "SPEC-AST-001 — Sunrise and sunset times",
+    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+  },
+  {
     "uuid": "43b0691e-1348-4088-99c5-86c584a90c42",
     "identifiant": "FN-001",
     "nature": "fonction",
@@ -306,6 +362,13 @@
     "nature": "exigence",
     "libelle": "Le calcul embarqué **n'émet aucune requête réseau** : il fonctionne hors ligne et ne transmet rien",
     "document": "exemples/SPEC-THM-001-refroidissement.md"
+  },
+  {
+    "uuid": "4a8d293a-238f-4600-89b0-3a587757d3e8",
+    "identifiant": "EX-02",
+    "nature": "exigence",
+    "libelle": "La **double précision binaire suffit**. La grandeur de sortie est arrondie à la minute, soit 4 × 10⁻⁴ jour, très au-dessus de tout bruit numérique",
+    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
   },
   {
     "uuid": "4b06688f-6465-4532-aa52-0db400bee2f4",
@@ -371,6 +434,13 @@
     "document": "exemples/SPEC-THM-001-refroidissement.md"
   },
   {
+    "uuid": "53eadd31-c842-4683-974c-e02c56b7aeb3",
+    "identifiant": "INV-02",
+    "nature": "invariant",
+    "libelle": "`sunrise_time` et `sunset_time` sont **tous deux** `ABSENT` ou tous deux présents. Jamais l'un sans l'autre.",
+    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+  },
+  {
     "uuid": "56568916-bbd1-44d2-86fc-12416f98676c",
     "identifiant": "FN-007",
     "nature": "fonction",
@@ -390,6 +460,13 @@
     "nature": "invariant",
     "libelle": "Sur un segment de pente positive ou nulle, `energie_segment > 0`",
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+  },
+  {
+    "uuid": "5b432b90-2b5c-482f-a032-922be7159f4e",
+    "identifiant": "P-03",
+    "nature": "paramètre",
+    "libelle": "Sens d'arrondi à la minute",
+    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
   },
   {
     "uuid": "5f56cc79-2938-4faa-a6fe-10aa2b53d021",
@@ -413,6 +490,13 @@
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
   },
   {
+    "uuid": "66ca83b9-80a9-49ed-8d97-9836840ca7d7",
+    "identifiant": "CT-01",
+    "nature": "cas de test",
+    "libelle": "Paris, solstice d'été",
+    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+  },
+  {
     "uuid": "67c240de-37c7-4d40-a6cc-330545759eb9",
     "identifiant": "INV-06",
     "nature": "invariant",
@@ -434,6 +518,13 @@
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
   },
   {
+    "uuid": "68ad3237-3c15-4f58-a8d6-ee9383bf46e2",
+    "identifiant": "Q-01",
+    "nature": "question",
+    "libelle": "Faut-il exposer les crépuscules civil, nautique et astronomique ? Ce sont les mêmes règles avec `h₀` valant −6°, −12° et −18° : `P-01` deviendrait une entrée",
+    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+  },
+  {
     "uuid": "694d1152-ae43-44ea-9cee-1a9226214548",
     "identifiant": "E-MAS-001",
     "nature": "cas d'erreur",
@@ -453,6 +544,13 @@
     "nature": "règle",
     "libelle": "Budget utilisable",
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+  },
+  {
+    "uuid": "6a936d8a-f897-4ada-883b-4d430c07ad49",
+    "identifiant": "CT-03",
+    "nature": "cas de test",
+    "libelle": "Quito, équinoxe, longitude négative",
+    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
   },
   {
     "uuid": "6b1bee5a-76dd-47f0-8a3a-4517eb13bd91",
@@ -518,6 +616,13 @@
     "document": "exemples/SPEC-THM-001-refroidissement.md"
   },
   {
+    "uuid": "77f14f85-1c37-4cb0-b59c-3cd5e9ea5c33",
+    "identifiant": "INV-05",
+    "nature": "invariant",
+    "libelle": "`solar_regime ≠ NORMAL` implique `",
+    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+  },
+  {
     "uuid": "7c52110c-fc9a-4bad-8b2e-30511a8b1751",
     "identifiant": "INV-02",
     "nature": "invariant",
@@ -546,6 +651,13 @@
     "document": "exemples/SPEC-THM-001-refroidissement.md"
   },
   {
+    "uuid": "871209e3-ca46-4ea2-8f77-455f0575b2f4",
+    "identifiant": "EX-04",
+    "nature": "exigence",
+    "libelle": "Volumétrie : jusqu'à 5 000 appels par seconde en pointe, latence au 99ᵉ centile sous 5 ms",
+    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+  },
+  {
     "uuid": "874a1ca9-d14a-43d5-9daf-865e9b8b7fc0",
     "identifiant": "EX-04",
     "nature": "exigence",
@@ -567,11 +679,25 @@
     "document": "exemples/fil-rouge/3-DONNEES.md"
   },
   {
+    "uuid": "8cad23b6-1739-4778-899a-8b3d7c2958fd",
+    "identifiant": "INV-04",
+    "nature": "invariant",
+    "libelle": "Symétrie par la longitude** : à latitude égale, décaler la longitude de `Δ` degrés vers l'est avance le lever **et** le coucher de `Δ ÷ 15` heures, à la minute d'arrondi près. C'est ce qui attrape une convention de signe inversée.",
+    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+  },
+  {
     "uuid": "8cd75e36-1a32-4cbe-be56-1fa572e468ef",
     "identifiant": "INV-02",
     "nature": "invariant",
     "libelle": "Additivité** : découper un segment en deux moitiés de mêmes vitesse et pente donne exactement la même énergie que le segment entier",
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+  },
+  {
+    "uuid": "8f627688-ce42-47d8-a4b5-0e55eb8d1571",
+    "identifiant": "RG-060",
+    "nature": "règle",
+    "libelle": "Instants du lever et du coucher",
+    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
   },
   {
     "uuid": "9111352a-45f3-4b93-8115-3102c370b556",
@@ -651,6 +777,13 @@
     "document": "exemples/SPEC-THM-001-refroidissement.md"
   },
   {
+    "uuid": "a3113841-3709-4029-9ccd-7ceef61af128",
+    "identifiant": "CT-04",
+    "nature": "cas de test",
+    "libelle": "Tromsø, jour polaire",
+    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+  },
+  {
     "uuid": "a40abaf1-3b00-415d-85a0-60d6d269158d",
     "identifiant": "FN-007",
     "nature": "fonction",
@@ -665,6 +798,20 @@
     "document": "exemples/SPEC-THM-001-refroidissement.md"
   },
   {
+    "uuid": "a9c2da1c-b965-4ba5-90c9-d4635518a4ea",
+    "identifiant": "P-04",
+    "nature": "paramètre",
+    "libelle": "Obliquité de l'écliptique",
+    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+  },
+  {
+    "uuid": "ad06693c-79b6-44d2-a7eb-bf351321c88a",
+    "identifiant": "CT-05",
+    "nature": "cas de test",
+    "libelle": "Tromsø, nuit polaire",
+    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+  },
+  {
     "uuid": "aeb9bd4f-38b4-4a27-8c60-28fc5d8141e7",
     "identifiant": "RG-020",
     "nature": "règle",
@@ -677,6 +824,13 @@
     "nature": "question",
     "libelle": "`P-07` vaut 0,10 °C. Cette marge devrait-elle dépendre de l'écart initial à l'ambiante plutôt que d'être une constante ?",
     "document": "exemples/SPEC-THM-001-refroidissement.md"
+  },
+  {
+    "uuid": "af97c323-6b9f-4fd6-9713-4e06c6d4672e",
+    "identifiant": "RG-010",
+    "nature": "règle",
+    "libelle": "Jour à midi solaire",
+    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
   },
   {
     "uuid": "b11ac534-4ee3-4ae5-8395-6f6b65dca68d",
@@ -698,6 +852,13 @@
     "nature": "exigence",
     "libelle": "Le fichier de paramètres téléchargé est **signé**, et une signature invalide entraîne le maintien de la version précédente",
     "document": "exemples/SPEC-THM-001-refroidissement.md"
+  },
+  {
+    "uuid": "b35f41d9-46c8-441d-a4be-11abad2464f7",
+    "identifiant": "Q-03",
+    "nature": "question",
+    "libelle": "Le service doit-il rendre l'heure locale plutôt qu'UTC ?",
+    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
   },
   {
     "uuid": "b3e154c8-b776-4ecb-86c7-fe1cc06173a9",
@@ -735,6 +896,20 @@
     "document": "exemples/SPEC-THM-001-refroidissement.md"
   },
   {
+    "uuid": "b7f23f9b-aa20-4597-9d4b-ca157a334135",
+    "identifiant": "E-AST-002",
+    "nature": "cas d'erreur",
+    "libelle": "`longitude` hors de `[−180, +180]`",
+    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+  },
+  {
+    "uuid": "baea8eed-a39c-46c8-96e6-543b35802c95",
+    "identifiant": "E-AST-001",
+    "nature": "cas d'erreur",
+    "libelle": "`latitude` hors de `[−90, +90]`",
+    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+  },
+  {
     "uuid": "bc161b8d-1cb1-4f60-b57f-905bcc8384fe",
     "identifiant": "FN-010",
     "nature": "fonction",
@@ -754,6 +929,13 @@
     "nature": "règle",
     "libelle": "Profil cumulé",
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+  },
+  {
+    "uuid": "beef87a2-3576-4109-91f9-89d9fc288add",
+    "identifiant": "RG-020",
+    "nature": "règle",
+    "libelle": "Position du Soleil sur son orbite",
+    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
   },
   {
     "uuid": "c048bd3f-7a20-4669-b9c7-2b29d366394c",
@@ -812,6 +994,13 @@
     "document": "exemples/bilan-de-masse/2-SPEC-MAS-001-batch-mass-balance.md"
   },
   {
+    "uuid": "c8a555a6-878d-4f81-afce-2434795a0886",
+    "identifiant": "P-02",
+    "nature": "paramètre",
+    "libelle": "Convention de signe des coordonnées",
+    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+  },
+  {
     "uuid": "c971327c-6b5f-4696-815e-ce1ee4479bb7",
     "identifiant": "CT-08",
     "nature": "cas de test",
@@ -824,6 +1013,13 @@
     "nature": "invariant",
     "libelle": "Le calcul est déterministe : mêmes entrées, mêmes sorties, profil compris",
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+  },
+  {
+    "uuid": "caf14734-10f4-4794-92ac-b92659005d00",
+    "identifiant": "CT-02",
+    "nature": "cas de test",
+    "libelle": "Paris, solstice d'hiver",
+    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
   },
   {
     "uuid": "cb226d98-6d59-4412-9083-0b7dfb034ca7",
@@ -938,6 +1134,13 @@
     "document": "exemples/SPEC-THM-001-refroidissement.md"
   },
   {
+    "uuid": "de6df248-be98-4400-8d44-f15007369dd1",
+    "identifiant": "RG-050",
+    "nature": "règle",
+    "libelle": "Angle horaire, et existence d'une solution",
+    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+  },
+  {
     "uuid": "dfb6ff92-8efb-47e8-96c8-ca15b1704d70",
     "identifiant": "CT-04",
     "nature": "cas de test",
@@ -985,6 +1188,13 @@
     "nature": "question",
     "libelle": "La puissance de charge décroît par paliers avec l'état de charge. Il en résulte que **deux arrêts courts sont souvent plus rapides qu'un seul arrêt long** — un résultat contre-intuitif pour le conducteur. Faut-il l'appliquer sans le dire, l'expliquer, ou plafonner le nombre d'arrêts pour respecter l'intuition ?",
     "document": "exemples/fil-rouge/4-FN-004-planifier-les-recharges.md"
+  },
+  {
+    "uuid": "e9900cc4-7c76-48db-a91f-521b12b216d1",
+    "identifiant": "EX-01",
+    "nature": "exigence",
+    "libelle": "Justesse : ± 2 minutes** par rapport aux éphémérides de référence, pour toute latitude `",
+    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
   },
   {
     "uuid": "e9dd2410-9fb4-485a-b8c6-b7966b7dc047",
@@ -1062,6 +1272,13 @@
     "nature": "exigence",
     "libelle": "Le calcul est **rejouable à l'identique** : mêmes entrées, mêmes masses, indéfiniment. Aucune dépendance à l'horloge, à l'ordre de lecture ou à un aléa",
     "document": "exemples/bilan-de-masse/2-SPEC-MAS-001-batch-mass-balance.md"
+  },
+  {
+    "uuid": "f278d30e-0fd0-4d13-a1d8-fcbce08fde09",
+    "identifiant": "RG-005",
+    "nature": "règle",
+    "libelle": "Jour julien de la date d'observation",
+    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
   },
   {
     "uuid": "f54e3523-e7d6-420e-ba89-c7ac8028e666",

@@ -1,6 +1,6 @@
 # Les exemples
 
-*Trois exemples, délibérément différents. Aucun n'est une illustration décorative : chacun
+*Quatre exemples, délibérément différents. Aucun n'est une illustration décorative : chacun
 existe pour montrer un régime que les autres ne montrent pas.*
 
 ---
@@ -9,6 +9,7 @@ existe pour montrer un régime que les autres ne montrent pas.*
 |---|---|---|
 | **[Le bilan de masse d'un lot](bilan-de-masse/)** | **Besoin → spécification → contrat → code → écarts** | La **chaîne complète**, seule du dépôt. Le code s'exécute, les données de référence sont rejouées, et l'analyse des écarts conclut que la spécification est en défaut |
 | **[Le refroidissement d'une boisson](SPEC-THM-001-refroidissement.md)** | Spécification seule | Le régime **continu et approché** : une équation différentielle, une incertitude, et un résultat dont on discute la *justesse* — pas la justesse d'un calcul, celle d'un modèle |
+| **[Le lever et le coucher du Soleil](SPEC-AST-001-lever-coucher-du-soleil.md)** | Spécification seule | Une **équation qui n'a pas toujours de solution** : au-delà du cercle polaire, le Soleil peut ne jamais se lever. Ce n'est pas une erreur, c'est un résultat. Plus les **conventions d'angle**, où un signe inversé donne un résultat plausible et faux |
 | **[L'autonomie d'un véhicule](fil-rouge/)** | Besoin → découpage → glossaire → données → spécification | Le **passage à l'échelle** : plusieurs fonctions, un catalogue de données partagé, une chaîne de traitement en dix étapes, et des fils d'exécution parallélisables |
 
 ---
@@ -40,6 +41,10 @@ passé aux développeurs.
 **Si vous voulez juger la rigueur d'une spécification** —
 [le refroidissement](SPEC-THM-001-refroidissement.md), et en particulier son traitement de
 l'ordre des opérations et de l'incertitude.
+
+**Si votre domaine est scientifique et que les conventions vous inquiètent** —
+[le lever du Soleil](SPEC-AST-001-lever-coucher-du-soleil.md), qui montre comment une
+spécification traite un cas sans solution et pourquoi une convention de signe se déclare.
 
 **Si vous vous demandez comment cela tient sur un vrai périmètre** —
 [le fil rouge](fil-rouge/), qui part d'un cas métier et va jusqu'à une spécification
