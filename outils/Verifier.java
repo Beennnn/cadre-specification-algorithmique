@@ -458,7 +458,10 @@ public class Verifier {
     }
 
     static void verifierLiens(Path chemin, String texte) {
-        String sansCode = texte.replaceAll("(?s)```.*?```", "");
+        // On retire les blocs de code ET les portions entre accents graves avant de
+        // chercher des liens : sans quoi une déclaration de type comme
+        // `Sequence[Component](1 .. 50)` est lue comme un lien vers « 1 .. 50 ».
+        String sansCode = texte.replaceAll("(?s)```.*?```", "").replaceAll("`[^`\n]*`", "");
         Matcher m = Pattern.compile("\\]\\(([^)#][^)]*)\\)").matcher(sansCode);
         while (m.find()) {
             String cible = m.group(1).split("#")[0];

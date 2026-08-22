@@ -84,8 +84,11 @@ public class Identites {
         if (liste.isEmpty()) return 0;
         LinkedHashMap<String, String> connus = annexeExistante(texte);
         int nouveaux = 0;
-        String renvoi = chemin.toString().contains("fil-rouge")
-                ? "../../CADRE.md" : "../CADRE.md";
+        // Le renvoi vers CADRE.md est relatif au document : on CALCULE sa profondeur
+        // depuis la racine du dépôt. Deviner à partir d'un morceau de chemin — ce que
+        // faisait la version précédente — casse dès qu'un exemple change de niveau.
+        int profondeur = racine.relativize(chemin).getNameCount() - 1;
+        String renvoi = profondeur == 0 ? "CADRE.md" : "../".repeat(profondeur) + "CADRE.md";
         List<String> lignes = new ArrayList<>(List.of("", ANNEXE, "",
                 "*Chaque objet porte un UUID attribué une fois et jamais modifié. "
                 + "L'identifiant lisible et le libellé sont des étiquettes : ils peuvent "

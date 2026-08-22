@@ -1,0 +1,25 @@
+# Données de référence de SPEC-MAS-001, version 1.0.0.
+#
+# Ce fichier N'EST PAS un jeu de tests écrit par le développeur : c'est le §10 de
+# la spécification, transcrit sans interprétation. Chaque ligne est un couple
+# (entrées, sorties) dont le métier a validé les sorties — un engagement opposable,
+# pas une illustration.
+#
+# Il ne se modifie que par une revalidation métier datée et motivée. Jamais parce
+# qu'un test est rouge : un test rouge signale un écart, et c'est l'écart qu'on
+# instruit (voir 5-ECARTS.md).
+#
+# Validé par : Responsable formulation, 2026-08-21.
+#
+# Format : cas ; masse_cible ; pas ; erreur_attendue ; composants
+#          composants = id:fraction:masse_attendue séparés par |
+#          masse_attendue est vide quand une erreur est attendue
+#
+CT-01;1.000;0.001;;CMP-A:0.333333:0.333|CMP-B:0.333333:0.333|CMP-C:0.333334:0.334
+CT-02;1.000;0.001;;CMP-A:0.166667:0.167|CMP-B:0.166667:0.167|CMP-C:0.666666:0.666
+CT-03;1.001;0.001;;CMP-A:0.400000:0.401|CMP-B:0.400000:0.400|CMP-C:0.200000:0.200
+CT-04;1.000;0.001;;CMP-A:0.500000:0.500|CMP-B:0.250000:0.250|CMP-C:0.250000:0.250
+CT-05;1.000;0.100;;CMP-A:0.142857:0.100|CMP-B:0.142857:0.100|CMP-C:0.142857:0.100|CMP-D:0.142857:0.100|CMP-E:0.142857:0.100|CMP-F:0.142857:0.100|CMP-G:0.142858:0.400
+CT-06;1.000;0.001;E-MAS-001;CMP-A:0.333333:|CMP-B:0.333333:|CMP-C:0.333333:
+CT-07;1.000;0.001;E-MAS-003;CMP-A:0.500000:|CMP-A:0.500000:
+CT-08;1.000;0.300;E-MAS-004;CMP-A:0.500000:|CMP-B:0.500000:

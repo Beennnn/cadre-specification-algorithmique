@@ -7,10 +7,10 @@
 | **Statut** | Validée |
 | **Valideur métier** | Responsable formulation |
 | **Co-auteur technique** | Équipe logiciel procédés |
-| **Glossaire de référence** | [GLOSSAIRE.md](../GLOSSAIRE.md) v1.0.0 |
+| **Glossaire de référence** | [GLOSSAIRE.md](../../GLOSSAIRE.md) v1.0.0 |
 
 > **Pourquoi cet exemple.** Il est le pendant de
-> [SPEC-THM-001](SPEC-THM-001-refroidissement.md). Là, des grandeurs **continues**, une
+> [SPEC-THM-001](../SPEC-THM-001-refroidissement.md). Là, des grandeurs **continues**, une
 > équation différentielle, un résultat **approché** dont on discute la justesse. Ici, des
 > grandeurs **discrètes et exactes** : une masse pesée existe au pas de la balance, pas
 > en deçà. Le résultat n'est pas approché, il est **juste ou faux** — et la conservation
@@ -71,7 +71,7 @@ Component :
 ```
 
 > **`[Scaled]`, et non `Real`.** La famille entre crochets est celle d'ISO/IEC 11404
-> ([CADRE §2.3](../CADRE.md)). `Scaled` désigne un rationnel à échelle décimale fixe,
+> ([CADRE §2.3](../../CADRE.md)). `Scaled` désigne un rationnel à échelle décimale fixe,
 > **exact** ; `Real` une approximation. `INV-01` exige une égalité stricte : elle ne
 > tient pas en binaire flottant, où 0,1 n'est pas représentable. Le type porte
 > l'exigence — il ne la recommande pas.
@@ -196,8 +196,8 @@ END FOR
 | `RG-010` | CT-01, CT-02, CT-03, CT-04 |
 | `RG-020` | CT-01, CT-02, CT-03, CT-04 |
 | `RG-030` | CT-01, CT-02, CT-03, CT-04 |
-| `RG-040` | CT-05 |
-| `RG-050` | CT-01, CT-02, CT-03 |
+| `RG-040` | CT-05 (borne atteinte, acceptée), CT-06 à CT-08 (préconditions) |
+| `RG-050` | CT-01, CT-02, CT-03, CT-05 |
 
 ---
 
@@ -280,16 +280,34 @@ un résultat qui dépend de l'ordre de lecture — et passe pourtant CT-01, CT-0
 
 `residual = 0,000` : `RG-050` ne modifie aucune dose. Somme **= 1,000**.
 
-### CT-05 — Résidu au-delà de la tolérance
+### CT-05 — Résidu exactement à la borne
 
-`target_batch_mass = 1,000`, `balance_step = 0,100`, quinze composants de fraction
-`0,066667` (somme `1,000005` ≠ 1) → rejet par `E-MAS-001` **avant** tout calcul.
+`balance_step = 0,100`, `target_batch_mass = 1,000`, sept composants de fractions
+`0,142857` × 6 et `0,142858`.
 
-Variante recevable en entrée mais rejetée au résidu : `balance_step = 0,100`,
-`target_batch_mass = 1,000`, sept composants de fractions `0,142857 × 6` et `0,142858`.
-Chaque dose nominale vaut ≈ 0,1429 kg, arrondie à 0,100 kg — somme 0,700 kg, résidu
-0,300 kg, soit **3 pas**. Le résidu vaut exactement `P-02` pas : il est **accepté**
-(`>` et non `≥`, `RG-040`). Avec `P-02 = 2`, le même cas serait rejeté par `E-MAS-002`.
+Chaque dose nominale vaut ≈ 0,1429 kg, arrondie à 0,100 kg — somme 0,700 kg, **résidu
+0,300 kg, soit exactement 3 pas**. Il vaut `P-02` pas : il est donc **accepté**, parce que
+`RG-040` borne à `>` et non à `≥`. Le résidu va à `CMP-G`, plus grande fraction, qui reçoit
+**0,400 kg**. Somme finale **= 1,000**.
+
+**C'est le cas de bord de la borne.** Avec `P-02 = 2`, le même jeu serait rejeté par
+`E-MAS-002`. Une implémentation qui écrirait `≥` au lieu de `>` échouerait ici, et
+seulement ici.
+
+### CT-06 — Fractions ne sommant pas à 1
+
+Trois composants de fraction `0,333333` — somme `0,999999`. Rejet par `E-MAS-001`, **avant
+tout calcul**. Aucun résultat partiel n'est produit.
+
+### CT-07 — Identifiants dupliqués
+
+Deux composants portant `CMP-A`, fractions `0,500000` chacune. Rejet par `E-MAS-003` : le
+départage de `RG-050` ne serait pas défini.
+
+### CT-08 — Masse cible non multiple du pas
+
+`target_batch_mass = 1,000`, `balance_step = 0,300`. Rejet par `E-MAS-004` : la
+conservation exacte de `INV-01` serait impossible.
 
 ### Provenance et validation
 
@@ -297,7 +315,8 @@ Chaque dose nominale vaut ≈ 0,1429 kg, arrondie à 0,100 kg — somme 0,700 kg
 |---|---|
 | **Provenance** | Calculs conduits en arithmétique décimale exacte, indépendamment de toute implémentation du composant |
 | **Comment ils ont été examinés** | Chaque ligne a été recalculée : masse nominale, nombre de pas, arrondi `HALF_EVEN`, résidu, affectation. La somme finale a été confrontée à `INV-01` sur chaque cas |
-| **Ce que l'examen a produit** | CT-03 a été construit **pour** faire apparaître l'égalité de fractions : sans lui, la règle de départage de `RG-050` n'était couverte par aucun cas |
+| **Ce que l'examen a produit** | CT-03 a été construit **pour** faire apparaître l'égalité de fractions : sans lui, la règle de départage de `RG-050` n'était couverte par aucun cas. CT-05 l'a été pour la borne du résidu, qui n'était atteinte par aucun autre |
+| **Où ils vivent** | [`4-code/donnees-de-reference.csv`](4-code/donnees-de-reference.csv), rejoué à chaque exécution du harnais de qualification |
 | **Validé par** | Responsable formulation, 2026-08-21 |
 
 ---
@@ -330,7 +349,7 @@ Chaque dose nominale vaut ≈ 0,1429 kg, arrondie à 0,100 kg — somme 0,700 kg
 
 ## Annexe — Identités
 
-*Chaque objet porte un UUID attribué une fois et jamais modifié. L'identifiant lisible et le libellé sont des étiquettes : ils peuvent changer, l'identité non. Voir [CADRE.md §2.8](../CADRE.md).*
+*Chaque objet porte un UUID attribué une fois et jamais modifié. L'identifiant lisible et le libellé sont des étiquettes : ils peuvent changer, l'identité non. Voir [CADRE.md §2.8](../../CADRE.md).*
 
 | Identifiant | UUID | Nature | Libellé |
 |---|---|---|---|
@@ -344,10 +363,13 @@ Chaque dose nominale vaut ≈ 0,1429 kg, arrondie à 0,100 kg — somme 0,700 kg
 | `CT-02` | `98d1b468-0e1f-4082-9f1a-43a47d0f1802` | cas de test | Résidu négatif |
 | `CT-03` | `b660aa4f-dd37-4cd9-b967-798a11586fd2` | cas de test | Ex æquo sur la plus grande fraction |
 | `CT-04` | `dfb6ff92-8efb-47e8-96c8-ca15b1704d70` | cas de test | Résidu nul |
-| `CT-05` | `bdc923c8-9721-47cf-8b54-b77407f04bb1` | cas de test | Résidu au-delà de la tolérance |
+| `CT-05` | `bdc923c8-9721-47cf-8b54-b77407f04bb1` | cas de test | Résidu exactement à la borne |
+| `CT-06` | `0bd9840e-b26b-4f5c-8fb1-942cf27adb3c` | cas de test | Fractions ne sommant pas à 1 |
+| `CT-07` | `9ed8d49a-3e8a-4e33-9dae-78541e2c80e1` | cas de test | Identifiants dupliqués |
+| `CT-08` | `c971327c-6b5f-4696-815e-ce1ee4479bb7` | cas de test | Masse cible non multiple du pas |
 | `P-01` | `4b92babc-dd3d-423e-8feb-046b7166db4e` | paramètre | Mode d'arrondi des doses |
 | `P-02` | `cd6b8a1b-c171-4083-aa90-16fbfbffba9b` | paramètre | Résidu maximal toléré, en pas de balance |
-| `EX-01` | `289af665-16cb-4113-86ea-9ff53ce1a4c5` | exigence | Le calcul emploie une **arithmétique décimale exacte**. Le binaire flo |
+| `EX-01` | `289af665-16cb-4113-86ea-9ff53ce1a4c5` | exigence | Le calcul emploie une **arithmétique décimale exacte**, comme l'impose |
 | `EX-02` | `525363e7-8bba-49e7-89e3-f0761903866b` | exigence | Un lot comporte au plus 50 composants ; le calcul est appelé au plus 2 |
 | `EX-03` | `f265a3a3-f970-41c9-81ca-f27bb0b129cb` | exigence | Le calcul est **rejouable à l'identique** : mêmes entrées, mêmes masse |
 | `EX-04` | `2c76616f-cdf7-439f-88a6-107cd43b3d24` | exigence | Les masses nominales sont conservées 10 ans avec le lot |
