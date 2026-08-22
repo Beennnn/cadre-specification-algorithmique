@@ -1,6 +1,6 @@
 # État du chantier
 
-*Dernière mise à jour : 2026-08-21 (9)*
+*Dernière mise à jour : 2026-08-22 (10)*
 
 ---
 
@@ -24,9 +24,30 @@ illustrée de bout en bout par un fil rouge dont tous les chiffres sont vérifi�
 | **Temps 3 — passation au développement** | ✅ `guides/6-PASSER-AU-DEVELOPPEMENT.md` |
 | Fondements théoriques et sources | ✅ `REFERENCES.md` |
 | Objections fréquentes | ✅ `FAQ.md` |
-| Fil rouge complet | ✅ `exemples/fil-rouge/` — 6 documents |
-| Deux vignettes de contraste | ✅ `exemples/mass-balance/`, `SPEC-THM-001` |
+| Fil rouge complet | ✅ `exemples/fil-rouge/` — 6 documents, spécification en deux langues |
+| Deux vignettes de contraste | ✅ `exemples/mass-balance/`, `exemples/cooling/` |
 | Une chaîne complète besoin → code → écarts | ✅ `exemples/mass-balance/`, code exécutable et qualifié |
+| **Six exemples, trois jusqu'au code** | ✅ `average-speed`, `mass-balance`, `weather-summary` en structure de projet — `spec/`, `tests/`, `code/` Maven, `reports/` |
+| **Un document par cas de test** | ✅ 23 documents sur les trois exemples outillés |
+| **Rapport de couverture spec ↔ code** | ✅ `outils/Couverture.java`, liens dans les deux sens |
+| **Toutes les specs en deux langues** | ✅ six documents `.en.md` normatifs, six traductions `.fr.md`, `C-42` garde la dérive |
+
+## Ce que la dernière passe a produit
+
+Écrire les documents de cas et le code des exemples a trouvé **cinq défauts réels**, tous
+dans nos propres documents, et aucun par relecture :
+
+| Où | Ce qui n'allait pas | Ce qui l'a trouvé |
+|---|---|---|
+| `SPEC-SPD-001` | `CT-04` s'appelait « Arrondi » et son quotient est exact : `P-01` n'était arbitré par aucun cas | l'écriture du document de cas |
+| `SPEC-MAS-001` | `E-MAS-002` — le rejet d'un résidu trop grand — exercé par aucun cas ; `P-01` non plus | le rapport de couverture |
+| `SPEC-WTH-001` | `CT-04` énonçait des lectures que `RG-010` écarte : les tours publiés ne pouvaient pas se produire | l'écriture du code |
+| `SPEC-WTH-001` | `EX-01` déclarait la double précision suffisante. Elle ne l'est pas pour un nombre **arrondi** : `CT-07` publiait 0,2 ou 0,3 selon l'ordre d'arrivée | la propriété de permutation **et** le cas sur l'égalité |
+| `SPEC-THM-001` | une grandeur restée en français après renommage | `C-03` |
+
+> **Le motif est constant : ce sont les paramètres qui échappent.** Une règle non couverte
+> se voit ; un paramètre validé, daté, implémenté et **arbitré par rien** ne se voit pas.
+> Trois des cinq défauts sont de cette forme.
 
 ## Priorité décidée pour la reprise
 
@@ -66,10 +87,12 @@ sans comportement d'absence), et ceux qui demandent un jugement.
 | H2 | ~~Mécaniser `C-05` à `C-13`~~ (ancienne ligne) (valeur magique, `IF` sans `ELSE`, arrondi sans sens, superlatif sans départage) — demande une analyse du pseudo-langage, pas seulement du markdown | à construire |
 | I | ~~Les avertissements `C-01`/`C-02`~~ — **tranché** : le vocabulaire des règles a été aligné sur les identifiants du contrat. Zéro avertissement | fait |
 | J | **Mécaniser `C-25`** (orthographe identique entre contrat et règles) — proche de `C-01`, réalisable | à construire |
-| ~~O~~ | ~~Un corpus de défauts connus~~ — **fait** : `outils/jeu-d-essai/`, verdict figé à 19 échecs et 3 avertissements | fait |
+| ~~O~~ | ~~Un corpus de défauts connus~~ — **fait** : `outils/jeu-d-essai/`, verdict figé à 28 échecs et 3 avertissements | fait |
 | ~~P~~ | ~~Le vérificateur en Java~~ — **fait** : `outils/Verifier.java`, fichier unique sans dépendance ni construction. Reste à décider s'il doit être empaqueté en module Maven et intégré à la chaîne de construction de l'organisation | fait ; empaquetage à arbitrer |
 | L | **Enrichir les glossaires d'illustrations** — chaque concept nommé, décrit **et illustré**. Les entrées existent, les illustrations manquent | à écrire |
-| M | **Appliquer la chaîne de traitement `ET-xx` aux deux vignettes** — seul `SPEC-NRG-001` la porte | à écrire |
+| ~~M~~ | ~~Appliquer la chaîne `ET-xx` aux deux vignettes~~ — **fait** : `SPEC-MAS-001` et `SPEC-AST-001` la portent | fait |
+| Q | **Le code et les tests de `sunrise` et `cooling`** — les deux exemples s'arrêtent à la spécification, et leurs README le disent. `cooling` est le plus intéressant : sa spécification annonce **deux implémentations opposées** de la même règle, et seule l'exécution le prouverait | à écrire |
+| R | **Arbitrer les paramètres par perturbation, partout** — `weather-summary` rejoue chaque cas avec un paramètre modifié et rapporte lesquels le décident. `average-speed` et `mass-balance` le font par des contrôles ad hoc. Le mécanisme mériterait d'être le même | à unifier |
 | ~~N~~ | ~~Mécaniser `C-35`/`C-36` dans la passe globale~~ — **fait** | fait |
 | ~~K~~ | ~~Les fiches de données en fichiers séparés~~ — **tranché : un catalogue unique.** La valeur est dans la vue d'ensemble ; le diagramme de cheminement et le tableau d'impact n'ont de sens que rassemblés | fait |
 

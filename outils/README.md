@@ -39,7 +39,7 @@ gratuites : ce sont les **points d'accroche** qui permettent à une machine de l
 document.
 
 Le compromis est assumé : formalisme **léger** — markdown et conventions — pour que le
-métier puisse écrire et relire, donc contrôle **partiel** — 31 règles sur 41. Le détail
+métier puisse écrire et relire, donc contrôle **partiel** — 25 règles sur 41. Le détail
 est dans le [README du dépôt](../README.md).
 
 ## Ce que le script ne fait pas

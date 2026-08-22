@@ -223,12 +223,12 @@ Il lit les spécifications du dépôt et rend deux services : il **contrôle**, 
 **Il donne à voir** — des vues qu'aucune lecture ne fournit :
 
 ```bash
-java outils/Verifier.java                    # tous les contrôles, sur tout le dépôt
-java    outils/Verifier.java                  # la même chose en Java, fichier unique
-java outils/Verifier.java --chaine <spec>    # qui crée / qui utilise chaque grandeur,
+java outils/Verifier.java                     # tous les contrôles, sur tout le dépôt
+java outils/Verifier.java --chaine <spec>     # qui crée / qui utilise chaque grandeur,
                                               # fils d'exécution, chemin critique, vue groupée
-java outils/Verifier.java --tracer <nom>     # où passe cette grandeur, dans tout le corpus
-java outils/Identites.java --registre        # le registre des identités durables
+java outils/Verifier.java --tracer <nom>      # où passe cette grandeur, dans tout le corpus
+java outils/Identites.java --registre         # le registre des identités durables
+java outils/Couverture.java <exemple>         # le rapport de couverture spécification ↔ code
 ```
 
 Sans dépendance, code de retour `1` sur échec — utilisable en intégration continue tel
@@ -265,15 +265,22 @@ contrôlable** — et c'est précisément la raison d'être des conventions de l
 
 **Le compromis est assumé, et il explique le chiffre.** On a choisi la lisibilité par le
 métier — donc un formalisme **léger** : du markdown et des conventions, pas un langage
-dédié. Donc un contrôle **partiel** : 31 règles sur 41. Un formalisme plus strict — une
+dédié. Donc un contrôle **partiel** : 25 règles sur 41. Un formalisme plus strict — une
 grammaire formelle, un schéma — permettrait d'en mécaniser davantage, au prix de ce qui
 compte le plus : que le métier puisse écrire et relire lui-même.
+
+> **Le chiffre se recompte, il ne se relit pas.** Une version antérieure de cette page
+> annonçait « 31 règles sur 41 » en citant deux contrôles qui n'existaient pas. Le nombre
+> se vérifie en comptant les constats émis par le vérificateur, pas en reprenant la phrase
+> précédente.
 
 ### Les vues globales, et celles que le code peut produire
 
 Les vues ci-dessus sont produites **à partir des spécifications** : elles disent ce qui est
 décrit. Une seconde famille de vues se produit **à partir du code**, en moissonnant les
-citations `RG-xxx` que les développeurs y ont posées ([guide 9](guides/9-L-APPORT-DE-L-IA.md)) :
+annotations `@ImplementsSpec` que les développeurs y ont posées. C'est ce que fait
+[`outils/Couverture.java`](outils/Couverture.java), et le rapport qu'il produit relie les
+deux sens — de l'ancre du point de spécification vers le fichier et la ligne, et retour :
 
 | Ce qu'on obtient | Ce que ça révèle |
 |---|---|
@@ -281,10 +288,17 @@ citations `RG-xxx` que les développeurs y ont posées ([guide 9](guides/9-L-APP
 | Quelles règles ne sont citées **nulle part** | Une règle non implémentée, ou implémentée sans être reconnue |
 | Quelles citations pointent vers une règle **qui n'existe plus** | Une citation périmée, après abrogation ou renommage |
 | Quelle version de spécification chaque composant déclare | Un composant resté sur une version antérieure |
+| Quels **paramètres** aucun cas de test n'arbitre | Une valeur validée, datée, implémentée — et vérifiée par rien. C'est le défaut le plus fréquent qu'ait produit ce dépôt |
 
 > **Cette seconde famille vit du côté du code, dans son intégration continue** — jamais
 > dans la spécification, qui ignore l'existence du dépôt de code. C'est la règle de
 > direction : le code cite la spécification, jamais l'inverse.
+>
+> Trois exemples du dépôt la font tourner :
+> [average-speed](exemples/average-speed/reports/COVERAGE-REPORT.md),
+> [mass-balance](exemples/mass-balance/reports/COVERAGE-REPORT.md) et
+> [weather-summary](exemples/weather-summary/reports/COVERAGE-REPORT.md). Les deux premiers
+> rapports ont **immédiatement désigné des trous réels** dans nos propres spécifications.
 
 ---
 
@@ -318,7 +332,7 @@ Et il se termine par ce que la plupart des démarches oublient : [l'analyse des
 que la spécification est en défaut** — la correction remonte donc au document, versionnée
 et motivée.
 
-→ [Les trois exemples et ce que chacun montre](exemples/)
+→ [Les six exemples et ce que chacun montre](exemples/)
 
 ## Le fil rouge
 
