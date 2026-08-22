@@ -75,7 +75,6 @@ sans comportement d'absence), et ceux qui demandent un jugement.
 
 ## Reste dans l'autre dépôt
 
-Une PR de transit, désormais obsolète, subsiste sur `Beennnn/scratch` :
-[#1](https://github.com/Beennnn/scratch/pull/1). Elle contenait la première version du
-contenu avant que ce dépôt n'existe, et décrit encore un exemple qui n'existe plus.
-**Elle peut être fermée** — décision du titulaire du compte.
+Une PR de transit, désormais obsolète, subsiste dans un dépôt privé du titulaire. Elle
+contenait la première version du contenu avant que ce dépôt n'existe, et décrit encore un
+exemple qui n'existe plus. **Elle peut être fermée** — décision du titulaire du compte.

@@ -13,7 +13,11 @@ pédagogique.
 
 ## Langue et style
 
-- **Tout est en français**, y compris les identifiants de section et les exemples.
+- **La méthode est en français** : CADRE, guides, glossaire, README, gabarits.
+- **Les spécifications sont bilingues** : `<nom>.en.md` fait foi, `<nom>.fr.md` est la
+  traduction, et `C-42` vérifie qu'elles ne dérivent pas.
+- **Le reste est en anglais seul** : pseudo-langage, identifiants, code, jeux de données,
+  tests, rapports. Ce sont des artefacts d'exécution, pas de relecture.
 - Guillemets français « … », espaces insécables avant `: ; ! ?` non requis en markdown.
 - Nombres à la française : `17,2005 kWh`, `0,601702`, `−5 °C` (signe moins U+2212).
 - Ton : direct, dense, sans remplissage. Chaque affirmation doit être défendable.
