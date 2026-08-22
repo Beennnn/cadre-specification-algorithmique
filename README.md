@@ -346,13 +346,22 @@ et motivée.
 
 ## Le fil rouge
 
-Tous les guides s'appuient sur **le même scénario** : *[l'autonomie d'un véhicule
-électrique](exemples/fil-rouge/)*. « Jusqu'où puis-je aller, et où dois-je m'arrêter ? »
+*[L'autonomie d'un véhicule électrique](exemples/fil-rouge/)* — « jusqu'où puis-je aller,
+et où dois-je m'arrêter ? » — est le **cas qui passe à l'échelle** : douze fonctions, cinq
+valideurs métier, un glossaire de domaine, un catalogue de données. C'est le seul exemple
+assez gros pour montrer le découpage, les dépendances entre fonctions et les notices de
+changement.
 
 Choisi parce qu'il réunit quatre qualités rarement ensemble : tout le monde comprend la
 question, il y a de la vraie physique avec des équations, il est assez complexe pour être
-intéressant, et il se découpe en une douzaine de fonctions réparties sur cinq valideurs
-métier.
+intéressant, et il se découpe naturellement.
+
+**Deux guides sont construits dessus** — [le cheminement des
+données](guides/3-DONNEES.md) et [le versionnement](guides/7-VERSIONNER.md), qui ont besoin
+d'un périmètre entier pour dire quelque chose. Les autres illustrent avec l'exemple qui
+sert leur propos : le bilan de masse, le relevé météo, la vitesse moyenne. **Un fil rouge
+obligatoire coûterait plus qu'il ne rapporte** — on choisit l'exemple le plus court qui
+fait voir le point, et on garde celui-ci pour ce que lui seul peut montrer.
 
 [Le cas métier](exemples/fil-rouge/0-LE-CAS-METIER.md) → [le
 découpage](exemples/fil-rouge/1-DECOUPAGE.md) → [le

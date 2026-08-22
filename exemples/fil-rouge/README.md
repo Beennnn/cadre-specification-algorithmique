@@ -1,8 +1,13 @@
 # Fil rouge — L'autonomie d'un véhicule électrique
 
-Tous les guides de ce dépôt s'appuient sur **le même scénario**. L'idée est simple :
-plutôt que dix exemples jetables, un seul cas qu'on approfondit à mesure qu'on avance,
-pour que chaque notion de la méthode se voie **appliquée sur un terrain déjà familier**.
+**Le cas qui passe à l'échelle.** Les cinq autres exemples du dépôt tiennent en une
+fonction ; celui-ci en porte douze, réparties sur cinq valideurs métier, avec son glossaire
+de domaine et son catalogue de données. C'est le seul terrain assez grand pour montrer le
+découpage, les dépendances entre fonctions et les notices de changement.
+
+Deux guides sont construits dessus — [le cheminement des données](../../guides/3-DONNEES.md)
+et [le versionnement](../../guides/7-VERSIONNER.md). Les autres l'empruntent au besoin, ou
+illustrent avec un exemple plus court quand il suffit.
 
 ## Pourquoi ce scénario
 

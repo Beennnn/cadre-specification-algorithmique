@@ -67,7 +67,7 @@ sans comportement d'absence), et ceux qui demandent un jugement.
 | # | Décision | Pourquoi |
 |---|---|---|
 | 1 | **Le dépôt est une méthode, pas un entrepôt** | Les specs réelles vivent dans le dépôt du produit. Une première version cataloguait des fonctions réelles : abandonnée |
-| 2 | **Un seul fil rouge**, décliné dans tous les guides | Mieux qu'une collection d'exemples jetables : le lecteur capitalise |
+| 2 | ~~**Un seul fil rouge**, décliné dans tous les guides~~ — **révisée.** Le fil rouge reste le cas qui passe à l'échelle, et deux guides sont construits dessus ; les autres illustrent avec l'exemple le plus court qui fait voir leur point. Un fil rouge obligatoire allongeait les guides sans rien apprendre | six exemples, chacun pour un régime que les autres ne montrent pas |
 | 3 | **Le fil rouge est l'autonomie d'un véhicule électrique** | Universel, avec de vraies équations, assez complexe, et il se découpe en 12 fonctions sur 5 valideurs métier. Deux fils rouges antérieurs écartés : la commande en ligne (pas d'équations), la détection de pics (trop proche de l'instrumentation) |
 | 4 | **Les deux vignettes sont conservées** | Elles aboutissent à trois conclusions opposées sur le type numérique — c'est la démonstration que la spécification décide, pas l'habitude |
 | ~~5~~ | ~~Ancrage dans le code~~ — **annulée par la décision 18** : la spécification ne pointe jamais vers le code | |
