@@ -4,3 +4,6 @@ __pycache__/
 
 # Artefacts d'exécution Java
 *.class
+
+# Rapports régénérés hors de leur place
+exemples/*/code/src/test/TEST-REPORT.md
