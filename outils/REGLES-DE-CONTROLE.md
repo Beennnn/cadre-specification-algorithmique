@@ -6,7 +6,7 @@ qui les exécute ([`Verifier.java`](Verifier.java)), une IA à qui on les donne 
 
 **Ce qui est mécanisé.** `Verifier.java` met en œuvre `C-01` à
 `C-04`, `C-08`, `C-10`, `C-11`, `C-13` à `C-15`, `C-17`, `C-19` à `C-21`, `C-23`, `C-24`,
-`C-26`, `C-28`, `C-29`, `C-35`, `C-36`, `C-38`, `C-39`, `C-42` — soit **24 des 40**. Les
+`C-26`, `C-28`, `C-29`, `C-35`, `C-36`, `C-38`, `C-39`, `C-42`, `C-43` — soit **25 des 41**. Les
 seize restants (`C-05` à `C-07`, `C-09`, `C-12`, `C-16`, `C-18`, `C-22`, `C-25`, `C-27`, `C-30`
 à `C-32`, `C-37`, `C-40`, `C-41`) demandent un jugement ou une lecture que le script ne
 fait pas.
@@ -99,6 +99,7 @@ le plus souvent : personne ne vérifie spontanément que le vingt-troisième par
 | `C-40` | **Aucune contrainte d'implémentation ne figure dans la spécification** : nom de bibliothèque, structure de données, stockage, cache, ordre d'exécution imposé sans justification métier. | Le métier sort de son mandat et ferme des solutions meilleures. Se repère mieux à la lecture — humaine ou par IA — qu'avec une liste de mots-clés |
 | `C-41` | **Aucune formulation qui repousse la décision** : « etc. », « le cas échéant », « en général », « si nécessaire », « on gère les cas particuliers ». | Chacune est une question que quelqu'un devra trancher plus tard, sans mandat |
 | `C-42` | **Une traduction porte exactement les objets de sa source**, avec les **mêmes identités durables**. Elle se déclare en en-tête : `| **Traduction de** | [fichier](fichier) |`. | Une traduction dont le jeu d'objets a dérivé est un document qui **dit autre chose que sa source**, sans que personne ne s'en aperçoive : une règle manquante d'un côté, un paramètre en trop de l'autre. C'est aussi ce qui exempte légitimement la traduction de `C-29` — elle n'est pas un doublon, elle est le même document dans une autre langue |
+| `C-43` | **Pas deux itérations dans une même règle.** *(avertissement)* | On a décrit un **parcours** au lieu d'un **résultat** (§2.5). La sortie est presque toujours de nommer une grandeur intermédiaire, ou d'employer une opération d'ensemble. Un cas légitime existe — d'où l'avertissement et non l'échec |
 
 ## Traçabilité
 

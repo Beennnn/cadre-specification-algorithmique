@@ -32,7 +32,7 @@ illustrée de bout en bout par un fil rouge dont tous les chiffres sont vérifi�
 
 **L'outillage.** Le dépôt affirme que « l'incohérence doit être détectable mécaniquement »
 et que l'étage 1 nettoie avant les humains : cette promesse doit être tenue entièrement.
-**24 des 40 contrôles sont désormais mécanisés** — `C-03` (fantôme) l'a été en dernier,
+**25 des 41 contrôles sont désormais mécanisés** — `C-03` (fantôme) l'a été en dernier,
 et a immédiatement trouvé deux défauts réels dans nos propres exemples. Restent `C-05`
 (valeur magique), `C-09` (complétude d'une table de décision), `C-12` (entrée facultative
 sans comportement d'absence), et ceux qui demandent un jugement.

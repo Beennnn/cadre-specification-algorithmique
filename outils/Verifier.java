@@ -468,6 +468,17 @@ public class Verifier {
                         constat("ÉCHEC", "C-10", chemin, titre + " : ROUND("
                                 + tronquer(ma.group(1).trim(), 40)
                                 + ") — il faut valeur, décimales et mode");
+                // C-43 : deux itérations imbriquées dans une même règle. Presque
+                // toujours le signe qu'on a décrit un PARCOURS au lieu d'un RÉSULTAT :
+                // la sortie est de nommer une grandeur intermédiaire, ou d'employer une
+                // opération d'ensemble. Avertissement, car un cas légitime existe.
+                long iterations = code.lines()
+                        .filter(l -> l.matches("\\s*(FOR EACH|WHILE)\\b.*")).count();
+                if (iterations > 1)
+                    constat("AVERTIR", "C-43", chemin, titre + " : " + iterations
+                            + " itérations dans une même règle — décrire un résultat plutôt"
+                            + " qu'un parcours (§2.5)");
+
                 if (code.contains("WHILE") && !Pattern.compile("it[ée]ration",
                         Pattern.CASE_INSENSITIVE).matcher(bloc).find())
                     constat("ÉCHEC", "C-13", chemin,
@@ -764,7 +775,7 @@ public class Verifier {
                 + "%d échec(s), %d avertissement(s)%n",
                 fichiers.size(), specs, echecs, constats.size() - echecs);
         if (constats.isEmpty())
-            System.out.println("Aucun défaut mécanique. 24 des 40 contrôles sont mécanisés ; "
+            System.out.println("Aucun défaut mécanique. 25 des 41 contrôles sont mécanisés ; "
                     + "les seize restants et les contrôles humains H-01 à H-07 relèvent de la relecture.");
         System.exit(echecs > 0 ? 1 : 0);
     }

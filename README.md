@@ -210,7 +210,7 @@ qu'un programme l'a produit, sans l'examiner**.
 Il lit les spécifications du dépôt et rend deux services : il **contrôle**, et il
 **donne à voir**.
 
-**Il contrôle** — 24 des 40 règles du catalogue, réparties en quatre familles :
+**Il contrôle** — 25 des 41 règles du catalogue, réparties en quatre familles :
 
 | Famille | Exemples de ce qu'il attrape |
 |---|---|

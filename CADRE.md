@@ -878,6 +878,46 @@ successive d'un barème par tranches, convergence itérative). Dans ce cas, on p
 critère d'arrêt **et** le nombre maximal d'itérations **et** ce qui se passe si on
 l'atteint.
 
+#### Quand la prose suffit, et quand le pseudo-code est exigé
+
+**On n'écrit pas du pseudo-code pour faire du code.** Une spécification n'est pas un
+programme raté : c'est un texte normatif, et le pseudo-code n'y est qu'un **outil de
+désambiguïsation**. Là où il n'y a rien à désambiguïser, il alourdit sans rien apporter —
+et il décourage l'auteur métier, qui n'est pas là pour mimer un langage.
+
+> **Le critère tient en une phrase : on écrit en pseudo-code exactement ce dont une
+> lecture différente changerait un résultat.** Tout le reste s'écrit en français.
+
+| S'écrit **en pseudo-code**, toujours | S'écrit **en prose**, et c'est mieux |
+|---|---|
+| Une **formule** de calcul | Un parcours dont l'itération ne porte aucune décision |
+| Un **arrondi** : à quelle étape, combien de décimales, quel mode | Un enchaînement que la chaîne de traitement (§3.2) donne déjà |
+| Une **branche** dont les deux issues diffèrent | Une agrégation évidente, dite par une opération d'ensemble |
+| Un **départage**, une **borne** `≥` / `>` | Le contexte, l'intention, la justification d'un choix |
+| Un **seuil**, un **paramètre** cité | Ce qui est hors périmètre |
+
+**La forme à préférer est mixte** : une phrase qui dit l'intention, puis la formule.
+
+| ✗ Cérémonie inutile | ✓ Ce qu'il fallait écrire |
+|---|---|
+| <code>FOR EACH component IN components<br/>&nbsp;&nbsp;&nbsp;&nbsp;nominal_mass = batch × fraction<br/>END FOR</code> | Pour chaque composant :<br/><code>nominal_mass = target_batch_mass × target_mass_fraction</code> |
+
+La boucle de gauche ne porte **aucune décision** : elle dit « on le fait pour chacun », ce
+qu'une phrase de trois mots dit mieux. Ce qui compte — la formule — est identique dans les
+deux, et c'est elle seule qui devait être en pseudo-code.
+
+> **Une boucle explicite est déjà un signal ; deux boucles imbriquées sont presque toujours
+> un défaut de la spécification**, pas une maladresse de rédaction. Elles signifient qu'on
+> a décrit un parcours au lieu d'un résultat. La sortie est presque toujours la même :
+> **nommer une grandeur intermédiaire**, ou employer une opération d'ensemble (§2.2).
+> `C-43` le signale.
+
+**Ce que cette règle n'autorise pas.** La prose remplace la *cérémonie*, jamais la
+*décision*. « On arrondit convenablement », « on prend le meilleur », « on gère les cas
+particuliers » restent des défauts — `C-41`. Le test est toujours le même : si deux
+développeurs honnêtes peuvent en tirer deux résultats différents, il fallait du
+pseudo-code.
+
 ### 2.6 Les tables de décision
 
 Dès qu'une règle combine plus de deux conditions, on abandonne les `IF` imbriqués pour

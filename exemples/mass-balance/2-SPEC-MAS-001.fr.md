@@ -187,10 +187,10 @@ du document.
 
 ### RG-010 — Masse nominale d'un composant
 
+Pour chaque composant :
+
 ```
-FOR EACH component IN components
-    nominal_mass = target_batch_mass × component.target_mass_fraction
-END FOR
+nominal_mass = target_batch_mass × target_mass_fraction
 ```
 
 La masse nominale est conservée en sortie, **non arrondie** : c'est elle qui permet de
@@ -198,11 +198,11 @@ rejouer le calcul et d'expliquer un écart.
 
 ### RG-020 — Arrondi au pas de la balance
 
+Pour chaque composant, on arrondit un **nombre de pas**, puis on revient à une masse :
+
 ```
-FOR EACH component IN components
-    LET steps = ROUND( nominal_mass ÷ balance_step, 0, P-01 )
-    rounded_mass = steps × balance_step
-END FOR
+LET steps    = ROUND( nominal_mass ÷ balance_step, 0, P-01 )
+rounded_mass = steps × balance_step
 ```
 
 > **On arrondit un nombre de pas, pas une masse.** Écrire
@@ -239,14 +239,16 @@ END IF
 LET largest = MAXIMUM OF target_mass_fraction OVER components
 LET eligible = FILTER components WHERE target_mass_fraction = largest
 LET receiver = THE FIRST OF ( SORT eligible BY component_id ASCENDING )
+```
 
-FOR EACH component IN components
-    IF component.component_id = receiver.component_id THEN
-        dispensed_mass = rounded_mass + residual
-    ELSE
-        dispensed_mass = rounded_mass
-    END IF
-END FOR
+Le composant retenu reçoit le résidu ; tous les autres gardent leur masse arrondie :
+
+```
+IF component_id = receiver.component_id THEN
+    dispensed_mass = rounded_mass + residual
+ELSE
+    dispensed_mass = rounded_mass
+END IF
 ```
 
 > **Deux décisions métier, et une seule serait insuffisante.**

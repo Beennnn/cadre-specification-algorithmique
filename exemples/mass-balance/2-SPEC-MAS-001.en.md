@@ -179,10 +179,10 @@ document.
 
 ### RG-010 — Nominal mass of a component
 
+For each component:
+
 ```
-FOR EACH component IN components
-    nominal_mass = target_batch_mass × component.target_mass_fraction
-END FOR
+nominal_mass = target_batch_mass × target_mass_fraction
 ```
 
 The nominal mass is kept in the output, **not rounded**: it is what allows the calculation
@@ -190,11 +190,11 @@ to be replayed and a deviation to be explained.
 
 ### RG-020 — Rounding to the balance step
 
+For each component, we round a **number of steps**, then come back to a mass:
+
 ```
-FOR EACH component IN components
-    LET steps = ROUND( nominal_mass ÷ balance_step, 0, P-01 )
-    rounded_mass = steps × balance_step
-END FOR
+LET steps    = ROUND( nominal_mass ÷ balance_step, 0, P-01 )
+rounded_mass = steps × balance_step
 ```
 
 > **We round a number of steps, not a mass.** Writing `ROUND(nominal_mass, 3, P-01)` would
@@ -230,14 +230,16 @@ END IF
 LET largest = MAXIMUM OF target_mass_fraction OVER components
 LET eligible = FILTER components WHERE target_mass_fraction = largest
 LET receiver = THE FIRST OF ( SORT eligible BY component_id ASCENDING )
+```
 
-FOR EACH component IN components
-    IF component.component_id = receiver.component_id THEN
-        dispensed_mass = rounded_mass + residual
-    ELSE
-        dispensed_mass = rounded_mass
-    END IF
-END FOR
+The receiver takes the residual; every other component keeps its rounded mass:
+
+```
+IF component_id = receiver.component_id THEN
+    dispensed_mass = rounded_mass + residual
+ELSE
+    dispensed_mass = rounded_mass
+END IF
 ```
 
 > **Two business decisions, and one alone would not be enough.**
