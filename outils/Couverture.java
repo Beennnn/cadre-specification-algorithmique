@@ -32,6 +32,9 @@ public class Couverture {
     /** Une citation dans le code : le fichier et la ligne qui déclarent la couvrir. */
     record Citation(String fichier, int ligne) {}
 
+    /** L'annexe est écrite dans la langue du document ; l'outil ne lit que les « .en.md ». */
+    static final String ANNEXE_TITRE = "## Appendix — Identities";
+
     static final List<String> sortie = new ArrayList<>();
     static void dire(String s) { sortie.add(s); }
 
@@ -51,7 +54,7 @@ public class Couverture {
     /** Points exigés par la spécification, dans l'ordre où elle les énonce. */
     static LinkedHashMap<String, Point> lireSpec(Path spec) throws IOException {
         String texte = Files.readString(spec);
-        int i = texte.indexOf("## Annexe — Identités");
+        int i = texte.indexOf(ANNEXE_TITRE);
         if (i >= 0) texte = texte.substring(0, i);
         String nom = spec.getFileName().toString();
         LinkedHashMap<String, Point> points = new LinkedHashMap<>();

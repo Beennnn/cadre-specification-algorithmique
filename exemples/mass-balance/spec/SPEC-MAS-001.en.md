@@ -445,41 +445,41 @@ do not catch this one, only the approved masses do.
 | 1.0.0 | 2026-08-21 | Initial version | — | — |
 | 1.1.0 | 2026-08-22 | `CT-09` and `CT-10` added: a residual of 4 steps rejected by `E-MAS-002`, and two nominal masses on a half-step that arbitrate `P-01` | **None on accepted batches.** No rule changed. The case covers a rejection path that no test reached | Implementers: rerun the reference set. An implementation that never checks the residual, or that rounds `HALF_UP`, was passing before and fails now |
 
-## Annexe — Identités
+## Appendix — Identities
 
-*Chaque objet porte un UUID attribué une fois et jamais modifié. L'identifiant lisible et le libellé sont des étiquettes : ils peuvent changer, l'identité non. Voir [CADRE.md §2.8](../../../CADRE.md).*
+*Every object carries a UUID, assigned once and never changed. The readable identifier and the label are labels: they may change, the identity may not. See [CADRE.md §2.8](../../../CADRE.md).*
 
-| Identifiant | UUID | Nature | Libellé |
+| Identifier | UUID | Kind | Label |
 |---|---|---|---|
 | `SPEC-MAS-001` | `292e2c59-db4e-4dcd-b7e1-101cf6d76de0` | document | SPEC-MAS-001 — Batch mass balance |
-| `RG-010` | `1f7dd670-3f98-4ea6-9bd1-04e2f61ad316` | règle | Nominal mass of a component |
-| `RG-020` | `2c2489c2-702a-46dd-a7cd-1064022ddbd4` | règle | Rounding to the balance step |
-| `RG-030` | `ed9131d6-4472-4d21-b75d-fba1122da558` | règle | Residual |
-| `RG-040` | `8080dc01-878b-4657-909b-b2199ecf4b60` | règle | Acceptability of the residual |
-| `RG-050` | `c55d71da-977b-4b31-93a3-66c3370a00a1` | règle | Allocation of the residual |
-| `CT-01` | `b3e154c8-b776-4ecb-86c7-fe1cc06173a9` | cas de test | Positive residual, single largest fraction |
-| `CT-02` | `98d1b468-0e1f-4082-9f1a-43a47d0f1802` | cas de test | Negative residual |
-| `CT-03` | `b660aa4f-dd37-4cd9-b967-798a11586fd2` | cas de test | Tie on the largest fraction |
-| `CT-04` | `dfb6ff92-8efb-47e8-96c8-ca15b1704d70` | cas de test | Zero residual |
-| `CT-05` | `bdc923c8-9721-47cf-8b54-b77407f04bb1` | cas de test | Residual exactly at the bound |
-| `CT-06` | `0bd9840e-b26b-4f5c-8fb1-942cf27adb3c` | cas de test | Fractions not adding up to 1 |
-| `CT-07` | `9ed8d49a-3e8a-4e33-9dae-78541e2c80e1` | cas de test | Duplicate identifiers |
-| `CT-08` | `c971327c-6b5f-4696-815e-ce1ee4479bb7` | cas de test | Target mass not a multiple of the step |
-| `CT-09` | `9cb4442a-f5c1-411c-a953-cbabd98bdcbb` | cas de test | Residual over the bound |
-| `CT-10` | `8ff07a1a-4d0c-4f42-98ce-7585e5dc0d03` | cas de test | Nominal masses exactly on a half-step |
-| `P-01` | `4b92babc-dd3d-423e-8feb-046b7166db4e` | paramètre | Rounding mode for doses |
-| `P-02` | `cd6b8a1b-c171-4083-aa90-16fbfbffba9b` | paramètre | Maximum tolerated residual, in balance steps |
-| `EX-01` | `289af665-16cb-4113-86ea-9ff53ce1a4c5` | exigence | The calculation uses **exact decimal arithmetic**, as required by the |
-| `EX-02` | `525363e7-8bba-49e7-89e3-f0761903866b` | exigence | A batch has at most 50 components; the calculation is called at most 2 |
-| `EX-03` | `f265a3a3-f970-41c9-81ca-f27bb0b129cb` | exigence | The calculation is **replayable identically**: same inputs, same masse |
-| `EX-04` | `2c76616f-cdf7-439f-88a6-107cd43b3d24` | exigence | Nominal masses are kept for 10 years with the batch |
+| `RG-010` | `1f7dd670-3f98-4ea6-9bd1-04e2f61ad316` | rule | Nominal mass of a component |
+| `RG-020` | `2c2489c2-702a-46dd-a7cd-1064022ddbd4` | rule | Rounding to the balance step |
+| `RG-030` | `ed9131d6-4472-4d21-b75d-fba1122da558` | rule | Residual |
+| `RG-040` | `8080dc01-878b-4657-909b-b2199ecf4b60` | rule | Acceptability of the residual |
+| `RG-050` | `c55d71da-977b-4b31-93a3-66c3370a00a1` | rule | Allocation of the residual |
+| `CT-01` | `b3e154c8-b776-4ecb-86c7-fe1cc06173a9` | test case | Positive residual, single largest fraction |
+| `CT-02` | `98d1b468-0e1f-4082-9f1a-43a47d0f1802` | test case | Negative residual |
+| `CT-03` | `b660aa4f-dd37-4cd9-b967-798a11586fd2` | test case | Tie on the largest fraction |
+| `CT-04` | `dfb6ff92-8efb-47e8-96c8-ca15b1704d70` | test case | Zero residual |
+| `CT-05` | `bdc923c8-9721-47cf-8b54-b77407f04bb1` | test case | Residual exactly at the bound |
+| `CT-06` | `0bd9840e-b26b-4f5c-8fb1-942cf27adb3c` | test case | Fractions not adding up to 1 |
+| `CT-07` | `9ed8d49a-3e8a-4e33-9dae-78541e2c80e1` | test case | Duplicate identifiers |
+| `CT-08` | `c971327c-6b5f-4696-815e-ce1ee4479bb7` | test case | Target mass not a multiple of the step |
+| `CT-09` | `9cb4442a-f5c1-411c-a953-cbabd98bdcbb` | test case | Residual over the bound |
+| `CT-10` | `8ff07a1a-4d0c-4f42-98ce-7585e5dc0d03` | test case | Nominal masses exactly on a half-step |
+| `P-01` | `4b92babc-dd3d-423e-8feb-046b7166db4e` | parameter | Rounding mode for doses |
+| `P-02` | `cd6b8a1b-c171-4083-aa90-16fbfbffba9b` | parameter | Maximum tolerated residual, in balance steps |
+| `EX-01` | `289af665-16cb-4113-86ea-9ff53ce1a4c5` | requirement | The calculation uses **exact decimal arithmetic**, as required by the |
+| `EX-02` | `525363e7-8bba-49e7-89e3-f0761903866b` | requirement | A batch has at most 50 components; the calculation is called at most 2 |
+| `EX-03` | `f265a3a3-f970-41c9-81ca-f27bb0b129cb` | requirement | The calculation is **replayable identically**: same inputs, same masse |
+| `EX-04` | `2c76616f-cdf7-439f-88a6-107cd43b3d24` | requirement | Nominal masses are kept for 10 years with the batch |
 | `INV-01` | `dbccfecf-777b-4959-a321-7cb6555461cf` | invariant | `SUM OF dispensed_mass OVER dispensed = target_batch_mass`, exactly* |
 | `INV-02` | `60bffc03-1312-4d2a-94b9-152a5f0f18e6` | invariant | Every `dispensed_mass` is an integer multiple of `balance_step`. |
 | `INV-03` | `14aa1bd5-f615-42c4-a9cb-3d2c078c1e0b` | invariant | Every `dispensed_mass` is `≥ 0`. A negative residual cannot make a dos |
 | `INV-04` | `9eb759d5-63d4-4b94-8f80-dd07b8d47340` | invariant | The result is **invariant under permutation** of the component list: r |
-| `E-MAS-001` | `694d1152-ae43-44ea-9cee-1a9226214548` | cas d'erreur | The target fractions do not add up to exactly 1 |
-| `E-MAS-002` | `1ae84506-b8e5-48fc-b902-b166a80b4b30` | cas d'erreur | The residual exceeds `P-02` balance steps |
-| `E-MAS-003` | `c1c93cb0-ddf8-40e4-820d-e702b518f1fe` | cas d'erreur | Two components carry the same `component_id` |
-| `E-MAS-004` | `f12f64b6-8041-4729-91ec-92cdee0b1e71` | cas d'erreur | `target_batch_mass` is not a multiple of `balance_step` |
+| `E-MAS-001` | `694d1152-ae43-44ea-9cee-1a9226214548` | error case | The target fractions do not add up to exactly 1 |
+| `E-MAS-002` | `1ae84506-b8e5-48fc-b902-b166a80b4b30` | error case | The residual exceeds `P-02` balance steps |
+| `E-MAS-003` | `c1c93cb0-ddf8-40e4-820d-e702b518f1fe` | error case | Two components carry the same `component_id` |
+| `E-MAS-004` | `f12f64b6-8041-4729-91ec-92cdee0b1e71` | error case | `target_batch_mass` is not a multiple of `balance_step` |
 | `Q-01` | `9111352a-45f3-4b93-8115-3102c370b556` | question | Should a residual of several steps be spread over several components, |
 | `Q-02` | `c16913b4-c54a-41ba-861a-7c369e06a149` | question | Should the alphabetical tie-break give way to a priority order declare |

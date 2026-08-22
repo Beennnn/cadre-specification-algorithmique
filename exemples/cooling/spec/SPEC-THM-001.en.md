@@ -580,37 +580,37 @@ parameter format, the caching strategy. Two teams implemented this document in t
 ways, and **both are conforming** — which is the best proof that the frontier was drawn in
 the right place.
 
-## Annexe — Identités
+## Appendix — Identities
 
-*Chaque objet porte un UUID attribué une fois et jamais modifié. L'identifiant lisible et le libellé sont des étiquettes : ils peuvent changer, l'identité non. Voir [CADRE.md §2.8](../../../CADRE.md).*
+*Every object carries a UUID, assigned once and never changed. The readable identifier and the label are labels: they may change, the identity may not. See [CADRE.md §2.8](../../../CADRE.md).*
 
-| Identifiant | UUID | Nature | Libellé |
+| Identifier | UUID | Kind | Label |
 |---|---|---|---|
 | `SPEC-THM-001` | `8416d9a7-cdb6-4116-bc37-a9538d3ff520` | document | SPEC-THM-001 — Cooling forecast for a hot drink |
-| `RG-010` | `944cf16e-090c-4191-a688-c1696c65cad4` | règle | The cooling model |
-| `RG-020` | `a5b55277-3455-44c9-82d8-c7c98d8d1ff3` | règle | Temperature at a given instant |
-| `RG-030` | `378cb511-d51c-4f98-8ef1-b5f414836038` | règle | Mixing two liquids |
-| `RG-040` | `dc39074f-2f6b-4c19-a81b-9fc68185e56d` | règle | Order of operations: when the addition happens |
-| `RG-050` | `a2f67f9d-5d0f-4b38-b3a6-afd875065ea6` | règle | Instant the target temperature is reached |
-| `RG-060` | `ea136394-b2ab-4c96-8cd8-794b0601a8b8` | règle | Convergence |
-| `CT-01` | `4b06688f-6465-4532-aa52-0db400bee2f4` | cas de test | Simple cooling |
-| `CT-02` | `cfd6fbbf-0aad-4bc7-8951-4c3a53e87223` | cas de test | Order of operations: the central case |
-| `CT-03` | `0fbe682c-8776-4e0b-8379-ae7aa9658f96` | cas de test | Unreachable target |
-| `CT-04` | `b4ee9744-60d3-4131-86d6-bd96fe9c3416` | cas de test | Target already reached |
-| `CT-05` | `37fcab9a-65f1-40e5-920f-e411021411df` | cas de test | Target beyond the horizon |
-| `CT-06` | `4d6f1ab4-7ded-4604-b857-b74f36df9407` | cas de test | Scale invariance (kelvin) |
-| `CT-07` | `1645cc91-0461-4d1f-9226-2800a352d859` | cas de test | Zero mass added |
-| `CT-08` | `7f647fe8-a8cc-4ad3-9d4c-5b3cf790b824` | cas de test | Negative coefficient |
-| `P-01` | `96718c6e-7ebb-45a8-becc-7dacb44b8db6` | paramètre | Cooling coefficient — open ceramic cup |
-| `P-02` | `6fa6e358-eac1-4052-9fe7-8057f5fa79d8` | paramètre | Cooling coefficient — closed insulated mug |
-| `P-03` | `87cb7eb4-c0f7-44bd-90b4-9e00c395c621` | paramètre | Default drinking target temperature |
-| `P-04` | `1b4f0d75-6953-45a5-9134-d3e656c3759c` | paramètre | Forecast horizon |
-| `P-05` | `75cfe6fc-7213-4967-a81f-f4e80c55c727` | paramètre | Convergence tolerance on the instant |
-| `P-06` | `6ea114e2-f73a-4512-8cd4-9656c42c8060` | paramètre | Maximum number of iterations |
-| `P-07` | `6f2b55b1-5c6a-451a-a794-963a915f7b63` | paramètre | Minimum gap to the ambient temperature for the target to be deemed rea |
-| `EX-01` | `47db7e61-d39c-4d07-ab94-810c0e0032fd` | exigence | The embedded calculation **makes no network request**: it works offlin |
-| `EX-02` | `b21a02b4-bdc9-4b4b-af4e-31fdda02e7b7` | exigence | The downloaded parameter file is **signed**, and an invalid signature |
-| `EX-03` | `e8c9de71-4877-459f-8946-f1ebfd76f1d8` | exigence | The code follows the **internal coding standard** `STD-DEV-2` |
+| `RG-010` | `944cf16e-090c-4191-a688-c1696c65cad4` | rule | The cooling model |
+| `RG-020` | `a5b55277-3455-44c9-82d8-c7c98d8d1ff3` | rule | Temperature at a given instant |
+| `RG-030` | `378cb511-d51c-4f98-8ef1-b5f414836038` | rule | Mixing two liquids |
+| `RG-040` | `dc39074f-2f6b-4c19-a81b-9fc68185e56d` | rule | Order of operations: when the addition happens |
+| `RG-050` | `a2f67f9d-5d0f-4b38-b3a6-afd875065ea6` | rule | Instant the target temperature is reached |
+| `RG-060` | `ea136394-b2ab-4c96-8cd8-794b0601a8b8` | rule | Convergence |
+| `CT-01` | `4b06688f-6465-4532-aa52-0db400bee2f4` | test case | Simple cooling |
+| `CT-02` | `cfd6fbbf-0aad-4bc7-8951-4c3a53e87223` | test case | Order of operations: the central case |
+| `CT-03` | `0fbe682c-8776-4e0b-8379-ae7aa9658f96` | test case | Unreachable target |
+| `CT-04` | `b4ee9744-60d3-4131-86d6-bd96fe9c3416` | test case | Target already reached |
+| `CT-05` | `37fcab9a-65f1-40e5-920f-e411021411df` | test case | Target beyond the horizon |
+| `CT-06` | `4d6f1ab4-7ded-4604-b857-b74f36df9407` | test case | Scale invariance (kelvin) |
+| `CT-07` | `1645cc91-0461-4d1f-9226-2800a352d859` | test case | Zero mass added |
+| `CT-08` | `7f647fe8-a8cc-4ad3-9d4c-5b3cf790b824` | test case | Negative coefficient |
+| `P-01` | `96718c6e-7ebb-45a8-becc-7dacb44b8db6` | parameter | Cooling coefficient — open ceramic cup |
+| `P-02` | `6fa6e358-eac1-4052-9fe7-8057f5fa79d8` | parameter | Cooling coefficient — closed insulated mug |
+| `P-03` | `87cb7eb4-c0f7-44bd-90b4-9e00c395c621` | parameter | Default drinking target temperature |
+| `P-04` | `1b4f0d75-6953-45a5-9134-d3e656c3759c` | parameter | Forecast horizon |
+| `P-05` | `75cfe6fc-7213-4967-a81f-f4e80c55c727` | parameter | Convergence tolerance on the instant |
+| `P-06` | `6ea114e2-f73a-4512-8cd4-9656c42c8060` | parameter | Maximum number of iterations |
+| `P-07` | `6f2b55b1-5c6a-451a-a794-963a915f7b63` | parameter | Minimum gap to the ambient temperature for the target to be deemed rea |
+| `EX-01` | `47db7e61-d39c-4d07-ab94-810c0e0032fd` | requirement | The embedded calculation **makes no network request**: it works offlin |
+| `EX-02` | `b21a02b4-bdc9-4b4b-af4e-31fdda02e7b7` | requirement | The downloaded parameter file is **signed**, and an invalid signature |
+| `EX-03` | `e8c9de71-4877-459f-8946-f1ebfd76f1d8` | requirement | The code follows the **internal coding standard** `STD-DEV-2` |
 | `INV-01` | `b11ac534-4ee3-4ae5-8395-6f6b65dca68d` | invariant | If `T(0) > T_ambient`, then `T(t)` is strictly decreasing |
 | `INV-02` | `7c52110c-fc9a-4bad-8b2e-30511a8b1751` | invariant | `T(t)` stays strictly between `T_ambient` and `T(0)` |
 | `INV-03` | `53836c25-75aa-4f5c-882f-2a05f28f1882` | invariant | `T(t)` tends to `T_ambient` as `t` grows, without ever reaching it |
@@ -619,11 +619,11 @@ the right place.
 | `INV-06` | `67c240de-37c7-4d40-a6cc-330545759eb9` | invariant | Monotonicity in `k`: all else equal, a larger `k` gives a shorter inst |
 | `INV-07` | `3e382a1c-177b-47e7-bb99-0a700f03541a` | invariant | Monotonicity in the target: a lower target gives a later instant |
 | `INV-08` | `c3221013-33d7-482b-bb07-98fa142945ca` | invariant | The calculation is deterministic: two runs on the same input give the |
-| `E-PARAM-001` | `b19ad839-f72a-4446-a9ec-f02a8aa522a1` | cas d'erreur | `cooling_coefficient ≤ 0` |
-| `E-PARAM-002` | `b757d637-570b-4594-bad2-040776993e62` | cas d'erreur | A mass or a specific heat capacity of the beverage is zero or negative |
-| `E-ENTREE-001` | `ef5edef2-6e13-4c75-83e6-e4d82f6dfe6a` | cas d'erreur | Neither `requested_instant` nor `target_temperature` is supplied |
-| `E-HORIZON-001` | `089406dd-f578-4bef-8d4b-3acbefc50e82` | cas d'erreur | `requested_instant > P-04` |
-| `E-CONV-001` | `1b5551ba-9d1b-44e3-beb3-89aac7d2fb26` | cas d'erreur | `P-06` iterations without converging to within `P-05` |
+| `E-PARAM-001` | `b19ad839-f72a-4446-a9ec-f02a8aa522a1` | error case | `cooling_coefficient ≤ 0` |
+| `E-PARAM-002` | `b757d637-570b-4594-bad2-040776993e62` | error case | A mass or a specific heat capacity of the beverage is zero or negative |
+| `E-ENTREE-001` | `ef5edef2-6e13-4c75-83e6-e4d82f6dfe6a` | error case | Neither `requested_instant` nor `target_temperature` is supplied |
+| `E-HORIZON-001` | `089406dd-f578-4bef-8d4b-3acbefc50e82` | error case | `requested_instant > P-04` |
+| `E-CONV-001` | `1b5551ba-9d1b-44e3-beb3-89aac7d2fb26` | error case | `P-06` iterations without converging to within `P-05` |
 | `Q-01` | `c048bd3f-7a20-4669-b9c7-2b29d366394c` | question | Should a radiation and evaporation term be added for temperatures abov |
 | `Q-02` | `6819e7f2-3111-47f1-bc56-070aa8d47524` | question | The laboratory use asks for an ambient temperature varying over time. |
 | `Q-03` | `cf4f641d-263d-421b-84fa-4869d01a6a03` | question | `RG-060` (non-convergence) and `E-HORIZON-001` are covered by no test |

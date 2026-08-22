@@ -259,29 +259,29 @@ would give 13.5 km/h.
 | 1.0.0 | 2026-08-22 | Initial version | — | — |
 | 1.1.0 | 2026-08-22 | `CT-06` added; `CT-04` renamed to what it actually tests | **None on published results.** No rule changed. `CT-06` exercises `P-01`, which until now no case decided | Implementers: rerun the reference set. An implementation using `HALF_UP` was passing before and fails now — that is the point |
 
-## Annexe — Identités
+## Appendix — Identities
 
-*Chaque objet porte un UUID attribué une fois et jamais modifié. L'identifiant lisible et le libellé sont des étiquettes : ils peuvent changer, l'identité non. Voir [CADRE.md §2.8](../../../CADRE.md).*
+*Every object carries a UUID, assigned once and never changed. The readable identifier and the label are labels: they may change, the identity may not. See [CADRE.md §2.8](../../../CADRE.md).*
 
-| Identifiant | UUID | Nature | Libellé |
+| Identifier | UUID | Kind | Label |
 |---|---|---|---|
 | `SPEC-SPD-001` | `e629651e-8b0d-416e-b97a-fd9cd4ceea3a` | document | SPEC-SPD-001 — Average speed of a journey |
-| `RG-010` | `d609f740-a23b-4a73-a66e-59a20ebc5702` | règle | Duration of one leg |
-| `RG-020` | `6aa5716c-8d3a-4fc4-acba-387eba4214a1` | règle | Journey totals |
-| `RG-030` | `a8bf6497-965d-4777-a9f9-f3d2a35cec8c` | règle | Average speed |
-| `CT-01` | `5b9cfac9-fffd-46d7-bd52-3e018d83b220` | cas de test | Equal distances, different speeds |
-| `CT-02` | `af954a1c-c6b7-44f7-b1a5-1e2577390e5a` | cas de test | Equal durations |
-| `CT-03` | `55b3128b-974b-49b9-bcf2-1153ad2e878c` | cas de test | A single leg |
-| `CT-04` | `453d1761-dec3-4e0b-bdb4-23d908e52130` | cas de test | Durations that never terminate |
-| `CT-05` | `8ae25c37-0e16-4bdd-8baa-106e65af357e` | cas de test | Null speed |
-| `CT-06` | `72a1fdb6-1b36-4261-b27c-8f69c72d8823` | cas de test | A tie exactly at the half |
-| `FN-001` | `aa32e541-ddbd-4bd1-b0cc-4bf61cc2d00b` | fonction | Leg duration |
-| `FN-002` | `6e9e8cc6-857f-497c-8fa7-6e034a83fb04` | fonction | Journey average speed |
-| `P-01` | `62f12714-40af-41b4-90fa-79c93e152c6e` | paramètre | Rounding mode of the published speed |
-| `P-02` | `b4ccd8a2-23b2-42d7-aa15-6dd5e58e3829` | paramètre | Decimals of the published speed |
-| `EX-01` | `2598ec0f-16ad-4bb3-a0df-0cfba7ea5648` | exigence | Distances and speeds are exact as entered; only the published speed is |
-| `EX-02` | `990e7004-55a7-42c4-83c6-ad45a25ea78b` | exigence | A journey has at most 200 legs; the calculation is called at most 50 t |
+| `RG-010` | `d609f740-a23b-4a73-a66e-59a20ebc5702` | rule | Duration of one leg |
+| `RG-020` | `6aa5716c-8d3a-4fc4-acba-387eba4214a1` | rule | Journey totals |
+| `RG-030` | `a8bf6497-965d-4777-a9f9-f3d2a35cec8c` | rule | Average speed |
+| `CT-01` | `5b9cfac9-fffd-46d7-bd52-3e018d83b220` | test case | Equal distances, different speeds |
+| `CT-02` | `af954a1c-c6b7-44f7-b1a5-1e2577390e5a` | test case | Equal durations |
+| `CT-03` | `55b3128b-974b-49b9-bcf2-1153ad2e878c` | test case | A single leg |
+| `CT-04` | `453d1761-dec3-4e0b-bdb4-23d908e52130` | test case | Durations that never terminate |
+| `CT-05` | `8ae25c37-0e16-4bdd-8baa-106e65af357e` | test case | Null speed |
+| `CT-06` | `72a1fdb6-1b36-4261-b27c-8f69c72d8823` | test case | A tie exactly at the half |
+| `FN-001` | `aa32e541-ddbd-4bd1-b0cc-4bf61cc2d00b` | function | Leg duration |
+| `FN-002` | `6e9e8cc6-857f-497c-8fa7-6e034a83fb04` | function | Journey average speed |
+| `P-01` | `62f12714-40af-41b4-90fa-79c93e152c6e` | parameter | Rounding mode of the published speed |
+| `P-02` | `b4ccd8a2-23b2-42d7-aa15-6dd5e58e3829` | parameter | Decimals of the published speed |
+| `EX-01` | `2598ec0f-16ad-4bb3-a0df-0cfba7ea5648` | requirement | Distances and speeds are exact as entered; only the published speed is |
+| `EX-02` | `990e7004-55a7-42c4-83c6-ad45a25ea78b` | requirement | A journey has at most 200 legs; the calculation is called at most 50 t |
 | `INV-01` | `0f0e6185-bb00-480a-b3f3-03efffee34a5` | invariant | `average_speed` lies between the **slowest** and the **fastest** leg s |
 | `INV-02` | `18950bf4-58d6-4a2b-9426-20cec1f6edba` | invariant | Before rounding, `average_speed × total_duration = total_distance`. |
-| `E-SPD-001` | `30c1c2f2-56d3-49e1-bf5d-869e1dff4936` | cas d'erreur | A leg has a speed `≤ 0` |
+| `E-SPD-001` | `30c1c2f2-56d3-49e1-bf5d-869e1dff4936` | error case | A leg has a speed `≤ 0` |
 | `Q-01` | `b7efbab4-d912-4803-9869-ef1c89743706` | question | Should stops be counted in the duration? Today they are out of scope, |

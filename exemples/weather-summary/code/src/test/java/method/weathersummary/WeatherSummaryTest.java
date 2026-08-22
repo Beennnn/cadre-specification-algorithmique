@@ -38,6 +38,9 @@ import java.util.regex.*;
 
 public final class WeatherSummaryTest {
 
+    /** The identities appendix, in the language of the document we read: English. */
+    static final String ANNEXE_TITRE = "## Appendix — Identities";
+
     /** Start of a table row, with the explicit anchor the specification carries. */
     static final String ANCRE = "^\\|\\s*(?:<a id=\"[^\"]+\"></a>)?\\s*";
 
@@ -326,7 +329,7 @@ public final class WeatherSummaryTest {
         String text = Files.readString(spec);
         // The identities annexe cites every object: reading it would take a UUID for the
         // statement of an invariant. We stop at the body of the document.
-        int annexe = text.indexOf("## Annexe — Identités");
+        int annexe = text.indexOf(ANNEXE_TITRE);
         if (annexe >= 0) text = text.substring(0, annexe);
 
         Map<String, String> required = new LinkedHashMap<>();

@@ -765,48 +765,48 @@ segments, the caching strategy, the format of the parameter file, the way the pr
 logged. None of that can betray a rule — and all of it will change at least once in the
 fifteen years of a vehicle's life.
 
-## Annexe — Identités
+## Appendix — Identities
 
-*Chaque objet porte un UUID attribué une fois et jamais modifié. L'identifiant lisible et le libellé sont des étiquettes : ils peuvent changer, l'identité non. Voir [CADRE.md §2.8](../../CADRE.md).*
+*Every object carries a UUID, assigned once and never changed. The readable identifier and the label are labels: they may change, the identity may not. See [CADRE.md §2.8](../../CADRE.md).*
 
-| Identifiant | UUID | Nature | Libellé |
+| Identifier | UUID | Kind | Label |
 |---|---|---|---|
 | `SPEC-NRG-001` | `9888723b-beee-4e1a-85ad-b631de8753be` | document | SPEC-NRG-001 — Estimating the range over a route |
-| `RG-010` | `980c488b-daf2-4834-b00e-c8d45668671a` | règle | Force balance on a segment |
-| `RG-020` | `aeb9bd4f-38b4-4a27-8c60-28fc5d8141e7` | règle | Mechanical energy of the segment |
-| `RG-030` | `069a2362-2dfb-4a2b-9e2e-f25e55c33516` | règle | Traction and regeneration |
-| `RG-040` | `947eb789-a60f-4267-8b78-dbca001441a8` | règle | Auxiliaries |
-| `RG-050` | `0a2c8c35-e90b-4e9a-a67a-84796f979fc0` | règle | Energy of a segment |
-| `RG-060` | `2eb8fe40-e628-4405-aa72-116729d70ba0` | règle | Available energy and temperature factor |
-| `RG-070` | `6a56299f-1c41-47be-bfa9-02bedc1ac609` | règle | Usable budget |
-| `RG-080` | `bebe83a6-bc21-4e69-9933-58259b8e74b1` | règle | Cumulative profile |
-| `RG-090` | `6c28457c-2b40-43aa-9c83-a3ace089ccdc` | règle | Range point |
-| `RG-100` | `ebf7bf69-d50b-4715-bfc6-03cf50323ef9` | règle | Rounding and rounding directions |
-| `CT-01` | `263cbebd-9441-4b74-9c57-846a2f5a389b` | cas de test | Full balance, segment by segment |
-| `CT-02` | `2cabdb36-4f9e-4af5-8a6e-812b673be478` | cas de test | Regeneration |
-| `CT-03` | `45b15e7c-d7b2-4c2e-b929-f91928f6e003` | cas de test | Range point, interpolation inside segment 2 |
-| `CT-04` | `d53a1d67-9713-4cac-ae1a-aeadd35ce458` | cas de test | The same route at −5 °C |
-| `CT-05` | `0dccee30-3ba4-447f-871f-2f844c974226` | cas de test | Range never reached |
-| `CT-06` | `6c3d7b34-250c-4744-809c-e4b8043d05da` | cas de test | The minimum-consumption speed |
-| `CT-07` | `b6a9cb5c-3772-4221-bd2b-81426d0491aa` | cas de test | Temperature unavailable |
-| `CT-08` | `c31484ce-4b11-467b-9cf5-8d3eaf5dd241` | cas de test | Empty route |
-| `FN-001` | `43b0691e-1348-4088-99c5-86c584a90c42` | fonction | behaviour |
-| `FN-011` | `f54e3523-e7d6-420e-ba89-c7ac8028e666` | fonction | behaviour |
-| `FN-004` | `ed9194c2-f465-458b-a68a-5bc2461be15d` | fonction | none |
-| `FN-007` | `56568916-bbd1-44d2-86fc-12416f98676c` | fonction | none |
-| `P-01` | `6573a577-9067-4cd6-861d-b257b71803d5` | paramètre | Acceleration of gravity |
-| `P-02` | `cce939a5-46cd-4eb3-a512-5c3f3de13dc7` | paramètre | Reference air density |
-| `P-03` | `ea5e594b-7ea7-4cff-9304-bbb3e4f25f72` | paramètre | Temperature factor — scale |
-| `P-04` | `4ea5c434-9869-4176-975d-1813cecfa836` | paramètre | Temperature factor used when the measurement is unavailable |
-| `EX-01` | `f25aa050-8a85-4e55-b202-b31cb0a683b8` | exigence | The computer software is written in the **MISRA C:2012** subset, manda |
-| `EX-02` | `d1f9aa40-7f4f-4ad1-a341-57f5064ff4f6` | exigence | No dynamic memory allocation after the initialisation phase |
-| `EX-03` | `c4b092be-6904-473d-ab88-3132570724b1` | exigence | The **worst-case** execution time is bounded, measured on target, and |
-| `EX-04` | `874a1ca9-d14a-43d5-9daf-865e9b8b7fc0` | exigence | The function runs in the **non-critical partition** of the computer; i |
-| `EX-05` | `d2d7839d-11dd-4f4e-a4e6-1c0aa842c169` | exigence | The function has at most **512 KB of RAM** and assumes no garbage coll |
-| `EX-06` | `d6310e36-7c2f-4ec2-9173-abc13fcc309b` | exigence | The **route is category C2 personal data**: it does not leave the vehi |
-| `EX-07` | `fca54b2f-b68d-4a52-98d9-83f4f907b530` | exigence | The data of the non-critical partition and that of the control partiti |
-| `EX-08` | `d34bba90-81e0-4566-a9b5-afcf17b81d19` | exigence | The server service uses a language from the approved technical list* |
-| `EX-09` | `e607e38d-b669-4ace-ba48-3098e6763c09` | exigence | The **test coverage** of the embedded code reaches 100 % of branches o |
+| `RG-010` | `980c488b-daf2-4834-b00e-c8d45668671a` | rule | Force balance on a segment |
+| `RG-020` | `aeb9bd4f-38b4-4a27-8c60-28fc5d8141e7` | rule | Mechanical energy of the segment |
+| `RG-030` | `069a2362-2dfb-4a2b-9e2e-f25e55c33516` | rule | Traction and regeneration |
+| `RG-040` | `947eb789-a60f-4267-8b78-dbca001441a8` | rule | Auxiliaries |
+| `RG-050` | `0a2c8c35-e90b-4e9a-a67a-84796f979fc0` | rule | Energy of a segment |
+| `RG-060` | `2eb8fe40-e628-4405-aa72-116729d70ba0` | rule | Available energy and temperature factor |
+| `RG-070` | `6a56299f-1c41-47be-bfa9-02bedc1ac609` | rule | Usable budget |
+| `RG-080` | `bebe83a6-bc21-4e69-9933-58259b8e74b1` | rule | Cumulative profile |
+| `RG-090` | `6c28457c-2b40-43aa-9c83-a3ace089ccdc` | rule | Range point |
+| `RG-100` | `ebf7bf69-d50b-4715-bfc6-03cf50323ef9` | rule | Rounding and rounding directions |
+| `CT-01` | `263cbebd-9441-4b74-9c57-846a2f5a389b` | test case | Full balance, segment by segment |
+| `CT-02` | `2cabdb36-4f9e-4af5-8a6e-812b673be478` | test case | Regeneration |
+| `CT-03` | `45b15e7c-d7b2-4c2e-b929-f91928f6e003` | test case | Range point, interpolation inside segment 2 |
+| `CT-04` | `d53a1d67-9713-4cac-ae1a-aeadd35ce458` | test case | The same route at −5 °C |
+| `CT-05` | `0dccee30-3ba4-447f-871f-2f844c974226` | test case | Range never reached |
+| `CT-06` | `6c3d7b34-250c-4744-809c-e4b8043d05da` | test case | The minimum-consumption speed |
+| `CT-07` | `b6a9cb5c-3772-4221-bd2b-81426d0491aa` | test case | Temperature unavailable |
+| `CT-08` | `c31484ce-4b11-467b-9cf5-8d3eaf5dd241` | test case | Empty route |
+| `FN-001` | `43b0691e-1348-4088-99c5-86c584a90c42` | function | behaviour |
+| `FN-011` | `f54e3523-e7d6-420e-ba89-c7ac8028e666` | function | behaviour |
+| `FN-004` | `ed9194c2-f465-458b-a68a-5bc2461be15d` | function | none |
+| `FN-007` | `56568916-bbd1-44d2-86fc-12416f98676c` | function | none |
+| `P-01` | `6573a577-9067-4cd6-861d-b257b71803d5` | parameter | Acceleration of gravity |
+| `P-02` | `cce939a5-46cd-4eb3-a512-5c3f3de13dc7` | parameter | Reference air density |
+| `P-03` | `ea5e594b-7ea7-4cff-9304-bbb3e4f25f72` | parameter | Temperature factor — scale |
+| `P-04` | `4ea5c434-9869-4176-975d-1813cecfa836` | parameter | Temperature factor used when the measurement is unavailable |
+| `EX-01` | `f25aa050-8a85-4e55-b202-b31cb0a683b8` | requirement | The computer software is written in the **MISRA C:2012** subset, manda |
+| `EX-02` | `d1f9aa40-7f4f-4ad1-a341-57f5064ff4f6` | requirement | No dynamic memory allocation after the initialisation phase |
+| `EX-03` | `c4b092be-6904-473d-ab88-3132570724b1` | requirement | The **worst-case** execution time is bounded, measured on target, and |
+| `EX-04` | `874a1ca9-d14a-43d5-9daf-865e9b8b7fc0` | requirement | The function runs in the **non-critical partition** of the computer; i |
+| `EX-05` | `d2d7839d-11dd-4f4e-a4e6-1c0aa842c169` | requirement | The function has at most **512 KB of RAM** and assumes no garbage coll |
+| `EX-06` | `d6310e36-7c2f-4ec2-9173-abc13fcc309b` | requirement | The **route is category C2 personal data**: it does not leave the vehi |
+| `EX-07` | `fca54b2f-b68d-4a52-98d9-83f4f907b530` | requirement | The data of the non-critical partition and that of the control partiti |
+| `EX-08` | `d34bba90-81e0-4566-a9b5-afcf17b81d19` | requirement | The server service uses a language from the approved technical list* |
+| `EX-09` | `e607e38d-b669-4ace-ba48-3098e6763c09` | requirement | The **test coverage** of the embedded code reaches 100 % of branches o |
 | `INV-01` | `5afa3fa9-13fd-455a-90f9-a7d6a105894e` | invariant | On a segment with a positive or zero gradient, `segment_energy > 0` |
 | `INV-02` | `8cd75e36-1a32-4cbe-be56-1fa572e468ef` | invariant | Additivity: splitting a segment into two halves of the same speed and |
 | `INV-03` | `e9dd2410-9fb4-485a-b8c6-b7966b7dc047` | invariant | Homogeneity: at equal speed and gradient, doubling the distance double |
@@ -815,10 +815,10 @@ fifteen years of a vehicle's life.
 | `INV-06` | `683ae5b4-21f5-4841-80c6-d1e5fa76fffa` | invariant | `range_point`, if it exists, lies between 0 and the total length of th |
 | `INV-07` | `cabb4a7c-3cc6-4b7f-840b-fa14ee4d0f4a` | invariant | The calculation is deterministic: same inputs, same outputs, profile i |
 | `INV-08` | `52d43b49-e236-4a5c-9835-ebe75ef1aecf` | invariant | The calculation is **pure**: no successive call depends on a previous |
-| `E-TRAJET-001` | `13e307f4-1b7a-444c-8829-d186c50601e9` | cas d'erreur | The route contains no segment |
-| `E-TRAJET-002` | `fe15e79b-a26e-4641-b826-8b0e35466f73` | cas d'erreur | A segment has a zero or negative distance or speed |
-| `E-VEHIC-001` | `3edc5a91-74d0-4ebc-aba7-6eb8e7e3352e` | cas d'erreur | An efficiency is outside the interval `]0 ; 1[` |
-| `E-RESERVE-001` | `e8eccfd9-d2cf-4434-9773-91abb263881f` | cas d'erreur | The safety reserve is greater than or equal to the available energy |
+| `E-TRAJET-001` | `13e307f4-1b7a-444c-8829-d186c50601e9` | error case | The route contains no segment |
+| `E-TRAJET-002` | `fe15e79b-a26e-4641-b826-8b0e35466f73` | error case | A segment has a zero or negative distance or speed |
+| `E-VEHIC-001` | `3edc5a91-74d0-4ebc-aba7-6eb8e7e3352e` | error case | An efficiency is outside the interval `]0 ; 1[` |
+| `E-RESERVE-001` | `e8eccfd9-d2cf-4434-9773-91abb263881f` | error case | The safety reserve is greater than or equal to the available energy |
 | `Q-01` | `41dea1ff-81d5-42cc-a782-0da8ba4473eb` | question | The temperature scale works in steps (`RG-060`). A tenth of a degree c |
 | `Q-02` | `3cc439b5-c892-4f1b-9b73-404b674cf47f` | question | The air density (`P-02`) is fixed. Should it be corrected for altitude |
 | `Q-03` | `e00a269d-7baf-4009-8412-13e4ccb848e8` | question | `H-2` assumes no wind. Weather forecasts are available on the server s |

@@ -463,40 +463,40 @@ these two cases reveal.
 |---|---|---|---|---|
 | 1.0.0 | 2026-08-21 | Initial version | — | — |
 
-## Annexe — Identités
+## Appendix — Identities
 
-*Chaque objet porte un UUID attribué une fois et jamais modifié. L'identifiant lisible et le libellé sont des étiquettes : ils peuvent changer, l'identité non. Voir [CADRE.md §2.8](../../../CADRE.md).*
+*Every object carries a UUID, assigned once and never changed. The readable identifier and the label are labels: they may change, the identity may not. See [CADRE.md §2.8](../../../CADRE.md).*
 
-| Identifiant | UUID | Nature | Libellé |
+| Identifier | UUID | Kind | Label |
 |---|---|---|---|
 | `SPEC-AST-001` | `428e65ae-0ed5-4a6b-8eb4-e41d0215211a` | document | SPEC-AST-001 — Sunrise and sunset times |
-| `RG-005` | `f278d30e-0fd0-4d13-a1d8-fcbce08fde09` | règle | Julian day of the observation date |
-| `RG-010` | `af97c323-6b9f-4fd6-9713-4e06c6d4672e` | règle | Day at solar noon |
-| `RG-020` | `beef87a2-3576-4109-91f9-89d9fc288add` | règle | Position of the Sun on its orbit |
-| `RG-030` | `3b88e87e-2677-41d1-b5fc-c8c951311eca` | règle | Declination |
-| `RG-040` | `16b13a55-55df-4eb7-b868-bc369b1138c0` | règle | Solar transit |
-| `RG-050` | `de6df248-be98-4400-8d44-f15007369dd1` | règle | Hour angle, and existence of a solution |
-| `RG-060` | `8f627688-ce42-47d8-a4b5-0e55eb8d1571` | règle | Sunrise and sunset instants |
-| `CT-01` | `66ca83b9-80a9-49ed-8d97-9836840ca7d7` | cas de test | Paris, summer solstice |
-| `CT-02` | `caf14734-10f4-4794-92ac-b92659005d00` | cas de test | Paris, winter solstice |
-| `CT-03` | `6a936d8a-f897-4ada-883b-4d430c07ad49` | cas de test | Quito, equinox, negative longitude |
-| `CT-04` | `a3113841-3709-4029-9ccd-7ceef61af128` | cas de test | Tromsø, polar day |
-| `CT-05` | `ad06693c-79b6-44d2-a7eb-bf351321c88a` | cas de test | Tromsø, polar night |
-| `P-01` | `103ce181-d9a9-43da-8828-8b39052e7b99` | paramètre | Reference altitude `h₀` |
-| `P-02` | `c8a555a6-878d-4f81-afce-2434795a0886` | paramètre | Sign convention of the coordinates |
-| `P-03` | `5b432b90-2b5c-482f-a032-922be7159f4e` | paramètre | Rounding direction to the minute |
-| `P-04` | `a9c2da1c-b965-4ba5-90c9-d4635518a4ea` | paramètre | Obliquity of the ecliptic |
-| `EX-01` | `e9900cc4-7c76-48db-a91f-521b12b216d1` | exigence | Accuracy: ± 2 minutes against the reference ephemerides, for every lat |
-| `EX-02` | `4a8d293a-238f-4600-89b0-3a587757d3e8` | exigence | Binary double precision is enough. The output quantity is rounded to t |
-| `EX-03` | `3125ec69-b46f-4d89-b533-f5b6985a4e50` | exigence | The calculation is **replayable identically**: no dependency on the cu |
-| `EX-04` | `871209e3-ca46-4ea2-8f77-455f0575b2f4` | exigence | Volume: up to 5 000 calls per second at peak, 99th-percentile latency |
+| `RG-005` | `f278d30e-0fd0-4d13-a1d8-fcbce08fde09` | rule | Julian day of the observation date |
+| `RG-010` | `af97c323-6b9f-4fd6-9713-4e06c6d4672e` | rule | Day at solar noon |
+| `RG-020` | `beef87a2-3576-4109-91f9-89d9fc288add` | rule | Position of the Sun on its orbit |
+| `RG-030` | `3b88e87e-2677-41d1-b5fc-c8c951311eca` | rule | Declination |
+| `RG-040` | `16b13a55-55df-4eb7-b868-bc369b1138c0` | rule | Solar transit |
+| `RG-050` | `de6df248-be98-4400-8d44-f15007369dd1` | rule | Hour angle, and existence of a solution |
+| `RG-060` | `8f627688-ce42-47d8-a4b5-0e55eb8d1571` | rule | Sunrise and sunset instants |
+| `CT-01` | `66ca83b9-80a9-49ed-8d97-9836840ca7d7` | test case | Paris, summer solstice |
+| `CT-02` | `caf14734-10f4-4794-92ac-b92659005d00` | test case | Paris, winter solstice |
+| `CT-03` | `6a936d8a-f897-4ada-883b-4d430c07ad49` | test case | Quito, equinox, negative longitude |
+| `CT-04` | `a3113841-3709-4029-9ccd-7ceef61af128` | test case | Tromsø, polar day |
+| `CT-05` | `ad06693c-79b6-44d2-a7eb-bf351321c88a` | test case | Tromsø, polar night |
+| `P-01` | `103ce181-d9a9-43da-8828-8b39052e7b99` | parameter | Reference altitude `h₀` |
+| `P-02` | `c8a555a6-878d-4f81-afce-2434795a0886` | parameter | Sign convention of the coordinates |
+| `P-03` | `5b432b90-2b5c-482f-a032-922be7159f4e` | parameter | Rounding direction to the minute |
+| `P-04` | `a9c2da1c-b965-4ba5-90c9-d4635518a4ea` | parameter | Obliquity of the ecliptic |
+| `EX-01` | `e9900cc4-7c76-48db-a91f-521b12b216d1` | requirement | Accuracy: ± 2 minutes against the reference ephemerides, for every lat |
+| `EX-02` | `4a8d293a-238f-4600-89b0-3a587757d3e8` | requirement | Binary double precision is enough. The output quantity is rounded to t |
+| `EX-03` | `3125ec69-b46f-4d89-b533-f5b6985a4e50` | requirement | The calculation is **replayable identically**: no dependency on the cu |
+| `EX-04` | `871209e3-ca46-4ea2-8f77-455f0575b2f4` | requirement | Volume: up to 5 000 calls per second at peak, 99th-percentile latency |
 | `INV-01` | `3dd144ed-ae0c-4122-a8e9-6cfe601315c0` | invariant | If `solar_regime = NORMAL`, then `sunrise_time < sunset_time` — sunris |
 | `INV-02` | `53eadd31-c842-4683-974c-e02c56b7aeb3` | invariant | `sunrise_time` and `sunset_time` are **both** `ABSENT` or both present |
 | `INV-03` | `062582ac-178f-486e-ab1e-94ccce05a0ca` | invariant | `−23.44° ≤ declination ≤ +23.44°`, whatever the date. A value outside |
 | `INV-04` | `8cad23b6-1739-4778-899a-8b3d7c2958fd` | invariant | Symmetry in longitude: at equal latitude, moving the longitude `Δ` d |
 | `INV-05` | `77f14f85-1c37-4cb0-b59c-3cd5e9ea5c33` | invariant | `solar_regime ≠ NORMAL` implies |
-| `E-AST-001` | `baea8eed-a39c-46c8-96e6-543b35802c95` | cas d'erreur | `latitude` outside `[−90, +90]` |
-| `E-AST-002` | `b7f23f9b-aa20-4597-9d4b-ca157a334135` | cas d'erreur | `longitude` outside `[−180, +180]` |
+| `E-AST-001` | `baea8eed-a39c-46c8-96e6-543b35802c95` | error case | `latitude` outside `[−90, +90]` |
+| `E-AST-002` | `b7f23f9b-aa20-4597-9d4b-ca157a334135` | error case | `longitude` outside `[−180, +180]` |
 | `Q-01` | `68ad3237-3c15-4f58-a8d6-ee9383bf46e2` | question | Should civil, nautical and astronomical twilight be exposed? They are |
 | `Q-02` | `392ff06a-a1d6-4f50-9cb2-858811eb569b` | question | Should the observer's altitude be corrected for? The effect reaches 4 |
 | `Q-03` | `b35f41d9-46c8-441d-a4be-11abad2464f7` | question | Should the service return local time rather than UTC? |

@@ -1008,8 +1008,11 @@ Le UUID n'a **aucune sémantique**. On n'y lit ni date, ni auteur, ni ordre de c
 toute tentative de l'interpréter est un défaut.
 
 **Où il vit.** Dans une **annexe « Identités »** en fin de document, pour que le corps du
-texte reste lisible. Le [registre](outils/) global — `registre.json` — est **généré** à
-partir des annexes, jamais tenu à la main : un registre entretenu manuellement diverge.
+texte reste lisible. Elle est écrite **dans la langue du document** — *Annexe — Identités*
+en français, *Appendix — Identities* en anglais : une spécification remise à une équipe
+internationale ne se termine pas par une annexe française. Le [registre](outils/) global —
+`registre.json` — est **généré** à partir des annexes, jamais tenu à la main : un registre
+entretenu manuellement diverge.
 
 ```bash
 java outils/Identites.java --attribuer      # complète les identités manquantes

@@ -21,7 +21,39 @@ import java.util.stream.*;
 public class Identites {
 
     static Path racine;
-    static final String ANNEXE = "## Annexe — Identités";
+
+    // L'annexe est écrite dans la LANGUE DU DOCUMENT. Une spécification anglaise remise à
+    // une équipe internationale ne peut pas se terminer par une annexe française : le
+    // lecteur y trouverait « règle » et « cas de test » au milieu de son propre document.
+    static final String ANNEXE_FR = "## Annexe — Identités";
+    static final String ANNEXE_EN = "## Appendix — Identities";
+
+    /** L'index du début de l'annexe, quelle que soit sa langue, ou −1. */
+    static int debutAnnexe(String texte) {
+        int fr = texte.indexOf(ANNEXE_FR), en = texte.indexOf(ANNEXE_EN);
+        if (fr < 0) return en;
+        if (en < 0) return fr;
+        return Math.min(fr, en);
+    }
+
+    /** Un document est anglais si son nom le dit : « <nom>.en.md ». */
+    static boolean anglais(Path chemin) {
+        return chemin.getFileName().toString().endsWith(".en.md");
+    }
+
+    /** Les natures, dans les deux langues. Même ordre que MOTIFS, plus « document ». */
+    static final Map<String, String> NATURES_EN = Map.ofEntries(
+            Map.entry("document", "document"),
+            Map.entry("règle", "rule"),
+            Map.entry("cas de test", "test case"),
+            Map.entry("fonction", "function"),
+            Map.entry("paramètre", "parameter"),
+            Map.entry("donnée", "data"),
+            Map.entry("exigence", "requirement"),
+            Map.entry("invariant", "invariant"),
+            Map.entry("cas d'erreur", "error case"),
+            Map.entry("question", "question"),
+            Map.entry("retiré", "withdrawn"));
 
     // Début d'une ligne de tableau, avec l'ancre explicite que portent les tables
     // référencées depuis l'extérieur. Sans elle, `| <a id="p-01"></a>`P-01` | …` ne
@@ -46,7 +78,7 @@ public class Identites {
     record Objet(String identifiant, String nature, String libelle) {}
 
     static String corps(String texte) {
-        int i = texte.indexOf(ANNEXE);
+        int i = debutAnnexe(texte);
         return i < 0 ? texte : texte.substring(0, i);
     }
 
@@ -129,10 +161,10 @@ public class Identites {
 
     static LinkedHashMap<String, String> annexeExistante(String texte) {
         LinkedHashMap<String, String> r = new LinkedHashMap<>();
-        int i = texte.indexOf(ANNEXE);
+        int i = debutAnnexe(texte);
         if (i < 0) return r;
         Matcher m = Pattern.compile("^\\|\\s*`([A-Z]+[-A-Z]*-[\\d-]+)`\\s*\\|\\s*`([0-9a-f-]{36})`",
-                Pattern.MULTILINE).matcher(texte.substring(i + ANNEXE.length()));
+                Pattern.MULTILINE).matcher(texte.substring(i));
         while (m.find()) r.put(m.group(1), m.group(2));
         return r;
     }
@@ -148,11 +180,18 @@ public class Identites {
         // faisait la version précédente — casse dès qu'un exemple change de niveau.
         int profondeur = racine.relativize(chemin).getNameCount() - 1;
         String renvoi = profondeur == 0 ? "CADRE.md" : "../".repeat(profondeur) + "CADRE.md";
-        List<String> lignes = new ArrayList<>(List.of("", ANNEXE, "",
-                "*Chaque objet porte un UUID attribué une fois et jamais modifié. "
-                + "L'identifiant lisible et le libellé sont des étiquettes : ils peuvent "
-                + "changer, l'identité non. Voir [CADRE.md §2.8](" + renvoi + ").*",
-                "", "| Identifiant | UUID | Nature | Libellé |", "|---|---|---|---|"));
+        boolean en = anglais(chemin);
+        List<String> lignes = new ArrayList<>(en
+                ? List.of("", ANNEXE_EN, "",
+                    "*Every object carries a UUID, assigned once and never changed. The "
+                    + "readable identifier and the label are labels: they may change, the "
+                    + "identity may not. See [CADRE.md §2.8](" + renvoi + ").*",
+                    "", "| Identifier | UUID | Kind | Label |", "|---|---|---|---|")
+                : List.of("", ANNEXE_FR, "",
+                    "*Chaque objet porte un UUID attribué une fois et jamais modifié. "
+                    + "L'identifiant lisible et le libellé sont des étiquettes : ils peuvent "
+                    + "changer, l'identité non. Voir [CADRE.md §2.8](" + renvoi + ").*",
+                    "", "| Identifiant | UUID | Nature | Libellé |", "|---|---|---|---|"));
         for (Objet o : liste) {
             if (!connus.containsKey(o.identifiant())) {
                 connus.put(o.identifiant(), UUID.randomUUID().toString());
@@ -160,17 +199,23 @@ public class Identites {
             }
             String libelle = o.libelle();
             if (libelle.length() > 70) libelle = equilibrer(libelle.substring(0, 70));
+            String nature = en ? NATURES_EN.getOrDefault(o.nature(), o.nature()) : o.nature();
             lignes.add("| `" + o.identifiant() + "` | `" + connus.get(o.identifiant())
-                    + "` | " + o.nature() + " | " + libelle + " |");
+                    + "` | " + nature + " | " + libelle + " |");
         }
         Set<String> vivants = liste.stream().map(Objet::identifiant).collect(Collectors.toSet());
         List<String> retires = connus.keySet().stream()
                 .filter(i -> !vivants.contains(i)).sorted().toList();
         if (!retires.isEmpty()) {
-            lignes.addAll(List.of("", "### Identités retirées", "",
-                    "*Un objet supprimé conserve son UUID : il n'est jamais réattribué, "
-                    + "pour qu'une référence ancienne reste résoluble.*", "",
-                    "| Identifiant | UUID |", "|---|---|"));
+            lignes.addAll(en
+                    ? List.of("", "### Withdrawn identities", "",
+                        "*A deleted object keeps its UUID: it is never reassigned, so that "
+                        + "an old reference stays resolvable.*", "",
+                        "| Identifier | UUID |", "|---|---|")
+                    : List.of("", "### Identités retirées", "",
+                        "*Un objet supprimé conserve son UUID : il n'est jamais réattribué, "
+                        + "pour qu'une référence ancienne reste résoluble.*", "",
+                        "| Identifiant | UUID |", "|---|---|"));
             for (String i : retires) lignes.add("| `" + i + "` | `" + connus.get(i) + "` |");
         }
         Files.writeString(chemin, corps(texte).stripTrailing() + "\n"

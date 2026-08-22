@@ -133,7 +133,18 @@ public class Verifier {
         {ANCRE + "`(E-[A-Z]+-\\d+)`\\s*\\|\\s*([^|]+)", "cas d'erreur"},
         {ANCRE + "`(Q-[\\d-]+)`\\s*\\|\\s*([^|]+)", "question"},
     };
+    // L'annexe des identités est écrite dans la langue du document : les deux titres
+    // existent, et tout ce qui découpe « corps » et « annexe » doit connaître les deux.
     static final String ANNEXE = "## Annexe — Identités";
+    static final String ANNEXE_EN = "## Appendix — Identities";
+
+    /** L'index du début de l'annexe, quelle que soit sa langue, ou −1. */
+    static int debutAnnexe(String texte) {
+        int fr = texte.indexOf(ANNEXE), en = texte.indexOf(ANNEXE_EN);
+        if (fr < 0) return en;
+        if (en < 0) return fr;
+        return Math.min(fr, en);
+    }
 
     /**
      * Le fichier dont ce document est la traduction, ou null s'il n'en est pas une.
@@ -147,7 +158,7 @@ public class Verifier {
     }
 
     static String corps(String texte) {
-        int i = texte.indexOf(ANNEXE);
+        int i = debutAnnexe(texte);
         return i < 0 ? texte : texte.substring(0, i);
     }
 
@@ -166,7 +177,7 @@ public class Verifier {
 
     static Map<String, String> annexe(String texte) {
         Map<String, String> r = new HashMap<>();
-        int i = texte.indexOf(ANNEXE);
+        int i = debutAnnexe(texte);
         if (i < 0) return r;
         Matcher m = Pattern.compile("^\\|\\s*`([A-Z]+[-A-Z]*-[\\d-]+)`\\s*\\|\\s*`([0-9a-f-]{36})`",
                 Pattern.MULTILINE).matcher(texte.substring(i));

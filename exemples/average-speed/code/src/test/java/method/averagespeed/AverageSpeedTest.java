@@ -26,7 +26,10 @@ import java.util.regex.*;
 
 public final class AverageSpeedTest {
 
-    /** Début d'une ligne de tableau, avec l'ancre explicite que porte la spécification. */
+    /** The identities appendix, in the language of the document we read: English. */
+    static final String ANNEXE_TITRE = "## Appendix — Identities";
+
+    /** Start of a table row, with the explicit anchor the specification carries. */
     static final String ANCRE = "^\\|\\s*(?:<a id=\"[^\"]+\"></a>)?\\s*";
 
     static final List<String> lines = new ArrayList<>();
@@ -191,9 +194,9 @@ public final class AverageSpeedTest {
      */
     static void coverageReport(Path spec) throws IOException {
         String text = Files.readString(spec);
-        // L'annexe des identités cite tous les objets : la lire ferait passer un UUID
-        // pour l'énoncé d'un invariant. On s'arrête au corps du document.
-        int annexe = text.indexOf("## Annexe — Identités");
+        // The identities appendix cites every object: reading it would take a UUID for
+        // the statement of an invariant. We stop at the body of the document.
+        int annexe = text.indexOf(ANNEXE_TITRE);
         if (annexe >= 0) text = text.substring(0, annexe);
         Map<String, String> required = new LinkedHashMap<>();
         collect(required, text, "^###\\s+(RG-\\d+)\\s+—\\s+(.+)$", Pattern.MULTILINE);
