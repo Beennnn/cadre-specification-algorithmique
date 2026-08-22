@@ -17,6 +17,14 @@
     produce the coverage report.
   </description>
 
+  <licenses>
+    <license>
+      <name>BSD Zero Clause License</name>
+      <url>https://spdx.org/licenses/0BSD.html</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.release>21</maven.compiler.release>

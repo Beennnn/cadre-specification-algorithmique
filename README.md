@@ -374,3 +374,20 @@ justesse numérique et validité du modèle : **[CADRE §1.3 et §2.9](CADRE.md)
 
 > La seule règle non négociable : **la spécification s'écrit avant le code.** Tout le
 > reste est un outil, pas un règlement — [CADRE.md](CADRE.md) dit comment l'adapter.
+
+---
+
+## Licence
+
+**[0BSD](LICENSE)** — *BSD Zero Clause License*, la moins contraignante des licences
+libres reconnues.
+
+Prenez ce cadre, ses gabarits, ses exemples et ses outils ; adaptez-les à votre domaine,
+renommez-les, intégrez-les à votre référentiel interne, publiez-les ou gardez-les. **Aucune
+attribution n'est requise, aucune condition n'est attachée.**
+
+> Ce choix n'est pas neutre, il découle de l'objet du dépôt. Une méthode ne vaut que si on
+> se l'approprie : une licence qui obligerait à citer la source freinerait exactement ce
+> qu'on cherche — qu'une organisation s'en empare et la fasse sienne.
+
+Même licence que [runtime-xray](https://github.com/Beennnn/runtime-xray).
