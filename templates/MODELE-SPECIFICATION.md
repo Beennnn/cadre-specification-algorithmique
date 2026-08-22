@@ -102,19 +102,43 @@ MODE D'EMPLOI
 
 ### RG-010 — <titre de la règle>
 
+<!-- Le pseudo-langage tient en une trentaine de mots-clés ANGLAIS, tous à
+     l'aide-mémoire de CADRE.md annexe A. Le texte autour reste dans la langue
+     de l'équipe. Remplacez le squelette ci-dessous ; il est là pour montrer la
+     forme, pas pour être conservé. -->
+
 ```
-<pseudo-langage>
+FOR EACH <élément> IN <collection>
+    LET <grandeur_intermediaire> = <expression>
+
+    IF <condition> THEN
+        <grandeur_produite> = <expression>
+    ELSE
+        <grandeur_produite> = <expression>
+    END IF
+END FOR
+
+LET <total> = SUM OF <grandeur_produite> OVER <collection>
 ```
 
 <!-- Une règle = un identifiant stable, jamais réutilisé.
      Ajoutez une note « > Pourquoi » quand le choix n'est pas évident : c'est ce
      qui évite qu'on le remette en cause tous les six mois.
-     Vérifiez : chaque SI a son SINON ; chaque table de décision est complète ;
-     les arrondis, les ex æquo et les valeurs absentes sont traités. -->
+     Vérifiez : chaque IF a son ELSE (C-08) ; chaque table de décision est
+     complète ; ROUND porte ses trois arguments (C-10) ; les ex æquo et les
+     valeurs absentes sont traités. -->
 
 ### RG-020 — <titre>
 
+<!-- Une règle qui rejette : l'erreur porte un identifiant du §9, pas seulement
+     un message — c'est ce qui la rend testable et traçable. -->
+
 ```
+IF <condition de rejet> THEN
+    RAISE ERROR E-XXX-001 "<ce qui est refusé, et pourquoi>"
+ELSE
+    <ce qui se passe dans le cas nominal>
+END IF
 ```
 
 ## 8. Invariants

@@ -51,6 +51,55 @@ Code de retour `1` si un cas est en écart : utilisable en intégration continue
 
 ---
 
+## Du pseudo-code au code, côte à côte
+
+C'est le passage que toute la méthode organise. À gauche ce que le métier écrit, à droite
+ce que le développeur en fait — et rien de plus.
+
+**`RG-020` — arrondi au pas de la balance**, tel qu'il figure au §7 de la
+[spécification](2-SPEC-MAS-001-batch-mass-balance.md) :
+
+```
+FOR EACH component IN components
+    LET steps = ROUND( nominal_mass ÷ balance_step, 0, P-01 )
+    rounded_mass = steps × balance_step
+END FOR
+```
+
+Et son implémentation dans [`MassBalance.java`](4-code/MassBalance.java) :
+
+```java
+/**
+ * RG-020 — arrondi au pas de la balance.
+ * On arrondit un NOMBRE DE PAS, pas une masse : un arrondi à trois décimales
+ * serait faux dès que le pas ne vaut pas 0,001 kg.
+ */
+private static BigDecimal roundedMass(BigDecimal nominal, BigDecimal balanceStep) {
+    BigDecimal steps = nominal.divide(balanceStep, 0, P_01_ROUNDING_MODE);
+    return steps.multiply(balanceStep);
+}
+```
+
+**Ce qui se transporte à l'identique** : la structure du calcul, le nom des grandeurs
+(`nominal_mass` → `nominalMass`, mécaniquement), le paramètre `P-01` — qui reste une
+constante nommée et ne se retrouve jamais en valeur littérale au milieu d'une expression.
+
+**Ce que le développeur ajoute, et qui n'a rien à faire dans la spécification** : le type
+`BigDecimal`, la signature, la visibilité, le fait que ce soit une méthode privée plutôt
+qu'une boucle en ligne.
+
+**Ce qu'il n'a pas le droit de changer** : arrondir le nombre de pas plutôt que la masse.
+C'est écrit dans la règle, c'est justifié juste en dessous, et l'inverser donnerait des
+résultats faux sur toute balance dont le pas n'est pas 0,001 kg — sans qu'aucun des cas de
+référence à pas fin ne le détecte.
+
+> **Le commentaire porte l'identifiant de la règle.** Partant de `RG-020`, on trouve le
+> code ; partant du code, on retrouve la règle **et sa justification**. C'est ce qui
+> permet, six mois plus tard, de répondre à « pourquoi c'est écrit comme ça ? » autrement
+> que par une reconstitution.
+
+---
+
 ## Les trois choses que cet exemple démontre
 
 **1. Le harnais ne contient aucune valeur attendue.** Il rejoue
