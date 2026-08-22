@@ -120,7 +120,7 @@ existent **en double**, Java et Python, et dont un écart serait coûteux à tra
 | **3 — La CI** | `Verifier.java` et `Couverture.java` rendent `1` en cas d'échec. Ils s'ajoutent à la chaîne GitLab comme n'importe quel *linter* | une étape de pipeline |
 | **4 — L'index** | Un régénérateur d'index existe déjà pour les ADR (`bin/dev/regen-adr-index.sh` dans `iris-common`, avec son `adr-drift.yml`). Le même dispositif vaut pour les spécifications | par analogie |
 
-### Ce que je recommande pour démarrer
+### Par où démarrer
 
 **Ne pas commencer par la méthode, commencer par un écart.** S'il existe un cas où
 `iris-service-java` et `iris-service-python` ne donnent pas le même résultat — ou un
