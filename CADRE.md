@@ -22,7 +22,7 @@
 - [7. Mise en place progressive](#7-mise-en-place-progressive)
 - [8. Anti-patterns](#8-anti-patterns)
 - [9. Les exemples : lecture guidée](#9-les-exemples--lecture-guidée)
-- [Annexe A — Aide-mémoire du pseudo-langage](#annexe-a--aide-mémoire-du-pseudo-langage)
+- [Annexe A — Aide-mémoire du pseudo-langage](#annexe-a--aide-mémoire-du-pseudo-langage) → [PSEUDO-LANGAGE.md](PSEUDO-LANGAGE.md)
 
 ---
 
@@ -363,87 +363,22 @@ fort en théorie, effectivement tenu en pratique.
 
 ### 2.2 Le lexique
 
-Le pseudo-langage tient en **une trentaine de mots**. C'est délibéré : un lexique qu'on ne
-peut pas mémoriser en une lecture n'est pas adopté.
+Le pseudo-langage tient en **une trentaine de mots**, tous en anglais, et **la liste est
+fermée**. Il a sa propre page, parce qu'on l'ouvre en écrivant et qu'on ne relit pas un
+document de deux mille lignes pour retrouver un mot-clé :
 
-> **Les mots-clés sont en anglais, la prose dans la langue de l'équipe.** Le pseudo-code
-> et les noms de grandeurs traversent la frontière métier / technique et finissent lus par
-> des développeurs, des relecteurs et des outils qui, eux, travaillent en anglais. Le
-> commentaire qui explique *pourquoi* une règle est ainsi reste, lui, dans la langue où on
-> le pense le mieux.
+> **→ [PSEUDO-LANGAGE.md](PSEUDO-LANGAGE.md)** — les quatre principes, les mots-clés par
+> famille, ce que le lexique n'a délibérément pas, et l'aide-mémoire d'une page.
 
-> **Le lexique est fermé.** Tout mot qui n'y figure pas n'est pas un mot-clé. On n'en
-> ajoute un que si son absence a causé une ambiguïté réelle — jamais par confort.
+Ce qu'il faut en retenir ici, parce que les sections suivantes s'appuient dessus :
 
-#### Structure
-
-| Mot-clé | Rôle |
-|---|---|
-| `DEFINE name(param : Type) : Type` | déclarer une fonction |
-| `INPUTS` · `OUTPUTS` | le contrat |
-| `PRECONDITIONS` · `POSTCONDITIONS` · `INVARIANTS` | ce qu'on exige, garantit, maintient |
-| `LET name = …` | **introduire** un nom — jamais le réaffecter (§2.4) |
-| `RETURN …` | produire le résultat |
-| `RAISE ERROR E-xxx "…"` | signaler une erreur **métier** |
-
-#### Conditions
-
-| Mot-clé | Rôle |
-|---|---|
-| `IF … THEN` · `ELSE IF … THEN` · `ELSE` · `END IF` | l'alternative |
-
-Un `IF` a **toujours** son `ELSE` (`C-08`). Au-delà de deux conditions combinées, on
-n'imbrique pas : on écrit une **table de décision** (§2.6).
-
-#### Itération
-
-| Mot-clé | Rôle |
-|---|---|
-| `FOR EACH x IN c … END FOR` | parcourir sans indice |
-| `WHILE cond … END WHILE` | itérer — **à justifier**, avec critère d'arrêt, maximum d'itérations et comportement en cas de non-convergence (`C-13`) |
-
-#### Ensembles — le style à préférer
-
-| Mot-clé | Rôle |
-|---|---|
-| `SUM` · `MEAN` · `MINIMUM` · `MAXIMUM` · `COUNT` | agréger |
-| `SUM OF x OVER c` | agréger une grandeur sur une collection |
-| `FILTER c WHERE cond` | restreindre |
-| `SORT c BY a ASCENDING \| DESCENDING` | ordonner, avec départage explicite |
-| `GROUP c BY criterion` | partitionner |
-| `THE FIRST` · `THE LAST` | extraire d'une collection **ordonnée** |
-| `THERE EXISTS` · `NONE` · `ALL` | quantifier |
-
-**Chaque fois qu'une opération d'ensemble remplace une boucle, on la préfère** : elle
-décrit un résultat et laisse le développeur libre de son chemin (§2.5).
-
-#### Opérateurs et valeurs
-
-| | |
-|---|---|
-| Arithmétique | `+` `−` `×` `÷` `^` |
-| Comparaison | `=` `≠` `<` `≤` `>` `≥` · `BETWEEN a AND b` |
-| Logique | `AND` · `OR` · `NOT` |
-| Appartenance | `IN` |
-| Valeurs | `TRUE` · `FALSE` · `ABSENT` |
-| Fonction imposée | `ROUND(value, decimals, mode)` |
-
-`ABSENT` désigne **l'absence métier** d'une valeur facultative. Ce n'est pas un `null`
-technique : son traitement est une décision métier, déclarée (`C-12`).
-
-Les fonctions mathématiques usuelles — racine, exponentielle, logarithme, sinus, arc
-tangente — s'écrivent avec leur notation habituelle et ne sont pas des mots-clés.
-
-#### Ce que le lexique n'a pas, et pourquoi
-
-| Absent | À la place | Pourquoi |
-|---|---|---|
-| `SWITCH` / `CASE` | une **table de décision** | elle rend la complétude vérifiable, un `SWITCH` non |
-| `BREAK` · `CONTINUE` · `GOTO` | un critère d'arrêt déclaré | une sortie anticipée cache une condition qui n'a pas été écrite |
-| `NULL` · `NIL` | `ABSENT` | l'absence est une notion métier, pas une valeur technique |
-| `+=` · `++` · toute réaffectation | un **nouveau nom** | l'immutabilité (§2.4) |
-| `TRY` / `CATCH` | `RAISE ERROR` | la spécification dit **quelle erreur métier**, pas comment elle se propage |
-| Fonctions anonymes, pointeurs, généricité, héritage | rien | ce sont des moyens d'implémentation |
+- **Les mots-clés sont en anglais, la prose dans la langue de l'équipe.** Le pseudo-code et
+  les noms de grandeurs traversent la frontière métier / technique ; la justification d'une
+  règle reste dans la langue où on la pense le mieux.
+- **Le lexique est fermé.** Tout mot qui n'y figure pas n'est pas un mot-clé. On n'en ajoute
+  un que si son absence a causé une ambiguïté réelle — jamais par confort.
+- **`ABSENT` n'est pas `null`.** C'est l'absence *métier* d'une valeur facultative, et son
+  traitement est une décision déclarée (`C-12`).
 
 ### 2.3 Types, unités, domaines
 
@@ -911,7 +846,7 @@ deux, et c'est elle seule qui devait être en pseudo-code.
 > **Une boucle explicite est déjà un signal ; deux boucles imbriquées sont presque toujours
 > un défaut de la spécification**, pas une maladresse de rédaction. Elles signifient qu'on
 > a décrit un parcours au lieu d'un résultat. La sortie est presque toujours la même :
-> **nommer une grandeur intermédiaire**, ou employer une opération d'ensemble (§2.2).
+> **nommer une grandeur intermédiaire**, ou employer une opération d'ensemble ([le lexique](PSEUDO-LANGAGE.md)).
 > `C-43` le signale.
 
 **Ce que cette règle n'autorise pas.** La prose remplace la *cérémonie*, jamais la
@@ -1965,55 +1900,8 @@ fallait.
 
 ## Annexe A — Aide-mémoire du pseudo-langage
 
-À imprimer et à garder à côté du clavier. **Tout le lexique tient ici.**
-
-```
-STRUCTURE
-  DEFINE name(param : Type) : Type
-  INPUTS · OUTPUTS · PRECONDITIONS · POSTCONDITIONS · INVARIANTS
-  LET x = ...             (on introduit un nom, on ne le réaffecte jamais)
-  RETURN x
-  RAISE ERROR E-XXX "message"
-
-CONDITIONS          IF ... THEN / ELSE IF ... THEN / ELSE / END IF
-                    (au-delà de deux conditions : table de décision)
-
-ITÉRATION           FOR EACH x IN c ... END FOR
-                    WHILE cond ... END WHILE          (à justifier)
-
-ENSEMBLES           SUM · MEAN · MINIMUM · MAXIMUM · COUNT
-                    SUM OF x OVER c
-                    FILTER c WHERE cond · GROUP c BY criterion
-                    SORT c BY a ASCENDING|DESCENDING
-                    THE FIRST · THE LAST · THERE EXISTS · NONE · ALL
-
-OPÉRATEURS          + − × ÷ ^     = ≠ < ≤ > ≥     BETWEEN a AND b
-                    AND · OR · NOT · IN
-VALEURS             TRUE · FALSE · ABSENT
-IMPOSÉE             ROUND(value, decimals, mode)
-
-TYPES               <nom> : <Famille>(<unité pivot> ▸ <unité d'usage>,
-                                      <précision>, <plage>)
-  Familles (ISO/IEC 11404) : Integer · Real · Scaled · CharacterString
-             Boolean · Enumerated · DateAndTime · TimeInterval
-             Sequence[…] · Array[…] · Table[…]
-
-IDENTIFIANTS
-  FN fonction · SPEC spécification · RG règle · P paramètre · D donnée
-  EX exigence · ET étape · GR groupe · INV invariant · CT cas de test
-  E erreur · Q question · SM suggestion · N notice · C/H contrôle
-  + un UUID par objet, attribué une fois, jamais réattribué
-
-LES 8 QUESTIONS À SE POSER AVANT DE DIRE « C'EST FINI »
-  1. Chaque grandeur porte-t-elle ce qui la rend interprétable — unité, échelle, référentiel ?
-  2. Chaque IF a-t-il son ELSE ? Chaque table est-elle complète ?
-  3. Où arrondit-on, à combien, dans quel sens, et où va le résidu ?
-  4. Que fait-on des ex æquo ?
-  5. Que fait-on d'une donnée absente, nulle, négative, aberrante ?
-  6. L'ordre d'application des règles change-t-il le résultat ? Si oui, est-il écrit ?
-  7. Chaque règle est-elle couverte par au moins un cas de test calculé à la main ?
-  8. Les volumes, la latence, la précision et la rejouabilité sont-ils chiffrés ?
-```
+Tout le lexique tient sur une page, à imprimer et à garder à côté du clavier :
+**[PSEUDO-LANGAGE.md § L'aide-mémoire](PSEUDO-LANGAGE.md#laide-mémoire)**.
 
 ---
 

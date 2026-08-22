@@ -229,7 +229,7 @@ On garde la notion, pas la syntaxe — un invariant s'énonce dans le pseudo-lan
 **Ce qu'on emprunte** : l'idée centrale, qui est celle de toute la méthode — **un langage
 naturel restreint vaut mieux qu'un langage naturel libre**, et la restriction doit être
 écrite, pas implicite. La discipline de nommage du [CADRE.md §2.4](CADRE.md) et le
-caractère **fermé** du lexique (§2.2) en descendent directement.
+caractère **fermé** du lexique ([PSEUDO-LANGAGE.md](PSEUDO-LANGAGE.md)) en descendent directement.
 
 **Ce qu'on écarte** : leur portée et leur coût. SBVR vise les règles déclaratives, pas les
 algorithmes séquentiels, et porte un métamodèle lourd. ACE impose une syntaxe si stricte

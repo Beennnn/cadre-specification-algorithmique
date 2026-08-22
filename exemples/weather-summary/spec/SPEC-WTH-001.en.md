@@ -105,7 +105,7 @@ FrostEpisode :
 ### 7.1 The algorithm, in one piece
 
 This is the whole calculation, in the order the business states it. Every keyword used
-here belongs to the closed lexicon of [CADRE §2.2](../../../CADRE.md).
+here belongs to the closed lexicon of the [pseudo-language](../../../PSEUDO-LANGAGE.md).
 
 ```
 DEFINE summarise_station_day(request) : result

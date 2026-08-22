@@ -61,6 +61,49 @@ choisisse seul le langage, les structures de données et l'architecture.
 
 ---
 
+## Ce que le métier écrit, concrètement
+
+Un extrait réel, pris dans le [relevé d'une station météo](exemples/weather-summary/) — le
+rejet des températures aberrantes :
+
+```
+    WHILE NOT converged AND round_number < P-02
+        LET mean_now = MEAN OF temperature OVER retained
+        LET spread   = STANDARD DEVIATION OF temperature OVER retained
+        LET outliers = FILTER retained WHERE |temperature − mean_now| > P-01 × spread
+
+        IF NONE OF retained IS IN outliers THEN
+            converged = TRUE
+        ELSE
+            retained     = FILTER retained WHERE temperature IS NOT IN outliers
+            round_number = round_number + 1
+        END IF
+    END WHILE
+```
+
+**Ce n'est pas un langage de programmation simplifié : c'est du français discipliné.**
+Une trentaine de mots-clés, tous en anglais, et la liste est **fermée**. Personne n'exécute
+ce texte ; il est lu par des humains, et un script en contrôle la cohérence.
+
+Trois choses s'y voient d'un coup d'œil, et aucune n'est un détail de forme :
+
+- **La boucle est bornée par un paramètre métier** (`P-02`), et ce qui se passe quand la
+  borne est atteinte est écrit — le relevé est publié quand même, étiqueté `SUSPECT`. Sans
+  cette phrase, chaque implémenteur décide pour lui-même.
+- **La borne est stricte** : `>` et non `≥`. Une lecture à exactement `P-01` écarts-types
+  est gardée. La frontière devait tomber d'un côté, et c'est le métier qui l'a choisi.
+- **`STANDARD DEVIATION` n'est pas un mot-clé** : le pseudo-langage ne redéfinit pas les
+  mathématiques. Ce que la spécification doit dire, c'est **laquelle** — ici celle
+  d'échantillon, au diviseur `n − 1`.
+
+| | |
+|---|---|
+| **Les principes et tous les mots-clés** | **[PSEUDO-LANGAGE.md](PSEUDO-LANGAGE.md)** — une page, avec l'aide-mémoire à imprimer |
+| **Un algorithme complet** | [SPEC-WTH-001 §7.1](exemples/weather-summary/spec/SPEC-WTH-001.en.md) — 65 lignes, 33 des 35 éléments du lexique |
+| **Le plus petit, pour commencer** | [la vitesse moyenne d'un trajet](exemples/average-speed/) — deux fonctions, trois règles |
+
+---
+
 ## Les douze étapes
 
 | | L'étape | Où c'est décrit |
@@ -200,6 +243,7 @@ qu'un programme l'a produit, sans l'examiner**.
 
 | | |
 |---|---|
+| **[PSEUDO-LANGAGE.md](PSEUDO-LANGAGE.md)** | **Le pseudo-langage en une page** : les quatre principes, tous les mots-clés par famille, ce qu'il n'a délibérément pas, et l'aide-mémoire |
 | **[CADRE.md](CADRE.md)** | **Le document de référence.** Le principe, la frontière, les faux amis, le pseudo-langage, le contrat, la chaîne de traitement, l'oracle, la gouvernance, les anti-patterns. À lire une fois, en entier |
 | **[guides/](guides/)** | Neuf guides opérationnels, à ouvrir pendant qu'on fait — dont [l'apport de l'IA](guides/9-L-APPORT-DE-L-IA.md), transverse |
 | **[templates/](templates/)** | Les modèles vierges : [spécification](templates/MODELE-SPECIFICATION.md), [fiche de fonction](templates/MODELE-FICHE-FONCTION.md), [fiche de donnée](templates/MODELE-FICHE-DONNEE.md), [glossaire](templates/MODELE-GLOSSAIRE.md), [liste de vérification](templates/CHECKLIST-RELECTURE.md) |

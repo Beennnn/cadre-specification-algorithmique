@@ -113,7 +113,7 @@ FrostEpisode :
 ### 7.1 L'algorithme, en un seul morceau
 
 C'est le calcul entier, dans l'ordre où le métier l'énonce. Tous les mots-clés employés ici
-appartiennent au lexique fermé de [CADRE §2.2](../../../CADRE.md).
+appartiennent au lexique fermé du [pseudo-langage](../../../PSEUDO-LANGAGE.md).
 
 ```
 DEFINE summarise_station_day(request) : result
