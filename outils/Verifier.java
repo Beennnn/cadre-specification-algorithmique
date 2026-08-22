@@ -126,6 +126,17 @@ public class Verifier {
     };
     static final String ANNEXE = "## Annexe — Identités";
 
+    /**
+     * Le fichier dont ce document est la traduction, ou null s'il n'en est pas une.
+     * Déclaré en en-tête : « | **Traduction de** | [fichier](fichier) | ».
+     */
+    static String traductionDe(String texte) {
+        Matcher m = Pattern.compile(
+                "\\|\\s*\\*\\*(?:Traduction de|Translation of)\\*\\*\\s*\\|\\s*"
+                + "(?:\\[[^\\]]*\\]\\()?([^)|\\s]+)").matcher(texte);
+        return m.find() ? m.group(1) : null;
+    }
+
     static String corps(String texte) {
         int i = texte.indexOf(ANNEXE);
         return i < 0 ? texte : texte.substring(0, i);
@@ -389,20 +400,53 @@ public class Verifier {
                         mx.group(1) + " sans " + String.join(", ", manquants));
         }
 
-        // C-28 / C-29 : identités durables
+        // C-28 / C-29 / C-42 : identités durables et traductions
         Map<String, String> table = annexe(texte);
         objets(texte).forEach((ident, nature) -> {
             if (!table.containsKey(ident))
                 constat("ÉCHEC", "C-28", chemin,
                         ident + " (" + nature + ") n'a pas d'identité dans l'annexe");
         });
-        table.forEach((ident, uid) -> {
-            String[] vu = uuidsVus.get(uid);
-            if (vu != null && !(vu[0].equals(chemin.toString()) && vu[1].equals(ident)))
-                constat("ÉCHEC", "C-29", chemin,
-                        "UUID " + uid.substring(0, 8) + " déjà porté par " + vu[1]);
-            uuidsVus.put(uid, new String[]{chemin.toString(), ident});
-        });
+
+        String source = traductionDe(texte);
+        if (source == null) {
+            // C-29 : un UUID ne désigne qu'un objet, dans tout le corpus.
+            table.forEach((ident, uid) -> {
+                String[] vu = uuidsVus.get(uid);
+                if (vu != null && !(vu[0].equals(chemin.toString()) && vu[1].equals(ident)))
+                    constat("ÉCHEC", "C-29", chemin,
+                            "UUID " + uid.substring(0, 8) + " déjà porté par " + vu[1]);
+                uuidsVus.put(uid, new String[]{chemin.toString(), ident});
+            });
+        } else {
+            // C-42 : une traduction n'est PAS un doublon — elle porte délibérément les
+            // mêmes objets. Mais alors elle doit les porter TOUS, avec les mêmes
+            // identités : une traduction dont le jeu d'objets a dérivé est un document
+            // qui dit autre chose que sa source, sans que personne ne s'en aperçoive.
+            Path src = chemin.getParent().resolve(source).normalize();
+            if (!Files.exists(src)) {
+                constat("ÉCHEC", "C-42", chemin,
+                        "traduction de « " + source + " », qui est introuvable");
+            } else {
+                try {
+                    Map<String, String> ref = annexe(Files.readString(src));
+                    for (String ident : new TreeSet<>(ref.keySet()))
+                        if (!table.containsKey(ident))
+                            constat("ÉCHEC", "C-42", chemin,
+                                    ident + " est dans la source mais absent de la traduction");
+                    for (String ident : new TreeSet<>(table.keySet())) {
+                        if (!ref.containsKey(ident))
+                            constat("ÉCHEC", "C-42", chemin,
+                                    ident + " est dans la traduction mais absent de la source");
+                        else if (!ref.get(ident).equals(table.get(ident)))
+                            constat("ÉCHEC", "C-42", chemin,
+                                    ident + " ne porte pas la même identité que dans la source");
+                    }
+                } catch (IOException e) {
+                    constat("ÉCHEC", "C-42", chemin, "source illisible : " + source);
+                }
+            }
+        }
 
         // C-08 / C-10 / C-13 / C-11 : analyse du pseudo-langage
         Matcher mr = Pattern.compile("^###\\s+(RG-\\d+)[^\n]*\n(.*?)(?=\n###\\s|\\Z)",
@@ -720,7 +764,7 @@ public class Verifier {
                 + "%d échec(s), %d avertissement(s)%n",
                 fichiers.size(), specs, echecs, constats.size() - echecs);
         if (constats.isEmpty())
-            System.out.println("Aucun défaut mécanique. 23 des 39 contrôles sont mécanisés ; "
+            System.out.println("Aucun défaut mécanique. 24 des 40 contrôles sont mécanisés ; "
                     + "les seize restants et les contrôles humains H-01 à H-07 relèvent de la relecture.");
         System.exit(echecs > 0 ? 1 : 0);
     }

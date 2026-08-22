@@ -15,7 +15,7 @@ amis.
 | | Document | Ce que l'étape produit | Qui la tient |
 |---|---|---|---|
 | **1** | [Le besoin](1-NEED.md) | Ce que le métier dit, dans ses mots, avant toute formalisation — et la liste des questions qu'il ne tranche pas encore | Métier |
-| **2** | [La spécification](2-SPEC-MAS-001.md) | Chaque question reçoit une réponse numérotée, justifiée et versionnée. Contrat typé, règles, invariants, jeu d'essai calculé à la main | Métier, avec un co-auteur technique |
+| **2** | [La spécification](2-SPEC-MAS-001.en.md) | Chaque question reçoit une réponse numérotée, justifiée et versionnée. Contrat typé, règles, invariants, jeu d'essai calculé à la main | Métier, avec un co-auteur technique |
 | **3** | [Le contrat](3-CONTRACT.md) | Ce qu'un développeur déduit du contrat, et la correspondance vers Java — mécanique, déclarée une fois | Technique |
 | **4** | [Le code](4-code/) | L'implémentation annotée règle par règle, et le harnais qui la qualifie contre les données de référence | Technique |
 | **5** | [Les écarts](5-DEVIATIONS.md) | Le métier juge les écarts au regard de ses tolérances — et décide ce qu'on en fait | Métier, avec le support de la technique |
@@ -57,7 +57,7 @@ C'est le passage que toute la méthode organise. À gauche ce que le métier éc
 ce que le développeur en fait — et rien de plus.
 
 **`RG-020` — arrondi au pas de la balance**, tel qu'il figure au §7 de la
-[spécification](2-SPEC-MAS-001.md) :
+[spécification](2-SPEC-MAS-001.en.md) :
 
 ```
 FOR EACH component IN components

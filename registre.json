@@ -67,7 +67,7 @@
     "identifiant": "CT-06",
     "nature": "cas de test",
     "libelle": "Fractions not adding up to 1",
-    "document": "exemples/mass-balance/2-SPEC-MAS-001.md"
+    "document": "exemples/mass-balance/2-SPEC-MAS-001.en.md"
   },
   {
     "uuid": "0c21b3f5-6dd0-46d4-bc12-cd24d35a5f10",
@@ -130,7 +130,7 @@
     "identifiant": "INV-03",
     "nature": "invariant",
     "libelle": "Every `dispensed_mass` is `≥ 0`. A negative residual cannot make a dose negative — if that happened, `RG-040` should have rejected first.",
-    "document": "exemples/mass-balance/2-SPEC-MAS-001.md"
+    "document": "exemples/mass-balance/2-SPEC-MAS-001.en.md"
   },
   {
     "uuid": "1645cc91-0461-4d1f-9226-2800a352d859",
@@ -158,7 +158,7 @@
     "identifiant": "E-MAS-002",
     "nature": "cas d'erreur",
     "libelle": "The residual exceeds `P-02` balance steps",
-    "document": "exemples/mass-balance/2-SPEC-MAS-001.md"
+    "document": "exemples/mass-balance/2-SPEC-MAS-001.en.md"
   },
   {
     "uuid": "1b4f0d75-6953-45a5-9134-d3e656c3759c",
@@ -186,7 +186,7 @@
     "identifiant": "RG-010",
     "nature": "règle",
     "libelle": "Nominal mass of a component",
-    "document": "exemples/mass-balance/2-SPEC-MAS-001.md"
+    "document": "exemples/mass-balance/2-SPEC-MAS-001.en.md"
   },
   {
     "uuid": "1ffdcc6b-2965-4ac9-a517-25affafc0b44",
@@ -221,28 +221,28 @@
     "identifiant": "EX-01",
     "nature": "exigence",
     "libelle": "The calculation uses **exact decimal arithmetic**, as required by the `Scaled` family in the contract (ISO/IEC 11404). Binary floating point is excluded: 0.1 cannot be represented in it, and `INV-01` requires strict equality",
-    "document": "exemples/mass-balance/2-SPEC-MAS-001.md"
+    "document": "exemples/mass-balance/2-SPEC-MAS-001.en.md"
   },
   {
     "uuid": "292e2c59-db4e-4dcd-b7e1-101cf6d76de0",
     "identifiant": "SPEC-MAS-001",
     "nature": "retiré",
     "libelle": "",
-    "document": "exemples/mass-balance/2-SPEC-MAS-001.md"
+    "document": "exemples/mass-balance/2-SPEC-MAS-001.en.md"
   },
   {
     "uuid": "2c2489c2-702a-46dd-a7cd-1064022ddbd4",
     "identifiant": "RG-020",
     "nature": "règle",
     "libelle": "Rounding to the balance step",
-    "document": "exemples/mass-balance/2-SPEC-MAS-001.md"
+    "document": "exemples/mass-balance/2-SPEC-MAS-001.en.md"
   },
   {
     "uuid": "2c76616f-cdf7-439f-88a6-107cd43b3d24",
     "identifiant": "EX-04",
     "nature": "exigence",
     "libelle": "Nominal masses are kept for 10 years with the batch",
-    "document": "exemples/mass-balance/2-SPEC-MAS-001.md"
+    "document": "exemples/mass-balance/2-SPEC-MAS-001.en.md"
   },
   {
     "uuid": "2cabdb36-4f9e-4af5-8a6e-812b673be478",
@@ -382,7 +382,7 @@
     "identifiant": "P-01",
     "nature": "paramètre",
     "libelle": "Rounding mode for doses",
-    "document": "exemples/mass-balance/2-SPEC-MAS-001.md"
+    "document": "exemples/mass-balance/2-SPEC-MAS-001.en.md"
   },
   {
     "uuid": "4d6f1ab4-7ded-4604-b857-b74f36df9407",
@@ -417,7 +417,7 @@
     "identifiant": "EX-02",
     "nature": "exigence",
     "libelle": "A batch has at most 50 components; the calculation is called at most 200 times per hour",
-    "document": "exemples/mass-balance/2-SPEC-MAS-001.md"
+    "document": "exemples/mass-balance/2-SPEC-MAS-001.en.md"
   },
   {
     "uuid": "52d43b49-e236-4a5c-9835-ebe75ef1aecf",
@@ -480,7 +480,7 @@
     "identifiant": "INV-02",
     "nature": "invariant",
     "libelle": "Every `dispensed_mass` is an integer multiple of `balance_step`.",
-    "document": "exemples/mass-balance/2-SPEC-MAS-001.md"
+    "document": "exemples/mass-balance/2-SPEC-MAS-001.en.md"
   },
   {
     "uuid": "6573a577-9067-4cd6-861d-b257b71803d5",
@@ -529,7 +529,7 @@
     "identifiant": "E-MAS-001",
     "nature": "cas d'erreur",
     "libelle": "The target fractions do not add up to exactly 1",
-    "document": "exemples/mass-balance/2-SPEC-MAS-001.md"
+    "document": "exemples/mass-balance/2-SPEC-MAS-001.en.md"
   },
   {
     "uuid": "6a2ac0bf-7a08-4a12-a6ff-e4d1d6c6ca33",
@@ -641,7 +641,7 @@
     "identifiant": "RG-040",
     "nature": "règle",
     "libelle": "Acceptability of the residual",
-    "document": "exemples/mass-balance/2-SPEC-MAS-001.md"
+    "document": "exemples/mass-balance/2-SPEC-MAS-001.en.md"
   },
   {
     "uuid": "8416d9a7-cdb6-4116-bc37-a9538d3ff520",
@@ -704,7 +704,7 @@
     "identifiant": "Q-01",
     "nature": "question",
     "libelle": "Should a residual of several steps be spread over several components, instead of going entirely to the largest one?",
-    "document": "exemples/mass-balance/2-SPEC-MAS-001.md"
+    "document": "exemples/mass-balance/2-SPEC-MAS-001.en.md"
   },
   {
     "uuid": "944cf16e-090c-4191-a688-c1696c65cad4",
@@ -746,7 +746,7 @@
     "identifiant": "CT-02",
     "nature": "cas de test",
     "libelle": "Negative residual",
-    "document": "exemples/mass-balance/2-SPEC-MAS-001.md"
+    "document": "exemples/mass-balance/2-SPEC-MAS-001.en.md"
   },
   {
     "uuid": "9e5fa8d2-ece3-4239-a3f5-6e034f7cbcfd",
@@ -760,14 +760,14 @@
     "identifiant": "INV-04",
     "nature": "invariant",
     "libelle": "The result is **invariant under permutation** of the component list: reordering the input changes no weighed mass. This is what the tie-break rule of `RG-050` guarantees.",
-    "document": "exemples/mass-balance/2-SPEC-MAS-001.md"
+    "document": "exemples/mass-balance/2-SPEC-MAS-001.en.md"
   },
   {
     "uuid": "9ed8d49a-3e8a-4e33-9dae-78541e2c80e1",
     "identifiant": "CT-07",
     "nature": "cas de test",
     "libelle": "Duplicate identifiers",
-    "document": "exemples/mass-balance/2-SPEC-MAS-001.md"
+    "document": "exemples/mass-balance/2-SPEC-MAS-001.en.md"
   },
   {
     "uuid": "a2f67f9d-5d0f-4b38-b3a6-afd875065ea6",
@@ -865,7 +865,7 @@
     "identifiant": "CT-01",
     "nature": "cas de test",
     "libelle": "Positive residual, single largest fraction",
-    "document": "exemples/mass-balance/2-SPEC-MAS-001.md"
+    "document": "exemples/mass-balance/2-SPEC-MAS-001.en.md"
   },
   {
     "uuid": "b4ee9744-60d3-4131-86d6-bd96fe9c3416",
@@ -879,7 +879,7 @@
     "identifiant": "CT-03",
     "nature": "cas de test",
     "libelle": "Tie on the largest fraction",
-    "document": "exemples/mass-balance/2-SPEC-MAS-001.md"
+    "document": "exemples/mass-balance/2-SPEC-MAS-001.en.md"
   },
   {
     "uuid": "b6a9cb5c-3772-4221-bd2b-81426d0491aa",
@@ -921,7 +921,7 @@
     "identifiant": "CT-05",
     "nature": "cas de test",
     "libelle": "Residual exactly at the bound",
-    "document": "exemples/mass-balance/2-SPEC-MAS-001.md"
+    "document": "exemples/mass-balance/2-SPEC-MAS-001.en.md"
   },
   {
     "uuid": "bebe83a6-bc21-4e69-9933-58259b8e74b1",
@@ -949,14 +949,14 @@
     "identifiant": "Q-02",
     "nature": "question",
     "libelle": "Should the alphabetical tie-break give way to a priority order declared per component?",
-    "document": "exemples/mass-balance/2-SPEC-MAS-001.md"
+    "document": "exemples/mass-balance/2-SPEC-MAS-001.en.md"
   },
   {
     "uuid": "c1c93cb0-ddf8-40e4-820d-e702b518f1fe",
     "identifiant": "E-MAS-003",
     "nature": "cas d'erreur",
     "libelle": "Two components carry the same `component_id`",
-    "document": "exemples/mass-balance/2-SPEC-MAS-001.md"
+    "document": "exemples/mass-balance/2-SPEC-MAS-001.en.md"
   },
   {
     "uuid": "c31484ce-4b11-467b-9cf5-8d3eaf5dd241",
@@ -991,7 +991,7 @@
     "identifiant": "RG-050",
     "nature": "règle",
     "libelle": "Allocation of the residual",
-    "document": "exemples/mass-balance/2-SPEC-MAS-001.md"
+    "document": "exemples/mass-balance/2-SPEC-MAS-001.en.md"
   },
   {
     "uuid": "c8a555a6-878d-4f81-afce-2434795a0886",
@@ -1005,7 +1005,7 @@
     "identifiant": "CT-08",
     "nature": "cas de test",
     "libelle": "Target mass not a multiple of the step",
-    "document": "exemples/mass-balance/2-SPEC-MAS-001.md"
+    "document": "exemples/mass-balance/2-SPEC-MAS-001.en.md"
   },
   {
     "uuid": "cabb4a7c-3cc6-4b7f-840b-fa14ee4d0f4a",
@@ -1040,7 +1040,7 @@
     "identifiant": "P-02",
     "nature": "paramètre",
     "libelle": "Maximum tolerated residual, in balance steps",
-    "document": "exemples/mass-balance/2-SPEC-MAS-001.md"
+    "document": "exemples/mass-balance/2-SPEC-MAS-001.en.md"
   },
   {
     "uuid": "cdc085b1-e472-43e3-be7b-2d28930aeed1",
@@ -1124,7 +1124,7 @@
     "identifiant": "INV-01",
     "nature": "invariant",
     "libelle": "`SUM OF dispensed_mass OVER dispensed = target_batch_mass`, **exactly**. This is mass conservation: it tolerates no gap, not even one step.",
-    "document": "exemples/mass-balance/2-SPEC-MAS-001.md"
+    "document": "exemples/mass-balance/2-SPEC-MAS-001.en.md"
   },
   {
     "uuid": "dc39074f-2f6b-4c19-a81b-9fc68185e56d",
@@ -1145,7 +1145,7 @@
     "identifiant": "CT-04",
     "nature": "cas de test",
     "libelle": "Zero residual",
-    "document": "exemples/mass-balance/2-SPEC-MAS-001.md"
+    "document": "exemples/mass-balance/2-SPEC-MAS-001.en.md"
   },
   {
     "uuid": "e00a269d-7baf-4009-8412-13e4ccb848e8",
@@ -1236,7 +1236,7 @@
     "identifiant": "RG-030",
     "nature": "règle",
     "libelle": "Residual",
-    "document": "exemples/mass-balance/2-SPEC-MAS-001.md"
+    "document": "exemples/mass-balance/2-SPEC-MAS-001.en.md"
   },
   {
     "uuid": "ed9194c2-f465-458b-a68a-5bc2461be15d",
@@ -1257,7 +1257,7 @@
     "identifiant": "E-MAS-004",
     "nature": "cas d'erreur",
     "libelle": "`target_batch_mass` is not a multiple of `balance_step`",
-    "document": "exemples/mass-balance/2-SPEC-MAS-001.md"
+    "document": "exemples/mass-balance/2-SPEC-MAS-001.en.md"
   },
   {
     "uuid": "f25aa050-8a85-4e55-b202-b31cb0a683b8",
@@ -1271,7 +1271,7 @@
     "identifiant": "EX-03",
     "nature": "exigence",
     "libelle": "The calculation is **replayable identically**: same inputs, same masses, indefinitely. No dependency on the clock, on reading order, or on randomness",
-    "document": "exemples/mass-balance/2-SPEC-MAS-001.md"
+    "document": "exemples/mass-balance/2-SPEC-MAS-001.en.md"
   },
   {
     "uuid": "f278d30e-0fd0-4d13-a1d8-fcbce08fde09",

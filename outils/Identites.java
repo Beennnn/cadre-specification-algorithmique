@@ -68,6 +68,17 @@ public class Identites {
         return trouves;
     }
 
+    /**
+     * Le fichier dont ce document est la traduction, ou null. Une traduction porte
+     * délibérément les mêmes objets que sa source : elle n'entre donc pas au registre,
+     * qui recense les objets une fois et une seule. C'est C-42, côté vérificateur, qui
+     * garantit qu'elle n'a pas dérivé.
+     */
+    static boolean estUneTraduction(String texte) {
+        return Pattern.compile("\\|\\s*\\*\\*(?:Traduction de|Translation of)\\*\\*\\s*\\|")
+                .matcher(texte).find();
+    }
+
     static LinkedHashMap<String, String> annexeExistante(String texte) {
         LinkedHashMap<String, String> r = new LinkedHashMap<>();
         int i = texte.indexOf(ANNEXE);
@@ -156,6 +167,7 @@ public class Identites {
         }
         for (Path chemin : fichiers) {
             String texte = Files.readString(chemin);
+            if (estUneTraduction(texte)) continue;
             Map<String, String> table = annexeExistante(texte);
             Map<String, Objet> natures = new HashMap<>();
             for (Objet o : objets(texte)) natures.put(o.identifiant(), o);

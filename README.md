@@ -210,7 +210,7 @@ qu'un programme l'a produit, sans l'examiner**.
 Il lit les spécifications du dépôt et rend deux services : il **contrôle**, et il
 **donne à voir**.
 
-**Il contrôle** — 23 des 39 règles du catalogue, réparties en quatre familles :
+**Il contrôle** — 24 des 40 règles du catalogue, réparties en quatre familles :
 
 | Famille | Exemples de ce qu'il attrape |
 |---|---|
@@ -295,7 +295,7 @@ résolution finie — assez petit pour être lu en entier, assez piégeux pour p
 amis.
 
 [Le besoin](exemples/mass-balance/1-NEED.md) → [la
-spécification](exemples/mass-balance/2-SPEC-MAS-001.md) → [le
+spécification](exemples/mass-balance/2-SPEC-MAS-001.en.md) → [le
 contrat](exemples/mass-balance/3-CONTRACT.md) → [le
 code](exemples/mass-balance/4-code/) → [les
 écarts](exemples/mass-balance/5-DEVIATIONS.md)
@@ -338,7 +338,7 @@ complète](exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md)
 **Deux vignettes** complètent l'illustration, gardées parce qu'elles aboutissent à des
 conclusions techniques **opposées** à partir de la même méthode :
 
-| | [Le bilan de masse d'un lot](exemples/mass-balance/2-SPEC-MAS-001.md) | [Le refroidissement d'une boisson](exemples/SPEC-THM-001-refroidissement.md) | [L'autonomie d'un véhicule](exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md) |
+| | [Le bilan de masse d'un lot](exemples/mass-balance/2-SPEC-MAS-001.en.md) | [Le refroidissement d'une boisson](exemples/SPEC-THM-001-refroidissement.md) | [L'autonomie d'un véhicule](exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md) |
 |---|---|---|---|
 | Exigence d'exactitude | exacte au centime | tolérance de 10⁻⁶ | reproductibilité de 10⁻⁹ entre deux implémentations |
 | **Type numérique qui en découle** | **décimal exact obligatoire** | **double précision confortable** | **double précision indispensable** |

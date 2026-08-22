@@ -61,5 +61,5 @@ be decided**. That difference is the whole method.
 
 ---
 
-→ Next step: [2 — the specification](2-SPEC-MAS-001.md), where each question above gets a
+→ Next step: [2 — the specification](2-SPEC-MAS-001.en.md), where each question above gets a
 written, numbered and justified answer.

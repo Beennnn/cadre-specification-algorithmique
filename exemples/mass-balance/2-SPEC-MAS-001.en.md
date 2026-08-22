@@ -165,7 +165,7 @@ produced upstream, `C-36` a quantity produced that nobody uses.
 | `ET-05` Allocation | `rounded_mass`, `residual`, `residual_is_acceptable`, `target_mass_fraction`, `component_id` | `dispensed_mass` | `RG-050` |
 
 ```bash
-java outils/Verifier.java --chaine exemples/mass-balance/2-SPEC-MAS-001.md
+java outils/Verifier.java --chaine exemples/mass-balance/2-SPEC-MAS-001.en.md
 ```
 
 From this table the tool derives **who creates and who uses** each quantity, the

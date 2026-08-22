@@ -296,6 +296,29 @@ qui réintroduit exactement ce que la méthode veut sortir des mains du métier.
 > *specification by example*, les invariants testables des tests de propriété, les unités
 > du SI et du GUM. On garde la règle, on laisse le métamodèle et l'outillage.
 
+#### Deux langues, une seule version qui fait foi
+
+Une spécification circule : elle est lue par des développeurs, des relecteurs et des outils
+qui, souvent, ne travaillent pas dans la langue de l'équipe métier. D'où une règle simple :
+
+| | |
+|---|---|
+| **La spécification** | existe en **deux versions**, `<nom>.en.md` et `<nom>.fr.md` |
+| **Celle qui fait foi** | la version **anglaise**. C'est elle que le code suit, celle que les identifiants et le pseudo-langage emploient, et celle que les outils vérifient |
+| **La traduction** | déclare sa source en en-tête : `\| **Traduction de** \| [fichier](fichier) \|`. Elle sert à la relecture métier dans la langue où l'on pense le mieux |
+| **Tout le reste** | jeu de données, code, tests, rapports de test : **en anglais uniquement**. Ce sont des artefacts d'exécution, pas des documents de relecture — les dupliquer serait créer deux vérités |
+
+> **Une traduction n'est pas un doublon, et ce n'est pas non plus un texte libre.** Elle
+> porte **exactement les mêmes objets identifiés que sa source, avec les mêmes identités
+> durables** — mêmes `RG-xxx`, mêmes `P-xx`, mêmes UUID. `C-42` le vérifie
+> mécaniquement : une règle manquante d'un côté, un paramètre en trop de l'autre, et le
+> contrôle échoue.
+>
+> Sans ce contrôle, le risque est connu et silencieux : les deux versions divergent
+> lentement, chacune est relue par un public différent, et **personne ne sait plus laquelle
+> dit vrai**. Déclarer laquelle fait foi ne suffit pas ; il faut que la dérive soit
+> détectable.
+
 #### Ce sur quoi le lexique s'adosse
 
 Écarter ces langages ne veut pas dire **inventer**. Un lexique inventé de bout en bout
@@ -456,7 +479,7 @@ domaine, et c'est elle qui dit au développeur quoi instancier :
 
 > **`Scaled` est le cas qui rapporte le plus.** ISO/IEC 11404 distingue `Real` — une
 > approximation — de `Scaled` — un rationnel à échelle décimale fixe, **exact**. C'est
-> exactement la distinction que réclame [SPEC-MAS-001](exemples/mass-balance/2-SPEC-MAS-001.md),
+> exactement la distinction que réclame [SPEC-MAS-001](exemples/mass-balance/2-SPEC-MAS-001.en.md),
 > dont l'invariant de conservation exige une égalité stricte que le binaire flottant ne
 > peut pas tenir. Écrire `Scaled` plutôt que « décimal exact, attention au flottant »,
 > c'est remplacer une recommandation par un type.
@@ -1789,7 +1812,7 @@ domaines opposés, parce que **la même méthode y conduit à des conclusions te
 contraires** — ce qui est la meilleure preuve que c'est bien la spécification qui décide,
 et non l'habitude du développeur.
 
-| | [SPEC-MAS-001](exemples/mass-balance/2-SPEC-MAS-001.md) — discret et exact | [SPEC-THM-001](exemples/SPEC-THM-001-refroidissement.md) — continu et approché |
+| | [SPEC-MAS-001](exemples/mass-balance/2-SPEC-MAS-001.en.md) — discret et exact | [SPEC-THM-001](exemples/SPEC-THM-001-refroidissement.md) — continu et approché |
 |---|---|---|
 | Le calcul | Le montant à payer d'une commande | La température d'une boisson qui refroidit |
 | Grandeurs | Montants, taux, quantités | Températures, durées, masses |
