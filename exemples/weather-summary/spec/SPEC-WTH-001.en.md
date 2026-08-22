@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Identifier** | SPEC-WTH-001 |
-| **Version** | 1.0.0 |
+| **Version** | 1.1.0 |
 | **Status** | Approved |
 | **Business approver** | Observation network manager |
 | **Technical co-author** | Climate data team |
@@ -270,6 +270,14 @@ max_temperature  = MAXIMUM OF temperature OVER retained
 Only the published mean is rounded. The minimum and the maximum are readings, and a reading
 is published as it was measured.
 
+> **The published mean is computed in exact decimal arithmetic.** It is the one quantity
+> here that a rounding decision applies to, and a rounding decision taken on a number a
+> hair off the tie goes the wrong way: a true mean of 0.25 accumulated in binary floating
+> point can land at 0.2500000000000001, which `HALF_EVEN` sends to 0.3 instead of 0.2.
+> Readings carry one decimal, so their sum is exact in decimal and the division rounds
+> correctly by construction. The statistics of `RG-030` are **not** concerned: they feed a
+> comparison against a threshold, not a published number. See `EX-01`.
+
 > **No tie-break is needed here, and that is worth stating.** `MINIMUM` and `MAXIMUM` yield
 > a **value**, not a chosen reading: if three readings share the lowest temperature, the
 > minimum is that temperature, whichever one we look at. A tie-break would only be needed
@@ -318,13 +326,26 @@ The table is complete: the three combinations cover every possible case, and non
 
 | Rule | Covered by |
 |---|---|
-| `RG-005` | CT-01, CT-02, CT-04 |
+| `RG-005` | CT-01, CT-02, CT-04, CT-07 |
 | `RG-010` | CT-01, CT-02, CT-03 |
 | `RG-020` | CT-03 |
-| `RG-030` | CT-01, CT-02, CT-04 |
-| `RG-040` | CT-01, CT-02, CT-04 |
+| `RG-030` | CT-01, CT-02, CT-04, CT-07 |
+| `RG-040` | CT-01, CT-02, CT-04, CT-07 |
 | `RG-050` | CT-01, CT-02 |
 | `RG-060` | CT-01 (`ACCEPTABLE`), CT-02 (`GOOD`), CT-04 (`SUSPECT`) |
+
+Each parameter must also be **arbitrated** by at least one case — one whose published
+result would change if the parameter changed. Stating that a case "covers `RG-040`" says
+nothing about whether it decides `P-04`:
+
+| Parameter | Arbitrated by |
+|---|---|
+| `P-01` rejection factor | CT-01, CT-04 |
+| `P-02` maximum rounds | CT-04 |
+| `P-03` minimum readings | CT-03 |
+| `P-04` rounding mode | **CT-07 alone** |
+| `P-05` published decimals | CT-01, CT-02, CT-04, CT-07 |
+| `P-06` frost threshold | CT-01, CT-02, CT-04, CT-07 |
 
 ---
 
@@ -409,23 +430,80 @@ Rejected by `E-WTH-003`, **before** any statistic is computed.
 
 ### CT-04 — Non-convergence
 
-Twelve readings whose values are 0, 1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024 °C, clipped
-to the physical range then re-expressed within it. Each round discards exactly the largest
-value, and five rounds are not enough.
+Twelve hourly readings, all `VALID` and all inside the physical range:
+
+| Time | 00:00 | 01:00 | 02:00 | 03:00 | 04:00 | 05:00 | 06:00 | 07:00 | 08:00 | 09:00 | 10:00 | 11:00 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| °C | 0.0 | 0.1 | 0.1 | 0.2 | 0.4 | 0.8 | 1.6 | 3.2 | 6.4 | 12.8 | 25.6 | 51.2 |
+
+Each round discards exactly the largest value, and five rounds are not enough:
 
 | Round | Mean | Deviation | Discarded |
 |---|---|---|---|
-| 1 | 170.583 | 308.798 | 1024 |
-| 2 | 93.000 | 159.495 | 512 |
-| 3 | 51.100 | 82.509 | 256 |
-| 4 | 28.333 | 42.749 | 128 |
-| 5 | 15.875 | 22.184 | 64 |
+| 1 | 8.533 | 15.437 | 51.2 |
+| 2 | 4.655 | 7.972 | 25.6 |
+| 3 | 2.560 | 4.122 | 12.8 |
+| 4 | 1.422 | 2.134 | 6.4 |
+| 5 | 0.800 | 1.105 | 3.2 |
 
 After `P-02` = 5 rounds the process has not converged. The summary **is still published**,
-on the 7 remaining readings, with `quality_label` = **`SUSPECT`**.
+on the 7 remaining readings:
+
+| Output | Value |
+|---|---|
+| `retained_count` | **7** · `rejected_count` **5** |
+| `mean_temperature` | **0.5 °C** |
+| `min_temperature` | **0.0 °C** · `max_temperature` **1.6 °C** |
+| `frost_episodes` | **none** — no reading is strictly below 0.0 °C |
+| `quality_label` | **`SUSPECT`** |
 
 **This is the case that documents the loop's exit.** Without it, nobody would know what
 happens when the iteration runs out — and every implementer would decide for themselves.
+
+> **The values are a doubling sequence, and they stay inside `−90 .. +60`.** The first
+> version of this case used 0, 1, 2, … 1024 °C, which `RG-010` would have discarded before
+> `RG-030` ever saw them: the rounds it published were arithmetically correct and could not
+> occur. The sequence is scaled by a tenth instead, which changes none of the round
+> structure — the clipping compares deviations to a multiple of the deviation, so it is
+> invariant under scale.
+
+### CT-05 — Two readings at the same instant
+
+Seven readings, two of them at 00:00. Rejected by `E-WTH-001`: with two readings sharing an
+instant, *the first of a frost run* in `RG-050` designates two different readings, and the
+rule stops being a rule.
+
+### CT-06 — A reading from another day
+
+Seven readings on 2026-01-15, the last one dated 2026-01-16 at 00:00. Rejected by
+`E-WTH-002`: the summary would describe two days while claiming to describe one.
+
+### CT-07 — A mean exactly on the half
+
+| Time | 00:00 | 01:00 | 02:00 | 03:00 | 04:00 | 05:00 | 06:00 | 07:00 |
+|---|---|---|---|---|---|---|---|---|
+| °C | 0.0 | 0.1 | 0.2 | 0.3 | 0.4 | 0.3 | 0.2 | 0.5 |
+
+Nothing is discarded — the round converges immediately. The eight readings sum to 2.0 °C,
+so the mean is **exactly 0.25 °C**, on the tie.
+
+| Output | Value |
+|---|---|
+| `retained_count` | **8** · `rejected_count` **0** |
+| `mean_temperature` | **0.2 °C** |
+| `min_temperature` | **0.0 °C** · `max_temperature` **0.5 °C** |
+| `frost_episodes` | **none** |
+| `quality_label` | **`GOOD`** |
+
+**This is the only case where `P-04` decides anything.** `HALF_EVEN` publishes 0.2;
+`HALF_UP` would publish 0.3. Every other case has a mean that no change of rounding mode
+moves.
+
+> **And it is the case that put `EX-01` in question.** With the mean accumulated in double
+> precision, this input published 0.2 or 0.3 **depending on the order the readings arrived
+> in** — a plain violation of `INV-04`, found by the permutation property and by nothing
+> else. Double precision is enough for the statistics; it is not enough for a number that
+> gets rounded. `EX-01` says so since v1.1.0, and `RG-040` says what to do about it.
 
 ### Provenance and validation
 
@@ -433,7 +511,8 @@ happens when the iteration runs out — and every implementer would decide for t
 |---|---|
 | **Provenance** | Rounds recomputed step by step in exact arithmetic, independently of any implementation |
 | **How they were examined** | Each round was recomputed: mean, sample deviation with divisor `n − 1`, threshold, discarded set. The frost episodes were checked reading by reading against the strict `<` bound |
-| **What the examination produced** | CT-04 was **built** to make the loop run out: no natural dataset did it, and without it the non-convergence branch of `RG-060` was covered by nothing |
+| **What the examination produced** | CT-04 was **built** to make the loop run out: no natural dataset did it, and without it the non-convergence branch of `RG-060` was covered by nothing. CT-05, CT-06 and CT-07 were added in v1.1.0: the first two because `E-WTH-001` and `E-WTH-002` were stated and exercised by no case, the third because no case arbitrated `P-04` — and because building it exposed a defect in `EX-01` |
+| **One document per case** | [`../tests/`](../tests/) — what each case exists to catch, and what it would let through |
 | **Approved by** | Observation network manager, 2026-08-22 |
 
 ---
@@ -442,7 +521,7 @@ happens when the iteration runs out — and every implementer would decide for t
 
 | Id | Statement | Source | Owner | Verification |
 |---|---|---|---|---|
-| <a id="ex-01"></a>`EX-01` | Double precision is enough: readings carry one decimal and an uncertainty of ±0.2 °C, far above any numerical noise | Sensor specification | IT architecture | Design review |
+| <a id="ex-01"></a>`EX-01` | Double precision is enough **for the statistics** — readings carry one decimal and an uncertainty of ±0.2 °C, far above any numerical noise. It is **not** enough for the published mean: that number is rounded, and a rounding decision taken on a value a hair off the tie goes the wrong way. `mean_temperature` is computed in exact decimal arithmetic (`RG-040`) | Sensor specification, and the defect found on `CT-07` | IT architecture | Design review, and the permutation property `INV-04` |
 | <a id="ex-02"></a>`EX-02` | 1 440 readings per station per day, 3 000 stations, one summary per station per day | Network sizing | Operations manager | Measurement in operation |
 | <a id="ex-03"></a>`EX-03` | The summary is **replayable identically** from the archived readings, for 30 years | Climate archiving `CLI-ARC-1` | Quality assurance | Annual replay against archive |
 
@@ -458,6 +537,7 @@ happens when the iteration runs out — and every implementer would decide for t
 | Version | Date | Change | Impact on results | Notice |
 |---|---|---|---|---|
 | 1.0.0 | 2026-08-22 | Initial version | — | — |
+| 1.1.0 | 2026-08-22 | `CT-05`, `CT-06`, `CT-07` added. `CT-04` restated with data that `RG-010` does not discard. `EX-01` amended and `RG-040` made explicit: the published mean is computed in exact decimal arithmetic | **A mean that fell exactly on the tie could be published as either neighbour**, depending on the order the readings arrived in. That is now fixed and `INV-04` holds. No other published value changes | Implementers: the mean must be accumulated in exact decimal, not in double. Rerun the reference set — an implementation summing in double fails `CT-07` under reordering |
 
 ## Annexe — Identités
 
@@ -477,13 +557,16 @@ happens when the iteration runs out — and every implementer would decide for t
 | `CT-02` | `a6b6ce38-a651-4269-bdb2-3bea51583d09` | cas de test | No outlier |
 | `CT-03` | `4784e57e-41d9-4424-bd92-2d7fa1cf0152` | cas de test | Not enough usable readings |
 | `CT-04` | `45f29eca-fd22-4d17-8b9d-e9817c3f52f8` | cas de test | Non-convergence |
+| `CT-05` | `45f1832b-1beb-40a2-a8b2-c88c2449d8ec` | cas de test | Two readings at the same instant |
+| `CT-06` | `2a66100f-29c1-4056-92af-82321c933d82` | cas de test | A reading from another day |
+| `CT-07` | `658ca7f7-95c5-4968-a548-68297db0fd34` | cas de test | A mean exactly on the half |
 | `P-01` | `8abfb819-5321-4a6a-a86b-acb6e3767455` | paramètre | Outlier rejection factor |
 | `P-02` | `66f9866a-bd25-4d1c-9bdc-f2a97a1c63af` | paramètre | Maximum rejection rounds |
 | `P-03` | `fa573126-d4e0-433c-8836-d48b19b123dd` | paramètre | Minimum readings for a summary |
 | `P-04` | `ab868262-f8a7-4149-a84a-f316b2d26c6f` | paramètre | Rounding mode of the published mean |
 | `P-05` | `5eb6502c-2198-41c1-8161-4eb05309c758` | paramètre | Decimals of the published mean |
 | `P-06` | `8b586410-483c-49d4-b1ba-3c78341b8593` | paramètre | Frost threshold |
-| `EX-01` | `f9ce6fbe-3f85-4bb0-8a4d-f7ec0d535568` | exigence | Double precision is enough: readings carry one decimal and an uncertai |
+| `EX-01` | `f9ce6fbe-3f85-4bb0-8a4d-f7ec0d535568` | exigence | Double precision is enough **for the statistics** — readings carry one |
 | `EX-02` | `245000d6-c226-4d14-b56a-8ff7be643e9c` | exigence | 1 440 readings per station per day, 3 000 stations, one summary per st |
 | `EX-03` | `745def66-32a8-4ca1-a2b5-6ba8acdb612b` | exigence | The summary is **replayable identically** from the archived readings,  |
 | `INV-01` | `53654d26-cf42-4131-9b28-a5eb4a831652` | invariant | `retained_count + rejected_count = COUNT OF usable`. No reading disapp |

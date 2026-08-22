@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Identifiant** | SPEC-WTH-001 |
-| **Version** | 1.0.0 |
+| **Version** | 1.1.0 |
 | **Statut** | Validée |
 | **Valideur métier** | Responsable du réseau d'observation |
 | **Co-auteur technique** | Équipe données climatiques |
@@ -278,6 +278,15 @@ max_temperature  = MAXIMUM OF temperature OVER retained
 Seule la moyenne publiée est arrondie. Le minimum et le maximum sont des lectures, et une
 lecture se publie telle qu'elle a été mesurée.
 
+> **La moyenne publiée se calcule en arithmétique décimale exacte.** C'est ici la seule
+> grandeur à laquelle s'applique une décision d'arrondi, et une décision d'arrondi prise
+> sur un nombre à un cheveu de l'égalité part du mauvais côté : une moyenne vraie de 0,25
+> accumulée en binaire flottant peut atterrir à 0,2500000000000001, que `HALF_EVEN` envoie
+> sur 0,3 au lieu de 0,2. Les lectures portent une décimale : leur somme est exacte en
+> décimal et la division arrondit juste par construction. Les statistiques de `RG-030` ne
+> sont **pas** concernées : elles alimentent une comparaison à un seuil, pas un nombre
+> publié. Voir `EX-01`.
+
 > **Aucun départage n'est nécessaire ici, et il vaut la peine de le dire.** `MINIMUM` et
 > `MAXIMUM` rendent une **valeur**, pas une lecture choisie : si trois lectures partagent la
 > température la plus basse, le minimum est cette température, quelle que soit celle qu'on
@@ -328,13 +337,26 @@ recouvre une autre.
 
 | Règle | Couverte par |
 |---|---|
-| `RG-005` | CT-01, CT-02, CT-04 |
+| `RG-005` | CT-01, CT-02, CT-04, CT-07 |
 | `RG-010` | CT-01, CT-02, CT-03 |
 | `RG-020` | CT-03 |
-| `RG-030` | CT-01, CT-02, CT-04 |
-| `RG-040` | CT-01, CT-02, CT-04 |
+| `RG-030` | CT-01, CT-02, CT-04, CT-07 |
+| `RG-040` | CT-01, CT-02, CT-04, CT-07 |
 | `RG-050` | CT-01, CT-02 |
 | `RG-060` | CT-01 (`ACCEPTABLE`), CT-02 (`GOOD`), CT-04 (`SUSPECT`) |
+
+Chaque paramètre doit en outre être **arbitré** par au moins un cas — un cas dont le
+résultat publié changerait si le paramètre changeait. Dire qu'un cas « couvre `RG-040` » ne
+dit rien de ce qu'il décide de `P-04` :
+
+| Paramètre | Arbitré par |
+|---|---|
+| `P-01` facteur de rejet | CT-01, CT-04 |
+| `P-02` nombre maximal de tours | CT-04 |
+| `P-03` nombre minimal de lectures | CT-03 |
+| `P-04` mode d'arrondi | **CT-07 seul** |
+| `P-05` décimales publiées | CT-01, CT-02, CT-04, CT-07 |
+| `P-06` seuil de gel | CT-01, CT-02, CT-04, CT-07 |
 
 ---
 
@@ -419,23 +441,79 @@ Huit lectures, mais cinq signalées `FAULTY` et une `ABSENT` : deux exploitables
 
 ### CT-04 — Non-convergence
 
-Douze lectures valant 0, 1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024 °C, ramenées dans la
-plage physique. Chaque tour écarte exactement la plus grande valeur, et cinq tours n'y
-suffisent pas.
+Douze lectures horaires, toutes `VALID` et toutes dans la plage physique :
+
+| Heure | 00:00 | 01:00 | 02:00 | 03:00 | 04:00 | 05:00 | 06:00 | 07:00 | 08:00 | 09:00 | 10:00 | 11:00 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| °C | 0,0 | 0,1 | 0,1 | 0,2 | 0,4 | 0,8 | 1,6 | 3,2 | 6,4 | 12,8 | 25,6 | 51,2 |
+
+Chaque tour écarte exactement la plus grande valeur, et cinq tours n'y suffisent pas :
 
 | Tour | Moyenne | Écart-type | Écartée |
 |---|---|---|---|
-| 1 | 170,583 | 308,798 | 1024 |
-| 2 | 93,000 | 159,495 | 512 |
-| 3 | 51,100 | 82,509 | 256 |
-| 4 | 28,333 | 42,749 | 128 |
-| 5 | 15,875 | 22,184 | 64 |
+| 1 | 8,533 | 15,437 | 51,2 |
+| 2 | 4,655 | 7,972 | 25,6 |
+| 3 | 2,560 | 4,122 | 12,8 |
+| 4 | 1,422 | 2,134 | 6,4 |
+| 5 | 0,800 | 1,105 | 3,2 |
 
 Après `P-02` = 5 tours, le processus n'a pas convergé. Le relevé **est publié quand même**,
-sur les 7 lectures restantes, avec `quality_label` = **`SUSPECT`**.
+sur les 7 lectures restantes :
+
+| Sortie | Valeur |
+|---|---|
+| `retained_count` | **7** · `rejected_count` **5** |
+| `mean_temperature` | **0,5 °C** |
+| `min_temperature` | **0,0 °C** · `max_temperature` **1,6 °C** |
+| `frost_episodes` | **aucun** — aucune lecture n'est strictement sous 0,0 °C |
+| `quality_label` | **`SUSPECT`** |
 
 **C'est le cas qui documente la sortie de boucle.** Sans lui, personne ne saurait ce qui se
 passe quand l'itération s'épuise — et chaque implémenteur déciderait pour lui-même.
+
+> **Les valeurs doublent, et elles restent dans `−90 .. +60`.** La première version de ce
+> cas employait 0, 1, 2, … 1024 °C, que `RG-010` aurait écartées avant que `RG-030` ne les
+> voie : les tours publiés étaient arithmétiquement justes et ne pouvaient pas se produire.
+> La suite est simplement divisée par dix, ce qui ne change rien à la structure des tours —
+> le rejet compare des écarts à un multiple de l'écart-type, il est donc invariant
+> d'échelle.
+
+### CT-05 — Deux lectures au même instant
+
+Sept lectures, dont deux à 00:00. Rejet par `E-WTH-001` : avec deux lectures au même
+instant, « la première de la suite » de `RG-050` en désigne deux, et la règle cesse d'être
+une règle.
+
+### CT-06 — Une lecture d'un autre jour
+
+Sept lectures du 2026-01-15, la dernière datée du 2026-01-16 à 00:00. Rejet par
+`E-WTH-002` : le relevé décrirait deux jours en prétendant en décrire un.
+
+### CT-07 — Une moyenne pile sur la moitié
+
+| Heure | 00:00 | 01:00 | 02:00 | 03:00 | 04:00 | 05:00 | 06:00 | 07:00 |
+|---|---|---|---|---|---|---|---|---|
+| °C | 0,0 | 0,1 | 0,2 | 0,3 | 0,4 | 0,3 | 0,2 | 0,5 |
+
+Rien n'est écarté — le tour converge immédiatement. Les huit lectures somment à 2,0 °C, donc
+la moyenne vaut **exactement 0,25 °C**, pile sur l'égalité.
+
+| Sortie | Valeur |
+|---|---|
+| `retained_count` | **8** · `rejected_count` **0** |
+| `mean_temperature` | **0,2 °C** |
+| `min_temperature` | **0,0 °C** · `max_temperature` **0,5 °C** |
+| `frost_episodes` | **aucun** |
+| `quality_label` | **`GOOD`** |
+
+**C'est le seul cas où `P-04` décide de quelque chose.** `HALF_EVEN` publie 0,2 ; `HALF_UP`
+publierait 0,3. Toutes les autres moyennes sont insensibles au mode d'arrondi.
+
+> **Et c'est le cas qui a mis `EX-01` en défaut.** Avec la moyenne accumulée en double
+> précision, cette entrée publiait 0,2 ou 0,3 **selon l'ordre d'arrivée des lectures** —
+> une violation franche de `INV-04`, trouvée par la propriété de permutation et par rien
+> d'autre. La double précision suffit pour les statistiques ; elle ne suffit pas pour un
+> nombre qu'on arrondit. `EX-01` le dit depuis la v1.1.0, et `RG-040` dit quoi en faire.
 
 ### Provenance et validation
 
@@ -443,7 +521,8 @@ passe quand l'itération s'épuise — et chaque implémenteur déciderait pour 
 |---|---|
 | **Provenance** | Tours recalculés pas à pas en arithmétique exacte, indépendamment de toute implémentation |
 | **Comment ils ont été examinés** | Chaque tour a été recalculé : moyenne, écart-type d'échantillon au diviseur `n − 1`, seuil, ensemble écarté. Les épisodes de gel ont été vérifiés lecture par lecture contre la borne stricte `<` |
-| **Ce que l'examen a produit** | CT-04 a été **construit** pour épuiser la boucle : aucun jeu naturel ne le faisait, et sans lui la branche de non-convergence de `RG-060` n'était couverte par rien |
+| **Ce que l'examen a produit** | CT-04 a été **construit** pour épuiser la boucle : aucun jeu naturel ne le faisait, et sans lui la branche de non-convergence de `RG-060` n'était couverte par rien. CT-05, CT-06 et CT-07 ont été ajoutés en v1.1.0 : les deux premiers parce que `E-WTH-001` et `E-WTH-002` étaient énoncés et exercés par aucun cas, le troisième parce qu'aucun cas n'arbitrait `P-04` — et parce que le construire a mis `EX-01` en défaut |
+| **Un document par cas** | [`../tests/`](../tests/) — ce que chaque cas existe pour attraper, et ce qu'il laisserait passer |
 | **Validé par** | Responsable du réseau d'observation, 2026-08-22 |
 
 ---
@@ -452,7 +531,7 @@ passe quand l'itération s'épuise — et chaque implémenteur déciderait pour 
 
 | Id | Énoncé | Source | Propriétaire | Vérification |
 |---|---|---|---|---|
-| <a id="ex-01"></a>`EX-01` | La double précision suffit : les lectures portent une décimale et une incertitude de ±0,2 °C, très au-dessus de tout bruit numérique | Spécification capteur | Architecture SI | Revue de conception |
+| <a id="ex-01"></a>`EX-01` | La double précision suffit **pour les statistiques** — les lectures portent une décimale et une incertitude de ±0,2 °C, très au-dessus de tout bruit numérique. Elle ne suffit **pas** pour la moyenne publiée : ce nombre est arrondi, et une décision d'arrondi prise sur une valeur à un cheveu de l'égalité part du mauvais côté. `mean_temperature` se calcule en arithmétique décimale exacte (`RG-040`) | Spécification capteur, et le défaut trouvé sur `CT-07` | Architecture SI | Revue de conception, et la propriété de permutation `INV-04` |
 | <a id="ex-02"></a>`EX-02` | 1 440 lectures par station et par jour, 3 000 stations, un relevé par station et par jour | Dimensionnement du réseau | Responsable exploitation | Mesure en exploitation |
 | <a id="ex-03"></a>`EX-03` | Le relevé est **rejouable à l'identique** depuis les lectures archivées, pendant 30 ans | Archivage climatique `CLI-ARC-1` | Assurance qualité | Rejeu annuel sur archive |
 
@@ -468,6 +547,7 @@ passe quand l'itération s'épuise — et chaque implémenteur déciderait pour 
 | Version | Date | Changement | Impact sur les résultats | Notice |
 |---|---|---|---|---|
 | 1.0.0 | 2026-08-22 | Version initiale | — | — |
+| 1.1.0 | 2026-08-22 | Ajout de `CT-05`, `CT-06`, `CT-07`. `CT-04` réénoncé avec des données que `RG-010` n'écarte pas. `EX-01` amendé et `RG-040` explicité : la moyenne publiée se calcule en arithmétique décimale exacte | **Une moyenne tombant pile sur l'égalité pouvait être publiée d'un côté ou de l'autre**, selon l'ordre d'arrivée des lectures. C'est corrigé et `INV-04` tient. Aucune autre valeur publiée ne change | Implémenteurs : la moyenne doit s'accumuler en décimal exact, pas en double. Rejouer le jeu de référence — une implémentation qui somme en double échoue `CT-07` sous permutation |
 
 ## Annexe — Identités
 
@@ -487,13 +567,16 @@ passe quand l'itération s'épuise — et chaque implémenteur déciderait pour 
 | `CT-02` | `a6b6ce38-a651-4269-bdb2-3bea51583d09` | cas de test | Aucune aberrante |
 | `CT-03` | `4784e57e-41d9-4424-bd92-2d7fa1cf0152` | cas de test | Pas assez de lectures exploitables |
 | `CT-04` | `45f29eca-fd22-4d17-8b9d-e9817c3f52f8` | cas de test | Non-convergence |
+| `CT-05` | `45f1832b-1beb-40a2-a8b2-c88c2449d8ec` | cas de test | Deux lectures au même instant |
+| `CT-06` | `2a66100f-29c1-4056-92af-82321c933d82` | cas de test | Une lecture d'un autre jour |
+| `CT-07` | `658ca7f7-95c5-4968-a548-68297db0fd34` | cas de test | Une moyenne pile sur la moitié |
 | `P-01` | `8abfb819-5321-4a6a-a86b-acb6e3767455` | paramètre | Facteur de rejet des aberrantes |
 | `P-02` | `66f9866a-bd25-4d1c-9bdc-f2a97a1c63af` | paramètre | Nombre maximal de tours de rejet |
 | `P-03` | `fa573126-d4e0-433c-8836-d48b19b123dd` | paramètre | Nombre minimal de lectures pour un relevé |
 | `P-04` | `ab868262-f8a7-4149-a84a-f316b2d26c6f` | paramètre | Mode d'arrondi de la moyenne publiée |
 | `P-05` | `5eb6502c-2198-41c1-8161-4eb05309c758` | paramètre | Décimales de la moyenne publiée |
 | `P-06` | `8b586410-483c-49d4-b1ba-3c78341b8593` | paramètre | Seuil de gel |
-| `EX-01` | `f9ce6fbe-3f85-4bb0-8a4d-f7ec0d535568` | exigence | La double précision suffit : les lectures portent une décimale et une  |
+| `EX-01` | `f9ce6fbe-3f85-4bb0-8a4d-f7ec0d535568` | exigence | La double précision suffit **pour les statistiques** — les lectures po |
 | `EX-02` | `245000d6-c226-4d14-b56a-8ff7be643e9c` | exigence | 1 440 lectures par station et par jour, 3 000 stations, un relevé par  |
 | `EX-03` | `745def66-32a8-4ca1-a2b5-6ba8acdb612b` | exigence | Le relevé est **rejouable à l'identique** depuis les lectures archivée |
 | `INV-01` | `53654d26-cf42-4131-9b28-a5eb4a831652` | invariant | `retained_count + rejected_count = COUNT OF usable`. Aucune lecture ne |

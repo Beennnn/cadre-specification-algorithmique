@@ -1,0 +1,25 @@
+# Reference data for SPEC-WTH-001, version 1.1.0.
+#
+# This file is section 10 of the specification, transcribed without interpretation. The
+# expected values were recomputed round by round in exact arithmetic, independently of any
+# implementation. It changes only through a dated, motivated business re-approval — never
+# because a test is red.
+#
+# Approved by: Observation network manager, 2026-08-22.
+#
+# Format: case ; station ; date ; expected_error ; retained ; rejected ; mean ; min ; max ;
+#         label ; episodes ; readings
+#
+#   readings  = time,temperature,flag  separated by |
+#               time is HH:MM on the observation date, or a full YYYY-MM-DDTHH:MM
+#               an empty temperature means ABSENT
+#   episodes  = HH:MM>HH:MM:count      separated by +   (empty when there is none)
+#   every field after expected_error is empty when an error is expected
+#
+CT-01;STA-001;2026-01-15;;7;1;0.5;-1.0;2.0;ACCEPTABLE;03:00>04:00:2;00:00,2.0,VALID|01:00,1.5,VALID|02:00,0.5,VALID|03:00,-0.5,VALID|04:00,-1.0,VALID|05:00,0.0,VALID|06:00,1.0,VALID|07:00,45.0,VALID
+CT-02;STA-001;2026-01-15;;7;0;0.5;-1.0;2.0;GOOD;03:00>04:00:2;00:00,2.0,VALID|01:00,1.5,VALID|02:00,0.5,VALID|03:00,-0.5,VALID|04:00,-1.0,VALID|05:00,0.0,VALID|06:00,1.0,VALID
+CT-03;STA-001;2026-01-15;E-WTH-003;;;;;;;;00:00,2.0,VALID|01:00,1.5,VALID|02:00,0.5,FAULTY|03:00,-0.5,FAULTY|04:00,-1.0,FAULTY|05:00,0.0,FAULTY|06:00,1.0,FAULTY|07:00,,VALID
+CT-04;STA-001;2026-01-15;;7;5;0.5;0.0;1.6;SUSPECT;;00:00,0.0,VALID|01:00,0.1,VALID|02:00,0.1,VALID|03:00,0.2,VALID|04:00,0.4,VALID|05:00,0.8,VALID|06:00,1.6,VALID|07:00,3.2,VALID|08:00,6.4,VALID|09:00,12.8,VALID|10:00,25.6,VALID|11:00,51.2,VALID
+CT-05;STA-001;2026-01-15;E-WTH-001;;;;;;;;00:00,2.0,VALID|00:00,1.5,VALID|01:00,0.5,VALID|02:00,-0.5,VALID|03:00,-1.0,VALID|04:00,0.0,VALID|05:00,1.0,VALID
+CT-06;STA-001;2026-01-15;E-WTH-002;;;;;;;;00:00,2.0,VALID|01:00,1.5,VALID|02:00,0.5,VALID|03:00,-0.5,VALID|04:00,-1.0,VALID|05:00,0.0,VALID|2026-01-16T00:00,1.0,VALID
+CT-07;STA-001;2026-01-15;;8;0;0.2;0.0;0.5;GOOD;;00:00,0.0,VALID|01:00,0.1,VALID|02:00,0.2,VALID|03:00,0.3,VALID|04:00,0.4,VALID|05:00,0.3,VALID|06:00,0.2,VALID|07:00,0.5,VALID

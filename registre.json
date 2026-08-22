@@ -280,6 +280,13 @@
     "document": "exemples/mass-balance/spec/SPEC-MAS-001.en.md"
   },
   {
+    "uuid": "2a66100f-29c1-4056-92af-82321c933d82",
+    "identifiant": "CT-06",
+    "nature": "cas de test",
+    "libelle": "A reading from another day",
+    "document": "exemples/weather-summary/spec/SPEC-WTH-001.en.md"
+  },
+  {
     "uuid": "2c2489c2-702a-46dd-a7cd-1064022ddbd4",
     "identifiant": "RG-020",
     "nature": "règle",
@@ -432,6 +439,13 @@
     "nature": "cas de test",
     "libelle": "Point d'autonomie, interpolation dans le segment 2",
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+  },
+  {
+    "uuid": "45f1832b-1beb-40a2-a8b2-c88c2449d8ec",
+    "identifiant": "CT-05",
+    "nature": "cas de test",
+    "libelle": "Two readings at the same instant",
+    "document": "exemples/weather-summary/spec/SPEC-WTH-001.en.md"
   },
   {
     "uuid": "45f29eca-fd22-4d17-8b9d-e9817c3f52f8",
@@ -628,6 +642,13 @@
     "nature": "paramètre",
     "libelle": "Accélération de la pesanteur",
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+  },
+  {
+    "uuid": "658ca7f7-95c5-4968-a548-68297db0fd34",
+    "identifiant": "CT-07",
+    "nature": "cas de test",
+    "libelle": "A mean exactly on the half",
+    "document": "exemples/weather-summary/spec/SPEC-WTH-001.en.md"
   },
   {
     "uuid": "66ca83b9-80a9-49ed-8d97-9836840ca7d7",
@@ -1760,7 +1781,7 @@
     "uuid": "f9ce6fbe-3f85-4bb0-8a4d-f7ec0d535568",
     "identifiant": "EX-01",
     "nature": "exigence",
-    "libelle": "Double precision is enough: readings carry one decimal and an uncertainty of ±0.2 °C, far above any numerical noise",
+    "libelle": "Double precision is enough **for the statistics** — readings carry one decimal and an uncertainty of ±0.2 °C, far above any numerical noise. It is **not** enough for the published mean: that number is rounded, and a rounding decision taken on a value a hair off the tie goes the wrong way. `mean_temperature` is computed in exact decimal arithmetic (`RG-040`)",
     "document": "exemples/weather-summary/spec/SPEC-WTH-001.en.md"
   },
   {

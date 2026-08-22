@@ -11,7 +11,7 @@ là-dessus, pas sur le domaine.*
 | Exemple | Taille | Jusqu'où il va | Ce qu'il montre et que les autres ne montrent pas |
 |---|---|---|---|
 | **[La vitesse moyenne d'un trajet](average-speed/)** | ~170 l. | spec → **un doc par cas** → code → rapports | La **prise en main**. Deux fonctions, deux paramètres, trois règles |
-| **[Le relevé d'une station météo](weather-summary/)** | ~450 l. | spec, deux langues | **Tout le pseudo-langage**, et une **boucle qui peut s'épuiser** |
+| **[Le relevé d'une station météo](weather-summary/)** | ~450 l. | spec → **un doc par cas** → code → rapports | **Tout le pseudo-langage**, une **boucle qui peut s'épuiser**, et le seul défaut que ni un invariant ni un jeu de cas n'auraient trouvé seuls |
 | **[Le bilan de masse d'un lot](mass-balance/)** | ~470 l. | besoin → spec → contrat → **un doc par cas** → code → rapports → **écarts** | La **chaîne complète**, jusqu'à l'analyse des écarts |
 | **[Le refroidissement d'une boisson](SPEC-THM-001-refroidissement.md)** | ~630 l. | spec | Le **continu et l'approché** : équation différentielle, incertitude |
 | **[Le lever du Soleil](SPEC-AST-001-lever-coucher-du-soleil.md)** | ~510 l. | spec | Une **équation sans solution** hors des cercles polaires |
@@ -83,6 +83,14 @@ produit assez d'hivers à −999 °C pour être bannie.
 > **Ce que l'exemple prouve en creux.** `CT-01` et `CT-02` publient la même moyenne,
 > **0,5 °C**. C'est la preuve que le rejet a fonctionné : une implémentation qui sauterait
 > `RG-030` publierait 6,1 °C pour `CT-01` — et passerait pourtant tous les autres cas.
+
+**Et ce qu'il a fini par trouver.** En écrivant le code, `CT-07` — une moyenne qui tombe
+pile sur l'égalité d'arrondi — publiait 0,2 ou 0,3 **selon l'ordre d'arrivée des lectures**.
+L'addition en double précision n'est pas associative, et l'arrondi n'a aucune tolérance :
+il transforme un écart de 10⁻¹⁶ en un écart de 0,1 °C. C'était un défaut de l'exigence
+`EX-01`, qui déclarait la double précision suffisante. Il a fallu **les deux dispositifs**
+pour le voir — la propriété de permutation, qui teste sur des ordres engendrés, et le cas
+sur l'égalité, seul endroit où cette propriété a des dents.
 
 ---
 
