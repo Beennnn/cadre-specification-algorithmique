@@ -23,17 +23,24 @@ public class Identites {
     static Path racine;
     static final String ANNEXE = "## Annexe — Identités";
 
+    // Début d'une ligne de tableau, avec l'ancre explicite que portent les tables
+    // référencées depuis l'extérieur. Sans elle, `| <a id="p-01"></a>`P-01` | …` ne
+    // s'apparie pas, et c'est la première ligne NON ancrée du document — souvent une
+    // table de couverture — qui fournit le libellé. Le défaut est silencieux : l'annexe
+    // reste bien formée, avec un libellé qui n'est pas celui de l'objet.
+    static final String ANCRE = "^\\|\\s*(?:<a id=\"[^\"]+\"></a>)?\\s*";
+
     // Les objets susceptibles d'être cités depuis l'extérieur de leur document.
     static final String[][] MOTIFS = {
         {"^###\\s+(RG-\\d+)\\s+—\\s+(.+)$", "règle"},
         {"^###\\s+(CT-\\d+)\\s+—\\s+(.+)$", "cas de test"},
-        {"^\\|\\s*`(FN-\\d+)`\\s*\\|\\s*\\*{0,2}([^|*]+)", "fonction"},
-        {"^\\|\\s*`(P-\\d+)`\\s*\\|\\s*([^|]+)", "paramètre"},
-        {"^\\|\\s*`(D-\\d+)`\\s*\\|\\s*([^|]+)", "donnée"},
-        {"^\\|\\s*`(EX-\\d+)`\\s*\\|\\s*([^|]+)", "exigence"},
-        {"^\\|\\s*`(INV-\\d+)`\\s*\\|\\s*([^|]+)", "invariant"},
-        {"^\\|\\s*`(E-[A-Z]+-\\d+)`\\s*\\|\\s*([^|]+)", "cas d'erreur"},
-        {"^\\|\\s*`(Q-[\\d-]+)`\\s*\\|\\s*([^|]+)", "question"},
+        {ANCRE + "`(FN-\\d+)`\\s*\\|\\s*\\*{0,2}([^|*]+)", "fonction"},
+        {ANCRE + "`(P-\\d+)`\\s*\\|\\s*([^|]+)", "paramètre"},
+        {ANCRE + "`(D-\\d+)`\\s*\\|\\s*([^|]+)", "donnée"},
+        {ANCRE + "`(EX-\\d+)`\\s*\\|\\s*([^|]+)", "exigence"},
+        {ANCRE + "`(INV-\\d+)`\\s*\\|\\s*([^|]+)", "invariant"},
+        {ANCRE + "`(E-[A-Z]+-\\d+)`\\s*\\|\\s*([^|]+)", "cas d'erreur"},
+        {ANCRE + "`(Q-[\\d-]+)`\\s*\\|\\s*([^|]+)", "question"},
     };
 
     record Objet(String identifiant, String nature, String libelle) {}

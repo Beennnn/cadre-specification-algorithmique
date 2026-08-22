@@ -10,7 +10,7 @@ là-dessus, pas sur le domaine.*
 
 | Exemple | Taille | Jusqu'où il va | Ce qu'il montre et que les autres ne montrent pas |
 |---|---|---|---|
-| **[La vitesse moyenne d'un trajet](average-speed/)** | ~170 l. | besoin → spec → code → rapports | La **prise en main**. Deux fonctions, deux paramètres, trois règles |
+| **[La vitesse moyenne d'un trajet](average-speed/)** | ~170 l. | spec → **un doc par cas** → code → rapports | La **prise en main**. Deux fonctions, deux paramètres, trois règles |
 | **[Le relevé d'une station météo](weather-summary/)** | ~450 l. | spec, deux langues | **Tout le pseudo-langage**, et une **boucle qui peut s'épuiser** |
 | **[Le bilan de masse d'un lot](mass-balance/)** | ~470 l. | besoin → spec → contrat → code → **écarts** | La **chaîne complète**, jusqu'à l'analyse des écarts |
 | **[Le refroidissement d'une boisson](SPEC-THM-001-refroidissement.md)** | ~630 l. | spec | Le **continu et l'approché** : équation différentielle, incertitude |
@@ -98,6 +98,13 @@ Son détail le plus instructif : `CT-02` est gardé **bien qu'il ne discrimine p
 montre qu'une implémentation fausse passe un test plausible, et le rapport de test le dit
 cas par cas. C'est aussi le seul exemple avec un **rapport de couverture outillé**, qui
 relie chaque point de la spec au fichier et à la ligne qui l'implémentent.
+
+C'est enfin le seul qui porte **[un document par cas de test](average-speed/tests/)**,
+avec pour chacun ce qu'il attrape *et ce qu'il laisse passer*. Écrire ces six documents a
+produit un défaut : `CT-04` s'appelait « Arrondi » et son quotient est exact — le mode
+d'arrondi `P-01` était validé, implémenté, déclaré couvert, et **arbitré par aucun cas**.
+`CT-06` a été ajouté pour cela, et le harnais rapporte désormais, cas par cas, quels
+paramètres chacun décide réellement.
 
 ### Le bilan de masse — la chaîne complète
 

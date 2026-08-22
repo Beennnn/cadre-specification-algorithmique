@@ -415,6 +415,7 @@ conservation of `INV-01` would be impossible.
 
 | Identifiant | UUID | Nature | Libellé |
 |---|---|---|---|
+| `SPEC-MAS-001` | `292e2c59-db4e-4dcd-b7e1-101cf6d76de0` | document | SPEC-MAS-001 — Batch mass balance |
 | `RG-010` | `1f7dd670-3f98-4ea6-9bd1-04e2f61ad316` | règle | Nominal mass of a component |
 | `RG-020` | `2c2489c2-702a-46dd-a7cd-1064022ddbd4` | règle | Rounding to the balance step |
 | `RG-030` | `ed9131d6-4472-4d21-b75d-fba1122da558` | règle | Residual |
@@ -444,11 +445,3 @@ conservation of `INV-01` would be impossible.
 | `E-MAS-004` | `f12f64b6-8041-4729-91ec-92cdee0b1e71` | cas d'erreur | `target_batch_mass` is not a multiple of `balance_step` |
 | `Q-01` | `9111352a-45f3-4b93-8115-3102c370b556` | question | Should a residual of several steps be spread over several components,  |
 | `Q-02` | `c16913b4-c54a-41ba-861a-7c369e06a149` | question | Should the alphabetical tie-break give way to a priority order declare |
-
-### Identités retirées
-
-*Un objet supprimé conserve son UUID : il n'est jamais réattribué, pour qu'une référence ancienne reste résoluble.*
-
-| Identifiant | UUID |
-|---|---|
-| `SPEC-MAS-001` | `292e2c59-db4e-4dcd-b7e1-101cf6d76de0` |

@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Identifier** | SPEC-SPD-001 |
-| **Version** | 1.0.0 |
+| **Version** | 1.1.0 |
 | **Status** | Approved |
 | **Business approver** | Fleet operations manager |
 | **Technical co-author** | Mobility software team |
@@ -131,9 +131,13 @@ average_speed = ROUND( total_distance ÷ total_duration, P-02, P-01 )
 
 | Rule | Covered by |
 |---|---|
-| `RG-010` | CT-01, CT-02, CT-03, CT-04 |
-| `RG-020` | CT-01, CT-02, CT-03, CT-04 |
-| `RG-030` | CT-01, CT-02, CT-03, CT-04 |
+| `RG-010` | CT-01, CT-02, CT-03, CT-04, CT-06 |
+| `RG-020` | CT-01, CT-02, CT-03, CT-04, CT-06 |
+| `RG-030` | CT-01, CT-02, CT-03, CT-04, CT-06 |
+
+`P-01` and `P-02` are arbitrated by **CT-06 alone**: it is the only case whose unrounded
+quotient falls on a tie. Every other case publishes the same number whatever the rounding
+mode — which is why the parameters were, until v1.1.0, verified by nothing.
 
 ---
 
@@ -185,18 +189,43 @@ implementation can pass a plausible test, and that CT-01 is the one doing the wo
 
 100 km at 80.0 km/h → 1.250000 h → **`average_speed` = 80.0 km/h**
 
-### CT-04 — Rounding
+### CT-04 — Durations that never terminate
 
 | Leg | Distance | Speed | Duration |
 |---|---|---|---|
-| 1 | 10 km | 7.0 km/h | 1.428571 h |
-| 2 | 10 km | 13.0 km/h | 0.769231 h |
+| 1 | 10 km | 7.0 km/h | 1.428571… h |
+| 2 | 10 km | 13.0 km/h | 0.769231… h |
 
-20 km ÷ 2.197802 h = 9.10000… → **`average_speed` = 9.1 km/h**
+20 km ÷ (200 ⁄ 91) h → **`average_speed` = 9.1 km/h**
+
+Neither leg duration has a finite decimal form: `10 ÷ 7 = 1.428571…`. The **quotient**,
+however, is exactly 9.1 — so the case checks that a chain of non-terminating intermediates
+still lands on the right value, and it discriminates against the naive mean, which would
+give 10.0 km/h. It does **not** exercise `P-01`: no rounding decision is ever taken here.
+That is what `CT-06` is for.
 
 ### CT-05 — Null speed
 
 One leg at 0.0 km/h → rejected by `E-SPD-001`.
+
+### CT-06 — A tie exactly at the half
+
+| Leg | Distance | Speed | Duration |
+|---|---|---|---|
+| 1 | 30 km | 5.0 km/h | 6.000000 h |
+| 2 | 44 km | 22.0 km/h | 2.000000 h |
+
+74 km ÷ 8 h = **exactly 9.25** → **`average_speed` = 9.2 km/h**
+
+**This is the only case where `P-01` decides anything.** The unrounded quotient falls
+exactly on the half, so `HALF_EVEN` publishes **9.2** where `HALF_UP` would publish 9.3.
+Without it, the rounding mode is a parameter that no test has ever exercised — approved,
+written down, and never verified.
+
+Both leg durations are exact — 6 h and 2 h — on purpose: an approximate intermediate would
+nudge the quotient off the tie and the case would silently stop testing anything. And the
+two legs take different times, so it discriminates against the naive mean as well: that one
+would give 13.5 km/h.
 
 ### Provenance and validation
 
@@ -204,7 +233,8 @@ One leg at 0.0 km/h → rejected by `E-SPD-001`.
 |---|---|
 | **Provenance** | Computed by hand in exact decimal arithmetic, independently of any implementation |
 | **How they were examined** | Each duration, total and quotient was recomputed, and each case was compared with the arithmetic mean of the speeds to check whether it discriminates |
-| **What the examination produced** | CT-02 was added **because** it does *not* discriminate: without it, nobody would see that passing three cases proves nothing |
+| **What the examination produced** | CT-02 was added **because** it does *not* discriminate: without it, nobody would see that passing three cases proves nothing. CT-06 was added when the examination showed that `P-01` was decided by no case at all — CT-04, whose title said "rounding", has an exact quotient |
+| **One document per case** | [`../tests/`](../tests/) — what each case exists to catch, and what it would let through |
 | **Where they live** | [`../code/src/test/resources/reference-data.csv`](../code/src/test/resources/reference-data.csv) |
 | **Approved by** | Fleet operations manager, 2026-08-22 |
 
@@ -228,6 +258,7 @@ One leg at 0.0 km/h → rejected by `E-SPD-001`.
 | Version | Date | Change | Impact on results | Notice |
 |---|---|---|---|---|
 | 1.0.0 | 2026-08-22 | Initial version | — | — |
+| 1.1.0 | 2026-08-22 | `CT-06` added; `CT-04` renamed to what it actually tests | **None on published results.** No rule changed. `CT-06` exercises `P-01`, which until now no case decided | Implementers: rerun the reference set. An implementation using `HALF_UP` was passing before and fails now — that is the point |
 
 ## Annexe — Identités
 
@@ -242,8 +273,9 @@ One leg at 0.0 km/h → rejected by `E-SPD-001`.
 | `CT-01` | `5b9cfac9-fffd-46d7-bd52-3e018d83b220` | cas de test | Equal distances, different speeds |
 | `CT-02` | `af954a1c-c6b7-44f7-b1a5-1e2577390e5a` | cas de test | Equal durations |
 | `CT-03` | `55b3128b-974b-49b9-bcf2-1153ad2e878c` | cas de test | A single leg |
-| `CT-04` | `453d1761-dec3-4e0b-bdb4-23d908e52130` | cas de test | Rounding |
+| `CT-04` | `453d1761-dec3-4e0b-bdb4-23d908e52130` | cas de test | Durations that never terminate |
 | `CT-05` | `8ae25c37-0e16-4bdd-8baa-106e65af357e` | cas de test | Null speed |
+| `CT-06` | `72a1fdb6-1b36-4261-b27c-8f69c72d8823` | cas de test | A tie exactly at the half |
 | `FN-001` | `aa32e541-ddbd-4bd1-b0cc-4bf61cc2d00b` | fonction | Leg duration |
 | `FN-002` | `6e9e8cc6-857f-497c-8fa7-6e034a83fb04` | fonction | Journey average speed |
 | `P-01` | `62f12714-40af-41b4-90fa-79c93e152c6e` | paramètre | Rounding mode of the published speed |

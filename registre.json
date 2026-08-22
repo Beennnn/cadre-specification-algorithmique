@@ -93,8 +93,8 @@
   {
     "uuid": "0f0e6185-bb00-480a-b3f3-03efffee34a5",
     "identifiant": "INV-01",
-    "nature": "retiré",
-    "libelle": "",
+    "nature": "invariant",
+    "libelle": "`average_speed` lies between the **slowest** and the **fastest** leg speed. A result outside that range means the arithmetic is wrong.",
     "document": "exemples/average-speed/spec/SPEC-SPD-001.en.md"
   },
   {
@@ -163,8 +163,8 @@
   {
     "uuid": "18950bf4-58d6-4a2b-9426-20cec1f6edba",
     "identifiant": "INV-02",
-    "nature": "retiré",
-    "libelle": "",
+    "nature": "invariant",
+    "libelle": "Before rounding, `average_speed × total_duration = total_distance`.",
     "document": "exemples/average-speed/spec/SPEC-SPD-001.en.md"
   },
   {
@@ -229,6 +229,20 @@
     "nature": "invariant",
     "libelle": "Monotonie vis-à-vis de la vitesse, au-delà de la vitesse de consommation minimale** : voir la note ci-dessous",
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+  },
+  {
+    "uuid": "22a6a616-0600-4cb1-91db-f8545a02acd5",
+    "identifiant": "INV-02",
+    "nature": "invariant",
+    "libelle": "Before rounding, `average_speed × total_duration = total_dis…",
+    "document": "exemples/average-speed/reports/TEST-REPORT.md"
+  },
+  {
+    "uuid": "245000d6-c226-4d14-b56a-8ff7be643e9c",
+    "identifiant": "EX-02",
+    "nature": "exigence",
+    "libelle": "1 440 readings per station per day, 3 000 stations, one summary per station per day",
+    "document": "exemples/weather-summary/spec/SPEC-WTH-001.en.md"
   },
   {
     "uuid": "2562f4ae-0906-4c4b-b7ba-8c65f0796de4",
@@ -303,8 +317,8 @@
   {
     "uuid": "30c1c2f2-56d3-49e1-bf5d-869e1dff4936",
     "identifiant": "E-SPD-001",
-    "nature": "retiré",
-    "libelle": "",
+    "nature": "cas d'erreur",
+    "libelle": "A leg has a speed `≤ 0`",
     "document": "exemples/average-speed/spec/SPEC-SPD-001.en.md"
   },
   {
@@ -371,6 +385,13 @@
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
   },
   {
+    "uuid": "3f8c34ce-99ef-485f-8fc6-2e9609889fa8",
+    "identifiant": "INV-03",
+    "nature": "invariant",
+    "libelle": "Frost episodes are **disjoint** and in increasing order of `started_at`. Two episodes never overlap: a run is maximal by construction.",
+    "document": "exemples/weather-summary/spec/SPEC-WTH-001.en.md"
+  },
+  {
     "uuid": "41dea1ff-81d5-42cc-a782-0da8ba4473eb",
     "identifiant": "Q-01",
     "nature": "question",
@@ -395,7 +416,7 @@
     "uuid": "453d1761-dec3-4e0b-bdb4-23d908e52130",
     "identifiant": "CT-04",
     "nature": "cas de test",
-    "libelle": "Rounding",
+    "libelle": "Durations that never terminate",
     "document": "exemples/average-speed/spec/SPEC-SPD-001.en.md"
   },
   {
@@ -497,6 +518,13 @@
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
   },
   {
+    "uuid": "53654d26-cf42-4131-9b28-a5eb4a831652",
+    "identifiant": "INV-01",
+    "nature": "invariant",
+    "libelle": "`retained_count + rejected_count = COUNT OF usable`. No reading disappears without being counted somewhere.",
+    "document": "exemples/weather-summary/spec/SPEC-WTH-001.en.md"
+  },
+  {
     "uuid": "53836c25-75aa-4f5c-882f-2a05f28f1882",
     "identifiant": "INV-03",
     "nature": "invariant",
@@ -553,6 +581,13 @@
     "document": "exemples/average-speed/spec/SPEC-SPD-001.en.md"
   },
   {
+    "uuid": "5eb6502c-2198-41c1-8161-4eb05309c758",
+    "identifiant": "P-05",
+    "nature": "paramètre",
+    "libelle": "Decimals of the published mean",
+    "document": "exemples/weather-summary/spec/SPEC-WTH-001.en.md"
+  },
+  {
     "uuid": "5f56cc79-2938-4faa-a6fe-10aa2b53d021",
     "identifiant": "FN-006",
     "nature": "fonction",
@@ -569,8 +604,8 @@
   {
     "uuid": "62f12714-40af-41b4-90fa-79c93e152c6e",
     "identifiant": "P-01",
-    "nature": "retiré",
-    "libelle": "",
+    "nature": "paramètre",
+    "libelle": "Rounding mode of the published speed",
     "document": "exemples/average-speed/spec/SPEC-SPD-001.en.md"
   },
   {
@@ -586,6 +621,13 @@
     "nature": "cas de test",
     "libelle": "Paris, solstice d'été",
     "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+  },
+  {
+    "uuid": "66f9866a-bd25-4d1c-9bdc-f2a97a1c63af",
+    "identifiant": "P-02",
+    "nature": "paramètre",
+    "libelle": "Maximum rejection rounds",
+    "document": "exemples/weather-summary/spec/SPEC-WTH-001.en.md"
   },
   {
     "uuid": "67c240de-37c7-4d40-a6cc-330545759eb9",
@@ -681,8 +723,8 @@
   {
     "uuid": "6e9e8cc6-857f-497c-8fa7-6e034a83fb04",
     "identifiant": "FN-002",
-    "nature": "retiré",
-    "libelle": "",
+    "nature": "fonction",
+    "libelle": "Journey average speed",
     "document": "exemples/average-speed/spec/SPEC-SPD-001.en.md"
   },
   {
@@ -691,6 +733,13 @@
     "nature": "paramètre",
     "libelle": "Nombre maximal d'itérations",
     "document": "exemples/SPEC-THM-001-refroidissement.md"
+  },
+  {
+    "uuid": "6edd9e11-c50d-4a91-971c-6a73a451c191",
+    "identifiant": "INV-04",
+    "nature": "invariant",
+    "libelle": "The result is **invariant under permutation** of the input readings. `RG-050` sorts by `recorded_at`, so the order of arrival changes nothing.",
+    "document": "exemples/weather-summary/spec/SPEC-WTH-001.en.md"
   },
   {
     "uuid": "6f2b55b1-5c6a-451a-a794-963a915f7b63",
@@ -707,6 +756,13 @@
     "document": "exemples/SPEC-THM-001-refroidissement.md"
   },
   {
+    "uuid": "72a1fdb6-1b36-4261-b27c-8f69c72d8823",
+    "identifiant": "CT-06",
+    "nature": "cas de test",
+    "libelle": "A tie exactly at the half",
+    "document": "exemples/average-speed/spec/SPEC-SPD-001.en.md"
+  },
+  {
     "uuid": "730f2923-d586-400b-9248-83ac8d297acf",
     "identifiant": "Q-04-3",
     "nature": "question",
@@ -714,11 +770,25 @@
     "document": "exemples/fil-rouge/4-FN-004-planifier-les-recharges.md"
   },
   {
+    "uuid": "745def66-32a8-4ca1-a2b5-6ba8acdb612b",
+    "identifiant": "EX-03",
+    "nature": "exigence",
+    "libelle": "The summary is **replayable identically** from the archived readings, for 30 years",
+    "document": "exemples/weather-summary/spec/SPEC-WTH-001.en.md"
+  },
+  {
     "uuid": "75cfe6fc-7213-4967-a81f-f4e80c55c727",
     "identifiant": "P-05",
     "nature": "paramètre",
     "libelle": "Tolérance de convergence sur l'instant",
     "document": "exemples/SPEC-THM-001-refroidissement.md"
+  },
+  {
+    "uuid": "7738b38a-880e-4e81-b601-a3ba78e78d3a",
+    "identifiant": "E-WTH-001",
+    "nature": "cas d'erreur",
+    "libelle": "Two readings carry the same `recorded_at`",
+    "document": "exemples/weather-summary/spec/SPEC-WTH-001.en.md"
   },
   {
     "uuid": "77f14f85-1c37-4cb0-b59c-3cd5e9ea5c33",
@@ -733,6 +803,13 @@
     "nature": "invariant",
     "libelle": "`T(t)` reste strictement comprise entre `T_ambiante` et `T(0)`",
     "document": "exemples/SPEC-THM-001-refroidissement.md"
+  },
+  {
+    "uuid": "7e952f80-9a2d-4a8d-8870-fc4e72428d70",
+    "identifiant": "P-01",
+    "nature": "paramètre",
+    "libelle": "Rounding mode of the published speed",
+    "document": "exemples/average-speed/reports/TEST-REPORT.md"
   },
   {
     "uuid": "7f647fe8-a8cc-4ad3-9d4c-5b3cf790b824",
@@ -753,6 +830,13 @@
     "identifiant": "RG-030",
     "nature": "règle",
     "libelle": "Iterative outlier rejection",
+    "document": "exemples/weather-summary/spec/SPEC-WTH-001.en.md"
+  },
+  {
+    "uuid": "8342a539-8aff-457a-aab7-838f3cf5de88",
+    "identifiant": "E-WTH-002",
+    "nature": "cas d'erreur",
+    "libelle": "A `recorded_at` falls outside `observation_date`",
     "document": "exemples/weather-summary/spec/SPEC-WTH-001.en.md"
   },
   {
@@ -777,6 +861,13 @@
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
   },
   {
+    "uuid": "87b0a976-8188-4f50-bded-49672142f3ae",
+    "identifiant": "INV-05",
+    "nature": "invariant",
+    "libelle": "`retained_count ≥ P-03`, always. Below that, `RG-020` rejected before any statistic was computed.",
+    "document": "exemples/weather-summary/spec/SPEC-WTH-001.en.md"
+  },
+  {
     "uuid": "87cb7eb4-c0f7-44bd-90b4-9e00c395c621",
     "identifiant": "P-03",
     "nature": "paramètre",
@@ -784,11 +875,25 @@
     "document": "exemples/SPEC-THM-001-refroidissement.md"
   },
   {
+    "uuid": "8abfb819-5321-4a6a-a86b-acb6e3767455",
+    "identifiant": "P-01",
+    "nature": "paramètre",
+    "libelle": "Outlier rejection factor",
+    "document": "exemples/weather-summary/spec/SPEC-WTH-001.en.md"
+  },
+  {
     "uuid": "8ae25c37-0e16-4bdd-8baa-106e65af357e",
     "identifiant": "CT-05",
     "nature": "cas de test",
     "libelle": "Null speed",
     "document": "exemples/average-speed/spec/SPEC-SPD-001.en.md"
+  },
+  {
+    "uuid": "8b586410-483c-49d4-b1ba-3c78341b8593",
+    "identifiant": "P-06",
+    "nature": "paramètre",
+    "libelle": "Frost threshold",
+    "document": "exemples/weather-summary/spec/SPEC-WTH-001.en.md"
   },
   {
     "uuid": "8ba5f8ea-5633-4d47-86c9-f86b974a2b33",
@@ -882,6 +987,13 @@
     "document": "exemples/average-speed/spec/SPEC-SPD-001.en.md"
   },
   {
+    "uuid": "9beb66b7-d8f8-4e69-b944-8f26f600394f",
+    "identifiant": "Q-02",
+    "nature": "question",
+    "libelle": "Should `P-01` depend on the season? Winter dispersion is naturally larger",
+    "document": "exemples/weather-summary/spec/SPEC-WTH-001.en.md"
+  },
+  {
     "uuid": "9e5fa8d2-ece3-4239-a3f5-6e034f7cbcfd",
     "identifiant": "Q-04",
     "nature": "question",
@@ -915,6 +1027,13 @@
     "nature": "cas de test",
     "libelle": "Tromsø, jour polaire",
     "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+  },
+  {
+    "uuid": "a3ce427d-6fe3-4285-b69e-5cba6e95d07e",
+    "identifiant": "E-SPD-001",
+    "nature": "cas d'erreur",
+    "libelle": "A leg has a speed `≤ 0`",
+    "document": "exemples/average-speed/reports/TEST-REPORT.md"
   },
   {
     "uuid": "a40abaf1-3b00-415d-85a0-60d6d269158d",
@@ -954,9 +1073,16 @@
   {
     "uuid": "aa32e541-ddbd-4bd1-b0cc-4bf61cc2d00b",
     "identifiant": "FN-001",
-    "nature": "retiré",
-    "libelle": "",
+    "nature": "fonction",
+    "libelle": "Leg duration",
     "document": "exemples/average-speed/spec/SPEC-SPD-001.en.md"
+  },
+  {
+    "uuid": "ab868262-f8a7-4149-a84a-f316b2d26c6f",
+    "identifiant": "P-04",
+    "nature": "paramètre",
+    "libelle": "Rounding mode of the published mean",
+    "document": "exemples/weather-summary/spec/SPEC-WTH-001.en.md"
   },
   {
     "uuid": "ad06693c-79b6-44d2-a7eb-bf351321c88a",
@@ -1031,8 +1157,8 @@
   {
     "uuid": "b4ccd8a2-23b2-42d7-aa15-6dd5e58e3829",
     "identifiant": "P-02",
-    "nature": "retiré",
-    "libelle": "",
+    "nature": "paramètre",
+    "libelle": "Decimals of the published speed",
     "document": "exemples/average-speed/spec/SPEC-SPD-001.en.md"
   },
   {
@@ -1076,6 +1202,13 @@
     "nature": "cas d'erreur",
     "libelle": "`longitude` hors de `[−180, +180]`",
     "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+  },
+  {
+    "uuid": "bad2cdd9-e127-4b3c-9ad7-5275df9e6cd1",
+    "identifiant": "Q-01",
+    "nature": "question",
+    "libelle": "Should a station whose summary is `SUSPECT` three days running be taken out of the network automatically?",
+    "document": "exemples/weather-summary/spec/SPEC-WTH-001.en.md"
   },
   {
     "uuid": "baea8eed-a39c-46c8-96e6-543b35802c95",
@@ -1188,6 +1321,13 @@
     "nature": "cas de test",
     "libelle": "Target mass not a multiple of the step",
     "document": "exemples/mass-balance/2-SPEC-MAS-001.en.md"
+  },
+  {
+    "uuid": "ca1243bc-4b2e-4a16-a9ab-beb4c0f9d5fc",
+    "identifiant": "P-02",
+    "nature": "paramètre",
+    "libelle": "Decimals of the published speed",
+    "document": "exemples/average-speed/reports/TEST-REPORT.md"
   },
   {
     "uuid": "cabb4a7c-3cc6-4b7f-840b-fa14ee4d0f4a",
@@ -1344,6 +1484,13 @@
     "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
   },
   {
+    "uuid": "df4d5585-6cf0-4547-8f5e-0d288572b1fa",
+    "identifiant": "INV-02",
+    "nature": "invariant",
+    "libelle": "`min_temperature ≤ mean_temperature ≤ max_temperature`, up to the rounding of the mean.",
+    "document": "exemples/weather-summary/spec/SPEC-WTH-001.en.md"
+  },
+  {
     "uuid": "dfb6ff92-8efb-47e8-96c8-ca15b1704d70",
     "identifiant": "CT-04",
     "nature": "cas de test",
@@ -1419,6 +1566,13 @@
     "nature": "règle",
     "libelle": "Convergence",
     "document": "exemples/SPEC-THM-001-refroidissement.md"
+  },
+  {
+    "uuid": "ea4adb82-d849-49ff-9724-1c18491649a7",
+    "identifiant": "E-WTH-003",
+    "nature": "cas d'erreur",
+    "libelle": "Fewer than `P-03` usable readings",
+    "document": "exemples/weather-summary/spec/SPEC-WTH-001.en.md"
   },
   {
     "uuid": "ea5e594b-7ea7-4cff-9304-bbb3e4f25f72",
@@ -1510,6 +1664,27 @@
     "nature": "document",
     "libelle": "FN-004 — Planifier les arrêts de recharge",
     "document": "exemples/fil-rouge/4-FN-004-planifier-les-recharges.md"
+  },
+  {
+    "uuid": "f80965fb-ffa5-488e-8137-91bc6993970c",
+    "identifiant": "INV-01",
+    "nature": "invariant",
+    "libelle": "`average_speed` lies between the **slowest** and the **faste…",
+    "document": "exemples/average-speed/reports/TEST-REPORT.md"
+  },
+  {
+    "uuid": "f9ce6fbe-3f85-4bb0-8a4d-f7ec0d535568",
+    "identifiant": "EX-01",
+    "nature": "exigence",
+    "libelle": "Double precision is enough: readings carry one decimal and an uncertainty of ±0.2 °C, far above any numerical noise",
+    "document": "exemples/weather-summary/spec/SPEC-WTH-001.en.md"
+  },
+  {
+    "uuid": "fa573126-d4e0-433c-8836-d48b19b123dd",
+    "identifiant": "P-03",
+    "nature": "paramètre",
+    "libelle": "Minimum readings for a summary",
+    "document": "exemples/weather-summary/spec/SPEC-WTH-001.en.md"
   },
   {
     "uuid": "faf499ce-6b1c-4b8e-af2d-1396d49bc513",

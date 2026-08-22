@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | **Identifiant** | SPEC-SPD-001 |
-| **Version** | 1.0.0 |
+| **Version** | 1.1.0 |
 | **Statut** | Validée |
 | **Valideur métier** | Responsable exploitation de flotte |
 | **Co-auteur technique** | Équipe logiciel mobilité |
@@ -138,9 +138,14 @@ average_speed = ROUND( total_distance ÷ total_duration, P-02, P-01 )
 
 | Règle | Couverte par |
 |---|---|
-| `RG-010` | CT-01, CT-02, CT-03, CT-04 |
-| `RG-020` | CT-01, CT-02, CT-03, CT-04 |
-| `RG-030` | CT-01, CT-02, CT-03, CT-04 |
+| `RG-010` | CT-01, CT-02, CT-03, CT-04, CT-06 |
+| `RG-020` | CT-01, CT-02, CT-03, CT-04, CT-06 |
+| `RG-030` | CT-01, CT-02, CT-03, CT-04, CT-06 |
+
+`P-01` et `P-02` sont arbitrés par **CT-06 seul** : c'est le seul cas dont le quotient non
+arrondi tombe pile sur une égalité. Tous les autres publient le même nombre quel que soit
+le mode d'arrondi — c'est pourquoi ces paramètres n'étaient, jusqu'en v1.1.0, vérifiés par
+rien.
 
 ---
 
@@ -193,18 +198,43 @@ implémentation fausse peut passer un test plausible, et que c'est CT-01 qui tra
 
 100 km à 80,0 km/h → 1,250000 h → **`average_speed` = 80,0 km/h**
 
-### CT-04 — Arrondi
+### CT-04 — Des durées qui ne tombent jamais juste
 
 | Segment | Distance | Vitesse | Durée |
 |---|---|---|---|
-| 1 | 10 km | 7,0 km/h | 1,428571 h |
-| 2 | 10 km | 13,0 km/h | 0,769231 h |
+| 1 | 10 km | 7,0 km/h | 1,428571… h |
+| 2 | 10 km | 13,0 km/h | 0,769231… h |
 
-20 km ÷ 2,197802 h = 9,10000… → **`average_speed` = 9,1 km/h**
+20 km ÷ (200 ⁄ 91) h → **`average_speed` = 9,1 km/h**
+
+Aucune des deux durées n'a d'écriture décimale finie : `10 ÷ 7 = 1,428571…`. Le
+**quotient**, lui, vaut exactement 9,1 — le cas vérifie donc qu'une chaîne
+d'intermédiaires non terminants retombe sur la bonne valeur, et il discrimine contre la
+moyenne naïve, qui donnerait 10,0 km/h. Il n'exerce **pas** `P-01` : aucune décision
+d'arrondi n'est prise ici. C'est à cela que sert `CT-06`.
 
 ### CT-05 — Vitesse nulle
 
 Un segment à 0,0 km/h → rejeté par `E-SPD-001`.
+
+### CT-06 — Une égalité pile sur la moitié
+
+| Segment | Distance | Vitesse | Durée |
+|---|---|---|---|
+| 1 | 30 km | 5,0 km/h | 6,000000 h |
+| 2 | 44 km | 22,0 km/h | 2,000000 h |
+
+74 km ÷ 8 h = **exactement 9,25** → **`average_speed` = 9,2 km/h**
+
+**C'est le seul cas où `P-01` décide de quelque chose.** Le quotient non arrondi tombe
+pile sur la moitié : `HALF_EVEN` publie **9,2** là où `HALF_UP` publierait 9,3. Sans lui,
+le mode d'arrondi est un paramètre qu'aucun test n'a jamais exercé — validé, écrit, et
+jamais vérifié.
+
+Les deux durées sont exactes — 6 h et 2 h — et c'est délibéré : un intermédiaire approché
+décalerait le quotient hors de l'égalité et le cas cesserait silencieusement de tester quoi
+que ce soit. Et les deux segments prennent des temps différents : le cas discrimine donc
+aussi contre la moyenne naïve, qui donnerait 13,5 km/h.
 
 ### Provenance et validation
 
@@ -212,7 +242,8 @@ Un segment à 0,0 km/h → rejeté par `E-SPD-001`.
 |---|---|
 | **Provenance** | Calculés à la main en arithmétique décimale exacte, indépendamment de toute implémentation |
 | **Comment ils ont été examinés** | Chaque durée, total et quotient a été recalculé, et chaque cas confronté à la moyenne arithmétique des vitesses pour savoir s'il discrimine |
-| **Ce que l'examen a produit** | CT-02 a été ajouté **parce qu'il ne discrimine pas** : sans lui, personne ne verrait que passer trois cas ne prouve rien |
+| **Ce que l'examen a produit** | CT-02 a été ajouté **parce qu'il ne discrimine pas** : sans lui, personne ne verrait que passer trois cas ne prouve rien. CT-06 a été ajouté quand l'examen a montré qu'aucun cas ne décidait `P-01` — CT-04, dont le titre disait « arrondi », a un quotient exact |
+| **Un document par cas** | [`../tests/`](../tests/) — ce que chaque cas existe pour attraper, et ce qu'il laisserait passer |
 | **Où ils vivent** | [`../code/src/test/resources/reference-data.csv`](../code/src/test/resources/reference-data.csv) |
 | **Validé par** | Responsable exploitation de flotte, 2026-08-22 |
 
@@ -236,6 +267,7 @@ Un segment à 0,0 km/h → rejeté par `E-SPD-001`.
 | Version | Date | Changement | Impact sur les résultats | Notice |
 |---|---|---|---|---|
 | 1.0.0 | 2026-08-22 | Version initiale | — | — |
+| 1.1.0 | 2026-08-22 | Ajout de `CT-06` ; `CT-04` renommé d'après ce qu'il teste vraiment | **Aucun sur les résultats publiés.** Aucune règle n'a changé. `CT-06` exerce `P-01`, qu'aucun cas ne décidait jusqu'ici | Implémenteurs : rejouer le jeu de référence. Une implémentation en `HALF_UP` passait avant et échoue maintenant — c'est le but |
 
 ## Annexe — Identités
 
@@ -243,22 +275,23 @@ Un segment à 0,0 km/h → rejeté par `E-SPD-001`.
 
 | Identifiant | UUID | Nature | Libellé |
 |---|---|---|---|
-| `SPEC-SPD-001` | `e629651e-8b0d-416e-b97a-fd9cd4ceea3a` | document | SPEC-SPD-001 — Average speed of a journey |
-| `RG-010` | `d609f740-a23b-4a73-a66e-59a20ebc5702` | règle | Duration of one leg |
-| `RG-020` | `6aa5716c-8d3a-4fc4-acba-387eba4214a1` | règle | Journey totals |
-| `RG-030` | `a8bf6497-965d-4777-a9f9-f3d2a35cec8c` | règle | Average speed |
-| `CT-01` | `5b9cfac9-fffd-46d7-bd52-3e018d83b220` | cas de test | Equal distances, different speeds |
-| `CT-02` | `af954a1c-c6b7-44f7-b1a5-1e2577390e5a` | cas de test | Equal durations |
-| `CT-03` | `55b3128b-974b-49b9-bcf2-1153ad2e878c` | cas de test | A single leg |
-| `CT-04` | `453d1761-dec3-4e0b-bdb4-23d908e52130` | cas de test | Rounding |
-| `CT-05` | `8ae25c37-0e16-4bdd-8baa-106e65af357e` | cas de test | Null speed |
-| `FN-001` | `aa32e541-ddbd-4bd1-b0cc-4bf61cc2d00b` | fonction | Leg duration |
-| `FN-002` | `6e9e8cc6-857f-497c-8fa7-6e034a83fb04` | fonction | Journey average speed |
-| `P-01` | `62f12714-40af-41b4-90fa-79c93e152c6e` | paramètre | Rounding mode of the published speed |
-| `P-02` | `b4ccd8a2-23b2-42d7-aa15-6dd5e58e3829` | paramètre | Decimals of the published speed |
-| `EX-01` | `2598ec0f-16ad-4bb3-a0df-0cfba7ea5648` | exigence | Distances and speeds are exact as entered; only the published speed is |
-| `EX-02` | `990e7004-55a7-42c4-83c6-ad45a25ea78b` | exigence | A journey has at most 200 legs; the calculation is called at most 50 t |
-| `INV-01` | `0f0e6185-bb00-480a-b3f3-03efffee34a5` | invariant | `average_speed` lies between the **slowest** and the **fastest** leg s |
-| `INV-02` | `18950bf4-58d6-4a2b-9426-20cec1f6edba` | invariant | Before rounding, `average_speed × total_duration = total_distance`. |
-| `E-SPD-001` | `30c1c2f2-56d3-49e1-bf5d-869e1dff4936` | cas d'erreur | A leg has a speed `≤ 0` |
-| `Q-01` | `b7efbab4-d912-4803-9869-ef1c89743706` | question | Should stops be counted in the duration? Today they are out of scope,  |
+| `SPEC-SPD-001` | `e629651e-8b0d-416e-b97a-fd9cd4ceea3a` | document | SPEC-SPD-001 — Vitesse moyenne d'un trajet |
+| `RG-010` | `d609f740-a23b-4a73-a66e-59a20ebc5702` | règle | Durée d'un segment |
+| `RG-020` | `6aa5716c-8d3a-4fc4-acba-387eba4214a1` | règle | Totaux du trajet |
+| `RG-030` | `a8bf6497-965d-4777-a9f9-f3d2a35cec8c` | règle | Vitesse moyenne |
+| `CT-01` | `5b9cfac9-fffd-46d7-bd52-3e018d83b220` | cas de test | Distances égales, vitesses différentes |
+| `CT-02` | `af954a1c-c6b7-44f7-b1a5-1e2577390e5a` | cas de test | Durées égales |
+| `CT-03` | `55b3128b-974b-49b9-bcf2-1153ad2e878c` | cas de test | Un seul segment |
+| `CT-04` | `453d1761-dec3-4e0b-bdb4-23d908e52130` | cas de test | Des durées qui ne tombent jamais juste |
+| `CT-05` | `8ae25c37-0e16-4bdd-8baa-106e65af357e` | cas de test | Vitesse nulle |
+| `CT-06` | `72a1fdb6-1b36-4261-b27c-8f69c72d8823` | cas de test | Une égalité pile sur la moitié |
+| `FN-001` | `aa32e541-ddbd-4bd1-b0cc-4bf61cc2d00b` | fonction | Durée d'un segment |
+| `FN-002` | `6e9e8cc6-857f-497c-8fa7-6e034a83fb04` | fonction | Vitesse moyenne du trajet |
+| `P-01` | `62f12714-40af-41b4-90fa-79c93e152c6e` | paramètre | Mode d'arrondi de la vitesse publiée |
+| `P-02` | `b4ccd8a2-23b2-42d7-aa15-6dd5e58e3829` | paramètre | Décimales de la vitesse publiée |
+| `EX-01` | `2598ec0f-16ad-4bb3-a0df-0cfba7ea5648` | exigence | Distances et vitesses sont exactes telles que saisies ; seule la vites |
+| `EX-02` | `990e7004-55a7-42c4-83c6-ad45a25ea78b` | exigence | Un trajet compte au plus 200 segments ; le calcul est appelé au plus 5 |
+| `INV-01` | `0f0e6185-bb00-480a-b3f3-03efffee34a5` | invariant | `average_speed` est comprise entre la vitesse du segment le **plus len |
+| `INV-02` | `18950bf4-58d6-4a2b-9426-20cec1f6edba` | invariant | Avant arrondi, `average_speed × total_duration = total_distance`. |
+| `E-SPD-001` | `30c1c2f2-56d3-49e1-bf5d-869e1dff4936` | cas d'erreur | Un segment a une vitesse `≤ 0` |
+| `Q-01` | `b7efbab4-d912-4803-9869-ef1c89743706` | question | Faut-il compter les arrêts dans la durée ? Aujourd'hui ils sont hors p |

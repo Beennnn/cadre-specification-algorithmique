@@ -475,15 +475,34 @@ passe quand l'itération s'épuise — et chaque implémenteur déciderait pour 
 
 | Identifiant | UUID | Nature | Libellé |
 |---|---|---|---|
-| `SPEC-WTH-001` | `d016ba2f-3f89-4b82-92cc-e30124eb547f` | document | SPEC-WTH-001 — Daily summary of a weather station |
-| `RG-005` | `154eba7a-a195-45cd-85ce-a25c6488c7f8` | règle | What the summary identifies |
-| `RG-010` | `8c70a047-add6-44ca-be32-bde0cfe2ae3f` | règle | Usable readings |
-| `RG-020` | `d94a065b-1bf3-4a0e-bc6e-488713d5da24` | règle | Minimum number of readings |
-| `RG-030` | `830ed5d0-0f38-4489-a084-42d3a5e7f00a` | règle | Iterative outlier rejection |
-| `RG-040` | `4fe6018e-437e-401b-b4e1-30cb153b7788` | règle | Statistics |
-| `RG-050` | `1d9ad939-2231-4a94-8e2a-01b72c5d94f8` | règle | Frost episodes |
-| `RG-060` | `efe07b5d-a903-4138-860d-bd0f6005a17d` | règle | Quality label |
-| `CT-01` | `bf599ac6-916a-4a89-b7b4-8985a6d093b6` | cas de test | One outlier, converges, one frost episode |
-| `CT-02` | `a6b6ce38-a651-4269-bdb2-3bea51583d09` | cas de test | No outlier |
-| `CT-03` | `4784e57e-41d9-4424-bd92-2d7fa1cf0152` | cas de test | Not enough usable readings |
+| `SPEC-WTH-001` | `d016ba2f-3f89-4b82-92cc-e30124eb547f` | document | SPEC-WTH-001 — Relevé quotidien d'une station météo |
+| `RG-005` | `154eba7a-a195-45cd-85ce-a25c6488c7f8` | règle | Ce que le relevé identifie |
+| `RG-010` | `8c70a047-add6-44ca-be32-bde0cfe2ae3f` | règle | Lectures exploitables |
+| `RG-020` | `d94a065b-1bf3-4a0e-bc6e-488713d5da24` | règle | Nombre minimal de lectures |
+| `RG-030` | `830ed5d0-0f38-4489-a084-42d3a5e7f00a` | règle | Rejet itératif des valeurs aberrantes |
+| `RG-040` | `4fe6018e-437e-401b-b4e1-30cb153b7788` | règle | Statistiques |
+| `RG-050` | `1d9ad939-2231-4a94-8e2a-01b72c5d94f8` | règle | Épisodes de gel |
+| `RG-060` | `efe07b5d-a903-4138-860d-bd0f6005a17d` | règle | Étiquette de qualité |
+| `CT-01` | `bf599ac6-916a-4a89-b7b4-8985a6d093b6` | cas de test | Une aberrante, convergence, un épisode de gel |
+| `CT-02` | `a6b6ce38-a651-4269-bdb2-3bea51583d09` | cas de test | Aucune aberrante |
+| `CT-03` | `4784e57e-41d9-4424-bd92-2d7fa1cf0152` | cas de test | Pas assez de lectures exploitables |
 | `CT-04` | `45f29eca-fd22-4d17-8b9d-e9817c3f52f8` | cas de test | Non-convergence |
+| `P-01` | `8abfb819-5321-4a6a-a86b-acb6e3767455` | paramètre | Facteur de rejet des aberrantes |
+| `P-02` | `66f9866a-bd25-4d1c-9bdc-f2a97a1c63af` | paramètre | Nombre maximal de tours de rejet |
+| `P-03` | `fa573126-d4e0-433c-8836-d48b19b123dd` | paramètre | Nombre minimal de lectures pour un relevé |
+| `P-04` | `ab868262-f8a7-4149-a84a-f316b2d26c6f` | paramètre | Mode d'arrondi de la moyenne publiée |
+| `P-05` | `5eb6502c-2198-41c1-8161-4eb05309c758` | paramètre | Décimales de la moyenne publiée |
+| `P-06` | `8b586410-483c-49d4-b1ba-3c78341b8593` | paramètre | Seuil de gel |
+| `EX-01` | `f9ce6fbe-3f85-4bb0-8a4d-f7ec0d535568` | exigence | La double précision suffit : les lectures portent une décimale et une  |
+| `EX-02` | `245000d6-c226-4d14-b56a-8ff7be643e9c` | exigence | 1 440 lectures par station et par jour, 3 000 stations, un relevé par  |
+| `EX-03` | `745def66-32a8-4ca1-a2b5-6ba8acdb612b` | exigence | Le relevé est **rejouable à l'identique** depuis les lectures archivée |
+| `INV-01` | `53654d26-cf42-4131-9b28-a5eb4a831652` | invariant | `retained_count + rejected_count = COUNT OF usable`. Aucune lecture ne |
+| `INV-02` | `df4d5585-6cf0-4547-8f5e-0d288572b1fa` | invariant | `min_temperature ≤ mean_temperature ≤ max_temperature`, à l'arrondi de |
+| `INV-03` | `3f8c34ce-99ef-485f-8fc6-2e9609889fa8` | invariant | Les épisodes de gel sont **disjoints** et par `started_at` croissant.  |
+| `INV-04` | `6edd9e11-c50d-4a91-971c-6a73a451c191` | invariant | Le résultat est **invariant par permutation** des lectures d'entrée. ` |
+| `INV-05` | `87b0a976-8188-4f50-bded-49672142f3ae` | invariant | `retained_count ≥ P-03`, toujours. En dessous, `RG-020` a rejeté avant |
+| `E-WTH-001` | `7738b38a-880e-4e81-b601-a3ba78e78d3a` | cas d'erreur | Deux lectures portent le même `recorded_at` |
+| `E-WTH-002` | `8342a539-8aff-457a-aab7-838f3cf5de88` | cas d'erreur | Un `recorded_at` sort de `observation_date` |
+| `E-WTH-003` | `ea4adb82-d849-49ff-9724-1c18491649a7` | cas d'erreur | Moins de `P-03` lectures exploitables |
+| `Q-01` | `bad2cdd9-e127-4b3c-9ad7-5275df9e6cd1` | question | Une station dont le relevé est `SUSPECT` trois jours de suite doit-ell |
+| `Q-02` | `9beb66b7-d8f8-4e69-b944-8f26f600394f` | question | `P-01` doit-il dépendre de la saison ? La dispersion hivernale est nat |

@@ -1,4 +1,4 @@
-// Implementation of SPEC-SPD-001 — Average speed of a journey, version 1.0.0.
+// Implementation of SPEC-SPD-001 — Average speed of a journey, version 1.1.0.
 //
 // Each element carries @ImplementsSpec with the identifiers it covers. That annotation
 // is what the coverage tool reads: starting from a rule you find the code, and starting

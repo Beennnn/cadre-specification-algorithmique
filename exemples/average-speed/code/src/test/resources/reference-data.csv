@@ -1,4 +1,4 @@
-# Reference data for SPEC-SPD-001, version 1.0.0.
+# Reference data for SPEC-SPD-001, version 1.1.0.
 #
 # This file is section 10 of the specification, transcribed without interpretation.
 # The expected values were computed by hand, independently of any implementation.
@@ -15,3 +15,4 @@ CT-02;;45.0;30:30.0|60:60.0
 CT-03;;80.0;100:80.0
 CT-04;;9.1;10:7.0|10:13.0
 CT-05;E-SPD-001;;60:30.0|40:0.0
+CT-06;;9.2;30:5.0|44:22.0
