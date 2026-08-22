@@ -13,6 +13,11 @@ rester vraies.
 > **Pressé ?** Ouvrez **[le plus petit exemple](exemples/average-speed/)** : deux fonctions,
 > trois règles, six cas de test, et la méthode entière déroulée en petit. Cinq minutes
 > suffisent à décider si la démarche vous parle.
+>
+> **Vous devez la présenter à une équipe ?**
+> **[PREMIERE-SEANCE.md](PREMIERE-SEANCE.md)** donne le déroulé d'une réunion de
+> vingt-cinq minutes : quoi montrer, dans quel ordre, quoi laisser fermé, et quoi
+> demander à la fin.
 
 ---
 
@@ -206,6 +211,7 @@ qu'un programme l'a produit, sans l'examiner**.
 | **[GLOSSAIRE.md](GLOSSAIRE.md)** | Le vocabulaire de la méthode elle-même |
 | **[REFERENCES.md](REFERENCES.md)** | D'où viennent les idées, ce qu'on leur emprunte et ce qu'on écarte |
 | **[FAQ.md](FAQ.md)** | Les objections fréquentes et leurs réponses |
+| **[PREMIERE-SEANCE.md](PREMIERE-SEANCE.md)** | Le déroulé d'une réunion de présentation : vingt-cinq minutes, une démonstration en direct, et une demande |
 | **[CHANTIER.md](CHANTIER.md)** | L'état des travaux, les décisions prises, ce qui reste ouvert |
 
 ## L'outillage

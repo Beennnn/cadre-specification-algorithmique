@@ -84,7 +84,7 @@ sans comportement d'absence), et ceux qui demandent un jugement.
 | D | **Un exemple « avant / après »** : une même règle mal spécifiée puis bien spécifiée | très pédagogique, pas encore écrit |
 | E | **Le nom du dépôt** — `cadre-specification-algorithmique` est étroit depuis que l'architecture fonctionnelle est couverte | renommage GitHub indolore ; `atlas-fonctionnel` avait été proposé |
 | F | **Protéger `main`** en exigeant une revue, et créer un label `question-ouverte` | cohérence : le dépôt doit s'appliquer à lui-même sa propre gouvernance (`CADRE.md` §6.3) |
-| G | **Une version diaporama** pour présenter la démarche en interne | évoqué, non commencé |
+| ~~G~~ | ~~Une version diaporama~~ — **tranché : pas de diaporama.** `PREMIERE-SEANCE.md` donne le déroulé d'une réunion de 25 minutes, avec une démonstration en direct plutôt que des captures | fait |
 | ~~H~~ | ~~Mécaniser `C-05` à `C-13`~~ — **fait pour `C-08`, `C-10`, `C-11`, `C-13`**, ainsi que `C-35`/`C-36` dans la passe globale. Restent `C-05`, `C-09`, `C-12` | partiellement fait |
 | H2 | ~~Mécaniser `C-05` à `C-13`~~ (ancienne ligne) (valeur magique, `IF` sans `ELSE`, arrondi sans sens, superlatif sans départage) — demande une analyse du pseudo-langage, pas seulement du markdown | à construire |
 | I | ~~Les avertissements `C-01`/`C-02`~~ — **tranché** : le vocabulaire des règles a été aligné sur les identifiants du contrat. Zéro avertissement | fait |
