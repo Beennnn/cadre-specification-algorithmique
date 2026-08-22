@@ -87,7 +87,8 @@ java    outils/Verifier.java              # seconde implémentation : même verd
 
 **Tout nombre publié dans un exemple doit avoir été calculé et vérifié**, jamais estimé.
 Les jeux d'essai des exemples ont tous été recalculés indépendamment (Python, `Decimal`
-pour les montants, formules fermées pour la physique). Si vous modifiez un exemple,
+décimal exact quand une conservation doit être stricte, flottant quand la grandeur est
+elle-même incertaine). Si vous modifiez un exemple,
 **recalculez** — un chiffre faux dans un dépôt qui prêche la rigueur le disqualifie.
 
 Valeurs de référence du fil rouge (véhicule 1 800 kg, Cx·S 0,64 m², Crr 0,010,

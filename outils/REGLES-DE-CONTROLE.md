@@ -91,7 +91,7 @@ le plus souvent : personne ne vérifie spontanément que le vingt-troisième par
 |---|---|---|
 | `C-08` | **Tout `IF` a son `ELSE`.** | Le comportement du cas non traité est décidé par le compilateur |
 | `C-09` | **Toute table de décision est complète et non redondante** : chaque combinaison des entrées apparaît dans exactement une ligne. | Incomplète, elle laisse un trou ; redondante, elle se contredit |
-| `C-10` | **Tout arrondi précise** le nombre de décimales, le sens, et l'étape à laquelle il intervient. | Deux implémentations correctes divergent d'un centime |
+| `C-10` | **Tout arrondi précise** le nombre de décimales, le sens, et l'étape à laquelle il intervient. | Deux implémentations correctes divergent d'un pas |
 | `C-11` | **Tout superlatif a une règle de départage** : « le plus petit », « le meilleur », « le premier » — et s'il y en a deux ? | Le résultat dépend de l'ordre de lecture des données, donc de l'implémentation |
 | `C-12` | **Toute entrée facultative a un comportement défini en cas d'absence**, et le sens du repli est explicite. | Le développeur choisit le repli, presque toujours le plus commode plutôt que le plus prudent |
 | `C-13` | **Tout calcul itératif déclare** son critère d'arrêt, son nombre maximal d'itérations, **et ce qui est rapporté en cas de non-convergence**. | Le troisième point est presque toujours oublié : le programme renvoie son dernier itéré comme s'il avait convergé |

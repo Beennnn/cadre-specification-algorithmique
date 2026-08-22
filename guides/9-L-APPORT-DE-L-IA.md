@@ -59,7 +59,7 @@ Puis la consigne prête à l'emploi : [`outils/PROMPT-RELECTURE-IA.md`](../outil
 | **2–3 Découper, nommer** | Proposer un découpage candidat à partir de documents existants ; repérer les verbes fourre-tout (« gérer », « traiter ») et les noms qui désignent un endroit plutôt qu'un résultat ; proposer des termes de glossaire | Le métier — elle ignore qui décide de quoi dans l'organisation |
 | **3 Données** | Repérer les données citées sans source, sans unité, sans comportement d'absence | Le métier |
 | **4 Écrire** | Reformuler de la prose en pseudo-langage ; transformer des `IF` imbriqués en table de décision ; signaler une boucle qui pourrait être une opération d'ensemble | Le métier — **elle ne fournit jamais la règle** |
-| **5 Jeu d'essai** | **Proposer les cas aux limites qu'on n'a pas pensés** : zéro, vide, un seul élément, valeur exactement au seuil, ex æquo, demi-centime, bascule de date, dépassement de plafond. Calculer les résultats attendus | Le métier — les résultats restent des **candidats jusqu'à examen** |
+| **5 Jeu d'essai** | **Proposer les cas aux limites qu'on n'a pas pensés** : zéro, vide, un seul élément, valeur exactement au seuil, ex æquo, quotient pile sur une égalité d'arrondi, bascule de date, itération qui s'épuise. Calculer les résultats attendus | Le métier — les résultats restent des **candidats jusqu'à examen** |
 | **7–8 Valider** | Tout ce qui précède, en une passe exhaustive | Les trois relecteurs |
 | **10 Coder et tester** | Produire une implémentation candidate ; appliquer les **règles de codage** de l'équipe ; écrire **commentaires et documentation** ; poser les **annotations de traçabilité** vers la spécification et en vérifier la cohérence ; transformer chaque `CT-xx` en test nommé ; dériver des tests de propriété depuis les invariants — voir ci-dessous | Le développeur, qui assume l'architecture, la qualité dans la durée et ce qu'il livre |
 | **11 Écarts** | Comparer obtenu et attendu **poste par poste le long de la chaîne**, localiser le premier point de divergence, proposer des hypothèses de cause | Le métier — **elle ne juge pas si l'écart est significatif** |
@@ -95,7 +95,7 @@ et qu'un relecteur humain fait de moins en moins bien à mesure que le fichier s
 
 Un bon commentaire ne répète pas le code : il dit **pourquoi**. Et le « pourquoi », dans
 cette méthode, est déjà écrit — ce sont les notes de justification des règles
-(« *Pourquoi « le plus petit » et pas « le prix promotionnel »* »).
+(« *Pourquoi « le plus petit identifiant » et pas « le premier de la liste »* »).
 
 > **L'IA fait ici un transfert, pas une invention** : elle reporte dans le code la
 > justification que le métier a écrite dans la spécification. C'est ce qui évite qu'un
@@ -139,7 +139,7 @@ Ces limites ne sont pas des défauts de maturité. Elles sont **structurelles**.
 
 | | |
 |---|---|
-| **Dire si la règle est la bonne règle** | Une règle peut être parfaitement claire, cohérente et complète — **et fausse**. Que la remise démarre à 3 articles quand la politique commerciale en vigueur dit 4 ne se lit dans aucun document : cela ne se sait que du métier (`H-06`) |
+| **Dire si la règle est la bonne règle** | Une règle peut être parfaitement claire, cohérente et complète — **et fausse**. Qu'on écarte une lecture à deux écarts-types quand le protocole en vigueur en retient trois ne se lit dans aucun document : cela ne se sait que du métier (`H-06`) |
 | **Juger qu'un écart est acceptable** | C'est un arbitrage entre des conséquences, pas un calcul |
 | **Voir ce dont personne n'a jamais parlé** | **C'est la limite la plus importante** — voir l'explication ci-dessous |
 | **Assumer** | Elle n'a pas de mandat et ne rend de comptes à personne |
@@ -152,7 +152,7 @@ d'une troisième dont personne n'a jamais parlé.
 | | |
 |---|---|
 | **Un trou avec des bords — elle le voit** | Un `IF` sans `ELSE` : le `IF` est écrit, son incomplétude est visible dans le texte. Une entrée déclarée qu'aucune règle n'emploie : les deux bouts sont là, c'est leur rapport qui cloche |
-| **Un trou sans bords — elle ne le voit pas** | Personne ne s'est jamais demandé *« et si deux produits ont exactement le même prix ? »*. Alors aucune règle ne parle d'égalité, le glossaire n'a pas de terme pour ça, aucun cas de test n'en approche. **Le document est parfaitement cohérent** — il lui manque simplement une question que personne n'a posée |
+| **Un trou sans bords — elle ne le voit pas** | Personne ne s'est jamais demandé *« et si deux composants ont exactement la même fraction cible ? »*. Alors aucune règle ne parle d'égalité, le glossaire n'a pas de terme pour ça, aucun cas de test n'en approche. **Le document est parfaitement cohérent** — il lui manque simplement une question que personne n'a posée |
 
 C'est structurel, et aucun progrès des modèles n'y changera rien : **on ne peut pas
 détecter l'absence de ce qui n'a jamais existé nulle part**. L'IA travaille sur ce qui est

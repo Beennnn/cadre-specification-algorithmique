@@ -568,12 +568,12 @@ moves.
 | `P-06` | `8b586410-483c-49d4-b1ba-3c78341b8593` | paramètre | Frost threshold |
 | `EX-01` | `f9ce6fbe-3f85-4bb0-8a4d-f7ec0d535568` | exigence | Double precision is enough **for the statistics** — readings carry one |
 | `EX-02` | `245000d6-c226-4d14-b56a-8ff7be643e9c` | exigence | 1 440 readings per station per day, 3 000 stations, one summary per st |
-| `EX-03` | `745def66-32a8-4ca1-a2b5-6ba8acdb612b` | exigence | The summary is **replayable identically** from the archived readings,  |
+| `EX-03` | `745def66-32a8-4ca1-a2b5-6ba8acdb612b` | exigence | The summary is **replayable identically** from the archived readings, |
 | `INV-01` | `53654d26-cf42-4131-9b28-a5eb4a831652` | invariant | `retained_count + rejected_count = COUNT OF usable`. No reading disapp |
 | `INV-02` | `df4d5585-6cf0-4547-8f5e-0d288572b1fa` | invariant | `min_temperature ≤ mean_temperature ≤ max_temperature`, up to the roun |
-| `INV-03` | `3f8c34ce-99ef-485f-8fc6-2e9609889fa8` | invariant | Frost episodes are **disjoint** and in increasing order of `started_at |
-| `INV-04` | `6edd9e11-c50d-4a91-971c-6a73a451c191` | invariant | The result is **invariant under permutation** of the input readings. ` |
-| `INV-05` | `87b0a976-8188-4f50-bded-49672142f3ae` | invariant | `retained_count ≥ P-03`, always. Below that, `RG-020` rejected before  |
+| `INV-03` | `3f8c34ce-99ef-485f-8fc6-2e9609889fa8` | invariant | Frost episodes are **disjoint** and in increasing order of started_at |
+| `INV-04` | `6edd9e11-c50d-4a91-971c-6a73a451c191` | invariant | The result is **invariant under permutation** of the input readings. |
+| `INV-05` | `87b0a976-8188-4f50-bded-49672142f3ae` | invariant | `retained_count ≥ P-03`, always. Below that, `RG-020` rejected before |
 | `E-WTH-001` | `7738b38a-880e-4e81-b601-a3ba78e78d3a` | cas d'erreur | Two readings carry the same `recorded_at` |
 | `E-WTH-002` | `8342a539-8aff-457a-aab7-838f3cf5de88` | cas d'erreur | A `recorded_at` falls outside `observation_date` |
 | `E-WTH-003` | `ea4adb82-d849-49ff-9724-1c18491649a7` | cas d'erreur | Fewer than `P-03` usable readings |

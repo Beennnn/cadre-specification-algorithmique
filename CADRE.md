@@ -105,8 +105,9 @@ ni d'être maintenu dix ans. On lui demande après coup ce qu'on ne lui avait pa
 #### Le vrai point commun
 
 **Le code mélange indissociablement l'intention et la mise en œuvre.** On ne distingue
-plus « on retient le prix le plus bas » — une règle de gestion, décidée, opposable — de
-« on trie la liste puis on prend le premier » — un choix d'implémentation, remplaçable.
+plus « le résidu va au composant de plus grande fraction » — une règle de gestion,
+décidée, opposable — de « on trie la liste puis on prend le premier » — un choix
+d'implémentation, remplaçable.
 
 Et l'effet symétrique est tout aussi coûteux : **quand la spécification est floue, c'est
 le développeur qui tranche des questions métier**, sans le savoir et sans mandat. Il
@@ -128,8 +129,8 @@ Ce n'est pas une répartition de tâches, c'est une répartition de **souveraine
 - L'IT n'a pas à justifier ses choix techniques auprès du métier — elle les fait, elle
   en assume les conséquences (coût, délai, exploitabilité).
 - **Aucun des deux ne se prononce dans le champ de l'autre.** Une spécification qui dit
-  « stocker dans une table indexée sur la référence produit » est aussi fautive qu'un
-  développeur qui décide seul d'arrondir au centime inférieur.
+  « stocker les composants dans une table indexée » est aussi fautive qu'un développeur
+  qui décide seul d'arrondir les égalités vers le haut plutôt qu'au pair.
 
 #### Ce que chacun décide, et ce qu'il ne décide pas
 
@@ -213,8 +214,8 @@ la cause majoritaire des écarts entre la spécification et le programme. Une
 spécification doit les traiter explicitement, toujours :
 
 1. **L'arrondi.** À quelle étape ? À combien de décimales ? Dans quel sens
-   (commercial, inférieur, supérieur, au pair) ? Et surtout : *que fait-on du centime
-   résiduel* quand la somme des lignes arrondies ne retombe pas sur le total arrondi ?
+   (au plus proche, inférieur, supérieur, au pair) ? Et surtout : *que fait-on du
+   résidu* quand la somme des valeurs arrondies ne retombe pas sur le total attendu ?
 2. **L'ordre des opérations non commutatives.** Sommer mille mesures en virgule
    flottante ne donne pas le même résultat selon l'ordre : additionnées de la plus
    petite à la plus grande, ou dans l'ordre d'acquisition, les derniers chiffres
@@ -500,8 +501,9 @@ spécification » est **trop large** et fait perdre de l'information utile.
 > **Le discriminant : la famille de type est une propriété du domaine ; la
 > représentation est un choix du développeur.**
 >
-> « Un entier entre 1 et 999 » est une affirmation métier — c'est le domaine qui dit qu'on
-> ne commande pas 2,5 articles ni 10 000. « `int16` » est une décision d'implémentation.
+> « Un entier entre 1 et 999 » est une affirmation métier — c'est le domaine qui dit qu'un
+> lot ne contient pas 2,5 composants, ni 10 000. « `int16` » est une décision
+> d'implémentation.
 > De même, « décimal exact à 2 décimales » est métier — le [§4](#4-la-fiche-de-contraintes--ce-qui-permet-de-choisir-le-langage-et-larchitecture)
 > montre que cette seule ligne peut éliminer des langages entiers ; « `BigDecimal` » est technique.
 
@@ -641,8 +643,8 @@ privilégiée et le facteur de conversion. C'est elle qu'on ouvre quand un chiff
 faux d'un facteur rond.
 
 **Les règles emploient les identifiants du contrat, écrits à l'identique.** Si le contrat
-déclare `prix_catalogue_ht`, la règle écrit `prix_catalogue_ht` — pas « le prix
-catalogue ». La prose autour peut employer le terme du glossaire ; le pseudo-code, lui,
+déclare `target_mass_fraction`, la règle écrit `target_mass_fraction` — pas « la fraction
+cible ». La prose autour peut employer le terme du glossaire ; le pseudo-code, lui,
 emploie l'identifiant. Deux raisons :
 
 - le lien entre contrat et règle devient **vérifiable mécaniquement** (`C-01` à `C-03`) ;
@@ -653,9 +655,9 @@ Quand un champ est imbriqué et que son nom se répète d'une structure à l'aut
 dans deux objets différents —, on écrit le **chemin complet** : `boisson.masse`,
 `ajout.masse`.
 
-Pour les montants, on précise en plus, une fois pour toutes, dans la spécification :
-la devise, le nombre de décimales, le mode d'arrondi par défaut, et l'étape à laquelle
-l'arrondi intervient.
+Pour toute grandeur destinée à être publiée, on précise en plus, une fois pour toutes,
+dans la spécification : l'unité pivot, le nombre de décimales, le mode d'arrondi par
+défaut, et **l'étape à laquelle l'arrondi intervient**.
 
 ### 2.4 Nommer : portée globale et immutabilité
 
@@ -715,7 +717,7 @@ table — elle est dans la boîte. C'est ce qui distingue `force_totale`, qui pa
 
 | Ce qu'on écrit | Ce qu'on n'écrit pas |
 |---|---|
-| `reduction_fidelite_ttc` | `réduction_fidélité_ttc` |
+| `battery_temperature` | `température_batterie` |
 | `alpha`, `rho`, `sigma` | `α`, `ρ`, `σ` |
 | `delta_temperature` | `Δtemperature` |
 
@@ -811,7 +813,7 @@ nominal_mass  →  rounded_mass  →  dispensed_mass
 ```
 
 Ces trois grandeurs ont la même famille, la même unité, la même plage. **Rien d'autre
-qu'un nom ne peut les distinguer** — et les confondre change le montant facturé. C'est
+qu'un nom ne peut les distinguer** — et les confondre change la masse pesée. C'est
 exactement le cas d'usage que Spolsky défend, et c'est déjà notre règle d'immutabilité.
 
 > **En résumé : on ne code dans le nom que ce qui n'est déclaré nulle part ailleurs.** Ce
@@ -836,7 +838,7 @@ mesure :
 | | |
 |---|---|
 | **La chaîne des noms est la trace du calcul** | on lit l'algorithme dans les noms, sans dérouler les règles |
-| **Aucune ambiguïté sur « à quel moment »** | « le montant net » ne veut plus dire trois choses selon l'endroit où on lit |
+| **Aucune ambiguïté sur « à quel moment »** | « la masse » ne veut plus dire trois choses selon l'endroit où on lit |
 | **Le parcours devient vérifiable** | un nom valorisé deux fois est un défaut détectable mécaniquement |
 | **Les cas de test se lisent** | chaque étape de la trace de calcul porte le nom de son résultat |
 | **Le développeur reste libre** | l'immutabilité est une propriété du **texte**, pas de l'implémentation : rien n'interdit de réutiliser une case mémoire |
@@ -863,9 +865,9 @@ l'architecture**.
 
 | ✗ On impose un parcours | ✓ On décrit un résultat |
 |---|---|
-| `POUR i DE 1 À n : total = total + ligne[i].montant` | `LET total = SUM OF montant DES lignes` |
-| « on parcourt les offres et on garde la meilleure » | « l'offre retenue est celle de prix minimal ; en cas d'égalité, celle de référence alphabétiquement la plus petite » |
-| « on boucle tant qu'il reste du budget » | « on retient le plus grand sous-ensemble de commandes dont la somme n'excède pas le budget, par ordre de priorité décroissante » |
+| `POUR i DE 1 À n : total = total + segment[i].energie` | `LET total = SUM OF energie OVER segments` |
+| « on parcourt les composants et on garde le bon » | « le composant retenu est celui de plus grande fraction ; en cas d'égalité, celui dont l'identifiant est alphabétiquement le plus petit » |
+| « on boucle tant qu'il reste de l'énergie » | « le point d'autonomie est la distance du **premier** point où l'énergie cumulée atteint le budget utilisable » |
 
 Formulé en résultat, le développeur peut choisir une somme en mémoire, une agrégation
 SQL, un calcul distribué ou un cache incrémental : **aucun de ces choix ne peut trahir
@@ -924,13 +926,16 @@ Dès qu'une règle combine plus de deux conditions, on abandonne les `IF` imbriq
 une table. Une table de décision a une propriété que le texte n'a pas : **on voit tout
 de suite s'il manque une ligne**.
 
-| Code promo | Remise quantité déjà appliquée | Client adhérent | Remise panier appliquée |
+| Cible déjà atteinte | Cible sous l'ambiante + `P-07` | Instant dans l'horizon | Résultat |
 |---|---|---|---|
-| absent | — | — | aucune |
-| non cumulable | oui | — | aucune (`RG-032`) |
-| non cumulable | non | — | selon barème |
-| cumulable | — | — | selon barème |
-| expiré | — | — | erreur `E-PROMO-002` |
+| oui | — | — | instant = 0, `target_already_reached` |
+| non | oui | — | `target_unreachable`, aucun instant |
+| non | non | non | `target_beyond_horizon`, aucun instant |
+| non | non | oui | l'instant est produit, à `P-05` près |
+
+*Table réelle : c'est `RG-050` de [SPEC-THM-001](exemples/cooling/spec/SPEC-THM-001.en.md).
+Les trois refus sont distincts parce qu'ils décrivent trois situations physiquement
+différentes — une valeur absente seule les confondrait.*
 
 Règle de complétude : **toute combinaison possible des colonnes d'entrée apparaît dans
 exactement une ligne**, `—` signifiant « quelle que soit la valeur ». Si une
@@ -990,7 +995,7 @@ l'autre, la référence casse. Le libellé, lui, change encore plus souvent.
 
 | Couche | Exemple | Change-t-elle ? | À quoi elle sert |
 |---|---|---|---|
-| **Le libellé** | « Prix unitaire retenu » | souvent | à lire |
+| **Le libellé** | « Bilan des forces sur un segment » | souvent | à lire |
 | **L'identifiant lisible** | `RG-010` | au déplacement, à la fusion | à citer entre humains |
 | **L'identité** | `980c488b-daf2-4834-b00e-c8d45668671a` | **jamais** | à référencer de façon sûre |
 
@@ -1228,12 +1233,12 @@ débats « c'est ton défaut / c'est le mien » par une lecture de deux lignes.
 
 **Deux exigences de forme, non négociables :**
 
-- **Un contrat sans unité ne vaut rien.** `montant : nombre` n'apporte rien que le code ne
-  disait déjà. Toute la valeur est dans l'unité, l'échelle, le référentiel, la précision et le
+- **Un contrat sans unité ne vaut rien.** `temperature : nombre` n'apporte rien que le code
+  ne disait déjà. Toute la valeur est dans l'unité, l'échelle, le référentiel, la précision et le
   domaine — c'est-à-dire dans ce que le typage d'un langage ne dit pas.
 - **Les règles emploient les identifiants du contrat, à l'identique** (§2.3). Si le contrat
-  déclare `prix_catalogue_ht` et que la règle parle du « prix catalogue », le lien n'est
-  plus vérifiable et le vocabulaire commence à diverger.
+  déclare `battery_temperature` et que la règle parle de « la température de la sonde », le
+  lien n'est plus vérifiable et le vocabulaire commence à diverger.
 
 **Ce qu'un contrat n'est pas** : une structure de données, une signature de fonction, un
 schéma d'échange. Ceux-là dérivent du contrat, dans un langage donné, et changeront
@@ -1364,11 +1369,11 @@ pas, parce que lui n'est pas vérifiable.
 
 Sur la section 6, une précision qui a des conséquences architecturales lourdes :
 
-> **Un paramètre n'est pas une règle.** Une règle dit « on applique une remise de
-> quantité au-delà d'un certain seuil ». Un paramètre dit « ce seuil vaut 3 unités
+> **Un paramètre n'est pas une règle.** Une règle dit « on écarte une lecture trop
+> éloignée de la moyenne du jour ». Un paramètre dit « *trop* vaut deux écarts-types
 > depuis le 1er janvier ». Les deux ne changent ni à la même fréquence, ni par les
 > mêmes personnes, ni selon le même circuit d'approbation. Les mélanger, c'est
-> transformer chaque décision commerciale en projet informatique.
+> transformer chaque décision métier en projet informatique.
 
 Chaque paramètre est décrit par : identifiant, libellé, valeur, unité, **qui peut le
 changer** (une personne ou un rôle nommé), **circuit de modification** (qui valide),
@@ -1463,8 +1468,9 @@ développeur un arbitrage entre la sûreté et l'expérience client.
 
 Deux commentaires qui valent le détour :
 
-**Le couple « exactitude / déterminisme » décide souvent du langage.** « Les montants
-sont exacts au centime, sans erreur de représentation » élimine le flottant binaire et
+**Le couple « exactitude / déterminisme » décide souvent du langage.** « Les masses
+pesées sont des multiples exacts du pas de balance, et leur somme égale la masse cible
+sans écart » élimine le flottant binaire et
 oriente vers les langages disposant d'un décimal natif ou d'une bibliothèque décimale
 éprouvée. « Le résultat doit être identique quel que soit l'ordre de traitement »
 interdit certaines parallélisations. Le métier n'a pas besoin de savoir tout cela : il
@@ -1623,12 +1629,12 @@ Ce qu'il contient, dans cet ordre :
 
 1. **Un ou deux cas nominaux**, simples, qu'on peut suivre de tête.
 2. **Un cas riche**, qui déclenche le plus de règles possible en même temps, avec sa
-   **trace de calcul détaillée** — étape par étape, chaque montant intermédiaire écrit.
+   **trace de calcul détaillée** — étape par étape, chaque valeur intermédiaire écrite.
    C'est le cas qui sert de référence commune quand un doute apparaît, six mois plus
    tard, sur l'ordre d'application des règles.
-3. **Les cas aux limites** : zéro, vide, une seule ligne, valeur exactement égale au
-   seuil (`≥` ou `>` ?), ex æquo, montant qui tombe pile sur un demi-centime, plafond
-   atteint, date de bascule d'un paramètre, franchissement d'un changement d'année.
+3. **Les cas aux limites** : zéro, vide, un seul élément, valeur exactement égale au
+   seuil (`≥` ou `>` ?), ex æquo, quotient qui tombe pile sur une égalité d'arrondi,
+   borne atteinte, date de bascule d'un paramètre, itération qui s'épuise.
 4. **Les cas d'erreur** : pour chacun, le code d'erreur attendu et ce qui est retourné
    (rien ? un résultat partiel ?).
 5. **Une table de couverture** : pour chaque `RG-xxx`, le ou les cas qui l'exercent. Une
@@ -1639,10 +1645,10 @@ Enfin, on écrit les **propriétés** (§ invariants), qui valent pour *toutes* 
 et pas seulement pour les cas listés :
 
 ```
-INV-01  Le montant à payer est toujours supérieur ou égal à zéro.
-INV-02  La somme des montants nets des lignes est égale au montant net total.
-INV-03  Ajouter un article à un panier ne peut jamais diminuer le montant avant remise.
-INV-04  Le calcul est idempotent : recalculer un panier inchangé donne le même montant.
+INV-01  La somme des masses pesées est égale à la masse cible, exactement.
+INV-02  Toute masse pesée est un multiple entier du pas de balance.
+INV-03  Aucune masse pesée n'est négative.
+INV-04  Le résultat est invariant par permutation de la liste des composants.
 ```
 
 Ces propriétés sont un cadeau au développeur : elles se testent automatiquement sur des
@@ -1834,7 +1840,7 @@ revient.
 | **L'oracle circulaire** | Un résultat a été accepté **parce qu'un programme l'a produit**, sans examen — « c'est ce que ça sort aujourd'hui, on part de là » | Le test ne mesure plus que la cohérence du programme avec lui-même. La faute est dans l'absence de jugement, pas dans la provenance |
 | **La maquette qui survit** | La maquette technique n'a pas été abandonnée après le développement | En dix-huit mois, un second système non testé, sans responsable, dont les résultats contredisent périodiquement ceux du vrai |
 | **La spécification rétroactive** | Écrite après le code, pour la forme | On paie le coût de la démarche sans en avoir le bénéfice |
-| **Le paramètre enfermé dans la règle** | Un seuil écrit en toutes lettres au milieu du pseudo-code | Chaque décision commerciale devient une livraison logicielle |
+| **Le paramètre enfermé dans la règle** | Un seuil écrit en toutes lettres au milieu du pseudo-code | Chaque décision métier devient une livraison logicielle |
 | **La question refermée en silence** | Un `Q-xx` qui disparaît du document sans décision tracée | Quelqu'un a tranché sans mandat, et on ne saura pas qui |
 
 ---
@@ -1846,54 +1852,59 @@ Le **fil rouge** de ce dépôt — *[l'autonomie d'un véhicule
 spécification détaillée, en passant par le glossaire du domaine. C'est là qu'il faut
 aller pour voir l'ensemble s'articuler.
 
-Deux **vignettes** complètent l'illustration, plus courtes et volontairement issues de
-domaines opposés. Elles sont volontairement issues de
-domaines opposés, parce que **la même méthode y conduit à des conclusions techniques
-contraires** — ce qui est la meilleure preuve que c'est bien la spécification qui décide,
-et non l'habitude du développeur.
+Deux **vignettes** complètent l'illustration, plus courtes et issues de domaines opposés
+— parce que **la même méthode y conduit à des conclusions techniques contraires**, ce qui
+est la meilleure preuve que c'est bien la spécification qui décide, et non l'habitude du
+développeur.
 
 | | [SPEC-MAS-001](exemples/mass-balance/spec/SPEC-MAS-001.en.md) — discret et exact | [SPEC-THM-001](exemples/cooling/spec/SPEC-THM-001.en.md) — continu et approché |
 |---|---|---|
-| Le calcul | Le montant à payer d'une commande | La température d'une boisson qui refroidit |
-| Grandeurs | Montants, taux, quantités | Températures, durées, masses |
-| Exigence d'exactitude | **Exacte au centime** | **Tolérance relative** |
+| Le calcul | Doser les composants d'un lot sur une balance de résolution finie | La température d'une boisson qui refroidit |
+| Grandeurs | Masses, fractions, pas de balance | Températures, durées, masses |
+| Exigence d'exactitude | **Conservation exacte de la masse** | **Tolérance relative** |
 | Type numérique qui en découle | **Décimal exact obligatoire** | **Double précision binaire suffisante** |
 | Critère d'acceptation | Égalité stricte | Reproductibilité 10⁻⁹, justesse 10⁻⁶, validité ± 2 °C (§2.8) |
-| L'ordre des opérations | Remise ligne, puis panier, puis fidélité | Ajouter le lait tôt ou tard — deux tiers de degré d'écart |
-| Le piège central traité | Le centime résiduel d'une répartition au prorata | La non-convergence, et l'asymptote qu'on ne peut pas atteindre |
-| Ce que la liberté laissée permet | Jointure, calcul en mémoire ou cache | Forme fermée **ou** intégrateur numérique — les deux conformes |
+| L'ordre des opérations | Arrondir un **nombre de pas**, puis revenir à une masse | Ajouter le lait tôt ou tard — deux tiers de degré d'écart |
+| Le piège central traité | Le résidu de pesée : qui le reçoit, et comment on départage | La non-convergence, et l'asymptote qu'on ne peut pas atteindre |
+| Ce que la liberté laissée permet | Décimal ou entier de pas, un passage ou deux, structures au choix | Forme fermée **ou** intégrateur numérique — les deux conformes |
 
-### Ce qu'il faut regarder dans l'exemple de gestion
+### Ce qu'il faut regarder dans le bilan de masse
 
-**Les paramètres séparés des règles (§6).** Le seuil de franchise de port a un
-un responsable habilité à le changer (« Direction commerciale »), une fréquence de changement observée
-(« hebdomadaire en soldes ») et une date d'effet. L'architecte y lit immédiatement :
-*ces valeurs ne doivent pas être dans le code*.
+**Les paramètres séparés des règles (§6).** Le mode d'arrondi des doses (`P-01`) porte un
+responsable habilité à le changer (« Responsable formulation »), un circuit de validation
+et une date d'effet. L'architecte y lit immédiatement : *cette valeur ne doit pas être en
+dur dans le code*. Et la justification est là aussi — `HALF_EVEN` plutôt que `HALF_UP`,
+parce qu'arrondir « au supérieur » pousse les masses vers le haut à chaque égalité, et que
+cette dérive se cumule sur une campagne de production.
 
 **Une règle qui ne dit pas comment (`RG-010`).**
 
 ```
-RG-010  Prix unitaire retenu
-   Pour chaque ligne, le prix unitaire retenu est le plus petit
-   du prix catalogue et du prix promotionnel en vigueur à la date de commande.
-   S'il n'existe aucun prix promotionnel en vigueur, le prix catalogue est retenu.
+nominal_mass = target_batch_mass × target_mass_fraction
 ```
 
-Aucune boucle, aucun tri, aucune structure : le développeur peut résoudre cela par une
-jointure en base, un calcul en mémoire ou un cache. Aucun de ces choix ne peut trahir la
-règle.
+Aucune boucle, aucun tri, aucune structure. Le développeur choisit le type décimal, l'ordre
+de parcours, un passage ou deux sur la liste des composants. Aucun de ces choix ne peut
+trahir la règle.
 
-**Un faux ami traité (`RG-085`, le centime résiduel).** Une remise de 5,00 € répartie au
-prorata sur trois lignes donne 5,01 € après arrondi. Un développeur laissé seul face à ce
-centime prendra une décision — au hasard, et différente d'un développeur à l'autre. La
-spécification tranche : *l'écart est imputé à la ligne dont le montant net est le plus
-élevé, et en cas d'égalité à celle dont la référence produit est alphabétiquement la plus
-petite*. C'est le genre de phrase qui distingue une spécification d'une intention.
+**Ce que la règle voisine, elle, tranche (`RG-020`).** On arrondit un **nombre de pas**,
+puis on revient à une masse — et non la masse à trois décimales. Les deux se confondent
+tant que le pas vaut 0,001 kg, et divergent dès qu'il vaut 5 g. Le document le dit et
+l'explique ; sans lui, le développeur écrirait la forme naturelle, qui est fausse sur la
+moitié des balances du marché.
 
-**Un mode dégradé qui est une décision commerciale.** « Si le service de fidélité est
-indisponible, la commande est calculée sans imputation des points et le client en est
-informé ; les points ne sont pas débités. » Ce n'est pas une décision d'exploitation :
-c'est un arbitrage entre perdre une vente et mécontenter un client.
+**Un faux ami traité (`RG-050`, l'affectation du résidu).** Trois composants à 0,333333
+d'un lot de 1 kg donnent 0,999 kg après arrondi : il reste un pas de balance à placer. Un
+développeur laissé seul devant ce résidu prendra une décision — au hasard, et différente
+d'un développeur à l'autre. La spécification tranche deux fois : *le résidu va au composant
+de plus grande fraction, parce que c'est là qu'il pèse le moins en relatif ; en cas
+d'égalité, au plus petit identifiant*. La seconde moitié est celle qu'on oublie, et c'est
+elle qui rend le résultat indépendant de l'ordre de saisie (`INV-04`).
+
+**Un rejet qui est une décision métier.** Une masse cible qui n'est pas un multiple du pas
+de balance est **refusée** (`E-MAS-004`), et non ramenée au multiple le plus proche. Ce
+n'est pas une décision d'exploitation : accepter en silence produirait un lot dont la
+masse ne peut pas être conservée exactement, et personne ne le saurait.
 
 ### Ce qu'il faut regarder dans l'exemple scientifique
 
@@ -1913,7 +1924,7 @@ suite puis attendre un quart d'heure donne **55,18 °C** ; attendre puis ajouter
 donne **54,52 °C**. Mêmes ingrédients, même durée, deux tiers de degré d'écart — parce
 qu'une boisson déjà refroidie par le lait perd ensuite sa chaleur plus lentement. Aucun
 développeur ne peut deviner cela, et aucun ne doit avoir à en décider. C'est le pendant
-exact de l'ordre d'application des remises dans l'exemple de gestion.
+exact de l'arrondi au pas de balance dans le bilan de masse.
 
 **`RG-050` — refuser de répondre, de trois façons différentes.** La cible peut être déjà
 atteinte, inatteignable (sous la température ambiante), ou atteinte au-delà de l'horizon.

@@ -10,8 +10,8 @@ qui instruit l'écart**, avec le support des développeurs.*
 
 Un écart entre le résultat obtenu et le résultat attendu n'est **ni normal ni anormal en
 soi**. C'est une question à instruire, et personne d'autre que le métier ne peut la
-trancher : lui seul sait si un dixième de degré, un centime ou trois kilomètres ont une
-conséquence.
+trancher : lui seul sait si un dixième de degré, un pas de balance ou trois kilomètres
+ont une conséquence.
 
 Sans cette étape, il ne reste que deux comportements, et ils sont mauvais tous les deux :
 ouvrir un ticket de bogue pour chaque écart, ou les accepter tous en bloc parce que « ça a

@@ -799,22 +799,22 @@ fifteen years of a vehicle's life.
 | `P-03` | `ea5e594b-7ea7-4cff-9304-bbb3e4f25f72` | paramètre | Temperature factor — scale |
 | `P-04` | `4ea5c434-9869-4176-975d-1813cecfa836` | paramètre | Temperature factor used when the measurement is unavailable |
 | `EX-01` | `f25aa050-8a85-4e55-b202-b31cb0a683b8` | exigence | The computer software is written in the **MISRA C:2012** subset, manda |
-| `EX-02` | `d1f9aa40-7f4f-4ad1-a341-57f5064ff4f6` | exigence | No dynamic memory allocation** after the initialisation phase |
-| `EX-03` | `c4b092be-6904-473d-ab88-3132570724b1` | exigence | The **worst-case** execution time is bounded, measured on target, and  |
+| `EX-02` | `d1f9aa40-7f4f-4ad1-a341-57f5064ff4f6` | exigence | No dynamic memory allocation after the initialisation phase |
+| `EX-03` | `c4b092be-6904-473d-ab88-3132570724b1` | exigence | The **worst-case** execution time is bounded, measured on target, and |
 | `EX-04` | `874a1ca9-d14a-43d5-9daf-865e9b8b7fc0` | exigence | The function runs in the **non-critical partition** of the computer; i |
 | `EX-05` | `d2d7839d-11dd-4f4e-a4e6-1c0aa842c169` | exigence | The function has at most **512 KB of RAM** and assumes no garbage coll |
 | `EX-06` | `d6310e36-7c2f-4ec2-9173-abc13fcc309b` | exigence | The **route is category C2 personal data**: it does not leave the vehi |
 | `EX-07` | `fca54b2f-b68d-4a52-98d9-83f4f907b530` | exigence | The data of the non-critical partition and that of the control partiti |
-| `EX-08` | `d34bba90-81e0-4566-a9b5-afcf17b81d19` | exigence | The server service uses a language from the **approved technical list* |
+| `EX-08` | `d34bba90-81e0-4566-a9b5-afcf17b81d19` | exigence | The server service uses a language from the approved technical list* |
 | `EX-09` | `e607e38d-b669-4ace-ba48-3098e6763c09` | exigence | The **test coverage** of the embedded code reaches 100 % of branches o |
 | `INV-01` | `5afa3fa9-13fd-455a-90f9-a7d6a105894e` | invariant | On a segment with a positive or zero gradient, `segment_energy > 0` |
-| `INV-02` | `8cd75e36-1a32-4cbe-be56-1fa572e468ef` | invariant | Additivity**: splitting a segment into two halves of the same speed an |
-| `INV-03` | `e9dd2410-9fb4-485a-b8c6-b7966b7dc047` | invariant | Homogeneity**: at equal speed and gradient, doubling the distance doub |
-| `INV-04` | `faf499ce-6b1c-4b8e-af2d-1396d49bc513` | invariant | Gradient symmetry**: a round trip over the same segment consumes stric |
-| `INV-05` | `21267255-1108-4c13-adf6-5832b0069bde` | invariant | Monotonicity in speed, above the minimum-consumption speed**: see the  |
+| `INV-02` | `8cd75e36-1a32-4cbe-be56-1fa572e468ef` | invariant | Additivity: splitting a segment into two halves of the same speed and |
+| `INV-03` | `e9dd2410-9fb4-485a-b8c6-b7966b7dc047` | invariant | Homogeneity: at equal speed and gradient, doubling the distance double |
+| `INV-04` | `faf499ce-6b1c-4b8e-af2d-1396d49bc513` | invariant | Gradient symmetry: a round trip over the same segment consumes strictl |
+| `INV-05` | `21267255-1108-4c13-adf6-5832b0069bde` | invariant | Monotonicity in speed, above the minimum-consumption speed: see the no |
 | `INV-06` | `683ae5b4-21f5-4841-80c6-d1e5fa76fffa` | invariant | `range_point`, if it exists, lies between 0 and the total length of th |
 | `INV-07` | `cabb4a7c-3cc6-4b7f-840b-fa14ee4d0f4a` | invariant | The calculation is deterministic: same inputs, same outputs, profile i |
-| `INV-08` | `52d43b49-e236-4a5c-9835-ebe75ef1aecf` | invariant | The calculation is **pure**: no successive call depends on a previous  |
+| `INV-08` | `52d43b49-e236-4a5c-9835-ebe75ef1aecf` | invariant | The calculation is **pure**: no successive call depends on a previous |
 | `E-TRAJET-001` | `13e307f4-1b7a-444c-8829-d186c50601e9` | cas d'erreur | The route contains no segment |
 | `E-TRAJET-002` | `fe15e79b-a26e-4641-b826-8b0e35466f73` | cas d'erreur | A segment has a zero or negative distance or speed |
 | `E-VEHIC-001` | `3edc5a91-74d0-4ebc-aba7-6eb8e7e3352e` | cas d'erreur | An efficiency is outside the interval `]0 ; 1[` |
@@ -823,5 +823,5 @@ fifteen years of a vehicle's life.
 | `Q-02` | `3cc439b5-c892-4f1b-9b73-404b674cf47f` | question | The air density (`P-02`) is fixed. Should it be corrected for altitude |
 | `Q-03` | `e00a269d-7baf-4009-8412-13e4ccb848e8` | question | `H-2` assumes no wind. Weather forecasts are available on the server s |
 | `Q-04` | `9e5fa8d2-ece3-4239-a3f5-6e034f7cbcfd` | question | `E-VEHIC-001` and `E-RESERVE-001` are covered by no test case |
-| `Q-06` | `1ffdcc6b-2965-4ac9-a517-25affafc0b44` | question | `EX-08` imposes an approved technical list on the server side, while ` |
+| `Q-06` | `1ffdcc6b-2965-4ac9-a517-25affafc0b44` | question | `EX-08` imposes an approved technical list on the server side, while |
 | `Q-05` | `0c21b3f5-6dd0-46d4-bc12-cd24d35a5f10` | question | Settled on 2026-03-12:* does the range point round to nearest or downw |

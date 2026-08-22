@@ -495,15 +495,15 @@ commettre, et la seule que ces deux cas révèlent.
 | `P-02` | `c8a555a6-878d-4f81-afce-2434795a0886` | paramètre | Convention de signe des coordonnées |
 | `P-03` | `5b432b90-2b5c-482f-a032-922be7159f4e` | paramètre | Sens d'arrondi à la minute |
 | `P-04` | `a9c2da1c-b965-4ba5-90c9-d4635518a4ea` | paramètre | Obliquité de l'écliptique |
-| `EX-01` | `e9900cc4-7c76-48db-a91f-521b12b216d1` | exigence | Justesse : ± 2 minutes** par rapport aux éphémérides de référence, pou |
+| `EX-01` | `e9900cc4-7c76-48db-a91f-521b12b216d1` | exigence | Justesse : ± 2 minutes par rapport aux éphémérides de référence, pour |
 | `EX-02` | `4a8d293a-238f-4600-89b0-3a587757d3e8` | exigence | La **double précision binaire suffit**. La grandeur de sortie est arro |
 | `EX-03` | `3125ec69-b46f-4d89-b533-f5b6985a4e50` | exigence | Le calcul est **rejouable à l'identique** : aucune dépendance à l'horl |
 | `EX-04` | `871209e3-ca46-4ea2-8f77-455f0575b2f4` | exigence | Volumétrie : jusqu'à 5 000 appels par seconde en pointe, latence au 99 |
 | `INV-01` | `3dd144ed-ae0c-4122-a8e9-6cfe601315c0` | invariant | Si `solar_regime = NORMAL`, alors `sunrise_time < sunset_time` — le le |
 | `INV-02` | `53eadd31-c842-4683-974c-e02c56b7aeb3` | invariant | `sunrise_time` et `sunset_time` sont **tous deux** `ABSENT` ou tous de |
 | `INV-03` | `062582ac-178f-486e-ab1e-94ccce05a0ca` | invariant | `−23,44° ≤ declination ≤ +23,44°`, quelle que soit la date. Une valeur |
-| `INV-04` | `8cad23b6-1739-4778-899a-8b3d7c2958fd` | invariant | Symétrie par la longitude** : à latitude égale, décaler la longitude d |
-| `INV-05` | `77f14f85-1c37-4cb0-b59c-3cd5e9ea5c33` | invariant | `solar_regime ≠ NORMAL` implique ` |
+| `INV-04` | `8cad23b6-1739-4778-899a-8b3d7c2958fd` | invariant | Symétrie par la longitude : à latitude égale, décaler la longitude d |
+| `INV-05` | `77f14f85-1c37-4cb0-b59c-3cd5e9ea5c33` | invariant | `solar_regime ≠ NORMAL` implique |
 | `E-AST-001` | `baea8eed-a39c-46c8-96e6-543b35802c95` | cas d'erreur | `latitude` hors de `[−90, +90]` |
 | `E-AST-002` | `b7f23f9b-aa20-4597-9d4b-ca157a334135` | cas d'erreur | `longitude` hors de `[−180, +180]` |
 | `Q-01` | `68ad3237-3c15-4f58-a8d6-ee9383bf46e2` | question | Faut-il exposer les crépuscules civil, nautique et astronomique ? Ce s |

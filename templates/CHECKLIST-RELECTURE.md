@@ -33,7 +33,7 @@ qu'à ce qu'eux ne savent pas voir — voir [guide 5](../guides/5-VALIDER.md).
 ## Relecteur métier — les huit pièges (CADRE.md §1.5)
 
 - [ ] **Arrondis** — à quelle étape, combien de décimales, quel sens, et **où va le
-      centime résiduel** ?
+      résidu** quand la somme des valeurs arrondies ne retombe pas sur le total attendu ?
 - [ ] **Ordre des opérations** — si l'ordre change le résultat, est-il écrit ? justifié ?
 - [ ] **Ex æquo** — chaque « le plus petit », « le meilleur », « le premier » a-t-il une
       règle de départage ?
@@ -46,7 +46,7 @@ qu'à ce qu'eux ne savent pas voir — voir [guide 5](../guides/5-VALIDER.md).
 - [ ] **Bornes** — `≥` ou `>` ? un plafond écrête-t-il ou rejette-t-il ? une itération
       a-t-elle un maximum, et que se passe-t-il si on l'atteint ?
 - [ ] **Indisponibilité** — que fait-on si une dépendance tombe ? (c'est une décision
-      commerciale, pas d'exploitation)
+      métier, pas d'exploitation)
 
 ## Relecteur métier — trois pièges supplémentaires en calcul scientifique
 

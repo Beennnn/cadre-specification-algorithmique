@@ -486,17 +486,17 @@ these two cases reveal.
 | `P-02` | `c8a555a6-878d-4f81-afce-2434795a0886` | paramètre | Sign convention of the coordinates |
 | `P-03` | `5b432b90-2b5c-482f-a032-922be7159f4e` | paramètre | Rounding direction to the minute |
 | `P-04` | `a9c2da1c-b965-4ba5-90c9-d4635518a4ea` | paramètre | Obliquity of the ecliptic |
-| `EX-01` | `e9900cc4-7c76-48db-a91f-521b12b216d1` | exigence | Accuracy: ± 2 minutes** against the reference ephemerides, for every l |
-| `EX-02` | `4a8d293a-238f-4600-89b0-3a587757d3e8` | exigence | Binary double precision is enough.** The output quantity is rounded to |
+| `EX-01` | `e9900cc4-7c76-48db-a91f-521b12b216d1` | exigence | Accuracy: ± 2 minutes against the reference ephemerides, for every lat |
+| `EX-02` | `4a8d293a-238f-4600-89b0-3a587757d3e8` | exigence | Binary double precision is enough. The output quantity is rounded to t |
 | `EX-03` | `3125ec69-b46f-4d89-b533-f5b6985a4e50` | exigence | The calculation is **replayable identically**: no dependency on the cu |
-| `EX-04` | `871209e3-ca46-4ea2-8f77-455f0575b2f4` | exigence | Volume: up to 5 000 calls per second at peak, 99th-percentile latency  |
+| `EX-04` | `871209e3-ca46-4ea2-8f77-455f0575b2f4` | exigence | Volume: up to 5 000 calls per second at peak, 99th-percentile latency |
 | `INV-01` | `3dd144ed-ae0c-4122-a8e9-6cfe601315c0` | invariant | If `solar_regime = NORMAL`, then `sunrise_time < sunset_time` — sunris |
 | `INV-02` | `53eadd31-c842-4683-974c-e02c56b7aeb3` | invariant | `sunrise_time` and `sunset_time` are **both** `ABSENT` or both present |
-| `INV-03` | `062582ac-178f-486e-ab1e-94ccce05a0ca` | invariant | `−23.44° ≤ declination ≤ +23.44°`, whatever the date. A value outside  |
-| `INV-04` | `8cad23b6-1739-4778-899a-8b3d7c2958fd` | invariant | Symmetry in longitude**: at equal latitude, moving the longitude `Δ` d |
-| `INV-05` | `77f14f85-1c37-4cb0-b59c-3cd5e9ea5c33` | invariant | `solar_regime ≠ NORMAL` implies ` |
+| `INV-03` | `062582ac-178f-486e-ab1e-94ccce05a0ca` | invariant | `−23.44° ≤ declination ≤ +23.44°`, whatever the date. A value outside |
+| `INV-04` | `8cad23b6-1739-4778-899a-8b3d7c2958fd` | invariant | Symmetry in longitude: at equal latitude, moving the longitude `Δ` d |
+| `INV-05` | `77f14f85-1c37-4cb0-b59c-3cd5e9ea5c33` | invariant | `solar_regime ≠ NORMAL` implies |
 | `E-AST-001` | `baea8eed-a39c-46c8-96e6-543b35802c95` | cas d'erreur | `latitude` outside `[−90, +90]` |
 | `E-AST-002` | `b7f23f9b-aa20-4597-9d4b-ca157a334135` | cas d'erreur | `longitude` outside `[−180, +180]` |
-| `Q-01` | `68ad3237-3c15-4f58-a8d6-ee9383bf46e2` | question | Should civil, nautical and astronomical twilight be exposed? They are  |
-| `Q-02` | `392ff06a-a1d6-4f50-9cb2-858811eb569b` | question | Should the observer's altitude be corrected for? The effect reaches 4  |
+| `Q-01` | `68ad3237-3c15-4f58-a8d6-ee9383bf46e2` | question | Should civil, nautical and astronomical twilight be exposed? They are |
+| `Q-02` | `392ff06a-a1d6-4f50-9cb2-858811eb569b` | question | Should the observer's altitude be corrected for? The effect reaches 4 |
 | `Q-03` | `b35f41d9-46c8-441d-a4be-11abad2464f7` | question | Should the service return local time rather than UTC? |

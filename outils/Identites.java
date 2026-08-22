@@ -88,10 +88,32 @@ public class Identites {
                 String libelle = mm.group(2).replaceAll("\\s+", " ");
                 // équivalent de strip(" *|") en Python : retrait des deux côtés
                 libelle = libelle.replaceAll("^[ *|]+", "").replaceAll("[ *|]+$", "");
-                trouves.add(new Objet(mm.group(1), motif[1], libelle));
+                trouves.add(new Objet(mm.group(1), motif[1], equilibrer(libelle)));
             }
         }
         return trouves;
+    }
+
+
+    /**
+     * Retire les marqueurs restés ouverts dans un libellé.
+     *
+     * Deux les produisent : le retrait des astérisques de tête, qui laisse le « ** »
+     * fermant orphelin, et la troncature à 70 caractères, qui peut couper au milieu
+     * d'un code entre accents graves. Le tableau affiche alors « Monotonie en `k`** »
+     * ou une accent grave isolé — visible, et sans rapport avec l'objet.
+     */
+    static String equilibrer(String s) {
+        int gras = s.split("\\*\\*", -1).length - 1;
+        if (gras % 2 == 1) {
+            int i = s.lastIndexOf("**");
+            s = s.substring(0, i) + s.substring(i + 2);
+        }
+        if (s.chars().filter(c -> c == '`').count() % 2 == 1) {
+            int i = s.lastIndexOf('`');
+            s = s.substring(0, i) + s.substring(i + 1);
+        }
+        return s.strip();
     }
 
     /**
@@ -137,7 +159,7 @@ public class Identites {
                 nouveaux++;
             }
             String libelle = o.libelle();
-            if (libelle.length() > 70) libelle = libelle.substring(0, 70);
+            if (libelle.length() > 70) libelle = equilibrer(libelle.substring(0, 70));
             lignes.add("| `" + o.identifiant() + "` | `" + connus.get(o.identifiant())
                     + "` | " + o.nature() + " | " + libelle + " |");
         }

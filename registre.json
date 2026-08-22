@@ -227,7 +227,7 @@
     "uuid": "21267255-1108-4c13-adf6-5832b0069bde",
     "identifiant": "INV-05",
     "nature": "invariant",
-    "libelle": "Monotonicity in speed, above the minimum-consumption speed**: see the note below",
+    "libelle": "Monotonicity in speed, above the minimum-consumption speed: see the note below",
     "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
@@ -374,7 +374,7 @@
     "uuid": "3e382a1c-177b-47e7-bb99-0a700f03541a",
     "identifiant": "INV-07",
     "nature": "invariant",
-    "libelle": "Monotonicity in the target**: a lower target gives a later instant",
+    "libelle": "Monotonicity in the target: a lower target gives a later instant",
     "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
@@ -458,7 +458,7 @@
     "uuid": "4a8d293a-238f-4600-89b0-3a587757d3e8",
     "identifiant": "EX-02",
     "nature": "exigence",
-    "libelle": "Binary double precision is enough.** The output quantity is rounded to the minute, that is 4 × 10⁻⁴ day, far above any numerical noise",
+    "libelle": "Binary double precision is enough. The output quantity is rounded to the minute, that is 4 × 10⁻⁴ day, far above any numerical noise",
     "document": "exemples/sunrise/spec/SPEC-AST-001.en.md"
   },
   {
@@ -647,7 +647,7 @@
     "uuid": "67c240de-37c7-4d40-a6cc-330545759eb9",
     "identifiant": "INV-06",
     "nature": "invariant",
-    "libelle": "Monotonicity in `k`**: all else equal, a larger `k` gives a shorter instant",
+    "libelle": "Monotonicity in `k`: all else equal, a larger `k` gives a shorter instant",
     "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
@@ -717,7 +717,7 @@
     "uuid": "6b37cd54-28a1-49d2-a574-60c454308e15",
     "identifiant": "INV-05",
     "nature": "invariant",
-    "libelle": "Mixing is bracketed**: `T_mixed` lies between the two temperatures mixed, and equals the warmer one exactly if the mass added is zero",
+    "libelle": "Mixing is bracketed: `T_mixed` lies between the two temperatures mixed, and equals the warmer one exactly if the mass added is zero",
     "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
@@ -808,7 +808,7 @@
     "uuid": "77f14f85-1c37-4cb0-b59c-3cd5e9ea5c33",
     "identifiant": "INV-05",
     "nature": "invariant",
-    "libelle": "`solar_regime ≠ NORMAL` implies `",
+    "libelle": "`solar_regime ≠ NORMAL` implies",
     "document": "exemples/sunrise/spec/SPEC-AST-001.en.md"
   },
   {
@@ -920,14 +920,14 @@
     "uuid": "8cad23b6-1739-4778-899a-8b3d7c2958fd",
     "identifiant": "INV-04",
     "nature": "invariant",
-    "libelle": "Symmetry in longitude**: at equal latitude, moving the longitude `Δ` degrees eastwards brings sunrise **and** sunset forward by `Δ ÷ 15` hours, up to the rounding minute. This is what catches an inverted sign convention.",
+    "libelle": "Symmetry in longitude**: at equal latitude, moving the longitude `Δ` degrees eastwards brings sunrise **and sunset forward by `Δ ÷ 15` hours, up to the rounding minute. This is what catches an inverted sign convention.",
     "document": "exemples/sunrise/spec/SPEC-AST-001.en.md"
   },
   {
     "uuid": "8cd75e36-1a32-4cbe-be56-1fa572e468ef",
     "identifiant": "INV-02",
     "nature": "invariant",
-    "libelle": "Additivity**: splitting a segment into two halves of the same speed and gradient gives exactly the same energy as the whole segment",
+    "libelle": "Additivity: splitting a segment into two halves of the same speed and gradient gives exactly the same energy as the whole segment",
     "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
@@ -1375,7 +1375,7 @@
     "uuid": "cdc085b1-e472-43e3-be7b-2d28930aeed1",
     "identifiant": "INV-04",
     "nature": "invariant",
-    "libelle": "Invariance under a change of origin of the scale**: adding a constant to *all* the temperatures (initial, ambient, addition, target) leaves the instant unchanged — a calculation in kelvin gives the same result as one in degrees Celsius (`CT-06`)",
+    "libelle": "Invariance under a change of origin of the scale: adding a constant to *all* the temperatures (initial, ambient, addition, target) leaves the instant unchanged — a calculation in kelvin gives the same result as one in degrees Celsius (`CT-06`)",
     "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
@@ -1417,7 +1417,7 @@
     "uuid": "d1f9aa40-7f4f-4ad1-a341-57f5064ff4f6",
     "identifiant": "EX-02",
     "nature": "exigence",
-    "libelle": "No dynamic memory allocation** after the initialisation phase",
+    "libelle": "No dynamic memory allocation after the initialisation phase",
     "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
@@ -1557,14 +1557,14 @@
     "uuid": "e9900cc4-7c76-48db-a91f-521b12b216d1",
     "identifiant": "EX-01",
     "nature": "exigence",
-    "libelle": "Accuracy: ± 2 minutes** against the reference ephemerides, for every latitude `",
+    "libelle": "Accuracy: ± 2 minutes against the reference ephemerides, for every latitude",
     "document": "exemples/sunrise/spec/SPEC-AST-001.en.md"
   },
   {
     "uuid": "e9dd2410-9fb4-485a-b8c6-b7966b7dc047",
     "identifiant": "INV-03",
     "nature": "invariant",
-    "libelle": "Homogeneity**: at equal speed and gradient, doubling the distance doubles `traction_energy` and `auxiliary_energy`",
+    "libelle": "Homogeneity: at equal speed and gradient, doubling the distance doubles `traction_energy` and `auxiliary_energy`",
     "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {
@@ -1690,7 +1690,7 @@
     "uuid": "faf499ce-6b1c-4b8e-af2d-1396d49bc513",
     "identifiant": "INV-04",
     "nature": "invariant",
-    "libelle": "Gradient symmetry**: a round trip over the same segment consumes strictly more than twice the same segment on the flat — regeneration never compensates the climb",
+    "libelle": "Gradient symmetry: a round trip over the same segment consumes strictly more than twice the same segment on the flat — regeneration never compensates the climb",
     "document": "exemples/fil-rouge/5-SPEC-NRG-001.en.md"
   },
   {

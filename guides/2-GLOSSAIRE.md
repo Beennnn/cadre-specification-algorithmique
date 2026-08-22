@@ -41,7 +41,7 @@ C'est le même partage que celui du [CADRE.md §1.4](../CADRE.md), appliqué au 
 
 **2. Un sens = un terme.** Celle-là s'oublie systématiquement, et coûte aussi cher.
 
-Trois mots pour la même notion — « client », « acheteur », « commanditaire » — fabriquent
+Trois mots pour la même notion — « lecture », « mesure », « relevé » — fabriquent
 des règles qui *semblent* parler de choses différentes. Le lecteur cherche la nuance,
 ne la trouve pas, et finit par en inventer une. C'est ainsi que naissent les divergences
 d'implémentation les plus difficiles à diagnostiquer : personne n'a écrit d'erreur, tout
@@ -63,7 +63,7 @@ le monde a lu un texte différent.
 Six critères, tous vérifiables en relecture :
 
 1. **Une phrase.** Si vous en écrivez trois, c'est probablement deux notions.
-2. **Sans employer le mot défini.** « Panier : un panier de commande » ne définit rien.
+2. **Sans employer le mot défini.** « Lot : un lot de composants » ne définit rien.
 3. **Elle dit ce que la chose *est***, pas ce qu'elle fait, ni comment on l'obtient.
 4. **Elle porte l'unité, l'échelle, le référentiel** quand il s'agit d'une grandeur.
 5. **Elle dit ce que ce n'est pas**, quand une confusion est fréquente.
@@ -73,22 +73,23 @@ Six critères, tous vérifiables en relecture :
 
 | | |
 |---|---|
-| ❌ | **Montant net** — le montant après remises. |
-| ✅ | **Montant net** — le montant hors taxes d'une ligne ou d'un panier, une fois toutes les remises appliquées et avant frais de livraison. Exprimé en euros à 2 décimales. À ne pas confondre avec le *montant à payer*, qui inclut la TVA, les frais de livraison et l'imputation des points de fidélité. |
+| ❌ | **Résidu** — ce qui reste après arrondi. |
+| ✅ | **Résidu** — l'écart entre la masse cible du lot et la somme des masses arrondies, exprimé en kilogrammes à 3 décimales. Il est **signé** : négatif quand les arrondis dépassent la cible. À ne pas confondre avec l'*erreur de pesée*, qui est l'écart entre la masse affichée par la balance et la masse réelle. |
 
-La mauvaise définition n'est pas fausse : elle est **insuffisante**. Elle ne dit pas les
-taxes, pas les frais de port, pas l'unité, et elle laisse le lecteur croire qu'elle
-désigne ce qu'on doit payer.
+La mauvaise définition n'est pas fausse : elle est **insuffisante**. Elle ne dit pas le
+signe, ni l'unité, ni la précision, et elle laisse le lecteur croire qu'elle désigne
+l'imprécision de l'instrument.
 
 | | |
 |---|---|
-| ❌ | **Remise** — on applique 10 % quand le client commande 3 articles ou plus. |
-| ✅ | **Remise** — réduction consentie sur un montant, exprimée en taux ou en montant fixe. Une remise de *quantité* porte sur une ligne, une remise de *panier* porte sur l'ensemble de la commande. |
+| ❌ | **Valeur aberrante** — on écarte une lecture qui s'éloigne de plus de deux écarts-types de la moyenne. |
+| ✅ | **Valeur aberrante** — une lecture encore retenue, trop éloignée de la moyenne de son propre groupe. « Trop » vaut `P-01` écarts-types : une décision métier, pas une constante statistique. |
 
 La mauvaise définition décrit **un traitement** au lieu d'une notion : elle enferme dans
-le glossaire une règle qui devrait vivre en `RG-xxx`, avec son identifiant, son
-le nom de qui peut le changer et sa date d'effet. Le jour où le seuil passe à 4 articles, il faudra
-modifier le glossaire — c'est-à-dire le socle partagé — pour un changement de paramètre.
+le glossaire une règle qui devrait vivre en `RG-xxx`, avec son identifiant, le nom de qui
+peut la changer et sa date d'effet. Le jour où le facteur passe à trois écarts-types, il
+faudrait modifier le glossaire — c'est-à-dire le socle partagé — pour un changement de
+paramètre.
 
 > **Le test.** Si une définition contient un chiffre, une condition ou un « si », c'est
 > presque toujours une règle déguisée. Sortez-la.
@@ -97,12 +98,13 @@ modifier le glossaire — c'est-à-dire le socle partagé — pour un changement
 
 Le même mot a souvent deux sens légitimes dans deux parties de l'organisation.
 
-> « **Commande** », pour le commerce, est l'intention d'achat validée par le client.
-> « **Commande** », pour la logistique, est l'ensemble des colis à préparer — une commande
-> commerciale peut en produire trois.
+> « **Autonomie** », pour le commercial et le réglementaire, est la distance homologuée sur
+> un cycle normalisé : une valeur de catalogue, identique pour tous les exemplaires d'un
+> modèle. « **Autonomie** », à bord, est la distance que *ce* véhicule, dans *son* état et
+> sur *ce* trajet, peut parcourir avant d'entamer sa réserve.
 
 **La mauvaise réponse est d'inventer un mot unique et artificiel** que personne
-n'emploiera. Personne ne dira jamais « commande-commerciale-agrégée » à la machine à
+n'emploiera. Personne ne dira jamais « autonomie-embarquée-instantanée » à la machine à
 café, et le glossaire redeviendra une fiction.
 
 La bonne réponse, documentée par Evans sous le nom de **contexte délimité** (*bounded
@@ -111,8 +113,11 @@ et on documente la correspondance au point de passage.
 
 | Terme | Contexte | Définition | Correspondance |
 |---|---|---|---|
-| Commande | Commerce | Intention d'achat validée par le client, à un instant donné | 1 commande commerciale → 1 à n expéditions |
-| Commande | Logistique | Ensemble des colis à préparer pour une même adresse et une même date | — |
+| Autonomie | Commercial / réglementaire | Distance homologuée sur un cycle normalisé, dans des conditions de référence | Aucune : les deux valeurs n'ont ni la même méthode, ni le même objet. **Ne jamais comparer l'une à l'autre** dans un message au conducteur |
+| Autonomie | Embarqué | Distance que ce véhicule, dans son état et sur ce trajet, peut parcourir avant d'entamer sa réserve | — |
+
+*Homonyme réel, tiré du [glossaire du fil rouge](../exemples/fil-rouge/2-GLOSSAIRE.md),
+qui en documente un second — « charge », mécanique ou électrique.*
 
 > **Une frontière de vocabulaire est presque toujours une frontière d'équipe, de
 > système, ou de responsabilité.** Quand vous en trouvez une, vous venez de découvrir

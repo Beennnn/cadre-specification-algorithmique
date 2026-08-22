@@ -22,7 +22,7 @@ pour que chaque notion de la méthode se voie **appliquée sur un terrain déjà
 | **[1-DECOUPAGE.md](1-DECOUPAGE.md)** | La sortie d'un atelier de découpage : 12 fonctions nommées, avec leur valideur métier et leur niveau de maturité | [Guide 1 — Découper](../../guides/1-DECOUPER.md) |
 | **[2-GLOSSAIRE.md](2-GLOSSAIRE.md)** | Un glossaire de domaine réel, avec ses homonymes et ses contextes | [Guide 2 — Le glossaire](../../guides/2-GLOSSAIRE.md) |
 | **[3-DONNEES.md](3-DONNEES.md)** | Le catalogue des données, leur source, leur cheminement — et les trois constats que l'exercice a produits | [Guide 3 — Les données](../../guides/3-DONNEES.md) |
-| **[4-FN-004-planifier-les-recharges.md](4-FN-004-planifier-les-recharges.md)** | Une fiche de fonction arrêtée au **niveau 3** : contrat typé, pas encore de spécification. Un état assumé, pas un travail inachevé | [Guide 1 §4](../../guides/1-DECOUPER.md) |
+| **[4-FN-004-planifier-les-recharges.md](4-FN-004-planifier-les-recharges.md)** | Une fiche de fonction arrêtée au **niveau 2** : contrat typé, pas encore de spécification. Un état assumé, pas un travail inachevé | [Guide 1 §4](../../guides/1-DECOUPER.md) |
 | **[5-SPEC-NRG-001.en.md](5-SPEC-NRG-001.en.md)** · [fr](5-SPEC-NRG-001.fr.md) | Une fonction montée au **niveau 4** : la spécification complète, avec ses équations et son jeu d'essai. **La version anglaise fait foi**, la française est sa traduction — `C-42` vérifie qu'elles ne dérivent pas | [CADRE.md](../../CADRE.md) |
 
 ## Le parcours conseillé
@@ -33,7 +33,7 @@ pour que chaque notion de la méthode se voie **appliquée sur un terrain déjà
    surtout que **toutes les fonctions ne sont pas au même niveau**.
 2. Lisez le **glossaire** : c'est le socle partagé, et le seul artefact que tout le monde
    doit approuver.
-3. Regardez la **fiche de niveau 3** : elle montre qu'on peut s'arrêter là, utilement.
+3. Regardez la **fiche de niveau 2** : elle montre qu'on peut s'arrêter là, utilement.
 4. Lisez la **spécification complète** : c'est le livrable final, celui que le
    développement reçoit.
 

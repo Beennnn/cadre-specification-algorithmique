@@ -577,12 +577,12 @@ publierait 0,3. Toutes les autres moyennes sont insensibles au mode d'arrondi.
 | `P-05` | `5eb6502c-2198-41c1-8161-4eb05309c758` | paramètre | Décimales de la moyenne publiée |
 | `P-06` | `8b586410-483c-49d4-b1ba-3c78341b8593` | paramètre | Seuil de gel |
 | `EX-01` | `f9ce6fbe-3f85-4bb0-8a4d-f7ec0d535568` | exigence | La double précision suffit **pour les statistiques** — les lectures po |
-| `EX-02` | `245000d6-c226-4d14-b56a-8ff7be643e9c` | exigence | 1 440 lectures par station et par jour, 3 000 stations, un relevé par  |
+| `EX-02` | `245000d6-c226-4d14-b56a-8ff7be643e9c` | exigence | 1 440 lectures par station et par jour, 3 000 stations, un relevé par |
 | `EX-03` | `745def66-32a8-4ca1-a2b5-6ba8acdb612b` | exigence | Le relevé est **rejouable à l'identique** depuis les lectures archivée |
 | `INV-01` | `53654d26-cf42-4131-9b28-a5eb4a831652` | invariant | `retained_count + rejected_count = COUNT OF usable`. Aucune lecture ne |
 | `INV-02` | `df4d5585-6cf0-4547-8f5e-0d288572b1fa` | invariant | `min_temperature ≤ mean_temperature ≤ max_temperature`, à l'arrondi de |
-| `INV-03` | `3f8c34ce-99ef-485f-8fc6-2e9609889fa8` | invariant | Les épisodes de gel sont **disjoints** et par `started_at` croissant.  |
-| `INV-04` | `6edd9e11-c50d-4a91-971c-6a73a451c191` | invariant | Le résultat est **invariant par permutation** des lectures d'entrée. ` |
+| `INV-03` | `3f8c34ce-99ef-485f-8fc6-2e9609889fa8` | invariant | Les épisodes de gel sont **disjoints** et par `started_at` croissant. |
+| `INV-04` | `6edd9e11-c50d-4a91-971c-6a73a451c191` | invariant | Le résultat est **invariant par permutation** des lectures d'entrée. |
 | `INV-05` | `87b0a976-8188-4f50-bded-49672142f3ae` | invariant | `retained_count ≥ P-03`, toujours. En dessous, `RG-020` a rejeté avant |
 | `E-WTH-001` | `7738b38a-880e-4e81-b601-a3ba78e78d3a` | cas d'erreur | Deux lectures portent le même `recorded_at` |
 | `E-WTH-002` | `8342a539-8aff-457a-aab7-838f3cf5de88` | cas d'erreur | Un `recorded_at` sort de `observation_date` |

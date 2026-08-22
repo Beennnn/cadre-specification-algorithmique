@@ -110,6 +110,6 @@ plus petit dans l'ordre lexicographique.
 |---|---|---|---|
 | `FN-004` | `f70a8d6f-84c8-406c-b40d-d662df8bb5f6` | document | FN-004 — Planifier les arrêts de recharge |
 | `Q-04-1` | `e95e0c6c-6009-4388-a415-d41c76dac652` | question | La puissance de charge décroît par paliers avec l'état de charge. Il e |
-| `Q-04-2` | `05ea43e3-893a-4bda-9086-8739be1e83d6` | question | Que fait-on lorsqu'**aucun plan recevable n'existe** ? On renvoie `fai |
-| `Q-04-3` | `730f2923-d586-400b-9248-83ac8d297acf` | question | La puissance réellement délivrée par une borne peut être inférieure à  |
+| `Q-04-2` | `05ea43e3-893a-4bda-9086-8739be1e83d6` | question | Que fait-on lorsqu'**aucun plan recevable n'existe** ? On renvoie fai |
+| `Q-04-3` | `730f2923-d586-400b-9248-83ac8d297acf` | question | La puissance réellement délivrée par une borne peut être inférieure à |
 | `Q-04-4` | `19326885-4fa0-498d-923f-d1b44998f662` | question | Un temps de trajet strictement minimal peut proposer un arrêt de 4 min |

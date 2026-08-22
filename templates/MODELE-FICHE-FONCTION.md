@@ -14,7 +14,7 @@ MODE D'EMPLOI — voir guides/1-DECOUPER.md
 Le niveau de maturité dit jusqu'où cette fiche est remplie. C'est un état ASSUMÉ,
 pas un travail inachevé :
   0  la fonction existe et porte un nom          → §1 seulement
-  1  + rôle et valideur métier                  → §1
+  1  + rôle et valideur métier                   → §1
   2  + contrat typé                              → §1, §2, §3
   3  + algorithme complet                        → cette fiche + un SPEC-xxx
 

@@ -609,23 +609,23 @@ the right place.
 | `P-06` | `6ea114e2-f73a-4512-8cd4-9656c42c8060` | paramètre | Maximum number of iterations |
 | `P-07` | `6f2b55b1-5c6a-451a-a794-963a915f7b63` | paramètre | Minimum gap to the ambient temperature for the target to be deemed rea |
 | `EX-01` | `47db7e61-d39c-4d07-ab94-810c0e0032fd` | exigence | The embedded calculation **makes no network request**: it works offlin |
-| `EX-02` | `b21a02b4-bdc9-4b4b-af4e-31fdda02e7b7` | exigence | The downloaded parameter file is **signed**, and an invalid signature  |
+| `EX-02` | `b21a02b4-bdc9-4b4b-af4e-31fdda02e7b7` | exigence | The downloaded parameter file is **signed**, and an invalid signature |
 | `EX-03` | `e8c9de71-4877-459f-8946-f1ebfd76f1d8` | exigence | The code follows the **internal coding standard** `STD-DEV-2` |
 | `INV-01` | `b11ac534-4ee3-4ae5-8395-6f6b65dca68d` | invariant | If `T(0) > T_ambient`, then `T(t)` is strictly decreasing |
 | `INV-02` | `7c52110c-fc9a-4bad-8b2e-30511a8b1751` | invariant | `T(t)` stays strictly between `T_ambient` and `T(0)` |
 | `INV-03` | `53836c25-75aa-4f5c-882f-2a05f28f1882` | invariant | `T(t)` tends to `T_ambient` as `t` grows, without ever reaching it |
-| `INV-04` | `cdc085b1-e472-43e3-be7b-2d28930aeed1` | invariant | Invariance under a change of origin of the scale**: adding a constant  |
-| `INV-05` | `6b37cd54-28a1-49d2-a574-60c454308e15` | invariant | Mixing is bracketed**: `T_mixed` lies between the two temperatures mix |
-| `INV-06` | `67c240de-37c7-4d40-a6cc-330545759eb9` | invariant | Monotonicity in `k`**: all else equal, a larger `k` gives a shorter in |
-| `INV-07` | `3e382a1c-177b-47e7-bb99-0a700f03541a` | invariant | Monotonicity in the target**: a lower target gives a later instant |
-| `INV-08` | `c3221013-33d7-482b-bb07-98fa142945ca` | invariant | The calculation is deterministic: two runs on the same input give the  |
+| `INV-04` | `cdc085b1-e472-43e3-be7b-2d28930aeed1` | invariant | Invariance under a change of origin of the scale: adding a constant to |
+| `INV-05` | `6b37cd54-28a1-49d2-a574-60c454308e15` | invariant | Mixing is bracketed: `T_mixed` lies between the two temperatures mixed |
+| `INV-06` | `67c240de-37c7-4d40-a6cc-330545759eb9` | invariant | Monotonicity in `k`: all else equal, a larger `k` gives a shorter inst |
+| `INV-07` | `3e382a1c-177b-47e7-bb99-0a700f03541a` | invariant | Monotonicity in the target: a lower target gives a later instant |
+| `INV-08` | `c3221013-33d7-482b-bb07-98fa142945ca` | invariant | The calculation is deterministic: two runs on the same input give the |
 | `E-PARAM-001` | `b19ad839-f72a-4446-a9ec-f02a8aa522a1` | cas d'erreur | `cooling_coefficient ≤ 0` |
 | `E-PARAM-002` | `b757d637-570b-4594-bad2-040776993e62` | cas d'erreur | A mass or a specific heat capacity of the beverage is zero or negative |
 | `E-ENTREE-001` | `ef5edef2-6e13-4c75-83e6-e4d82f6dfe6a` | cas d'erreur | Neither `requested_instant` nor `target_temperature` is supplied |
 | `E-HORIZON-001` | `089406dd-f578-4bef-8d4b-3acbefc50e82` | cas d'erreur | `requested_instant > P-04` |
 | `E-CONV-001` | `1b5551ba-9d1b-44e3-beb3-89aac7d2fb26` | cas d'erreur | `P-06` iterations without converging to within `P-05` |
 | `Q-01` | `c048bd3f-7a20-4669-b9c7-2b29d366394c` | question | Should a radiation and evaporation term be added for temperatures abov |
-| `Q-02` | `6819e7f2-3111-47f1-bc56-070aa8d47524` | question | The laboratory use asks for an ambient temperature varying over time.  |
-| `Q-03` | `cf4f641d-263d-421b-84fa-4869d01a6a03` | question | `RG-060` (non-convergence) and `E-HORIZON-001` are covered by no test  |
+| `Q-02` | `6819e7f2-3111-47f1-bc56-070aa8d47524` | question | The laboratory use asks for an ambient temperature varying over time. |
+| `Q-03` | `cf4f641d-263d-421b-84fa-4869d01a6a03` | question | `RG-060` (non-convergence) and `E-HORIZON-001` are covered by no test |
 | `Q-04` | `aec32bd5-c60a-44a3-9485-5f4187d080fd` | question | `P-07` is 0.10 °C. Should that margin depend on the initial gap to the |
 | `Q-05` | `cb226d98-6d59-4412-9083-0b7dfb034ca7` | question | Settled on 2025-12-10:* should the instant of the addition have a defa |

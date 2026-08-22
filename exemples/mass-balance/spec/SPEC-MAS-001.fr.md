@@ -484,7 +484,7 @@ invariants qui attrapent celui-là, ce sont les masses validées.
 | `EX-02` | `525363e7-8bba-49e7-89e3-f0761903866b` | exigence | Un lot comporte au plus 50 composants ; le calcul est appelé au plus 2 |
 | `EX-03` | `f265a3a3-f970-41c9-81ca-f27bb0b129cb` | exigence | Le calcul est **rejouable à l'identique** : mêmes entrées, mêmes masse |
 | `EX-04` | `2c76616f-cdf7-439f-88a6-107cd43b3d24` | exigence | Les masses nominales sont conservées 10 ans avec le lot |
-| `INV-01` | `dbccfecf-777b-4959-a321-7cb6555461cf` | invariant | `SUM OF dispensed_mass OVER dispensed = target_batch_mass`, **exacteme |
+| `INV-01` | `dbccfecf-777b-4959-a321-7cb6555461cf` | invariant | `SUM OF dispensed_mass OVER dispensed = target_batch_mass`, exacteme |
 | `INV-02` | `60bffc03-1312-4d2a-94b9-152a5f0f18e6` | invariant | Chaque `dispensed_mass` est un multiple entier de `balance_step`. |
 | `INV-03` | `14aa1bd5-f615-42c4-a9cb-3d2c078c1e0b` | invariant | Chaque `dispensed_mass` est `≥ 0`. Un résidu négatif ne peut pas rendr |
 | `INV-04` | `9eb759d5-63d4-4b94-8f80-dd07b8d47340` | invariant | Le résultat est **invariant par permutation** de la liste des composan |
@@ -492,5 +492,5 @@ invariants qui attrapent celui-là, ce sont les masses validées.
 | `E-MAS-002` | `1ae84506-b8e5-48fc-b902-b166a80b4b30` | cas d'erreur | Le résidu dépasse `P-02` pas de balance |
 | `E-MAS-003` | `c1c93cb0-ddf8-40e4-820d-e702b518f1fe` | cas d'erreur | Deux composants portent le même `component_id` |
 | `E-MAS-004` | `f12f64b6-8041-4729-91ec-92cdee0b1e71` | cas d'erreur | `target_batch_mass` n'est pas un multiple de `balance_step` |
-| `Q-01` | `9111352a-45f3-4b93-8115-3102c370b556` | question | Faut-il répartir un résidu de plusieurs pas sur plusieurs composants,  |
+| `Q-01` | `9111352a-45f3-4b93-8115-3102c370b556` | question | Faut-il répartir un résidu de plusieurs pas sur plusieurs composants, |
 | `Q-02` | `c16913b4-c54a-41ba-861a-7c369e06a149` | question | Le départage alphabétique doit-il céder la place à un ordre de priorit |

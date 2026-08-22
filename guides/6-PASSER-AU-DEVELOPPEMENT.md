@@ -68,8 +68,8 @@ vous.
 
 Trois lignes du §11 pèsent plus que toutes les préférences d'équipe :
 
-- **Exactitude.** « Exact au centime » impose un décimal exact et écarte le flottant
-  binaire. « Tolérance relative de 10⁻⁶ » rend la double précision largement suffisante.
+- **Exactitude.** « La somme des masses pesées égale la masse cible, exactement » impose
+  un décimal exact et écarte le flottant binaire. « Tolérance relative de 10⁻⁶ » rend la double précision largement suffisante.
   « Reproductibilité 10⁻⁹ entre deux implémentations » exclut la simple précision.
 - **Déterminisme.** Un déterminisme strict interdit les réductions en ordre non garanti,
   donc certaines bibliothèques parallèles, dont le résultat dépend du nombre de fils.

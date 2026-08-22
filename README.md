@@ -142,8 +142,8 @@ l'absence d'une troisième. Un trou ne se voit que s'il a des bords.
 | Étage | Qui relit | Ce qu'on y cherche | Exemple de ce qui est attrapé |
 |---|---|---|---|
 | **1** | Un **script**, puis une **IA** | Les incohérences **formelles** — celles qui se constatent sans rien connaître au métier | Une entrée déclarée qu'aucune règle n'emploie ; un `IF` sans `ELSE` ; un numéro de version qui ne correspond pas à l'historique |
-| **2** | Le **métier** et le **test** | La **justesse et la complétude** des règles | Une règle **impeccablement écrite mais fausse** : le document dit que la remise démarre à 3 articles, la politique commerciale en vigueur dit 4. Ou un cas que le métier connaît et que personne n'a pensé à écrire |
-| **3** | Un **développeur extérieur** au domaine et à l'écriture | La **capacité à implémenter**, par oui ou par non | Une question à laquelle le document ne répond pas, et qu'il trancherait donc **seul, sans mandat** : « deux lignes ont exactement le même montant — sur laquelle j'impute le centime restant ? » |
+| **2** | Le **métier** et le **test** | La **justesse et la complétude** des règles | Une règle **impeccablement écrite mais fausse** : le document écarte une lecture au-delà de deux écarts-types, le protocole d'étalonnage en vigueur dit trois. Ou un cas que le métier connaît et que personne n'a pensé à écrire |
+| **3** | Un **développeur extérieur** au domaine et à l'écriture | La **capacité à implémenter**, par oui ou par non | Une question à laquelle le document ne répond pas, et qu'il trancherait donc **seul, sans mandat** : « deux composants ont exactement la même fraction cible — auquel des deux j'ajoute le pas de balance qui reste ? » |
 
 ### Pourquoi deux passes au premier étage
 
@@ -151,7 +151,7 @@ Elles n'attrapent pas la même chose, et l'une ne remplace pas l'autre.
 
 | | Ce qu'elle attrape | Son verdict |
 |---|---|---|
-| **Le script** — [`Verifier.java`](outils/Verifier.java) | ce qui se **compte** : entrées orphelines, paramètres morts, règles non couvertes, identifiants dupliqués, versions incohérentes | **certain**, en quelques secondes, sans faux positif |
+| **Le script** — [`Verifier.java`](outils/Verifier.java) | ce qui se **compte** : entrées orphelines, paramètres morts, règles non couvertes, identifiants dupliqués, versions incohérentes | **certain** — un constat désigne un défaut, pas une suspicion |
 | **L'IA** | ce qui se **lit** : une règle floue, une contrainte d'implémentation glissée dans le texte, un « etc. » qui repousse une décision, un vocabulaire qui dérive | **à vérifier** — chaque constat doit citer un passage exact |
 
 Le script vient en premier parce qu'il est gratuit et sûr. L'IA vient ensuite, sur un
@@ -162,8 +162,8 @@ trouver, et peut se consacrer à ce que seule une lecture repère.
 remplace les autres :
 
 - un document peut être **formellement irréprochable et matériellement faux** — aucun
-  script, aucune IA ne sait qu'une remise démarre en réalité à 4 articles ; seul quelqu'un
-  qui connaît la politique commerciale le sait ;
+  script, aucune IA ne sait que le protocole d'étalonnage retient trois écarts-types et non
+  deux ; seul quelqu'un qui connaît le protocole le sait ;
 - et il peut être **juste, complet du point de vue métier, et malgré tout inimplémentable
   sans deviner** — parce que le métier, qui connaît trop bien son domaine, n'a pas vu qu'il
   laissait une question sans réponse. Seul quelqu'un qui doit écrire le code s'y heurte.
@@ -355,14 +355,15 @@ données](exemples/fil-rouge/3-DONNEES.md) → [une fiche arrêtée au niveau
 2](exemples/fil-rouge/4-FN-004-planifier-les-recharges.md) → [la spécification
 complète](exemples/fil-rouge/5-SPEC-NRG-001.en.md)
 
-**Deux vignettes** complètent l'illustration, gardées parce qu'elles aboutissent à des
-conclusions techniques **opposées** à partir de la même méthode :
+**Deux vignettes** complètent l'illustration — le bilan de masse et le refroidissement.
+Confrontées au fil rouge, elles aboutissent à des conclusions techniques **opposées** à
+partir de la même méthode :
 
 | | [Le bilan de masse d'un lot](exemples/mass-balance/spec/SPEC-MAS-001.en.md) | [Le refroidissement d'une boisson](exemples/cooling/spec/SPEC-THM-001.en.md) | [L'autonomie d'un véhicule](exemples/fil-rouge/5-SPEC-NRG-001.en.md) |
 |---|---|---|---|
-| Exigence d'exactitude | exacte au centime | tolérance de 10⁻⁶ | reproductibilité de 10⁻⁹ entre deux implémentations |
+| Exigence d'exactitude | conservation exacte de la masse | tolérance de 10⁻⁶ | reproductibilité de 10⁻⁹ entre deux implémentations |
 | **Type numérique qui en découle** | **décimal exact obligatoire** | **double précision confortable** | **double précision indispensable** |
-| Faux ami central | le centime résiduel d'une répartition | l'ordre d'ajout du lait | le sens de l'arrondi de l'autonomie |
+| Faux ami central | le sort du résidu de pesée | l'ordre d'ajout du lait | le sens de l'arrondi de l'autonomie |
 
 *Trois exigences, trois conclusions.* C'est la démonstration que c'est la spécification qui
 décide, et non l'habitude du développeur.

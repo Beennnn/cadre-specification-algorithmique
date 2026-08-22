@@ -76,8 +76,8 @@ travailler.
 
 > **Un désaccord ne se résout jamais par un compromis de rédaction.**
 
-Écrire « en général, on retient le prix le plus bas » pour satisfaire deux personnes qui
-pensaient l'inverse ne résout rien : ça transmet le désaccord au développeur, qui le
+Écrire « en général, le résidu va au plus gros composant » pour satisfaire deux personnes
+qui pensaient l'inverse ne résout rien : ça transmet le désaccord au développeur, qui le
 tranchera sans le savoir.
 
 La règle est mécanique :

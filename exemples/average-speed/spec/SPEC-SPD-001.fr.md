@@ -289,7 +289,7 @@ aussi contre la moyenne naïve, qui donnerait 13,5 km/h.
 | `P-02` | `b4ccd8a2-23b2-42d7-aa15-6dd5e58e3829` | paramètre | Décimales de la vitesse publiée |
 | `EX-01` | `2598ec0f-16ad-4bb3-a0df-0cfba7ea5648` | exigence | Distances et vitesses sont exactes telles que saisies ; seule la vites |
 | `EX-02` | `990e7004-55a7-42c4-83c6-ad45a25ea78b` | exigence | Un trajet compte au plus 200 segments ; le calcul est appelé au plus 5 |
-| `INV-01` | `0f0e6185-bb00-480a-b3f3-03efffee34a5` | invariant | `average_speed` est comprise entre la vitesse du segment le **plus len |
+| `INV-01` | `0f0e6185-bb00-480a-b3f3-03efffee34a5` | invariant | `average_speed` est comprise entre la vitesse du segment le plus len |
 | `INV-02` | `18950bf4-58d6-4a2b-9426-20cec1f6edba` | invariant | Avant arrondi, `average_speed × total_duration = total_distance`. |
 | `E-SPD-001` | `30c1c2f2-56d3-49e1-bf5d-869e1dff4936` | cas d'erreur | Un segment a une vitesse `≤ 0` |
 | `Q-01` | `b7efbab4-d912-4803-9869-ef1c89743706` | question | Faut-il compter les arrêts dans la durée ? Aujourd'hui ils sont hors p |

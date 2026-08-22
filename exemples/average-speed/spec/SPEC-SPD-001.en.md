@@ -284,4 +284,4 @@ would give 13.5 km/h.
 | `INV-01` | `0f0e6185-bb00-480a-b3f3-03efffee34a5` | invariant | `average_speed` lies between the **slowest** and the **fastest** leg s |
 | `INV-02` | `18950bf4-58d6-4a2b-9426-20cec1f6edba` | invariant | Before rounding, `average_speed × total_duration = total_distance`. |
 | `E-SPD-001` | `30c1c2f2-56d3-49e1-bf5d-869e1dff4936` | cas d'erreur | A leg has a speed `≤ 0` |
-| `Q-01` | `b7efbab4-d912-4803-9869-ef1c89743706` | question | Should stops be counted in the duration? Today they are out of scope,  |
+| `Q-01` | `b7efbab4-d912-4803-9869-ef1c89743706` | question | Should stops be counted in the duration? Today they are out of scope, |

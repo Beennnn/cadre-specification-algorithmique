@@ -469,11 +469,11 @@ do not catch this one, only the approved masses do.
 | `CT-10` | `8ff07a1a-4d0c-4f42-98ce-7585e5dc0d03` | cas de test | Nominal masses exactly on a half-step |
 | `P-01` | `4b92babc-dd3d-423e-8feb-046b7166db4e` | paramètre | Rounding mode for doses |
 | `P-02` | `cd6b8a1b-c171-4083-aa90-16fbfbffba9b` | paramètre | Maximum tolerated residual, in balance steps |
-| `EX-01` | `289af665-16cb-4113-86ea-9ff53ce1a4c5` | exigence | The calculation uses **exact decimal arithmetic**, as required by the  |
+| `EX-01` | `289af665-16cb-4113-86ea-9ff53ce1a4c5` | exigence | The calculation uses **exact decimal arithmetic**, as required by the |
 | `EX-02` | `525363e7-8bba-49e7-89e3-f0761903866b` | exigence | A batch has at most 50 components; the calculation is called at most 2 |
 | `EX-03` | `f265a3a3-f970-41c9-81ca-f27bb0b129cb` | exigence | The calculation is **replayable identically**: same inputs, same masse |
 | `EX-04` | `2c76616f-cdf7-439f-88a6-107cd43b3d24` | exigence | Nominal masses are kept for 10 years with the batch |
-| `INV-01` | `dbccfecf-777b-4959-a321-7cb6555461cf` | invariant | `SUM OF dispensed_mass OVER dispensed = target_batch_mass`, **exactly* |
+| `INV-01` | `dbccfecf-777b-4959-a321-7cb6555461cf` | invariant | `SUM OF dispensed_mass OVER dispensed = target_batch_mass`, exactly* |
 | `INV-02` | `60bffc03-1312-4d2a-94b9-152a5f0f18e6` | invariant | Every `dispensed_mass` is an integer multiple of `balance_step`. |
 | `INV-03` | `14aa1bd5-f615-42c4-a9cb-3d2c078c1e0b` | invariant | Every `dispensed_mass` is `≥ 0`. A negative residual cannot make a dos |
 | `INV-04` | `9eb759d5-63d4-4b94-8f80-dd07b8d47340` | invariant | The result is **invariant under permutation** of the component list: r |
@@ -481,5 +481,5 @@ do not catch this one, only the approved masses do.
 | `E-MAS-002` | `1ae84506-b8e5-48fc-b902-b166a80b4b30` | cas d'erreur | The residual exceeds `P-02` balance steps |
 | `E-MAS-003` | `c1c93cb0-ddf8-40e4-820d-e702b518f1fe` | cas d'erreur | Two components carry the same `component_id` |
 | `E-MAS-004` | `f12f64b6-8041-4729-91ec-92cdee0b1e71` | cas d'erreur | `target_batch_mass` is not a multiple of `balance_step` |
-| `Q-01` | `9111352a-45f3-4b93-8115-3102c370b556` | question | Should a residual of several steps be spread over several components,  |
+| `Q-01` | `9111352a-45f3-4b93-8115-3102c370b556` | question | Should a residual of several steps be spread over several components, |
 | `Q-02` | `c16913b4-c54a-41ba-861a-7c369e06a149` | question | Should the alphabetical tie-break give way to a priority order declare |

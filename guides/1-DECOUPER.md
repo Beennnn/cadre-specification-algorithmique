@@ -27,12 +27,12 @@ comment ? »**
 
 | Candidat | Verdict |
 |---|---|
-| « Calculer le montant à payer d'une commande » | ✅ le résultat est nommable : un montant |
-| « Prévoir la date de livraison » | ✅ une date |
-| « Décider de l'éligibilité à une remise » | ✅ une décision, avec son motif |
-| « Gérer les commandes » | ❌ ne produit rien de nommable — c'est un paquet, pas une fonction |
-| « Synchroniser le cache produit » | ❌ pas de résultat métier — c'est de la technique |
-| « Écran de validation du panier » | ❌ c'est un endroit d'où l'on appelle des fonctions |
+| « Calculer l'énergie consommée sur un trajet » | ✅ le résultat est nommable : une énergie |
+| « Prévoir l'instant du lever du Soleil » | ✅ un instant |
+| « Décider si une lecture est exploitable » | ✅ une décision, avec son motif |
+| « Gérer les relevés » | ❌ ne produit rien de nommable — c'est un paquet, pas une fonction |
+| « Synchroniser le cache des stations » | ❌ pas de résultat métier — c'est de la technique |
+| « Écran de saisie d'un lot » | ❌ c'est un endroit d'où l'on appelle des fonctions |
 
 ## Les trois façons de découper — et laquelle choisir
 
@@ -63,9 +63,9 @@ administrer, prendre en charge*. Ce ne sont pas des verbes, ce sont des cache-mi
 
 | ❌ | ✅ |
 |---|---|
-| Gérer les remises | Calculer la remise applicable à une ligne · Décider de la cumulabilité d'un code promotionnel |
-| Traiter les commandes | Valider un panier · Calculer le montant à payer · Réserver le stock |
-| Module de tarification | *(ce n'est pas une fonction, c'est un endroit)* |
+| Gérer les aberrantes | Décider si une lecture est exploitable · Écarter les lectures aberrantes d'un relevé |
+| Traiter les relevés | Valider un relevé · Calculer la moyenne du jour · Détecter les épisodes de gel |
+| Module de dosage | *(ce n'est pas une fonction, c'est un endroit)* |
 
 Les noms sont **des décisions collectives**, pas des préférences d'auteur : ils
 deviendront le vocabulaire de la spécification, du code, des tests et des conversations.
@@ -159,16 +159,16 @@ second langage à apprendre :
 
 ```
 entrees :
-    montant_ht    : Montant(EUR, 2 décimales, ≥ 0)
-    date_commande : Horodatage(fuseau Europe/Paris)
-    quantite      : Entier(≥ 1)
+    temperature  : Temperature(°C, −90.0 .. +60.0, 1 décimale)
+    recorded_at  : DateAndTime(UTC, à la minute)
+    quality_flag : Enumerated { VALID, SUSPECT, FAULTY }
 
 sorties :
-    remise_ht     : Montant(EUR, 2 décimales, ≥ 0)
-    motif         : Énuméré { QUANTITE, CODE_PROMO, AUCUNE }
+    usable       : Booleen
+    motif        : Enumerated { ABSENTE, SIGNALEE, HORS_PLAGE, AUCUN }
 ```
 
-> **Un contrat sans unité ne vaut rien.** `montant : nombre` n'apporte aucune information
+> **Un contrat sans unité ne vaut rien.** `temperature : nombre` n'apporte aucune information
 > que le code ne donnait déjà. Toute la valeur est dans l'unité, l'échelle, le référentiel, la
 > précision et le domaine — c'est-à-dire dans ce que le typage du langage ne dit pas.
 

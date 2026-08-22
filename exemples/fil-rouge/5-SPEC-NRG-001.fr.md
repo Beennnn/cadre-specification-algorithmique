@@ -814,21 +814,21 @@ changera au moins une fois dans les quinze ans de vie du véhicule.
 | `P-02` | `cce939a5-46cd-4eb3-a512-5c3f3de13dc7` | paramètre | Masse volumique de l'air de référence |
 | `P-03` | `ea5e594b-7ea7-4cff-9304-bbb3e4f25f72` | paramètre | Facteur de température — barème |
 | `P-04` | `4ea5c434-9869-4176-975d-1813cecfa836` | paramètre | Facteur de température retenu si la mesure est indisponible |
-| `EX-01` | `f25aa050-8a85-4e55-b202-b31cb0a683b8` | exigence | Le logiciel du calculateur est écrit dans le sous-ensemble **MISRA C:2 |
-| `EX-02` | `d1f9aa40-7f4f-4ad1-a341-57f5064ff4f6` | exigence | Aucune allocation dynamique de mémoire** après la phase d'initialisati |
+| `EX-01` | `f25aa050-8a85-4e55-b202-b31cb0a683b8` | exigence | Le logiciel du calculateur est écrit dans le sous-ensemble MISRA C:2 |
+| `EX-02` | `d1f9aa40-7f4f-4ad1-a341-57f5064ff4f6` | exigence | Aucune allocation dynamique de mémoire après la phase d'initialisation |
 | `EX-03` | `c4b092be-6904-473d-ab88-3132570724b1` | exigence | Le temps d'exécution **pire cas** est borné, mesuré sur cible, et docu |
 | `EX-04` | `874a1ca9-d14a-43d5-9daf-865e9b8b7fc0` | exigence | La fonction s'exécute dans la **partition non critique** du calculateu |
 | `EX-05` | `d2d7839d-11dd-4f4e-a4e6-1c0aa842c169` | exigence | La fonction dispose d'au plus **512 Ko de mémoire vive** et ne suppose |
 | `EX-06` | `d6310e36-7c2f-4ec2-9173-abc13fcc309b` | exigence | Le **trajet est une donnée personnelle de catégorie C2** : il ne quitt |
-| `EX-07` | `fca54b2f-b68d-4a52-98d9-83f4f907b530` | exigence | Les données de la partition non critique et celles de la partition de  |
-| `EX-08` | `d34bba90-81e0-4566-a9b5-afcf17b81d19` | exigence | Le service serveur emploie un langage de la **liste technique approuvé |
+| `EX-07` | `fca54b2f-b68d-4a52-98d9-83f4f907b530` | exigence | Les données de la partition non critique et celles de la partition de |
+| `EX-08` | `d34bba90-81e0-4566-a9b5-afcf17b81d19` | exigence | Le service serveur emploie un langage de la liste technique approuvé |
 | `EX-09` | `e607e38d-b669-4ace-ba48-3098e6763c09` | exigence | La **couverture des tests** du code embarqué atteint 100 % des branche |
 | `INV-01` | `5afa3fa9-13fd-455a-90f9-a7d6a105894e` | invariant | Sur un segment de pente positive ou nulle, `segment_energy > 0` |
-| `INV-02` | `8cd75e36-1a32-4cbe-be56-1fa572e468ef` | invariant | Additivité** : découper un segment en deux moitiés de mêmes vitesse et |
-| `INV-03` | `e9dd2410-9fb4-485a-b8c6-b7966b7dc047` | invariant | Homogénéité** : à vitesse et pente égales, doubler la distance double  |
-| `INV-04` | `faf499ce-6b1c-4b8e-af2d-1396d49bc513` | invariant | Symétrie de la pente** : un aller-retour sur un même segment consomme  |
+| `INV-02` | `8cd75e36-1a32-4cbe-be56-1fa572e468ef` | invariant | Additivité : découper un segment en deux moitiés de mêmes vitesse et p |
+| `INV-03` | `e9dd2410-9fb4-485a-b8c6-b7966b7dc047` | invariant | Homogénéité : à vitesse et pente égales, doubler la distance double t |
+| `INV-04` | `faf499ce-6b1c-4b8e-af2d-1396d49bc513` | invariant | Symétrie de la pente : un aller-retour sur un même segment consomme st |
 | `INV-05` | `21267255-1108-4c13-adf6-5832b0069bde` | invariant | Monotonie vis-à-vis de la vitesse, au-delà de la vitesse de consommati |
-| `INV-06` | `683ae5b4-21f5-4841-80c6-d1e5fa76fffa` | invariant | `range_point`, s'il existe, est compris entre 0 et la longueur totale  |
+| `INV-06` | `683ae5b4-21f5-4841-80c6-d1e5fa76fffa` | invariant | `range_point`, s'il existe, est compris entre 0 et la longueur totale |
 | `INV-07` | `cabb4a7c-3cc6-4b7f-840b-fa14ee4d0f4a` | invariant | Le calcul est déterministe : mêmes entrées, mêmes sorties, profil comp |
 | `INV-08` | `52d43b49-e236-4a5c-9835-ebe75ef1aecf` | invariant | Le calcul est **pur** : aucun appel successif ne dépend d'un appel pré |
 | `E-TRAJET-001` | `13e307f4-1b7a-444c-8829-d186c50601e9` | cas d'erreur | Le trajet ne contient aucun segment |
@@ -836,8 +836,8 @@ changera au moins une fois dans les quinze ans de vie du véhicule.
 | `E-VEHIC-001` | `3edc5a91-74d0-4ebc-aba7-6eb8e7e3352e` | cas d'erreur | Un rendement est hors de l'intervalle `]0 ; 1[` |
 | `E-RESERVE-001` | `e8eccfd9-d2cf-4434-9773-91abb263881f` | cas d'erreur | La réserve de sécurité est supérieure ou égale à l'énergie disponible |
 | `Q-01` | `41dea1ff-81d5-42cc-a782-0da8ba4473eb` | question | Le barème de température procède par paliers (`RG-060`). Un dixième de |
-| `Q-02` | `3cc439b5-c892-4f1b-9b73-404b674cf47f` | question | La masse volumique de l'air (`P-02`) est fixe. Faut-il la corriger de  |
+| `Q-02` | `3cc439b5-c892-4f1b-9b73-404b674cf47f` | question | La masse volumique de l'air (`P-02`) est fixe. Faut-il la corriger de |
 | `Q-03` | `e00a269d-7baf-4009-8412-13e4ccb848e8` | question | `H-2` suppose l'absence de vent. Les prévisions météorologiques sont d |
 | `Q-04` | `9e5fa8d2-ece3-4239-a3f5-6e034f7cbcfd` | question | `E-VEHIC-001` et `E-RESERVE-001` ne sont couverts par aucun cas de tes |
-| `Q-06` | `1ffdcc6b-2965-4ac9-a517-25affafc0b44` | question | `EX-08` impose une liste technique approuvée côté serveur, alors que ` |
+| `Q-06` | `1ffdcc6b-2965-4ac9-a517-25affafc0b44` | question | `EX-08` impose une liste technique approuvée côté serveur, alors que |
 | `Q-05` | `0c21b3f5-6dd0-46d4-bc12-cd24d35a5f10` | question | Tranchée le 2026-03-12 :* le point d'autonomie s'arrondit-il au plus p |

@@ -623,10 +623,10 @@ la meilleure preuve que la frontière a été tracée au bon endroit.
 | `INV-01` | `b11ac534-4ee3-4ae5-8395-6f6b65dca68d` | invariant | Si `T(0) > T_ambient`, alors `T(t)` est strictement décroissante |
 | `INV-02` | `7c52110c-fc9a-4bad-8b2e-30511a8b1751` | invariant | `T(t)` reste strictement comprise entre `T_ambient` et `T(0)` |
 | `INV-03` | `53836c25-75aa-4f5c-882f-2a05f28f1882` | invariant | `T(t)` tend vers `T_ambient` quand `t` croît, sans jamais l'atteindre |
-| `INV-04` | `cdc085b1-e472-43e3-be7b-2d28930aeed1` | invariant | Invariance par changement d'origine de l'échelle** : ajouter une const |
-| `INV-05` | `6b37cd54-28a1-49d2-a574-60c454308e15` | invariant | Encadrement du mélange** : `T_mixed` est comprise entre les deux tempé |
-| `INV-06` | `67c240de-37c7-4d40-a6cc-330545759eb9` | invariant | Monotonie vis-à-vis de `k`** : à conditions égales, un `k` plus grand  |
-| `INV-07` | `3e382a1c-177b-47e7-bb99-0a700f03541a` | invariant | Monotonie vis-à-vis de la cible** : une cible plus basse donne un inst |
+| `INV-04` | `cdc085b1-e472-43e3-be7b-2d28930aeed1` | invariant | Invariance par changement d'origine de l'échelle : ajouter une constan |
+| `INV-05` | `6b37cd54-28a1-49d2-a574-60c454308e15` | invariant | Encadrement du mélange : `T_mixed` est comprise entre les deux tempéra |
+| `INV-06` | `67c240de-37c7-4d40-a6cc-330545759eb9` | invariant | Monotonie vis-à-vis de `k` : à conditions égales, un `k` plus grand do |
+| `INV-07` | `3e382a1c-177b-47e7-bb99-0a700f03541a` | invariant | Monotonie vis-à-vis de la cible : une cible plus basse donne un instan |
 | `INV-08` | `c3221013-33d7-482b-bb07-98fa142945ca` | invariant | Le calcul est déterministe : deux exécutions sur la même entrée donnen |
 | `E-PARAM-001` | `b19ad839-f72a-4446-a9ec-f02a8aa522a1` | cas d'erreur | `cooling_coefficient ≤ 0` |
 | `E-PARAM-002` | `b757d637-570b-4594-bad2-040776993e62` | cas d'erreur | Une masse ou une capacité massique de la boisson est nulle ou négative |
@@ -634,7 +634,7 @@ la meilleure preuve que la frontière a été tracée au bon endroit.
 | `E-HORIZON-001` | `089406dd-f578-4bef-8d4b-3acbefc50e82` | cas d'erreur | `requested_instant > P-04` |
 | `E-CONV-001` | `1b5551ba-9d1b-44e3-beb3-89aac7d2fb26` | cas d'erreur | `P-06` itérations sans convergence à `P-05` près |
 | `Q-01` | `c048bd3f-7a20-4669-b9c7-2b29d366394c` | question | Faut-il ajouter un terme de rayonnement et d'évaporation pour les temp |
-| `Q-02` | `6819e7f2-3111-47f1-bc56-070aa8d47524` | question | L'usage laboratoire demande une température ambiante variable dans le  |
+| `Q-02` | `6819e7f2-3111-47f1-bc56-070aa8d47524` | question | L'usage laboratoire demande une température ambiante variable dans le |
 | `Q-03` | `cf4f641d-263d-421b-84fa-4869d01a6a03` | question | `RG-060` (non-convergence) et `E-HORIZON-001` ne sont couverts par auc |
 | `Q-04` | `aec32bd5-c60a-44a3-9485-5f4187d080fd` | question | `P-07` vaut 0,10 °C. Cette marge devrait-elle dépendre de l'écart init |
 | `Q-05` | `cb226d98-6d59-4412-9083-0b7dfb034ca7` | question | Tranchée le 2025-12-10 :* l'instant d'ajout doit-il avoir une valeur p |
