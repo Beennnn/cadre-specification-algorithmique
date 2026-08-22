@@ -195,7 +195,8 @@ qu'un programme l'a produit, sans l'examiner**.
 | **[guides/](guides/)** | Neuf guides opérationnels, à ouvrir pendant qu'on fait — dont [l'apport de l'IA](guides/9-L-APPORT-DE-L-IA.md), transverse |
 | **[templates/](templates/)** | Les modèles vierges : [spécification](templates/MODELE-SPECIFICATION.md), [fiche de fonction](templates/MODELE-FICHE-FONCTION.md), [fiche de donnée](templates/MODELE-FICHE-DONNEE.md), [glossaire](templates/MODELE-GLOSSAIRE.md), [liste de vérification](templates/CHECKLIST-RELECTURE.md) |
 | **[outils/](outils/)** | Le catalogue des règles de contrôle, le vérificateur, la gestion des identités, la consigne de relecture par une IA |
-| **[exemples/](exemples/)** | Quatre exemples, et ce que chacun montre que les autres ne montrent pas |
+| **[IRIS.md](IRIS.md)** | Le rattachement aux projets Iris : pourquoi une architecture se choisit sur des exigences chiffrées, que seule l'expression du besoin produit |
+| **[exemples/](exemples/)** | Six exemples, et ce que chacun montre que les autres ne montrent pas |
 | **[exemples/mass-balance/](exemples/mass-balance/)** | La **chaîne complète** : besoin → spécification → contrat → code exécutable → analyse des écarts |
 | **[exemples/fil-rouge/](exemples/fil-rouge/)** | Le fil rouge complet : *l'autonomie d'un véhicule électrique* |
 | **[GLOSSAIRE.md](GLOSSAIRE.md)** | Le vocabulaire de la méthode elle-même |
