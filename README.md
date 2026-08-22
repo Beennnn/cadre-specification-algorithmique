@@ -295,25 +295,26 @@ lot](exemples/mass-balance/)*. Doser les composants d'un lot sur une balance de
 résolution finie — assez petit pour être lu en entier, assez piégeux pour porter cinq faux
 amis.
 
-[Le besoin](exemples/mass-balance/1-NEED.md) → [la
-spécification](exemples/mass-balance/2-SPEC-MAS-001.en.md) → [le
-contrat](exemples/mass-balance/3-CONTRACT.md) → [le
-code](exemples/mass-balance/4-code/) → [les
-écarts](exemples/mass-balance/5-DEVIATIONS.md)
+[Le besoin](exemples/mass-balance/NEED.md) → [la
+spécification](exemples/mass-balance/spec/SPEC-MAS-001.en.md) → [le
+contrat](exemples/mass-balance/CONTRACT.md) → [le
+code](exemples/mass-balance/code/) → [les
+écarts](exemples/mass-balance/DEVIATIONS.md)
 
 Le code s'exécute en deux commandes, sans dépendance, et se qualifie contre les données de
 référence de la spécification :
 
 ```bash
-cd exemples/mass-balance/4-code
-javac -d /tmp/mb *.java && java -cp /tmp/mb MassBalanceTest
+cd exemples/mass-balance/code && javac -encoding UTF-8 -d /tmp/mb $(find src -name '*.java')
+cd .. && java -cp /tmp/mb method.massbalance.MassBalanceTest \
+    code/src/test/resources/reference-data.csv spec/SPEC-MAS-001.en.md reports/TEST-REPORT.md
 ```
 
 Le harnais **ne contient aucune valeur attendue** : il rejoue le §10 de la spécification.
 C'est ce qui en fait une qualification et non un test écrit par celui qui a codé.
 
 Et il se termine par ce que la plupart des démarches oublient : [l'analyse des
-écarts](exemples/mass-balance/5-DEVIATIONS.md), qui conclut ici que **le code est conforme et
+écarts](exemples/mass-balance/DEVIATIONS.md), qui conclut ici que **le code est conforme et
 que la spécification est en défaut** — la correction remonte donc au document, versionnée
 et motivée.
 
@@ -339,7 +340,7 @@ complète](exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md)
 **Deux vignettes** complètent l'illustration, gardées parce qu'elles aboutissent à des
 conclusions techniques **opposées** à partir de la même méthode :
 
-| | [Le bilan de masse d'un lot](exemples/mass-balance/2-SPEC-MAS-001.en.md) | [Le refroidissement d'une boisson](exemples/SPEC-THM-001-refroidissement.md) | [L'autonomie d'un véhicule](exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md) |
+| | [Le bilan de masse d'un lot](exemples/mass-balance/spec/SPEC-MAS-001.en.md) | [Le refroidissement d'une boisson](exemples/SPEC-THM-001-refroidissement.md) | [L'autonomie d'un véhicule](exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md) |
 |---|---|---|---|
 | Exigence d'exactitude | exacte au centime | tolérance de 10⁻⁶ | reproductibilité de 10⁻⁹ entre deux implémentations |
 | **Type numérique qui en découle** | **décimal exact obligatoire** | **double précision confortable** | **double précision indispensable** |

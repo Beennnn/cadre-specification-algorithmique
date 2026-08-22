@@ -84,17 +84,23 @@ public class Couverture {
         try (Stream<Path> s = Files.walk(racineCode)) {
             sources = s.filter(p -> p.toString().endsWith(".java")).sorted().toList();
         }
-        Pattern annotation = Pattern.compile("@ImplementsSpec\\s*\\(([^)]*)\\)");
+        // L'annotation est lue sur le TEXTE ENTIER, pas ligne à ligne : une liste
+        // d'identifiants un peu longue se replie sur deux lignes, et une lecture ligne
+        // à ligne n'y trouve alors aucune parenthèse fermante. Elle ne signalait rien :
+        // l'annotation disparaissait, et le point passait pour vérifié par personne.
+        Pattern annotation = Pattern.compile("@ImplementsSpec\\s*\\(([^)]*)\\)",
+                Pattern.DOTALL);
         Pattern identifiant = Pattern.compile("\"([A-Z]+-[A-Z]*-?\\d+)\"");
         for (Path source : sources) {
-            List<String> lignes = Files.readAllLines(source, StandardCharsets.UTF_8);
-            for (int n = 0; n < lignes.size(); n++) {
-                Matcher ma = annotation.matcher(lignes.get(n));
-                if (!ma.find()) continue;
+            String texte = Files.readString(source, StandardCharsets.UTF_8);
+            Matcher ma = annotation.matcher(texte);
+            while (ma.find()) {
+                int ligne = 1 + (int) texte.substring(0, ma.start()).chars()
+                        .filter(c -> c == '\n').count();
                 Matcher mi = identifiant.matcher(ma.group(1));
                 while (mi.find())
                     cite.computeIfAbsent(mi.group(1), k -> new ArrayList<>())
-                        .add(new Citation(racineCode.relativize(source).toString(), n + 1));
+                        .add(new Citation(racineCode.relativize(source).toString(), ligne));
             }
         }
         return cite;

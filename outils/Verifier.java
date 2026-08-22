@@ -113,16 +113,25 @@ public class Verifier {
     }
 
     // --- identités durables --------------------------------------------------
+    /**
+     * Début d'une ligne de tableau, avec l'ancre explicite que portent les lignes
+     * référencées depuis l'extérieur du document. Sans elle,
+     * « | <a id="p-01"></a>`P-01` | … » ne s'apparie pas : le paramètre devient
+     * invisible, et C-35 le déclare consommé sans être déclaré. Le défaut se voit,
+     * mais il désigne le mauvais coupable.
+     */
+    static final String ANCRE = "^\\|\\s*(?:<a id=\"[^\"]+\"></a>)?\\s*";
+
     static final String[][] MOTIFS = {
         {"^###\\s+(RG-\\d+)\\s+—\\s+(.+)$", "règle"},
         {"^###\\s+(CT-\\d+)\\s+—\\s+(.+)$", "cas de test"},
-        {"^\\|\\s*`(FN-\\d+)`\\s*\\|\\s*\\*{0,2}([^|*]+)", "fonction"},
-        {"^\\|\\s*`(P-\\d+)`\\s*\\|\\s*([^|]+)", "paramètre"},
-        {"^\\|\\s*`(D-\\d+)`\\s*\\|\\s*([^|]+)", "donnée"},
-        {"^\\|\\s*`(EX-\\d+)`\\s*\\|\\s*([^|]+)", "exigence"},
-        {"^\\|\\s*`(INV-\\d+)`\\s*\\|\\s*([^|]+)", "invariant"},
-        {"^\\|\\s*`(E-[A-Z]+-\\d+)`\\s*\\|\\s*([^|]+)", "cas d'erreur"},
-        {"^\\|\\s*`(Q-[\\d-]+)`\\s*\\|\\s*([^|]+)", "question"},
+        {ANCRE + "`(FN-\\d+)`\\s*\\|\\s*\\*{0,2}([^|*]+)", "fonction"},
+        {ANCRE + "`(P-\\d+)`\\s*\\|\\s*([^|]+)", "paramètre"},
+        {ANCRE + "`(D-\\d+)`\\s*\\|\\s*([^|]+)", "donnée"},
+        {ANCRE + "`(EX-\\d+)`\\s*\\|\\s*([^|]+)", "exigence"},
+        {ANCRE + "`(INV-\\d+)`\\s*\\|\\s*([^|]+)", "invariant"},
+        {ANCRE + "`(E-[A-Z]+-\\d+)`\\s*\\|\\s*([^|]+)", "cas d'erreur"},
+        {ANCRE + "`(Q-[\\d-]+)`\\s*\\|\\s*([^|]+)", "question"},
     };
     static final String ANNEXE = "## Annexe — Identités";
 
@@ -173,7 +182,7 @@ public class Verifier {
     static List<Etape> lireChaine(String texte) {
         List<Etape> r = new ArrayList<>();
         Matcher m = Pattern.compile(
-                "^\\|\\s*`(ET-\\d+)`\\s*([^|]*)\\|([^|]*)\\|([^|]*)\\|([^|]*)\\|",
+                ANCRE + "`(ET-\\d+)`\\s*([^|]*)\\|([^|]*)\\|([^|]*)\\|([^|]*)\\|",
                 Pattern.MULTILINE).matcher(texte);
         while (m.find())
             r.add(new Etape(m.group(1), m.group(2).trim(),
@@ -183,7 +192,7 @@ public class Verifier {
 
     static List<Groupe> lireGroupes(String texte) {
         List<Groupe> r = new ArrayList<>();
-        Matcher m = Pattern.compile("^\\|\\s*`(GR-\\d+)`\\s*([^|]*)\\|([^|]*)\\|([^|]*)\\|",
+        Matcher m = Pattern.compile(ANCRE + "`(GR-\\d+)`\\s*([^|]*)\\|([^|]*)\\|([^|]*)\\|",
                 Pattern.MULTILINE).matcher(texte);
         while (m.find())
             r.add(new Groupe(m.group(1), m.group(2).trim(),
@@ -327,7 +336,7 @@ public class Verifier {
 
         // C-04 : paramètre déclaré et jamais employé
         String params = sec.getOrDefault("parametres", "");
-        for (String p : trouverTout("^\\|\\s*`(P-\\d+)`", params, Pattern.MULTILINE)) {
+        for (String p : trouverTout(ANCRE + "`(P-\\d+)`", params, Pattern.MULTILINE)) {
             // On compte hors ANNEXE DES IDENTITÉS : celle-ci cite tout objet identifié,
             // y compris les paramètres, et suffirait à faire passer pour « employé » un
             // paramètre qu'aucune règle n'utilise. C'est un faux négatif observé.
@@ -371,7 +380,7 @@ public class Verifier {
                             "l'identifiant « " + champ + " » n'est pas en ASCII snake_case");
 
         // C-21 : question ouverte sans décideur ni échéance
-        Matcher mq = Pattern.compile("^\\|\\s*`(Q-[\\d-]+)`\\s*\\|(.*)$", Pattern.MULTILINE)
+        Matcher mq = Pattern.compile(ANCRE + "`(Q-[\\d-]+)`\\s*\\|(.*)$", Pattern.MULTILINE)
                 .matcher(sec.getOrDefault("questions", ""));
         while (mq.find()) {
             // split(-1) conserve les cellules vides finales, comme en Python : sans cela
@@ -386,7 +395,7 @@ public class Verifier {
         }
 
         // C-26 : exigence de réalisation sans source, propriétaire ou vérification
-        Matcher mx = Pattern.compile("^\\|\\s*`(EX-[\\d-]+)`\\s*\\|(.*)$", Pattern.MULTILINE)
+        Matcher mx = Pattern.compile(ANCRE + "`(EX-[\\d-]+)`\\s*\\|(.*)$", Pattern.MULTILINE)
                 .matcher(sec.getOrDefault("contraintes", ""));
         while (mx.find()) {
             String[] c = Arrays.stream(mx.group(2).split("\\|", -1)).map(String::trim)
@@ -511,7 +520,7 @@ public class Verifier {
         List<Etape> etapes = lireChaine(texte);
         if (!etapes.isEmpty()) {
             Set<String> disponibles = new HashSet<>(champs(sec.getOrDefault("entrees", "")));
-            disponibles.addAll(trouverTout("^\\|\\s*`(P-\\d+)`", params, Pattern.MULTILINE));
+            disponibles.addAll(trouverTout(ANCRE + "`(P-\\d+)`", params, Pattern.MULTILINE));
             int i = texte.indexOf("Grandeurs internes");
             if (i >= 0)
                 disponibles.addAll(champs(texte.substring(i,
@@ -583,7 +592,7 @@ public class Verifier {
         }
         Map<String, String> sec = sections(texte);
         Set<String> connus = new LinkedHashSet<>(champs(sec.getOrDefault("entrees", "")));
-        connus.addAll(trouverTout("^\\|\\s*`(P-\\d+)`", sec.getOrDefault("parametres", ""),
+        connus.addAll(trouverTout(ANCRE + "`(P-\\d+)`", sec.getOrDefault("parametres", ""),
                 Pattern.MULTILINE));
         Set<String> sorties = champs(sec.getOrDefault("sorties", ""));
 

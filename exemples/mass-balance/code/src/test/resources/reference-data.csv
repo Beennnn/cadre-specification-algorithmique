@@ -1,0 +1,26 @@
+# Reference data for SPEC-MAS-001, version 1.1.0.
+#
+# This file is NOT a test set written by the developer: it is section 10 of the
+# specification, transcribed without interpretation. Each line is an (inputs, outputs)
+# pair whose outputs the business has approved — a commitment, not an illustration.
+#
+# It changes only through a dated, motivated business re-approval. Never because a test
+# is red: a red test signals a deviation, and the deviation is what gets investigated
+# (see DEVIATIONS.md).
+#
+# Approved by: Formulation manager, 2026-08-21.
+#
+# Format: case ; target_mass ; step ; expected_error ; components
+#         components = id:fraction:expected_mass separated by |
+#         expected_mass is empty when an error is expected
+#
+CT-01;1.000;0.001;;CMP-A:0.333333:0.333|CMP-B:0.333333:0.333|CMP-C:0.333334:0.334
+CT-02;1.000;0.001;;CMP-A:0.166667:0.167|CMP-B:0.166667:0.167|CMP-C:0.666666:0.666
+CT-03;1.001;0.001;;CMP-A:0.400000:0.401|CMP-B:0.400000:0.400|CMP-C:0.200000:0.200
+CT-04;1.000;0.001;;CMP-A:0.500000:0.500|CMP-B:0.250000:0.250|CMP-C:0.250000:0.250
+CT-05;1.000;0.100;;CMP-A:0.142857:0.100|CMP-B:0.142857:0.100|CMP-C:0.142857:0.100|CMP-D:0.142857:0.100|CMP-E:0.142857:0.100|CMP-F:0.142857:0.100|CMP-G:0.142858:0.400
+CT-06;1.000;0.001;E-MAS-001;CMP-A:0.333333:|CMP-B:0.333333:|CMP-C:0.333333:
+CT-07;1.000;0.001;E-MAS-003;CMP-A:0.500000:|CMP-A:0.500000:
+CT-08;1.000;0.300;E-MAS-004;CMP-A:0.500000:|CMP-B:0.500000:
+CT-09;1.400;0.100;E-MAS-002;CMP-A:0.100000:|CMP-B:0.100000:|CMP-C:0.100000:|CMP-D:0.100000:|CMP-E:0.100000:|CMP-F:0.100000:|CMP-G:0.100000:|CMP-H:0.100000:|CMP-I:0.100000:|CMP-J:0.100000:
+CT-10;1.000;0.001;;CMP-A:0.250500:0.250|CMP-B:0.249000:0.249|CMP-C:0.500500:0.501

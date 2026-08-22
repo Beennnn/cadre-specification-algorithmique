@@ -12,7 +12,7 @@ là-dessus, pas sur le domaine.*
 |---|---|---|---|
 | **[La vitesse moyenne d'un trajet](average-speed/)** | ~170 l. | spec → **un doc par cas** → code → rapports | La **prise en main**. Deux fonctions, deux paramètres, trois règles |
 | **[Le relevé d'une station météo](weather-summary/)** | ~450 l. | spec, deux langues | **Tout le pseudo-langage**, et une **boucle qui peut s'épuiser** |
-| **[Le bilan de masse d'un lot](mass-balance/)** | ~470 l. | besoin → spec → contrat → code → **écarts** | La **chaîne complète**, jusqu'à l'analyse des écarts |
+| **[Le bilan de masse d'un lot](mass-balance/)** | ~470 l. | besoin → spec → contrat → **un doc par cas** → code → rapports → **écarts** | La **chaîne complète**, jusqu'à l'analyse des écarts |
 | **[Le refroidissement d'une boisson](SPEC-THM-001-refroidissement.md)** | ~630 l. | spec | Le **continu et l'approché** : équation différentielle, incertitude |
 | **[Le lever du Soleil](SPEC-AST-001-lever-coucher-du-soleil.md)** | ~510 l. | spec | Une **équation sans solution** hors des cercles polaires |
 | **[L'autonomie d'un véhicule](fil-rouge/)** | ~840 l. | besoin → découpage → glossaire → données → spec | Le **passage à l'échelle** : douze fonctions, dix étapes |
@@ -112,6 +112,17 @@ Le seul qui va **jusqu'à l'analyse des écarts**. Le code s'exécute, rejoue le
 référence, et l'étape 5 conclut que **le code est conforme et que la spécification est en
 défaut** : un composant reçoit +180 % de sa part visée alors que la conservation de la
 masse est parfaite. La correction remonte au document, versionnée.
+
+Il porte aussi **[un document par cas de test](mass-balance/tests/)** et un rapport de
+couverture outillé. Les écrire a produit deux cas qui manquaient : `E-MAS-002` — le rejet
+d'un résidu trop grand — n'était exercé par aucun cas, et aucune masse nominale ne tombait
+jamais sur un demi-pas, si bien que le mode d'arrondi `P-01` était **arbitré par rien**.
+
+> **Ce que ces deux cas montrent, et qu'aucun autre exemple ne montre.** `CT-03` et `CT-10`
+> sont passés par `INV-01` à `INV-04` **alors que les masses pesées sont fausses** : une
+> allocation dépendante de l'ordre et un mauvais mode d'arrondi conservent tous deux la
+> masse. Ce qui les attrape, ce sont les **masses validées par le métier**. Un invariant ne
+> remplace pas un jeu de référence, et réciproquement.
 
 ### Le refroidissement — le continu et l'approché
 

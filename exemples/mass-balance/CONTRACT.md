@@ -1,7 +1,7 @@
 # 3 — Le contrat, et son passage vers le code
 
 *Troisième étape. Le contrat existe déjà, aux §4 et §5 de la
-[spécification](2-SPEC-MAS-001.en.md). Ce document ne le réécrit pas : il
+[spécification](spec/SPEC-MAS-001.en.md). Ce document ne le réécrit pas : il
 montre **ce qu'un développeur en fait**, et pourquoi ce passage est mécanique.*
 
 ---
@@ -76,5 +76,5 @@ qui laisse cette porte ouverte.
 
 ---
 
-→ Étape suivante : [4 — le code](4-code/), qui met en œuvre ces règles, et le harnais qui
+→ Étape suivante : [4 — le code](code/), qui met en œuvre ces règles, et le harnais qui
 le qualifie contre les données de référence.

@@ -3,14 +3,14 @@
 | | |
 |---|---|
 | **Identifier** | SPEC-MAS-001 |
-| **Version** | 1.0.0 |
+| **Version** | 1.1.0 |
 | **Status** | Approved |
 | **Business approver** | Formulation manager |
 | **Technical co-author** | Process software team |
-| **Reference glossary** | [GLOSSAIRE.md](../../GLOSSAIRE.md) v1.0.0 |
+| **Reference glossary** | [GLOSSAIRE.md](../../../GLOSSAIRE.md) v1.0.0 |
 
 > **Why this example.** It is the counterpart of
-> [SPEC-THM-001](../SPEC-THM-001-refroidissement.md). There, **continuous** quantities, a
+> [SPEC-THM-001](../../SPEC-THM-001-refroidissement.md). There, **continuous** quantities, a
 > differential equation, and an **approximate** result whose accuracy is open to
 > discussion. Here, **discrete and exact** quantities: a weighed mass exists at the balance
 > step, and nowhere in between. The result is not approximate, it is **right or wrong** —
@@ -71,7 +71,7 @@ Component :
 ```
 
 > **`[Scaled]`, not `Real`.** The family in brackets is the ISO/IEC 11404 one
-> ([CADRE §2.3](../../CADRE.md)). `Scaled` means a rational with a fixed decimal scale —
+> ([CADRE §2.3](../../../CADRE.md)). `Scaled` means a rational with a fixed decimal scale —
 > **exact**; `Real` means an approximation. `INV-01` requires strict equality: it does not
 > hold in binary floating point, where 0.1 cannot be represented. The type carries the
 > requirement — it does not merely recommend it.
@@ -102,8 +102,8 @@ Dispensed :
 
 | Id | Name | Value | Unit | Who may change it | Effective date |
 |---|---|---|---|---|---|
-| `P-01` | Rounding mode for doses | `HALF_EVEN` | — | Formulation manager | 2026-01-01 |
-| `P-02` | Maximum tolerated residual, in balance steps | 3 | steps | Formulation manager | 2026-01-01 |
+| <a id="p-01"></a>`P-01` | Rounding mode for doses | `HALF_EVEN` | — | Formulation manager | 2026-01-01 |
+| <a id="p-02"></a>`P-02` | Maximum tolerated residual, in balance steps | 3 | steps | Formulation manager | 2026-01-01 |
 
 > **`P-01` is `HALF_EVEN`, and this is not a detail.** Over a large number of batches,
 > rounding "half up" pushes masses upwards every single time. `HALF_EVEN` splits the tie
@@ -165,7 +165,7 @@ produced upstream, `C-36` a quantity produced that nobody uses.
 | `ET-05` Allocation | `rounded_mass`, `residual`, `residual_is_acceptable`, `target_mass_fraction`, `component_id` | `dispensed_mass` | `RG-050` |
 
 ```bash
-java outils/Verifier.java --chaine exemples/mass-balance/2-SPEC-MAS-001.en.md
+java outils/Verifier.java --chaine exemples/mass-balance/spec/SPEC-MAS-001.en.md
 ```
 
 From this table the tool derives **who creates and who uses** each quantity, the
@@ -269,10 +269,10 @@ END IF
 
 | Id | Statement |
 |---|---|
-| `INV-01` | `SUM OF dispensed_mass OVER dispensed = target_batch_mass`, **exactly**. This is mass conservation: it tolerates no gap, not even one step. |
-| `INV-02` | Every `dispensed_mass` is an integer multiple of `balance_step`. |
-| `INV-03` | Every `dispensed_mass` is `≥ 0`. A negative residual cannot make a dose negative — if that happened, `RG-040` should have rejected first. |
-| `INV-04` | The result is **invariant under permutation** of the component list: reordering the input changes no weighed mass. This is what the tie-break rule of `RG-050` guarantees. |
+| <a id="inv-01"></a>`INV-01` | `SUM OF dispensed_mass OVER dispensed = target_batch_mass`, **exactly**. This is mass conservation: it tolerates no gap, not even one step. |
+| <a id="inv-02"></a>`INV-02` | Every `dispensed_mass` is an integer multiple of `balance_step`. |
+| <a id="inv-03"></a>`INV-03` | Every `dispensed_mass` is `≥ 0`. A negative residual cannot make a dose negative — if that happened, `RG-040` should have rejected first. |
+| <a id="inv-04"></a>`INV-04` | The result is **invariant under permutation** of the component list: reordering the input changes no weighed mass. This is what the tie-break rule of `RG-050` guarantees. |
 
 > `INV-04` is tested on generated inputs: we shuffle the list at random and check that the
 > result is identical. It is the check that catches an implementation which "forgot" the
@@ -285,10 +285,10 @@ END IF
 
 | Id | Condition | Behaviour |
 |---|---|---|
-| `E-MAS-001` | The target fractions do not add up to exactly 1 | Reject. No partial result is produced |
-| `E-MAS-002` | The residual exceeds `P-02` balance steps | Reject, reporting the residual found |
-| `E-MAS-003` | Two components carry the same `component_id` | Reject: the tie-break of `RG-050` would not be defined |
-| `E-MAS-004` | `target_batch_mass` is not a multiple of `balance_step` | Reject: the exact conservation of `INV-01` would be impossible |
+| <a id="e-mas-001"></a>`E-MAS-001` | The target fractions do not add up to exactly 1 | Reject. No partial result is produced |
+| <a id="e-mas-002"></a>`E-MAS-002` | The residual exceeds `P-02` balance steps | Reject, reporting the residual found |
+| <a id="e-mas-003"></a>`E-MAS-003` | Two components carry the same `component_id` | Reject: the tie-break of `RG-050` would not be defined |
+| <a id="e-mas-004"></a>`E-MAS-004` | `target_batch_mass` is not a multiple of `balance_step` | Reject: the exact conservation of `INV-01` would be impossible |
 
 ---
 
@@ -371,14 +371,49 @@ tie-break of `RG-050` would not be defined.
 `target_batch_mass = 1.000`, `balance_step = 0.300`. Rejected by `E-MAS-004`: the exact
 conservation of `INV-01` would be impossible.
 
+### CT-09 — Residual over the bound
+
+`balance_step = 0.100`, `target_batch_mass = 1.400`, ten components with fraction
+`0.100000` each.
+
+Each nominal dose is 0.140 kg — exactly **1.4 steps**, rounded down to 1 step, so 0.100 kg
+is weighed instead of 0.140. Ten components lose 0.4 step each: sum of rounded `= 1.000`,
+**residual `= +0.400`, which is 4 steps**. That exceeds `P-02 = 3`, so the batch is
+**rejected** by `E-MAS-002`, reporting the residual found.
+
+**This is the case that makes the bound real.** CT-05 sits *on* the bound and is accepted;
+CT-09 sits just past it and is refused. Without the pair, an implementation that never
+checks the residual at all passes the whole set: until v1.1.0, `E-MAS-002` was stated,
+implemented, and exercised by nothing.
+
+### CT-10 — Nominal masses exactly on a half-step
+
+`target_batch_mass = 1.000 kg`, `balance_step = 0.001 kg`
+
+| Component | Target fraction | Nominal mass | In steps | Rounded | **Weighed** |
+|---|---|---|---|---|---|
+| `CMP-A` | 0.250500 | 0.250500000 | **250.5** | 0.250 | **0.250** |
+| `CMP-B` | 0.249000 | 0.249000000 | 249.0 | 0.249 | **0.249** |
+| `CMP-C` | 0.500500 | 0.500500000 | **500.5** | 0.500 | **0.501** |
+
+Two nominal masses fall exactly halfway between two steps. `HALF_EVEN` rounds both to the
+even neighbour — 250 and 500 — so the sum of rounded is `0.999`, `residual = +0.001`, and
+`CMP-C` receives it. Final sum **= 1.000**.
+
+**This is the only case where `P-01` decides anything.** With `HALF_UP` the same input
+gives 251 and 501 steps, a residual of `−0.001`, and the doses **0.251 / 0.249 / 0.500** —
+a different sheet for the same recipe. Note that `INV-01` holds either way: the invariants
+do not catch this one, only the approved masses do.
+
 ### Provenance and validation
 
 | | |
 |---|---|
 | **Provenance** | Computed in exact decimal arithmetic, independently of any implementation of the component |
 | **How they were examined** | Every line was recomputed: nominal mass, number of steps, `HALF_EVEN` rounding, residual, allocation. The final sum was checked against `INV-01` for each case |
-| **What the examination produced** | CT-03 was built **in order to** expose the tie between fractions: without it, the tie-break rule of `RG-050` was covered by no case. CT-05 was built for the residual bound, which no other case reached |
-| **Where they live** | [`4-code/reference-data.csv`](4-code/reference-data.csv), replayed on every run of the qualification harness |
+| **What the examination produced** | CT-03 was built **in order to** expose the tie between fractions: without it, the tie-break rule of `RG-050` was covered by no case. CT-05 was built for the residual bound, which no other case reached. CT-09 was added in v1.1.0, when the coverage report showed that `E-MAS-002` — the rejection above the bound — was exercised by no case at all. CT-10 followed for the same reason: no case produced a nominal mass on a half-step, so `P-01` — a business decision with an effective date — was arbitrated by nothing |
+| **Where they live** | [`../code/src/test/resources/reference-data.csv`](../code/src/test/resources/reference-data.csv), replayed on every run of the qualification harness |
+| **One document per case** | [`../tests/`](../tests/) — what each case exists to catch, and what it would let through |
 | **Approved by** | Formulation manager, 2026-08-21 |
 
 ---
@@ -408,10 +443,11 @@ conservation of `INV-01` would be impossible.
 | Version | Date | Change | Impact on results | Notice |
 |---|---|---|---|---|
 | 1.0.0 | 2026-08-21 | Initial version | — | — |
+| 1.1.0 | 2026-08-22 | `CT-09` and `CT-10` added: a residual of 4 steps rejected by `E-MAS-002`, and two nominal masses on a half-step that arbitrate `P-01` | **None on accepted batches.** No rule changed. The case covers a rejection path that no test reached | Implementers: rerun the reference set. An implementation that never checks the residual, or that rounds `HALF_UP`, was passing before and fails now |
 
 ## Annexe — Identités
 
-*Chaque objet porte un UUID attribué une fois et jamais modifié. L'identifiant lisible et le libellé sont des étiquettes : ils peuvent changer, l'identité non. Voir [CADRE.md §2.8](../../CADRE.md).*
+*Chaque objet porte un UUID attribué une fois et jamais modifié. L'identifiant lisible et le libellé sont des étiquettes : ils peuvent changer, l'identité non. Voir [CADRE.md §2.8](../../../CADRE.md).*
 
 | Identifiant | UUID | Nature | Libellé |
 |---|---|---|---|
@@ -429,6 +465,8 @@ conservation of `INV-01` would be impossible.
 | `CT-06` | `0bd9840e-b26b-4f5c-8fb1-942cf27adb3c` | cas de test | Fractions not adding up to 1 |
 | `CT-07` | `9ed8d49a-3e8a-4e33-9dae-78541e2c80e1` | cas de test | Duplicate identifiers |
 | `CT-08` | `c971327c-6b5f-4696-815e-ce1ee4479bb7` | cas de test | Target mass not a multiple of the step |
+| `CT-09` | `9cb4442a-f5c1-411c-a953-cbabd98bdcbb` | cas de test | Residual over the bound |
+| `CT-10` | `8ff07a1a-4d0c-4f42-98ce-7585e5dc0d03` | cas de test | Nominal masses exactly on a half-step |
 | `P-01` | `4b92babc-dd3d-423e-8feb-046b7166db4e` | paramètre | Rounding mode for doses |
 | `P-02` | `cd6b8a1b-c171-4083-aa90-16fbfbffba9b` | paramètre | Maximum tolerated residual, in balance steps |
 | `EX-01` | `289af665-16cb-4113-86ea-9ff53ce1a4c5` | exigence | The calculation uses **exact decimal arithmetic**, as required by the  |

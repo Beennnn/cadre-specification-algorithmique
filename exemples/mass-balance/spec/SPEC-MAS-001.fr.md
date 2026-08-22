@@ -3,19 +3,19 @@
 | | |
 |---|---|
 | **Identifiant** | SPEC-MAS-001 |
-| **Version** | 1.0.0 |
+| **Version** | 1.1.0 |
 | **Statut** | Validée |
 | **Valideur métier** | Responsable formulation |
 | **Co-auteur technique** | Équipe logiciel procédés |
-| **Glossaire de référence** | [GLOSSAIRE.md](../../GLOSSAIRE.md) v1.0.0 |
-| **Traduction de** | [2-SPEC-MAS-001.en.md](2-SPEC-MAS-001.en.md) |
+| **Glossaire de référence** | [GLOSSAIRE.md](../../../GLOSSAIRE.md) v1.0.0 |
+| **Traduction de** | [SPEC-MAS-001.en.md](SPEC-MAS-001.en.md) |
 
-> **Version française, non normative.** La version qui fait foi est [`2-SPEC-MAS-001.en.md`](2-SPEC-MAS-001.en.md) : c'est elle que le code suit et que les outils vérifient. Cette traduction sert à la relecture métier en français.
+> **Version française, non normative.** La version qui fait foi est [`SPEC-MAS-001.en.md`](SPEC-MAS-001.en.md) : c'est elle que le code suit et que les outils vérifient. Cette traduction sert à la relecture métier en français.
 > Les deux portent **les mêmes identifiants et les mêmes identités durables** —
 > `C-42` le vérifie mécaniquement.
 >
 > **Pourquoi cet exemple.** Il est le pendant de
-> [SPEC-THM-001](../SPEC-THM-001-refroidissement.md). Là, des grandeurs **continues**, une
+> [SPEC-THM-001](../../SPEC-THM-001-refroidissement.md). Là, des grandeurs **continues**, une
 > équation différentielle, un résultat **approché** dont on discute la justesse. Ici, des
 > grandeurs **discrètes et exactes** : une masse pesée existe au pas de la balance, pas
 > en deçà. Le résultat n'est pas approché, il est **juste ou faux** — et la conservation
@@ -76,7 +76,7 @@ Component :
 ```
 
 > **`[Scaled]`, et non `Real`.** La famille entre crochets est celle d'ISO/IEC 11404
-> ([CADRE §2.3](../../CADRE.md)). `Scaled` désigne un rationnel à échelle décimale fixe,
+> ([CADRE §2.3](../../../CADRE.md)). `Scaled` désigne un rationnel à échelle décimale fixe,
 > **exact** ; `Real` une approximation. `INV-01` exige une égalité stricte : elle ne
 > tient pas en binaire flottant, où 0,1 n'est pas représentable. Le type porte
 > l'exigence — il ne la recommande pas.
@@ -107,8 +107,8 @@ Dispensed :
 
 | Id | Nom | Valeur | Unité | Qui peut le changer | Date d'effet |
 |---|---|---|---|---|---|
-| `P-01` | Mode d'arrondi des doses | `HALF_EVEN` | — | Responsable formulation | 2026-01-01 |
-| `P-02` | Résidu maximal toléré, en pas de balance | 3 | pas | Responsable formulation | 2026-01-01 |
+| <a id="p-01"></a>`P-01` | Mode d'arrondi des doses | `HALF_EVEN` | — | Responsable formulation | 2026-01-01 |
+| <a id="p-02"></a>`P-02` | Résidu maximal toléré, en pas de balance | 3 | pas | Responsable formulation | 2026-01-01 |
 
 > **`P-01` vaut `HALF_EVEN`, et ce n'est pas un détail.** Sur un grand nombre de lots,
 > l'arrondi au plus proche « moitié vers le haut » biaise systématiquement les masses
@@ -173,7 +173,7 @@ n'utilise.
 | `ET-05` Affectation | `rounded_mass`, `residual`, `residual_is_acceptable`, `target_mass_fraction`, `component_id` | `dispensed_mass` | `RG-050` |
 
 ```bash
-java outils/Verifier.java --chaine exemples/mass-balance/2-SPEC-MAS-001.fr.md
+java outils/Verifier.java --chaine exemples/mass-balance/spec/SPEC-MAS-001.fr.md
 ```
 
 L'outil en dérive **qui crée et qui utilise** chaque grandeur, les **niveaux d'exécution**
@@ -278,10 +278,10 @@ END IF
 
 | Id | Énoncé |
 |---|---|
-| `INV-01` | `SUM OF dispensed_mass OVER dispensed = target_batch_mass`, **exactement**. C'est la conservation de la masse : elle ne tolère aucun écart, fût-il d'un pas. |
-| `INV-02` | Chaque `dispensed_mass` est un multiple entier de `balance_step`. |
-| `INV-03` | Chaque `dispensed_mass` est `≥ 0`. Un résidu négatif ne peut pas rendre une dose négative — si cela arrivait, `RG-040` aurait dû rejeter avant. |
-| `INV-04` | Le résultat est **invariant par permutation** de la liste des composants : réordonner l'entrée ne change aucune masse pesée. C'est ce que garantit la règle de départage de `RG-050`. |
+| <a id="inv-01"></a>`INV-01` | `SUM OF dispensed_mass OVER dispensed = target_batch_mass`, **exactement**. C'est la conservation de la masse : elle ne tolère aucun écart, fût-il d'un pas. |
+| <a id="inv-02"></a>`INV-02` | Chaque `dispensed_mass` est un multiple entier de `balance_step`. |
+| <a id="inv-03"></a>`INV-03` | Chaque `dispensed_mass` est `≥ 0`. Un résidu négatif ne peut pas rendre une dose négative — si cela arrivait, `RG-040` aurait dû rejeter avant. |
+| <a id="inv-04"></a>`INV-04` | Le résultat est **invariant par permutation** de la liste des composants : réordonner l'entrée ne change aucune masse pesée. C'est ce que garantit la règle de départage de `RG-050`. |
 
 > `INV-04` se teste sur des entrées générées : on permute la liste au hasard et on
 > vérifie que le résultat est identique. C'est le contrôle qui attrape une
@@ -295,10 +295,10 @@ END IF
 
 | Id | Condition | Comportement |
 |---|---|---|
-| `E-MAS-001` | La somme des fractions cibles ne vaut pas exactement 1 | Rejet. Aucun résultat partiel n'est produit |
-| `E-MAS-002` | Le résidu dépasse `P-02` pas de balance | Rejet, en indiquant le résidu constaté |
-| `E-MAS-003` | Deux composants portent le même `component_id` | Rejet : le départage de `RG-050` ne serait pas défini |
-| `E-MAS-004` | `target_batch_mass` n'est pas un multiple de `balance_step` | Rejet : la conservation exacte de `INV-01` serait impossible |
+| <a id="e-mas-001"></a>`E-MAS-001` | La somme des fractions cibles ne vaut pas exactement 1 | Rejet. Aucun résultat partiel n'est produit |
+| <a id="e-mas-002"></a>`E-MAS-002` | Le résidu dépasse `P-02` pas de balance | Rejet, en indiquant le résidu constaté |
+| <a id="e-mas-003"></a>`E-MAS-003` | Deux composants portent le même `component_id` | Rejet : le départage de `RG-050` ne serait pas défini |
+| <a id="e-mas-004"></a>`E-MAS-004` | `target_batch_mass` n'est pas un multiple de `balance_step` | Rejet : la conservation exacte de `INV-01` serait impossible |
 
 ---
 
@@ -382,14 +382,49 @@ départage de `RG-050` ne serait pas défini.
 `target_batch_mass = 1,000`, `balance_step = 0,300`. Rejet par `E-MAS-004` : la
 conservation exacte de `INV-01` serait impossible.
 
+### CT-09 — Résidu au-delà de la borne
+
+`balance_step = 0,100`, `target_batch_mass = 1,400`, dix composants de fraction
+`0,100000` chacun.
+
+Chaque dose nominale vaut 0,140 kg — exactement **1,4 pas**, arrondi à 1 pas : on pèse
+0,100 kg au lieu de 0,140. Dix composants perdent 0,4 pas chacun : somme des arrondis
+`= 1,000`, **résidu `= +0,400`, soit 4 pas**. C'est au-delà de `P-02 = 3` : le lot est
+**rejeté** par `E-MAS-002`, qui rapporte le résidu constaté.
+
+**C'est le cas qui rend la borne réelle.** CT-05 se tient *sur* la borne et passe ; CT-09
+se tient juste au-delà et est refusé. Sans la paire, une implémentation qui ne contrôle
+jamais le résidu passe le jeu entier : jusqu'en v1.1.0, `E-MAS-002` était énoncé,
+implémenté, et exercé par rien.
+
+### CT-10 — Masses nominales pile sur un demi-pas
+
+`target_batch_mass = 1,000 kg`, `balance_step = 0,001 kg`
+
+| Composant | Fraction cible | Masse nominale | En pas | Arrondi | **Pesé** |
+|---|---|---|---|---|---|
+| `CMP-A` | 0,250500 | 0,250500000 | **250,5** | 0,250 | **0,250** |
+| `CMP-B` | 0,249000 | 0,249000000 | 249,0 | 0,249 | **0,249** |
+| `CMP-C` | 0,500500 | 0,500500000 | **500,5** | 0,500 | **0,501** |
+
+Deux masses nominales tombent pile entre deux pas. `HALF_EVEN` les arrondit au voisin pair
+— 250 et 500 — d'où une somme d'arrondis de `0,999`, un `résidu = +0,001` que reçoit
+`CMP-C`. Somme finale **= 1,000**.
+
+**C'est le seul cas où `P-01` décide de quelque chose.** En `HALF_UP`, la même entrée donne
+251 et 501 pas, un résidu de `−0,001` et les doses **0,251 / 0,249 / 0,500** — une autre
+fiche pour la même recette. À noter : `INV-01` tient dans les deux cas ; ce ne sont pas les
+invariants qui attrapent celui-là, ce sont les masses validées.
+
 ### Provenance et validation
 
 | | |
 |---|---|
 | **Provenance** | Calculs conduits en arithmétique décimale exacte, indépendamment de toute implémentation du composant |
 | **Comment ils ont été examinés** | Chaque ligne a été recalculée : masse nominale, nombre de pas, arrondi `HALF_EVEN`, résidu, affectation. La somme finale a été confrontée à `INV-01` sur chaque cas |
-| **Ce que l'examen a produit** | CT-03 a été construit **pour** faire apparaître l'égalité de fractions : sans lui, la règle de départage de `RG-050` n'était couverte par aucun cas. CT-05 l'a été pour la borne du résidu, qui n'était atteinte par aucun autre |
-| **Où ils vivent** | [`4-code/reference-data.csv`](4-code/reference-data.csv), rejoué à chaque exécution du harnais de qualification |
+| **Ce que l'examen a produit** | CT-03 a été construit **pour** faire apparaître l'égalité de fractions : sans lui, la règle de départage de `RG-050` n'était couverte par aucun cas. CT-05 l'a été pour la borne du résidu, qui n'était atteinte par aucun autre. CT-09 a été ajouté en v1.1.0, quand le rapport de couverture a montré que `E-MAS-002` — le rejet au-delà de la borne — n'était exercé par aucun cas. CT-10 a suivi pour la même raison : aucun cas ne produisait de masse nominale sur un demi-pas, donc `P-01` — une décision métier datée — n'était arbitré par rien |
+| **Où ils vivent** | [`../code/src/test/resources/reference-data.csv`](../code/src/test/resources/reference-data.csv), rejoué à chaque exécution du harnais de qualification |
+| **Un document par cas** | [`../tests/`](../tests/) — ce que chaque cas existe pour attraper, et ce qu'il laisserait passer |
 | **Validé par** | Responsable formulation, 2026-08-21 |
 
 ---
@@ -419,10 +454,11 @@ conservation exacte de `INV-01` serait impossible.
 | Version | Date | Changement | Impact sur les résultats | Notice |
 |---|---|---|---|---|
 | 1.0.0 | 2026-08-21 | Version initiale | — | — |
+| 1.1.0 | 2026-08-22 | Ajout de `CT-09` et `CT-10` : un résidu de 4 pas rejeté par `E-MAS-002`, et deux masses nominales sur un demi-pas qui arbitrent `P-01` | **Aucun sur les lots acceptés.** Aucune règle n'a changé. Le cas couvre un chemin de rejet qu'aucun test n'atteignait | Implémenteurs : rejouer le jeu de référence. Une implémentation qui ne contrôle jamais le résidu, ou qui arrondit en `HALF_UP`, passait avant et échoue maintenant |
 
 ## Annexe — Identités
 
-*Chaque objet porte un UUID attribué une fois et jamais modifié. L'identifiant lisible et le libellé sont des étiquettes : ils peuvent changer, l'identité non. Voir [CADRE.md §2.8](../../CADRE.md).*
+*Chaque objet porte un UUID attribué une fois et jamais modifié. L'identifiant lisible et le libellé sont des étiquettes : ils peuvent changer, l'identité non. Voir [CADRE.md §2.8](../../../CADRE.md).*
 
 | Identifiant | UUID | Nature | Libellé |
 |---|---|---|---|
@@ -440,6 +476,8 @@ conservation exacte de `INV-01` serait impossible.
 | `CT-06` | `0bd9840e-b26b-4f5c-8fb1-942cf27adb3c` | cas de test | Fractions ne sommant pas à 1 |
 | `CT-07` | `9ed8d49a-3e8a-4e33-9dae-78541e2c80e1` | cas de test | Identifiants dupliqués |
 | `CT-08` | `c971327c-6b5f-4696-815e-ce1ee4479bb7` | cas de test | Masse cible non multiple du pas |
+| `CT-09` | `9cb4442a-f5c1-411c-a953-cbabd98bdcbb` | cas de test | Résidu au-delà de la borne |
+| `CT-10` | `8ff07a1a-4d0c-4f42-98ce-7585e5dc0d03` | cas de test | Masses nominales pile sur un demi-pas |
 | `P-01` | `4b92babc-dd3d-423e-8feb-046b7166db4e` | paramètre | Mode d'arrondi des doses |
 | `P-02` | `cd6b8a1b-c171-4083-aa90-16fbfbffba9b` | paramètre | Résidu maximal toléré, en pas de balance |
 | `EX-01` | `289af665-16cb-4113-86ea-9ff53ce1a4c5` | exigence | Le calcul emploie une **arithmétique décimale exacte**, comme l'impose |

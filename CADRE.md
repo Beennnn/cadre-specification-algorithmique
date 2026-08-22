@@ -479,7 +479,7 @@ domaine, et c'est elle qui dit au développeur quoi instancier :
 
 > **`Scaled` est le cas qui rapporte le plus.** ISO/IEC 11404 distingue `Real` — une
 > approximation — de `Scaled` — un rationnel à échelle décimale fixe, **exact**. C'est
-> exactement la distinction que réclame [SPEC-MAS-001](exemples/mass-balance/2-SPEC-MAS-001.en.md),
+> exactement la distinction que réclame [SPEC-MAS-001](exemples/mass-balance/spec/SPEC-MAS-001.en.md),
 > dont l'invariant de conservation exige une égalité stricte que le binaire flottant ne
 > peut pas tenir. Écrire `Scaled` plutôt que « décimal exact, attention au flottant »,
 > c'est remplacer une recommandation par un type.
@@ -1852,7 +1852,7 @@ domaines opposés, parce que **la même méthode y conduit à des conclusions te
 contraires** — ce qui est la meilleure preuve que c'est bien la spécification qui décide,
 et non l'habitude du développeur.
 
-| | [SPEC-MAS-001](exemples/mass-balance/2-SPEC-MAS-001.en.md) — discret et exact | [SPEC-THM-001](exemples/SPEC-THM-001-refroidissement.md) — continu et approché |
+| | [SPEC-MAS-001](exemples/mass-balance/spec/SPEC-MAS-001.en.md) — discret et exact | [SPEC-THM-001](exemples/SPEC-THM-001-refroidissement.md) — continu et approché |
 |---|---|---|
 | Le calcul | Le montant à payer d'une commande | La température d'une boisson qui refroidit |
 | Grandeurs | Montants, taux, quantités | Températures, durées, masses |

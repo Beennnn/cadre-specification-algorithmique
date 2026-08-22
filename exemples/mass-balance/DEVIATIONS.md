@@ -107,4 +107,4 @@ personne ne puisse plus dire laquelle fait foi.
 
 ---
 
-← [4 — le code](4-code/) · [Retour au parcours](README.md)
+← [4 — le code](code/) · [Retour au parcours](README.md)
