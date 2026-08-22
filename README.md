@@ -61,46 +61,22 @@ choisisse seul le langage, les structures de données et l'architecture.
 
 ---
 
-## Ce que le métier écrit, concrètement
+## En quelle langue écrit-on un algorithme ?
 
-Un extrait réel, pris dans le [relevé d'une station météo](exemples/weather-summary/) — le
-rejet des températures aberrantes :
+C'est **la** question de la méthode, et elle n'a que deux mauvaises réponses. Du code : le
+métier ne l'écrit pas, ne le relit pas, et on retombe dans le mélange qu'on voulait défaire.
+De la prose libre : « on arrondit convenablement », « on prend le meilleur » — deux lecteurs
+honnêtes, deux résultats.
 
-```
-    WHILE NOT converged AND round_number < P-02
-        LET mean_now = MEAN OF temperature OVER retained
-        LET spread   = STANDARD DEVIATION OF temperature OVER retained
-        LET outliers = FILTER retained WHERE |temperature − mean_now| > P-01 × spread
-
-        IF NONE OF retained IS IN outliers THEN
-            converged = TRUE
-        ELSE
-            retained     = FILTER retained WHERE temperature IS NOT IN outliers
-            round_number = round_number + 1
-        END IF
-    END WHILE
-```
-
-**Ce n'est pas un langage de programmation simplifié : c'est du français discipliné.**
-Une trentaine de mots-clés, tous en anglais, et la liste est **fermée**. Personne n'exécute
-ce texte ; il est lu par des humains, et un script en contrôle la cohérence.
-
-Trois choses s'y voient d'un coup d'œil, et aucune n'est un détail de forme :
-
-- **La boucle est bornée par un paramètre métier** (`P-02`), et ce qui se passe quand la
-  borne est atteinte est écrit — le relevé est publié quand même, étiqueté `SUSPECT`. Sans
-  cette phrase, chaque implémenteur décide pour lui-même.
-- **La borne est stricte** : `>` et non `≥`. Une lecture à exactement `P-01` écarts-types
-  est gardée. La frontière devait tomber d'un côté, et c'est le métier qui l'a choisi.
-- **`STANDARD DEVIATION` n'est pas un mot-clé** : le pseudo-langage ne redéfinit pas les
-  mathématiques. Ce que la spécification doit dire, c'est **laquelle** — ici celle
-  d'échantillon, au diviseur `n − 1`.
+La réponse retenue est un **pseudo-langage** : une trentaine de mots-clés, tous en anglais,
+et **la liste est fermée**. Ce n'est pas un langage de programmation simplifié, c'est du
+français discipliné. On écrit en pseudo-code exactement ce dont une lecture différente
+changerait un résultat ; **tout le reste s'écrit en français**.
 
 | | |
 |---|---|
 | **Les principes et tous les mots-clés** | **[PSEUDO-LANGAGE.md](PSEUDO-LANGAGE.md)** — une page, avec l'aide-mémoire à imprimer |
-| **Un algorithme complet** | [SPEC-WTH-001 §7.1](exemples/weather-summary/spec/SPEC-WTH-001.en.md) — 65 lignes, 33 des 35 éléments du lexique |
-| **Le plus petit, pour commencer** | [la vitesse moyenne d'un trajet](exemples/average-speed/) — deux fonctions, trois règles |
+| **Un algorithme complet, en vrai** | [SPEC-WTH-001 §7.1](exemples/weather-summary/spec/SPEC-WTH-001.en.md) — 65 lignes, 33 des 35 éléments du lexique |
 
 ---
 
