@@ -114,6 +114,72 @@ Dispensed :
 
 ## 7. Règles
 
+### 7.1 L'algorithme, en un seul morceau
+
+**Les règles ci-dessous ne sont pas des fragments indépendants : ce sont les étapes d'un
+seul algorithme.** En voici la composition, telle que le métier l'énonce — c'est elle qui
+fait foi sur l'**ordre**, et le développeur n'a rien à réinventer :
+
+```
+DEFINE compute_mass_balance(request) : result
+
+    PRECONDITIONS  E-MAS-001, E-MAS-003, E-MAS-004
+
+    FOR EACH component IN request.components
+        nominal_mass = ...                          (RG-010)
+        rounded_mass = ...                          (RG-020)
+    END FOR
+
+    LET residual = ...                              (RG-030)
+
+    IF the residual exceeds the bound THEN          (RG-040)
+        RAISE ERROR E-MAS-002
+    ELSE
+        dispensed_mass = ...                        (RG-050)
+    END IF
+
+    RETURN result
+```
+
+> **Pourquoi les deux vues, et pas seulement celle-ci.** L'algorithme intégré se lit d'un
+> trait et se juge d'un coup : c'est lui qui permet à un relecteur technique de répondre
+> « oui, je peux coder ça ». Les règles numérotées, elles, sont les **unités adressables**
+> du document — c'est à elles qu'on rattache un cas de test (§10), une notice de changement
+> (§13), une suggestion du développeur, un commentaire dans le code. Un bloc unique de
+> quatre-vingts lignes ne se cite pas, ne se couvre pas règle par règle, et ne se versionne
+> pas par morceaux.
+>
+> Ce ne sont donc pas deux options entre lesquelles choisir : c'est **le même algorithme,
+> vu à deux granularités**, et les deux sont exigées.
+
+### 7.2 Chaîne de traitement
+
+Le même enchaînement, vu comme des boîtes qui se passent des grandeurs. C'est cette table
+qui rend l'ordre **vérifiable mécaniquement** : `C-35` signale une étape qui consomme une
+grandeur que rien n'a produite en amont, `C-36` une grandeur produite que personne
+n'utilise.
+
+| Étape | Consomme | Produit | Règles |
+|---|---|---|---|
+| `ET-01` Masse nominale | `target_batch_mass`, `target_mass_fraction` | `nominal_mass` | `RG-010` |
+| `ET-02` Arrondi au pas | `nominal_mass`, `balance_step`, `P-01` | `rounded_mass` | `RG-020` |
+| `ET-03` Résidu | `rounded_mass`, `target_batch_mass` | `residual` | `RG-030` |
+| `ET-04` Recevabilité | `residual`, `balance_step`, `P-02` | `residual_is_acceptable` | `RG-040` |
+| `ET-05` Affectation | `rounded_mass`, `residual`, `residual_is_acceptable`, `target_mass_fraction`, `component_id` | `dispensed_mass` | `RG-050` |
+
+```bash
+java outils/Verifier.java --chaine exemples/bilan-de-masse/2-SPEC-MAS-001-batch-mass-balance.md
+```
+
+L'outil en dérive **qui crée et qui utilise** chaque grandeur, les **niveaux d'exécution**
+— ce qui peut se calculer en parallèle — et le **chemin critique**. Aucune de ces vues
+n'est écrite à la main : elles se déduisent de la table, donc elles ne peuvent pas diverger
+du document.
+
+> **Ici, la chaîne est strictement séquentielle** : chaque étape consomme ce que la
+> précédente produit, il n'y a rien à paralléliser. C'est un résultat, pas une omission —
+> et c'est utile au développeur de le savoir avant d'essayer.
+
 ### RG-010 — Masse nominale d'un composant
 
 ```

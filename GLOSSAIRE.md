@@ -7,7 +7,7 @@ chaque équipe produit pour son propre métier ([guide 2](guides/2-GLOSSAIRE.md)
 
 | Terme | Définition |
 |---|---|
-| **Cas de test** (`CT-xx`) | Un jeu d'entrées et le résultat attendu correspondant, **calculé à la main** par le métier. Un cas de test dont le résultat provient d'une implémentation ne vérifie rien. |
+| **Cas de test** (`CT-xx`) | Un jeu d'entrées et le résultat attendu correspondant, **calculé à la main** par le métier. Un cas de test dont le résultat provient d'une implémentation ne vérifie rien. **À ne pas confondre avec un test unitaire** : un `CT-xx` porte sur la **fonction spécifiée**, au niveau du contrat, et ses valeurs attendues sont un engagement métier ; un test unitaire porte sur une unité de code, est écrit par le développeur, et relève de lui seul. Le développeur implémente chaque `CT-xx` — souvent comme un test, unitaire ou d'intégration selon son découpage — et en écrit autant d'autres qu'il le juge utile. Ceux-là ne figurent pas dans la spécification. |
 | **Axe** | L'une des directions d'un symbole structuré. Une matrice de rang 2 a deux axes. Chaque axe porte une **étendue** et une signification déclarée. À ne pas confondre avec la **dimension**, qui est physique. |
 | **Contrat** | Les entrées et sorties d'une fonction, typées avec leur unité, leur précision et leur domaine de validité. Niveau 3 de l'échelle de maturité. |
 | **Découpage** | L'opération qui identifie et nomme les fonctions d'un périmètre. Précède toute écriture de règle. |

@@ -1191,9 +1191,52 @@ intermédiaires exposées — ne sert que la moitié de son office.
 D'où une exigence qui se pose à l'écriture, longtemps avant la recette : **le contrat doit
 être écrit pour être vérifiable**, pas seulement pour être compris.
 
-### 3.2 La chaîne de traitement
+### 3.2 La composition : l'algorithme en un seul morceau
 
-Un calcul un peu long cesse d'être lisible comme une suite de règles. Il se lit alors
+> **Les règles numérotées ne sont pas des fragments indépendants que le développeur
+> assemblerait à sa guise.** Ce sont les **étapes d'un seul algorithme**, et l'ordre dans
+> lequel elles s'enchaînent fait partie de la spécification — pas de l'implémentation.
+
+C'est une confusion fréquente, et elle est grave : si la composition n'est pas écrite, le
+développeur la déduit des dépendances de données. Il tombera juste la plupart du temps —
+et le jour où deux ordres sont possibles et donnent des résultats différents, il en
+choisira un **sans le savoir et sans mandat**. C'est exactement le deuxième des huit faux
+amis (§1.5).
+
+Toute spécification porte donc **deux vues du même calcul**, et les deux sont exigées :
+
+| | **L'algorithme intégré** | **Les règles numérotées** |
+|---|---|---|
+| Ce qu'il donne | Le calcul **d'un trait**, dans l'ordre, avec ses branches | Les **unités adressables** du document |
+| À quoi il sert | Le relecteur technique répond « oui, je peux coder ça » en le lisant | Y rattacher un cas de test, une notice de changement, une suggestion, un commentaire de code |
+| Ce qu'il ne peut pas faire | Se citer, se couvrir morceau par morceau, se versionner par parties | Se juger d'un coup : cinquante règles ne montrent pas la forme du tout |
+
+**Ce ne sont pas deux options entre lesquelles choisir.** C'est le même algorithme vu à
+deux granularités — la vue d'ensemble et les pièces nommées. Écrire l'une sans l'autre,
+c'est perdre soit la vérifiabilité globale, soit la traçabilité fine.
+
+L'algorithme intégré s'écrit en pseudo-langage, sans le détail des expressions : il montre
+**l'enchaînement et les branches**, et renvoie à chaque règle pour le contenu.
+
+```
+DEFINE compute_something(request) : result
+
+    PRECONDITIONS  E-XXX-001
+
+    LET intermediate = ...                (RG-010)
+
+    IF condition THEN                     (RG-020)
+        outcome = ...                     (RG-030)
+    ELSE
+        RAISE ERROR E-XXX-002
+    END IF
+
+    RETURN result
+```
+
+#### La chaîne de traitement
+
+Un calcul un peu long cesse d'être lisible même ainsi. Il se lit alors
 comme **une suite de boîtes qui s'enchaînent** — et cette vue se place **avant** les
 règles, parce qu'elle dit de quoi on va parler.
 

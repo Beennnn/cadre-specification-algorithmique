@@ -129,7 +129,65 @@ result :
 
 ## 7. Règles
 
-### 7.1 Grandeurs internes
+### 7.1 L'algorithme, en un seul morceau
+
+**Les règles ci-dessous sont les étapes d'un seul algorithme, pas des fragments à
+assembler.** Voici sa composition, telle que le métier l'énonce :
+
+```
+DEFINE compute_sunrise_sunset(request) : result
+
+    PRECONDITIONS  E-AST-001, E-AST-002
+
+    LET julian_day         = ...                    (RG-005)
+    LET days_since_epoch   = ...                    (RG-010)
+    LET mean_anomaly       = ...                    (RG-020)
+    LET ecliptic_longitude = ...                    (RG-020)
+    declination            = ...                    (RG-030)
+    LET solar_transit      = ...                    (RG-040)
+    LET cos_hour_angle     = ...                    (RG-050)
+
+    IF cos_hour_angle IS OUTSIDE [−1, 1] THEN       (RG-050)
+        solar_regime = POLAR_DAY OR POLAR_NIGHT, according to its sign
+        sunrise_time = ABSENT
+        sunset_time  = ABSENT
+    ELSE
+        solar_regime = NORMAL
+        sunrise_time = ...                          (RG-060)
+        sunset_time  = ...                          (RG-060)
+    END IF
+
+    RETURN result
+```
+
+> **L'algorithme intégré se lit d'un trait ; les règles numérotées sont adressables.** Ce
+> sont deux vues du même calcul, pas deux options. Sans la première, l'ordre resterait à
+> deviner ; sans les secondes, on ne pourrait rattacher ni un cas de test, ni une notice de
+> changement, ni un commentaire de code à un point précis.
+
+### 7.2 Chaîne de traitement
+
+| Étape | Consomme | Produit | Règles |
+|---|---|---|---|
+| `ET-01` Jour julien | `observation_date` | `julian_day` | `RG-005` |
+| `ET-02` Jour local | `julian_day`, `longitude` | `days_since_epoch` | `RG-010` |
+| `ET-03` Position orbitale | `days_since_epoch` | `mean_anomaly`, `ecliptic_longitude` | `RG-020` |
+| `ET-04` Déclinaison | `ecliptic_longitude`, `P-04` | `declination` | `RG-030` |
+| `ET-05` Midi solaire | `days_since_epoch`, `longitude`, `mean_anomaly`, `ecliptic_longitude` | `solar_transit` | `RG-040` |
+| `ET-06` Régime solaire | `latitude`, `declination`, `ecliptic_longitude`, `P-01` | `cos_hour_angle`, `solar_regime` | `RG-050` |
+| `ET-07` Instants | `cos_hour_angle`, `solar_regime`, `solar_transit`, `P-03` | `sunrise_time`, `sunset_time` | `RG-060` |
+
+```bash
+java outils/Verifier.java --chaine exemples/SPEC-AST-001-lever-coucher-du-soleil.md
+```
+
+> **Contrairement au bilan de masse, cette chaîne n'est pas une file.** `ET-04`
+> (déclinaison) et `ET-05` (midi solaire) ne dépendent pas l'une de l'autre : elles sont
+> **indépendantes et calculables en parallèle**. L'outil le dérive de la table, sans qu'on
+> l'écrive. La spécification dit ce qui est indépendant ; elle ne dit pas d'en profiter —
+> ce choix appartient au développeur.
+
+### 7.3 Grandeurs internes
 
 *Portée **interne** : visibles dans le corps de cette fonction seulement. Elles ne
 figurent ni au contrat, ni au catalogue des données — mais elles sont décrites avec la
