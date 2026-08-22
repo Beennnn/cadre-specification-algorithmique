@@ -13,8 +13,8 @@ là-dessus, pas sur le domaine.*
 | **[La vitesse moyenne d'un trajet](average-speed/)** | ~170 l. | spec → **un doc par cas** → code → rapports | La **prise en main**. Deux fonctions, deux paramètres, trois règles |
 | **[Le relevé d'une station météo](weather-summary/)** | ~450 l. | spec → **un doc par cas** → code → rapports | **Tout le pseudo-langage**, une **boucle qui peut s'épuiser**, et le seul défaut que ni un invariant ni un jeu de cas n'auraient trouvé seuls |
 | **[Le bilan de masse d'un lot](mass-balance/)** | ~470 l. | besoin → spec → contrat → **un doc par cas** → code → rapports → **écarts** | La **chaîne complète**, jusqu'à l'analyse des écarts |
-| **[Le refroidissement d'une boisson](SPEC-THM-001-refroidissement.md)** | ~630 l. | spec | Le **continu et l'approché** : équation différentielle, incertitude |
-| **[Le lever du Soleil](SPEC-AST-001-lever-coucher-du-soleil.md)** | ~510 l. | spec | Une **équation sans solution** hors des cercles polaires |
+| **[Le refroidissement d'une boisson](cooling/)** | ~630 l. | spec, deux langues | Le **continu et l'approché** : équation différentielle, incertitude |
+| **[Le lever du Soleil](sunrise/)** | ~510 l. | spec, deux langues | Une **équation sans solution** hors des cercles polaires |
 | **[L'autonomie d'un véhicule](fil-rouge/)** | ~840 l. | besoin → découpage → glossaire → données → spec | Le **passage à l'échelle** : douze fonctions, dix étapes |
 
 **Par où commencer** : la vitesse moyenne si vous découvrez la méthode, le relevé météo si
@@ -174,11 +174,12 @@ Le bilan de masse et le refroidissement traitent des grandeurs de nature opposé
 
 | | |
 |---|---|
-| **Deux langues** | `<nom>.en.md` fait foi, `<nom>.fr.md` est la traduction. `C-42` vérifie qu'elles portent les mêmes objets et les mêmes identités |
+| **Deux langues** | `<nom>.en.md` fait foi, `<nom>.fr.md` est la traduction. `C-42` vérifie qu'elles portent les mêmes objets et les mêmes identités. Les **cinq specs** du dépôt la respectent |
 | **Une seule langue pour le reste** | jeu de données, code, tests, rapports : **anglais**. Ce sont des artefacts d'exécution, pas de relecture |
 | **Deux vues du même calcul** | l'algorithme intégré, qui se juge d'un coup, et les règles numérotées, qui sont adressables |
 | **Des chiffres vérifiés** | tout résultat publié a été recalculé indépendamment de toute implémentation |
 | **Les 25 contrôles** | `java outils/Verifier.java` finit à zéro échec sur les six |
+| **Une structure de projet** | `spec/`, `tests/`, `code/` en disposition Maven, `reports/` — pour les trois exemples qui vont jusqu'au code |
 
 ## Ajouter un exemple
 

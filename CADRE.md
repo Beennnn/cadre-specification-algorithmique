@@ -1032,7 +1032,7 @@ partagée.
 
 Le cadre s'applique tel quel à un algorithme scientifique, mais trois points demandent
 une adaptation explicite. Ils sont illustrés dans
-[exemples/SPEC-THM-001-refroidissement.md](exemples/SPEC-THM-001-refroidissement.md).
+[exemples/cooling/spec/SPEC-THM-001.en.md](exemples/cooling/spec/SPEC-THM-001.en.md).
 
 **1. Spécifier le modèle et la tolérance, pas la méthode de résolution.**
 « Intégrer par Runge-Kutta d'ordre 4 avec un pas de 1 s » est un choix d'implémentation
@@ -1852,7 +1852,7 @@ domaines opposés, parce que **la même méthode y conduit à des conclusions te
 contraires** — ce qui est la meilleure preuve que c'est bien la spécification qui décide,
 et non l'habitude du développeur.
 
-| | [SPEC-MAS-001](exemples/mass-balance/spec/SPEC-MAS-001.en.md) — discret et exact | [SPEC-THM-001](exemples/SPEC-THM-001-refroidissement.md) — continu et approché |
+| | [SPEC-MAS-001](exemples/mass-balance/spec/SPEC-MAS-001.en.md) — discret et exact | [SPEC-THM-001](exemples/cooling/spec/SPEC-THM-001.en.md) — continu et approché |
 |---|---|---|
 | Le calcul | Le montant à payer d'une commande | La température d'une boisson qui refroidit |
 | Grandeurs | Montants, taux, quantités | Températures, durées, masses |

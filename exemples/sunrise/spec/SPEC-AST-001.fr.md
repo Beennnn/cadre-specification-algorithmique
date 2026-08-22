@@ -1,4 +1,4 @@
-# SPEC-AST-001 — Sunrise and sunset times
+# SPEC-AST-001 — Heures de lever et de coucher du Soleil
 
 | | |
 |---|---|
@@ -7,7 +7,13 @@
 | **Statut** | Validée |
 | **Valideur métier** | Responsable éphémérides |
 | **Co-auteur technique** | Équipe services géospatiaux |
-| **Glossaire de référence** | [GLOSSAIRE.md](../GLOSSAIRE.md) v1.0.0 |
+| **Glossaire de référence** | [GLOSSAIRE.md](../../../GLOSSAIRE.md) v1.0.0 |
+| **Traduction de** | [SPEC-AST-001.en.md](SPEC-AST-001.en.md) |
+
+> **Version française, non normative.** La version qui fait foi est
+> [`SPEC-AST-001.en.md`](SPEC-AST-001.en.md) : c'est elle que le code suit et que les
+> outils vérifient. `C-42` contrôle que les deux portent les mêmes objets et les mêmes
+> identités durables.
 
 > **Pourquoi cet exemple.** Il apporte un régime qu'aucun autre du dépôt ne montre : **une
 > équation qui n'a pas toujours de solution**. Au-delà des cercles polaires, le Soleil peut
@@ -99,10 +105,10 @@ result :
 
 | Id | Nom | Valeur | Unité | Qui peut le changer | Date d'effet |
 |---|---|---|---|---|---|
-| `P-01` | Hauteur de référence `h₀` | −0,833 | ° | Responsable éphémérides | 2026-01-01 |
-| `P-02` | Convention de signe des coordonnées | nord et est positifs | — | Responsable éphémérides | 2026-01-01 |
-| `P-03` | Sens d'arrondi à la minute | `P-03.lever` = `CEILING`, `P-03.coucher` = `FLOOR` | — | Responsable éphémérides | 2026-01-01 |
-| `P-04` | Obliquité de l'écliptique | 23,4397 | ° | Responsable éphémérides | 2026-01-01 |
+| <a id="p-01"></a>`P-01` | Hauteur de référence `h₀` | −0,833 | ° | Responsable éphémérides | 2026-01-01 |
+| <a id="p-02"></a>`P-02` | Convention de signe des coordonnées | nord et est positifs | — | Responsable éphémérides | 2026-01-01 |
+| <a id="p-03"></a>`P-03` | Sens d'arrondi à la minute | `P-03.lever` = `CEILING`, `P-03.coucher` = `FLOOR` | — | Responsable éphémérides | 2026-01-01 |
+| <a id="p-04"></a>`P-04` | Obliquité de l'écliptique | 23,4397 | ° | Responsable éphémérides | 2026-01-01 |
 
 > **`P-01` porte la définition même du résultat, et c'est le faux ami central.**
 > « Le Soleil se lève » peut désigner quatre instants distincts :
@@ -178,7 +184,7 @@ DEFINE compute_sunrise_sunset(request) : result
 | `ET-07` Instants | `cos_hour_angle`, `solar_regime`, `solar_transit`, `P-03` | `sunrise_time`, `sunset_time` | `RG-060` |
 
 ```bash
-java outils/Verifier.java --chaine exemples/SPEC-AST-001-lever-coucher-du-soleil.md
+java outils/Verifier.java --chaine exemples/sunrise/spec/SPEC-AST-001.fr.md
 ```
 
 > **Contrairement au bilan de masse, cette chaîne n'est pas une file.** `ET-04`
@@ -291,7 +297,7 @@ END IF
 > Une implémentation qui appellerait `arccos` sans ce test produirait, selon le langage,
 > une exception, un `NaN` silencieux, ou une valeur repliée sur la borne — trois
 > comportements différents pour une même spécification. C'est exactement le genre d'écart
-> que le [test de la double implémentation](../CADRE.md) est fait pour révéler.
+> que le [test de la double implémentation](../../../CADRE.md) est fait pour révéler.
 
 ### RG-060 — Instants du lever et du coucher
 
@@ -329,11 +335,11 @@ END IF
 
 | Id | Énoncé |
 |---|---|
-| `INV-01` | Si `solar_regime = NORMAL`, alors `sunrise_time < sunset_time` — le lever précède toujours le coucher du même jour solaire. |
-| `INV-02` | `sunrise_time` et `sunset_time` sont **tous deux** `ABSENT` ou tous deux présents. Jamais l'un sans l'autre. |
-| `INV-03` | `−23,44° ≤ declination ≤ +23,44°`, quelle que soit la date. Une valeur hors de cet intervalle signale une erreur de conversion d'angle — le symptôme le plus courant d'une confusion degrés / radians. |
-| `INV-04` | **Symétrie par la longitude** : à latitude égale, décaler la longitude de `Δ` degrés vers l'est avance le lever **et** le coucher de `Δ ÷ 15` heures, à la minute d'arrondi près. C'est ce qui attrape une convention de signe inversée. |
-| `INV-05` | `solar_regime ≠ NORMAL` implique `|latitude| > 66,0°`. En deçà du cercle polaire, il y a toujours un lever et un coucher. |
+| <a id="inv-01"></a>`INV-01` | Si `solar_regime = NORMAL`, alors `sunrise_time < sunset_time` — le lever précède toujours le coucher du même jour solaire. |
+| <a id="inv-02"></a>`INV-02` | `sunrise_time` et `sunset_time` sont **tous deux** `ABSENT` ou tous deux présents. Jamais l'un sans l'autre. |
+| <a id="inv-03"></a>`INV-03` | `−23,44° ≤ declination ≤ +23,44°`, quelle que soit la date. Une valeur hors de cet intervalle signale une erreur de conversion d'angle — le symptôme le plus courant d'une confusion degrés / radians. |
+| <a id="inv-04"></a>`INV-04` | **Symétrie par la longitude** : à latitude égale, décaler la longitude de `Δ` degrés vers l'est avance le lever **et** le coucher de `Δ ÷ 15` heures, à la minute d'arrondi près. C'est ce qui attrape une convention de signe inversée. |
+| <a id="inv-05"></a>`INV-05` | `solar_regime ≠ NORMAL` implique `|latitude| > 66,0°`. En deçà du cercle polaire, il y a toujours un lever et un coucher. |
 
 > `INV-04` et `INV-05` se testent sur des entrées **engendrées**, pas sur les cinq cas du
 > jeu d'essai. `INV-05` en particulier balaie tout le globe : c'est le seul contrôle qui
@@ -345,8 +351,8 @@ END IF
 
 | Id | Condition | Comportement |
 |---|---|---|
-| `E-AST-001` | `latitude` hors de `[−90, +90]` | Rejet : la coordonnée n'existe pas |
-| `E-AST-002` | `longitude` hors de `[−180, +180]` | Rejet. **On ne replie pas** silencieusement : une longitude de 200° signale une convention non respectée en amont, et la corriger masquerait le défaut |
+| <a id="e-ast-001"></a>`E-AST-001` | `latitude` hors de `[−90, +90]` | Rejet : la coordonnée n'existe pas |
+| <a id="e-ast-002"></a>`E-AST-002` | `longitude` hors de `[−180, +180]` | Rejet. **On ne replie pas** silencieusement : une longitude de 200° signale une convention non respectée en amont, et la corriger masquerait le défaut |
 
 > **Le jour polaire n'est pas dans cette table, et c'est le point de la spécification.**
 > Ce n'est pas un cas d'erreur : c'est un résultat, porté par `solar_regime`.
@@ -437,13 +443,13 @@ commettre, et la seule que ces deux cas révèlent.
 
 | Id | Énoncé | Source | Propriétaire | Vérification |
 |---|---|---|---|---|
-| `EX-01` | **Justesse : ± 2 minutes** par rapport aux éphémérides de référence, pour toute latitude `|φ| < 65°`. Au-delà, l'erreur croît fortement : le Soleil y rase l'horizon, et un écart d'angle infime déplace l'instant de plusieurs minutes | Engagement de service | Responsable éphémérides | Comparaison annuelle sur 200 lieux |
-| `EX-02` | La **double précision binaire suffit**. La grandeur de sortie est arrondie à la minute, soit 4 × 10⁻⁴ jour, très au-dessus de tout bruit numérique | Analyse d'exactitude | Architecture SI | Revue de conception |
-| `EX-03` | Le calcul est **rejouable à l'identique** : aucune dépendance à l'horloge courante ni au fuseau de la machine | Exigence de service | Architecture SI | Rejeu sur archive |
-| `EX-04` | Volumétrie : jusqu'à 5 000 appels par seconde en pointe, latence au 99ᵉ centile sous 5 ms | Mesure de production | Responsable service | Tir de charge trimestriel |
+| <a id="ex-01"></a>`EX-01` | **Justesse : ± 2 minutes** par rapport aux éphémérides de référence, pour toute latitude `|φ| < 65°`. Au-delà, l'erreur croît fortement : le Soleil y rase l'horizon, et un écart d'angle infime déplace l'instant de plusieurs minutes | Engagement de service | Responsable éphémérides | Comparaison annuelle sur 200 lieux |
+| <a id="ex-02"></a>`EX-02` | La **double précision binaire suffit**. La grandeur de sortie est arrondie à la minute, soit 4 × 10⁻⁴ jour, très au-dessus de tout bruit numérique | Analyse d'exactitude | Architecture SI | Revue de conception |
+| <a id="ex-03"></a>`EX-03` | Le calcul est **rejouable à l'identique** : aucune dépendance à l'horloge courante ni au fuseau de la machine | Exigence de service | Architecture SI | Rejeu sur archive |
+| <a id="ex-04"></a>`EX-04` | Volumétrie : jusqu'à 5 000 appels par seconde en pointe, latence au 99ᵉ centile sous 5 ms | Mesure de production | Responsable service | Tir de charge trimestriel |
 
 > **`EX-01` distingue la justesse du modèle de l'exactitude du calcul** ([CADRE
-> §2.9](../CADRE.md)). Les ±2 minutes ne viennent pas d'une imprécision numérique : elles
+> §2.9](../../../CADRE.md)). Les ±2 minutes ne viennent pas d'une imprécision numérique : elles
 > viennent du **modèle**, qui néglige la réfraction réelle du jour, l'altitude de
 > l'observateur et le relief. Un calcul en précision infinie donnerait le même écart.
 > Confondre les deux conduirait à chercher un bogue là où il n'y en a pas.
@@ -454,9 +460,9 @@ commettre, et la seule que ces deux cas révèlent.
 
 | Id | Question | Décideur | Échéance | Statut |
 |---|---|---|---|---|
-| `Q-01` | Faut-il exposer les crépuscules civil, nautique et astronomique ? Ce sont les mêmes règles avec `h₀` valant −6°, −12° et −18° : `P-01` deviendrait une entrée | Responsable éphémérides | 2026-11-01 | Ouverte |
-| `Q-02` | Faut-il corriger de l'altitude de l'observateur ? L'effet atteint 4 minutes à 1 000 m | Responsable éphémérides | 2026-11-01 | Ouverte |
-| `Q-03` | Le service doit-il rendre l'heure locale plutôt qu'UTC ? | Responsable éphémérides | | Fermée : non, le fuseau relève de l'affichage |
+| <a id="q-01"></a>`Q-01` | Faut-il exposer les crépuscules civil, nautique et astronomique ? Ce sont les mêmes règles avec `h₀` valant −6°, −12° et −18° : `P-01` deviendrait une entrée | Responsable éphémérides | 2026-11-01 | Ouverte |
+| <a id="q-02"></a>`Q-02` | Faut-il corriger de l'altitude de l'observateur ? L'effet atteint 4 minutes à 1 000 m | Responsable éphémérides | 2026-11-01 | Ouverte |
+| <a id="q-03"></a>`Q-03` | Le service doit-il rendre l'heure locale plutôt qu'UTC ? | Responsable éphémérides | | Fermée : non, le fuseau relève de l'affichage |
 
 ---
 
@@ -468,11 +474,11 @@ commettre, et la seule que ces deux cas révèlent.
 
 ## Annexe — Identités
 
-*Chaque objet porte un UUID attribué une fois et jamais modifié. L'identifiant lisible et le libellé sont des étiquettes : ils peuvent changer, l'identité non. Voir [CADRE.md §2.8](../CADRE.md).*
+*Chaque objet porte un UUID attribué une fois et jamais modifié. L'identifiant lisible et le libellé sont des étiquettes : ils peuvent changer, l'identité non. Voir [CADRE.md §2.8](../../../CADRE.md).*
 
 | Identifiant | UUID | Nature | Libellé |
 |---|---|---|---|
-| `SPEC-AST-001` | `428e65ae-0ed5-4a6b-8eb4-e41d0215211a` | document | SPEC-AST-001 — Sunrise and sunset times |
+| `SPEC-AST-001` | `428e65ae-0ed5-4a6b-8eb4-e41d0215211a` | document | SPEC-AST-001 — Heures de lever et de coucher du Soleil |
 | `RG-005` | `f278d30e-0fd0-4d13-a1d8-fcbce08fde09` | règle | Jour julien de la date d'observation |
 | `RG-010` | `af97c323-6b9f-4fd6-9713-4e06c6d4672e` | règle | Jour à midi solaire |
 | `RG-020` | `beef87a2-3576-4109-91f9-89d9fc288add` | règle | Position du Soleil sur son orbite |

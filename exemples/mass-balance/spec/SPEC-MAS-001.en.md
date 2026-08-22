@@ -10,7 +10,7 @@
 | **Reference glossary** | [GLOSSAIRE.md](../../../GLOSSAIRE.md) v1.0.0 |
 
 > **Why this example.** It is the counterpart of
-> [SPEC-THM-001](../../SPEC-THM-001-refroidissement.md). There, **continuous** quantities, a
+> [SPEC-THM-001](../../cooling/spec/SPEC-THM-001.en.md). There, **continuous** quantities, a
 > differential equation, and an **approximate** result whose accuracy is open to
 > discussion. Here, **discrete and exact** quantities: a weighed mass exists at the balance
 > step, and nowhere in between. The result is not approximate, it is **right or wrong** —

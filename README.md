@@ -340,7 +340,7 @@ complète](exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md)
 **Deux vignettes** complètent l'illustration, gardées parce qu'elles aboutissent à des
 conclusions techniques **opposées** à partir de la même méthode :
 
-| | [Le bilan de masse d'un lot](exemples/mass-balance/spec/SPEC-MAS-001.en.md) | [Le refroidissement d'une boisson](exemples/SPEC-THM-001-refroidissement.md) | [L'autonomie d'un véhicule](exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md) |
+| | [Le bilan de masse d'un lot](exemples/mass-balance/spec/SPEC-MAS-001.en.md) | [Le refroidissement d'une boisson](exemples/cooling/spec/SPEC-THM-001.en.md) | [L'autonomie d'un véhicule](exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md) |
 |---|---|---|---|
 | Exigence d'exactitude | exacte au centime | tolérance de 10⁻⁶ | reproductibilité de 10⁻⁹ entre deux implémentations |
 | **Type numérique qui en découle** | **décimal exact obligatoire** | **double précision confortable** | **double précision indispensable** |

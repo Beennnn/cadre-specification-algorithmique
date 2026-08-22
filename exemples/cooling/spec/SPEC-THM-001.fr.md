@@ -10,8 +10,14 @@
 | **Co-auteur technique** | *(rôle : Architecte applicatif)* |
 | **Date d'effet** | 2026-01-01 |
 | **Glossaire de référence** | interne — §3 de ce document |
+| **Traduction de** | [SPEC-THM-001.en.md](SPEC-THM-001.en.md) |
 
-> **Note de lecture.** Exemple pédagogique du cadre décrit dans [CADRE.md](../CADRE.md),
+> **Version française, non normative.** La version qui fait foi est
+> [`SPEC-THM-001.en.md`](SPEC-THM-001.en.md) : c'est elle que le code suit et que les
+> outils vérifient. `C-42` contrôle que les deux portent les mêmes objets et les mêmes
+> identités durables.
+
+> **Note de lecture.** Exemple pédagogique du cadre décrit dans [CADRE.md](../../../CADRE.md),
 > appliqué à un **modèle physique**. Le phénomène — une boisson chaude qui refroidit —
 > est connu de tout le monde et se calcule avec une loi que tout le monde a croisée au
 > lycée. C'est précisément ce qui en fait un bon étalon : **aucune connaissance de
@@ -78,27 +84,27 @@ spécification décrit bien *ce qui est calculé*, pas *comment*.
 ## 4. Entrées
 
 ```
-demande :
-    boisson :
-        masse                 : Masse(kg, > 0, 4 décimales)
-        temperature_initiale  : Température(°C, 2 décimales)
-        capacite_massique     : CapacitéThermique(kJ·kg⁻¹·K⁻¹, > 0, 3 décimales)
-    temperature_ambiante      : Température(°C, 2 décimales)
-    coefficient_refroidissement : Taux(min⁻¹, > 0, 5 décimales)
-    ajout                     : Ajout — facultatif
-    instant_demande           : Durée(min, ≥ 0, 4 décimales) — facultatif
-    temperature_cible         : Température(°C, 2 décimales) — facultatif
+request :
+    beverage :
+        mass                    : Masse(kg, > 0, 4 décimales)
+        initial_temperature     : Température(°C, 2 décimales)
+        specific_heat_capacity  : CapacitéThermique(kJ·kg⁻¹·K⁻¹, > 0, 3 décimales)
+    ambient_temperature         : Température(°C, 2 décimales)
+    cooling_coefficient         : Taux(min⁻¹, > 0, 5 décimales)
+    addition                    : Addition — facultatif
+    requested_instant           : Durée(min, ≥ 0, 4 décimales) — facultatif
+    target_temperature          : Température(°C, 2 décimales) — facultatif
 
-Ajout :
-    masse             : Masse(kg, ≥ 0, 4 décimales)
-    temperature       : Température(°C, 2 décimales)
-    capacite_massique : CapacitéThermique(kJ·kg⁻¹·K⁻¹, > 0, 3 décimales)
-    instant           : Durée(min, ≥ 0, 4 décimales)
+Addition :
+    mass                    : Masse(kg, ≥ 0, 4 décimales)
+    temperature             : Température(°C, 2 décimales)
+    specific_heat_capacity  : CapacitéThermique(kJ·kg⁻¹·K⁻¹, > 0, 3 décimales)
+    instant                 : Durée(min, ≥ 0, 4 décimales)
 ```
 
 **Préconditions :**
-- Au moins l'un de `instant_demande` et `temperature_cible` est fourni.
-- `coefficient_refroidissement` est strictement positif.
+- Au moins l'un de `requested_instant` et `target_temperature` est fourni.
+- `cooling_coefficient` est strictement positif.
 - Les masses et capacités massiques sont strictement positives, sauf la masse de
   l'ajout qui peut être nulle (`CT-07`).
 
@@ -113,18 +119,18 @@ Ajout :
 ## 5. Sorties
 
 ```
-resultat :
-    temperature_a_instant      : Température(°C) — si instant_demande fourni
-    instant_atteinte_cible     : Durée(min)      — si temperature_cible fournie et atteinte
-    cible_deja_atteinte        : Booléen         — vraie si atteinte dès l'instant 0
-    cible_inatteignable        : Booléen         — vraie si la cible est hors du domaine (RG-050)
-    cible_hors_horizon         : Booléen         — vraie si atteinte au-delà de P-04
-    temperature_apres_ajout    : Température(°C) — si un ajout a eu lieu
-    iterations_utilisees       : Entier(≥ 0)     — 0 si résolution exacte
+result :
+    temperature_at_instant     : Température(°C) — si requested_instant fourni
+    target_reached_at          : Durée(min)      — si target_temperature fournie et atteinte
+    target_already_reached     : Booléen         — vraie si atteinte dès l'instant 0
+    target_unreachable         : Booléen         — vraie si la cible est hors du domaine (RG-050)
+    target_beyond_horizon      : Booléen         — vraie si atteinte au-delà de P-04
+    temperature_after_addition : Température(°C) — si un ajout a eu lieu
+    iterations_used            : Entier(≥ 0)     — 0 si résolution exacte
 ```
 
-> Les trois indicateurs `cible_deja_atteinte`, `cible_inatteignable` et
-> `cible_hors_horizon` ne sont pas redondants : ils décrivent **trois situations
+> Les trois indicateurs `target_already_reached`, `target_unreachable` et
+> `target_beyond_horizon` ne sont pas redondants : ils décrivent **trois situations
 > physiquement distinctes** qu'une valeur absente seule confondrait. Un résultat
 > scientifique dont on ne peut pas dire *pourquoi* il est absent n'est pas exploitable.
 
@@ -132,13 +138,13 @@ resultat :
 
 | Id | Libellé | Valeur | Unité | Qui peut le changer | Circuit de validation | Fréquence observée | Date d'effet |
 |---|---|---|---|---|---|---|---|
-| `P-01` | Coefficient de refroidissement — tasse en céramique ouverte | 0,03000 | min⁻¹ | Responsable modèles | Validation Direction produit | 1 à 2 fois par an | 2026-01-01 |
-| `P-02` | Coefficient de refroidissement — mug isotherme fermé | 0,00600 | min⁻¹ | Responsable modèles | Validation Direction produit | 1 à 2 fois par an | 2026-01-01 |
-| `P-03` | Température cible de dégustation par défaut | 55,00 | °C | Direction produit | Validation Direction | 1 fois par an | 2026-01-01 |
-| `P-04` | Horizon de prévision | 120,0 | min | Direction produit | Validation Direction | rare | 2026-01-01 |
-| `P-05` | Tolérance de convergence sur l'instant | 0,01 | min | Responsable modèles | Validation Direction produit | rare | 2026-01-01 |
-| `P-06` | Nombre maximal d'itérations | 100 | — | Responsable modèles | Validation Direction produit | rare | 2026-01-01 |
-| `P-07` | Écart minimal à la température ambiante pour que la cible soit réputée atteignable | 0,10 | °C | Responsable modèles | Validation Direction produit | rare | 2026-01-01 |
+| <a id="p-01"></a>`P-01` | Coefficient de refroidissement — tasse en céramique ouverte | 0,03000 | min⁻¹ | Responsable modèles | Validation Direction produit | 1 à 2 fois par an | 2026-01-01 |
+| <a id="p-02"></a>`P-02` | Coefficient de refroidissement — mug isotherme fermé | 0,00600 | min⁻¹ | Responsable modèles | Validation Direction produit | 1 à 2 fois par an | 2026-01-01 |
+| <a id="p-03"></a>`P-03` | Température cible de dégustation par défaut | 55,00 | °C | Direction produit | Validation Direction | 1 fois par an | 2026-01-01 |
+| <a id="p-04"></a>`P-04` | Horizon de prévision | 120,0 | min | Direction produit | Validation Direction | rare | 2026-01-01 |
+| <a id="p-05"></a>`P-05` | Tolérance de convergence sur l'instant | 0,01 | min | Responsable modèles | Validation Direction produit | rare | 2026-01-01 |
+| <a id="p-06"></a>`P-06` | Nombre maximal d'itérations | 100 | — | Responsable modèles | Validation Direction produit | rare | 2026-01-01 |
+| <a id="p-07"></a>`P-07` | Écart minimal à la température ambiante pour que la cible soit réputée atteignable | 0,10 | °C | Responsable modèles | Validation Direction produit | rare | 2026-01-01 |
 
 > `P-01` et `P-02` sont des **valeurs mesurées**, pas des constantes physiques : elles
 > dépendent du récipient et de l'environnement, et elles seront réestimées quand la
@@ -151,15 +157,15 @@ resultat :
 ### RG-010 — Le modèle de refroidissement
 
 ```
-LET k           = coefficient_refroidissement
-LET T_ambiante  = temperature_ambiante
-LET T(0)        = boisson.temperature_initiale
+LET k           = cooling_coefficient
+LET T_ambient  = ambient_temperature
+LET T(0)        = beverage.initial_temperature
 
 La température de la boisson suit la loi de refroidissement de Newton :
 
-    dT/dt = − k × ( T(t) − T_ambiante )
+    dT/dt = − k × ( T(t) − T_ambient )
 
-T_ambiante est constante sur toute la durée prévue (hypothèse H-2).
+T_ambient est constante sur toute la durée prévue (hypothèse H-2).
 ```
 
 **Hypothèses assumées par le métier**, chacune fausse dans l'absolu et acceptable dans
@@ -173,7 +179,7 @@ le domaine d'emploi visé :
 | H-4 | Le mélange (`RG-030`) est instantané et sans perte | Négligeable pour un ajout de quelques secondes |
 
 > **La spécification énonce l'équation, pas sa méthode de résolution.** Pour `k` et
-> `T_ambiante` constants, cette équation admet une solution en forme fermée ; une
+> `T_ambient` constants, cette équation admet une solution en forme fermée ; une
 > implémentation peut l'utiliser, ou intégrer numériquement. **Les deux sont conformes**
 > dès lors qu'elles respectent les tolérances du §8.2. Ce choix appartient au
 > développeur — et le §11 montre que les deux usages du produit ne le trancheront pas de
@@ -181,17 +187,17 @@ le domaine d'emploi visé :
 >
 > Écrire « intégrer par Runge-Kutta d'ordre 4 avec un pas de 1 s » serait une faute :
 > cela figerait une méthode, interdirait la solution exacte, et deviendrait faux le jour
-> où `T_ambiante` varierait.
+> où `T_ambient` varierait.
 
 ### RG-020 — Température à un instant donné
 
 ```
-temperature_a_instant = la valeur en t = instant_demande de la solution de RG-010,
+temperature_at_instant = la valeur en t = requested_instant de la solution de RG-010,
                         partant de l'état initial et intégrant l'ajout éventuel (RG-040)
 ```
 
-Si `instant_demande` dépasse `P-04`, la valeur n'est pas produite et
-`cible_hors_horizon` ne s'applique pas — c'est l'erreur `E-HORIZON-001`.
+Si `requested_instant` dépasse `P-04`, la valeur n'est pas produite et
+`target_beyond_horizon` ne s'applique pas — c'est l'erreur `E-HORIZON-001`.
 
 ### RG-030 — Mélange de deux liquides
 
@@ -199,24 +205,24 @@ Si `instant_demande` dépasse `P-04`, la valeur n'est pas produite et
 Lors d'un ajout, la température résultante est celle qui conserve l'énergie
 thermique de l'ensemble :
 
-LET capacite_boisson = boisson.masse × boisson.capacite_massique
-LET capacite_ajout   = ajout.masse   × ajout.capacite_massique
+LET beverage_heat_capacity = beverage.mass × beverage.specific_heat_capacity
+LET addition_heat_capacity   = addition.mass   × addition.specific_heat_capacity
 
-    temperature_apres_ajout =
-        ( capacite_boisson × T(ajout.instant) + capacite_ajout × ajout.temperature )
-        ÷ ( capacite_boisson + capacite_ajout )
+    temperature_after_addition =
+        ( beverage_heat_capacity × T(addition.instant) + addition_heat_capacity × addition.temperature )
+        ÷ ( beverage_heat_capacity + addition_heat_capacity )
 
 Le mélange ne modifie pas la boisson : il en produit une nouvelle.
 
-    boisson_melangee.masse             = boisson.masse + ajout.masse
-    boisson_melangee.capacite_massique = ( capacite_boisson + capacite_ajout )
-                                         ÷ boisson_melangee.masse
-    boisson_melangee.temperature       = temperature_apres_ajout
+    mixed_beverage.mass                   = beverage.mass + addition.mass
+    mixed_beverage.specific_heat_capacity = ( beverage_heat_capacity + addition_heat_capacity )
+                                            ÷ mixed_beverage.mass
+    mixed_beverage.temperature            = temperature_after_addition
 ```
 
-Si `ajout.masse = 0`, la formule laisse la boisson inchangée : le cas est **couvert par la règle
+Si `addition.mass = 0`, la formule laisse la boisson inchangée : le cas est **couvert par la règle
 générale**, il n'a pas besoin d'être traité à part. Une spécification qui ajoute une
-branche `IF masse = 0 THEN ...` pour un cas déjà couvert crée deux chemins là où un
+branche `IF mass = 0 THEN ...` pour un cas déjà couvert crée deux chemins là où un
 seul suffit — et un jour, ils divergeront.
 
 ### RG-040 — Ordre des opérations : quand l'ajout a lieu
@@ -226,9 +232,9 @@ L'instant de l'ajout est une DONNÉE D'ENTRÉE. La spécification n'impose pas
 de convention par défaut : le demandeur doit le déclarer.
 
 Le calcul se déroule en deux phases :
-    1. refroidissement seul, de t = 0 à t = ajout.instant          (RG-010)
-    2. mélange à t = ajout.instant, produisant temperature_apres_ajout  (RG-030)
-    3. refroidissement de boisson_melangee, à partir de t = ajout.instant  (RG-010)
+    1. refroidissement seul, de t = 0 à t = addition.instant          (RG-010)
+    2. mélange à t = addition.instant, produisant temperature_after_addition  (RG-030)
+    3. refroidissement de mixed_beverage, à partir de t = addition.instant  (RG-010)
 ```
 
 > **C'est le faux ami central de cette spécification, et il est contre-intuitif.**
@@ -251,21 +257,21 @@ Le calcul se déroule en deux phases :
 ### RG-050 — Instant d'atteinte de la température cible
 
 ```
-L'instant d'atteinte est le PLUS PETIT t ≥ 0 tel que T(t) ≤ temperature_cible.
+L'instant d'atteinte est le PLUS PETIT t ≥ 0 tel que T(t) ≤ target_temperature.
 
 Conditions d'existence, évaluées dans cet ordre :
 
-  IF boisson.temperature_initiale ≤ temperature_cible THEN
-     instant_atteinte_cible = 0,00 ; cible_deja_atteinte = vrai ; on s'arrête
+  IF beverage.initial_temperature ≤ target_temperature THEN
+     target_reached_at = 0,00 ; target_already_reached = vrai ; on s'arrête
 
-  ELSE IF temperature_cible ≤ temperature_ambiante + P-07 THEN
-     cible_inatteignable = vrai ; aucun instant n'est produit ; on s'arrête
+  ELSE IF target_temperature ≤ ambient_temperature + P-07 THEN
+     target_unreachable = vrai ; aucun instant n'est produit ; on s'arrête
 
   ELSE IF l'instant d'atteinte est supérieur à P-04 THEN
-     cible_hors_horizon = vrai ; aucun instant n'est produit
+     target_beyond_horizon = vrai ; aucun instant n'est produit
 
   ELSE
-     instant_atteinte_cible est produit, à P-05 près
+     target_reached_at est produit, à P-05 près
   END IF
 ```
 
@@ -288,7 +294,7 @@ IF P-06 itérations sont atteintes sans satisfaire P-05 THEN
    RAISE ERROR E-CONV-001
    aucun instant n'est produit
 ELSE
-   instant_atteinte_cible est produit, et le nombre d'itérations utilisées est rapporté
+   target_reached_at est produit, et le nombre d'itérations utilisées est rapporté
 END IF
 
 Le nombre d'itérations réellement utilisées est rapporté.
@@ -308,14 +314,14 @@ Une implémentation qui résout RG-050 exactement rapporte 0 itération.
 
 | Id | Propriété |
 |---|---|
-| `INV-01` | Si `T(0) > T_ambiante`, alors `T(t)` est strictement décroissante |
-| `INV-02` | `T(t)` reste strictement comprise entre `T_ambiante` et `T(0)` |
-| `INV-03` | `T(t)` tend vers `T_ambiante` quand `t` croît, sans jamais l'atteindre |
-| `INV-04` | **Invariance par changement d'origine de l'échelle** : ajouter une constante à *toutes* les températures (initiale, ambiante, ajout, cible) laisse l'instant d'atteinte inchangé — un calcul en kelvins donne le même résultat qu'en degrés Celsius (`CT-06`) |
-| `INV-05` | **Encadrement du mélange** : `T_melange` est comprise entre les deux températures mélangées, et vaut exactement la plus chaude si la masse ajoutée est nulle |
-| `INV-06` | **Monotonie vis-à-vis de `k`** : à conditions égales, un `k` plus grand donne un instant d'atteinte plus court |
-| `INV-07` | **Monotonie vis-à-vis de la cible** : une cible plus basse donne un instant d'atteinte plus tardif |
-| `INV-08` | Le calcul est déterministe : deux exécutions sur la même entrée donnent le même résultat, indicateurs compris |
+| <a id="inv-01"></a>`INV-01` | Si `T(0) > T_ambient`, alors `T(t)` est strictement décroissante |
+| <a id="inv-02"></a>`INV-02` | `T(t)` reste strictement comprise entre `T_ambient` et `T(0)` |
+| <a id="inv-03"></a>`INV-03` | `T(t)` tend vers `T_ambient` quand `t` croît, sans jamais l'atteindre |
+| <a id="inv-04"></a>`INV-04` | **Invariance par changement d'origine de l'échelle** : ajouter une constante à *toutes* les températures (initiale, ambiante, ajout, cible) laisse l'instant d'atteinte inchangé — un calcul en kelvins donne le même résultat qu'en degrés Celsius (`CT-06`) |
+| <a id="inv-05"></a>`INV-05` | **Encadrement du mélange** : `T_mixed` est comprise entre les deux températures mélangées, et vaut exactement la plus chaude si la masse ajoutée est nulle |
+| <a id="inv-06"></a>`INV-06` | **Monotonie vis-à-vis de `k`** : à conditions égales, un `k` plus grand donne un instant d'atteinte plus court |
+| <a id="inv-07"></a>`INV-07` | **Monotonie vis-à-vis de la cible** : une cible plus basse donne un instant d'atteinte plus tardif |
+| <a id="inv-08"></a>`INV-08` | Le calcul est déterministe : deux exécutions sur la même entrée donnent le même résultat, indicateurs compris |
 
 > `INV-04` et `INV-06` sont des **propriétés de symétrie et de monotonie**. Elles se
 > testent automatiquement sur des milliers d'entrées générées et attrapent la classe
@@ -352,11 +358,11 @@ entrées de la spécification**, parce que la reproductibilité d'un résultat e
 
 | Code | Condition | Conséquence | Message |
 |---|---|---|---|
-| `E-PARAM-001` | `coefficient_refroidissement ≤ 0` | Aucun résultat | « Le coefficient de refroidissement doit être strictement positif. » |
-| `E-PARAM-002` | Une masse ou une capacité massique de la boisson est nulle ou négative | Aucun résultat | « Les caractéristiques de la boisson sont invalides. » |
-| `E-ENTREE-001` | Ni `instant_demande` ni `temperature_cible` n'est fourni | Aucun résultat | « Précisez un instant ou une température cible. » |
-| `E-HORIZON-001` | `instant_demande > P-04` | Aucun résultat | « La prévision ne dépasse pas 2 heures. » |
-| `E-CONV-001` | `P-06` itérations sans convergence à `P-05` près | Aucun instant produit | « Le calcul n'a pas convergé. » |
+| <a id="e-param-001"></a>`E-PARAM-001` | `cooling_coefficient ≤ 0` | Aucun résultat | « Le coefficient de refroidissement doit être strictement positif. » |
+| <a id="e-param-002"></a>`E-PARAM-002` | Une masse ou une capacité massique de la boisson est nulle ou négative | Aucun résultat | « Les caractéristiques de la boisson sont invalides. » |
+| <a id="e-entree-001"></a>`E-ENTREE-001` | Ni `requested_instant` ni `target_temperature` n'est fourni | Aucun résultat | « Précisez un instant ou une température cible. » |
+| <a id="e-horizon-001"></a>`E-HORIZON-001` | `requested_instant > P-04` | Aucun résultat | « La prévision ne dépasse pas 2 heures. » |
+| <a id="e-conv-001"></a>`E-CONV-001` | `P-06` itérations sans convergence à `P-05` près | Aucun instant produit | « Le calcul n'a pas convergé. » |
 
 ## 10. Jeu d'essai
 
@@ -372,15 +378,15 @@ entrées de la spécification**, parce que la reproductibilité d'un résultat e
 
 *Ces résultats sont des **données de référence** : ils qualifient le code et servent
 de base de non-régression. Ils ne se modifient que par une revalidation métier datée
-([CADRE §5](../CADRE.md)).*
+([CADRE §5](../../../CADRE.md)).*
 
-**Construction de l'oracle.** Pour `k` et `T_ambiante` constants, `RG-010` admet la
+**Construction de l'oracle.** Pour `k` et `T_ambient` constants, `RG-010` admet la
 solution analytique `T(t) = T_amb + (T₀ − T_amb)·exp(−k·t)`, et `RG-050` la solution
 `t = ln((T_cible − T_amb) ÷ (T₀ − T_amb)) ÷ (−k)`. **La vérité de référence est donc
 analytique** : elle ne provient d'aucune implémentation, et n'importe qui peut la
 recalculer avec une calculatrice scientifique.
 
-Sauf mention contraire : `T_ambiante = 20,00 °C`, `k = P-01 = 0,03000 min⁻¹`,
+Sauf mention contraire : `T_ambient = 20,00 °C`, `k = P-01 = 0,03000 min⁻¹`,
 boisson de `0,2000 kg`, capacité massique `4,180 kJ·kg⁻¹·K⁻¹`.
 
 ### Vue d'ensemble
@@ -389,9 +395,9 @@ boisson de `0,2000 kg`, capacité massique `4,180 kJ·kg⁻¹·K⁻¹`.
 |---|---|---|
 | `CT-01` | Refroidissement simple, température et instant d'atteinte | `T(30) = 46,4270 °C` ; `t(55 °C) = 20,6346 min` |
 | `CT-02` | **Ordre des opérations** : ajout tôt vs ajout tard (`RG-040`) | `55,1833 °C` vs `54,5160 °C` |
-| `CT-03` | Cible sous la température ambiante (`RG-050`) | `cible_inatteignable = vrai` |
-| `CT-04` | Cible déjà atteinte à l'instant 0 | `t = 0,00` ; `cible_deja_atteinte = vrai` |
-| `CT-05` | Cible atteinte au-delà de l'horizon | `cible_hors_horizon = vrai` |
+| `CT-03` | Cible sous la température ambiante (`RG-050`) | `target_unreachable = vrai` |
+| `CT-04` | Cible déjà atteinte à l'instant 0 | `t = 0,00` ; `target_already_reached = vrai` |
+| `CT-05` | Cible atteinte au-delà de l'horizon | `target_beyond_horizon = vrai` |
 | `CT-06` | **Invariance d'échelle** : mêmes données en kelvins (`INV-04`) | `t = 20,6346 min`, identique à `CT-01` |
 | `CT-07` | Masse ajoutée nulle (`RG-030`) | Température inchangée : `85,0000 °C` |
 | `CT-08` | Coefficient de refroidissement négatif | erreur `E-PARAM-001` |
@@ -407,7 +413,7 @@ instant demandé `30,0000 min`.
 | `T(30)` | `20 + 65 × exp(−0,9)` | **46,4270 °C** |
 | Instant d'atteinte | `ln(35 ÷ 65) ÷ (−0,03)` | **20,6346 min** |
 | Contrôle | `T(20,6346)` | 55,0000 °C ✓ |
-| `iterations_utilisees` | résolution exacte possible | 0 (ou ≤ `P-06` si itératif) |
+| `iterations_used` | résolution exacte possible | 0 (ou ≤ `P-06` si itératif) |
 
 ### CT-02 — Ordre des opérations : le cas central
 
@@ -445,7 +451,7 @@ lait `0,0300 × 3,900 = 0,1170 kJ·K⁻¹` ; total `0,9530 kJ·K⁻¹`.
 `T₀ = 85,00 °C`, `T_amb = 20,00 °C`, cible `15,00 °C`.
 
 - `15,00 ≤ 20,00 + 0,10` → la cible est sous la température ambiante augmentée de `P-07`.
-- **`cible_inatteignable = vrai`**, aucun instant produit, aucune erreur signalée.
+- **`target_unreachable = vrai`**, aucun instant produit, aucune erreur signalée.
 
 > Ce n'est pas une erreur : la demande est légitime, la réponse est « jamais ». La
 > distinction compte, parce qu'une erreur interrompt un traitement alors qu'un
@@ -455,12 +461,12 @@ lait `0,0300 × 3,900 = 0,1170 kJ·K⁻¹` ; total `0,9530 kJ·K⁻¹`.
 
 `T₀ = 50,00 °C`, cible `55,00 °C`.
 
-- `T(0) = 50,00 ≤ 55,00` → **`instant_atteinte_cible = 0,00 min`**,
-  `cible_deja_atteinte = vrai`.
+- `T(0) = 50,00 ≤ 55,00` → **`target_reached_at = 0,00 min`**,
+  `target_already_reached = vrai`.
 
 > La condition est évaluée **en premier** dans `RG-050`. L'ordre d'évaluation des
 > conditions fait partie de la règle : intervertir les deux premières branches donnerait
-> ici `cible_inatteignable` pour une boisson déjà buvable.
+> ici `target_unreachable` pour une boisson déjà buvable.
 
 ### CT-05 — Cible hors horizon
 
@@ -470,7 +476,7 @@ Mug isotherme : `k = P-02 = 0,00600 min⁻¹`, `T₀ = 85,00 °C`, cible `25,00 
 |---|---|---|
 | Instant d'atteinte théorique | `ln(5 ÷ 65) ÷ (−0,006)` | 427,4916 min |
 | Comparaison à l'horizon | `427,49 > 120,0` | dépassé |
-| Résultat | | **`cible_hors_horizon = vrai`**, aucun instant produit |
+| Résultat | | **`target_beyond_horizon = vrai`**, aucun instant produit |
 | Contrôle | `T(120) = 20 + 65 × exp(−0,72)` | 51,6389 °C — encore loin de 25 °C ✓ |
 
 ### CT-06 — Invariance d'échelle (kelvins)
@@ -523,7 +529,7 @@ diffère, et c'est elle qui produira deux implémentations.
 | **Mode d'appel** | À la demande, **sur l'appareil, sans réseau** | À la demande, sur poste de travail |
 | **Latence** | **Moins de 1 ms par calcul.** Au-delà, le curseur devient saccadé — le produit est jugé de mauvaise qualité | moins de 2 s ; l'utilisateur attend un tracé |
 | **Énergie et mémoire** | **Contrainte forte** : le calcul ne doit pas être perceptible sur l'autonomie ; empreinte mémoire de quelques kilo-octets | sans contrainte |
-| **Exactitude** | Voir §8.2. Reproductibilité 10⁻⁹ ; justesse numérique 10⁻⁶ ; validité du modèle ± 2 °C à 60 min | identiques, **plus** la capacité de faire varier `T_ambiante` au cours du temps (`Q-02`) |
+| **Exactitude** | Voir §8.2. Reproductibilité 10⁻⁹ ; justesse numérique 10⁻⁶ ; validité du modèle ± 2 °C à 60 min | identiques, **plus** la capacité de faire varier `T_ambient` au cours du temps (`Q-02`) |
 | **Déterminisme** | Strict (`INV-08`), indicateurs compris | strict |
 | **Rejouabilité** | Aucune exigence : le résultat n'est pas conservé | **Les résultats publiés dans un compte rendu doivent être rejouables 5 ans**, avec la version de spécification et le jeu de paramètres de l'époque |
 | **Auditabilité** | Aucune | Les entrées, les paramètres et la version de la spécification sont conservés avec chaque tracé |
@@ -538,26 +544,26 @@ diffère, et c'est elle qui produira deux implémentations.
 
 | Id | Exigence | Source | Qui la valide | Vérification |
 |---|---|---|---|---|
-| `EX-01` | Le calcul embarqué **n'émet aucune requête réseau** : il fonctionne hors ligne et ne transmet rien | Engagement produit « aucune donnée ne quitte l'appareil » | Direction produit | Analyse des flux réseau, à chaque version publiée |
-| `EX-02` | Le fichier de paramètres téléchargé est **signé**, et une signature invalide entraîne le maintien de la version précédente | Politique de sécurité applicative `SEC-APP-4` | Sécurité SI | Test de non-régression sur signature invalide |
-| `EX-03` | Le code respecte le **standard de codage interne** `STD-DEV-2` | Comité d'architecture | Architecture SI | Intégration continue |
+| <a id="ex-01"></a>`EX-01` | Le calcul embarqué **n'émet aucune requête réseau** : il fonctionne hors ligne et ne transmet rien | Engagement produit « aucune donnée ne quitte l'appareil » | Direction produit | Analyse des flux réseau, à chaque version publiée |
+| <a id="ex-02"></a>`EX-02` | Le fichier de paramètres téléchargé est **signé**, et une signature invalide entraîne le maintien de la version précédente | Politique de sécurité applicative `SEC-APP-4` | Sécurité SI | Test de non-régression sur signature invalide |
+| <a id="ex-03"></a>`EX-03` | Le code respecte le **standard de codage interne** `STD-DEV-2` | Comité d'architecture | Architecture SI | Intégration continue |
 
 ## 12. Questions ouvertes
 
 | Id | Question | Décideur | Échéance | Statut |
 |---|---|---|---|---|
-| `Q-01` | Faut-il ajouter un terme de rayonnement et d'évaporation pour les températures supérieures à 80 °C, où `H-3` est la plus fausse ? Cela **casserait `INV-04`** (le modèle cesserait d'être invariant par changement d'origine d'échelle) et imposerait de travailler en kelvins | Responsable modèles | 2026-11-30 | Ouverte |
-| `Q-02` | L'usage laboratoire demande une température ambiante variable dans le temps. `RG-010` reste valable, mais la solution en forme fermée disparaît : seule une résolution numérique reste possible. Faut-il l'intégrer à cette spécification ou en faire une variante ? | Direction produit | 2026-12-31 | Ouverte |
-| `Q-03` | `RG-060` (non-convergence) et `E-HORIZON-001` ne sont couverts par aucun cas de test. Faut-il les conserver si aucune entrée réaliste ne les déclenche ? | Auteur métier | 2026-10-15 | Ouverte |
-| `Q-04` | `P-07` vaut 0,10 °C. Cette marge devrait-elle dépendre de l'écart initial à l'ambiante plutôt que d'être une constante ? | Responsable modèles | 2026-11-30 | Ouverte |
-| `Q-05` | *Tranchée le 2025-12-10 :* l'instant d'ajout doit-il avoir une valeur par défaut (0, c'est-à-dire « tout de suite ») ? → **non**. Une valeur par défaut sur `RG-040` masquerait une décision qui change le résultat ; le demandeur doit la déclarer | Direction produit | — | Fermée |
+| <a id="q-01"></a>`Q-01` | Faut-il ajouter un terme de rayonnement et d'évaporation pour les températures supérieures à 80 °C, où `H-3` est la plus fausse ? Cela **casserait `INV-04`** (le modèle cesserait d'être invariant par changement d'origine d'échelle) et imposerait de travailler en kelvins | Responsable modèles | 2026-11-30 | Ouverte |
+| <a id="q-02"></a>`Q-02` | L'usage laboratoire demande une température ambiante variable dans le temps. `RG-010` reste valable, mais la solution en forme fermée disparaît : seule une résolution numérique reste possible. Faut-il l'intégrer à cette spécification ou en faire une variante ? | Direction produit | 2026-12-31 | Ouverte |
+| <a id="q-03"></a>`Q-03` | `RG-060` (non-convergence) et `E-HORIZON-001` ne sont couverts par aucun cas de test. Faut-il les conserver si aucune entrée réaliste ne les déclenche ? | Auteur métier | 2026-10-15 | Ouverte |
+| <a id="q-04"></a>`Q-04` | `P-07` vaut 0,10 °C. Cette marge devrait-elle dépendre de l'écart initial à l'ambiante plutôt que d'être une constante ? | Responsable modèles | 2026-11-30 | Ouverte |
+| <a id="q-05"></a>`Q-05` | *Tranchée le 2025-12-10 :* l'instant d'ajout doit-il avoir une valeur par défaut (0, c'est-à-dire « tout de suite ») ? → **non**. Une valeur par défaut sur `RG-040` masquerait une décision qui change le résultat ; le demandeur doit la déclarer | Direction produit | — | Fermée |
 
 ## 13. Historique
 
 | Version | Date | Changement | Impact sur les résultats |
 |---|---|---|---|
 | 1.0.0 | 2026-01-01 | Version initiale | — |
-| 1.0.1 | 2026-08-21 | `RG-030` et `RG-040` : l'instant de l'ajout est nommé `ajout.instant`, comme au contrat, au lieu de `instant_ajout` — la même grandeur portait deux noms (fantôme relevé par `C-03`) | Aucun — la grandeur et sa valeur sont inchangées |
+| 1.0.1 | 2026-08-21 | `RG-030` et `RG-040` : l'instant de l'ajout est nommé `addition.instant`, comme au contrat, au lieu de `instant_ajout` — la même grandeur portait deux noms (fantôme relevé par `C-03`) | Aucun — la grandeur et sa valeur sont inchangées |
 
 ---
 
@@ -569,10 +575,10 @@ diffère, et c'est elle qui produira deux implémentations.
 
 | Contrainte lue au §11 | Décision technique qui en découle |
 |---|---|
-| Embarqué : **< 1 ms, sans réseau, contrainte d'énergie**, `T_ambiante` constante | **La solution en forme fermée** — deux exponentielles et une division, sans allocation ni itération. Aucun intégrateur numérique n'est justifiable ici. `iterations_utilisees` vaut toujours 0 |
-| Laboratoire : `T_ambiante` variable attendue (`Q-02`) | **Un intégrateur numérique à pas adaptatif**, dont la tolérance est réglée pour tenir la justesse numérique de 10⁻⁶ du §8.2. La forme fermée sert alors de **cas de non-régression** de l'intégrateur — un luxe rare, et gratuit ici |
+| Embarqué : **< 1 ms, sans réseau, contrainte d'énergie**, `T_ambient` constante | **La solution en forme fermée** — deux exponentielles et une division, sans allocation ni itération. Aucun intégrateur numérique n'est justifiable ici. `iterations_used` vaut toujours 0 |
+| Laboratoire : `T_ambient` variable attendue (`Q-02`) | **Un intégrateur numérique à pas adaptatif**, dont la tolérance est réglée pour tenir la justesse numérique de 10⁻⁶ du §8.2. La forme fermée sert alors de **cas de non-régression** de l'intégrateur — un luxe rare, et gratuit ici |
 | Les deux, mêmes tolérances de reproductibilité (§8.2) | Le **même jeu d'essai `CT-01` à `CT-08`** valide les deux implémentations. C'est le contrôle qui garantit qu'elles ne divergeront pas — et c'est possible **uniquement** parce que la spécification n'a imposé aucune méthode |
-| Justesse 10⁻⁶ relatif, validité du modèle ± 2 °C | **La double précision binaire suffit très largement.** Contraste voulu avec [SPEC-MAS-001](mass-balance/spec/SPEC-MAS-001.en.md), où la conservation exacte de la masse imposait un décimal exact : ici, la grandeur physique est elle-même incertaine à 2 °C près. **La même méthode, appliquée à deux domaines, produit deux conclusions opposées sur le type numérique** |
+| Justesse 10⁻⁶ relatif, validité du modèle ± 2 °C | **La double précision binaire suffit très largement.** Contraste voulu avec [SPEC-MAS-001](../../mass-balance/spec/SPEC-MAS-001.en.md), où la conservation exacte de la masse imposait un décimal exact : ici, la grandeur physique est elle-même incertaine à 2 °C près. **La même méthode, appliquée à deux domaines, produit deux conclusions opposées sur le type numérique** |
 | Trois niveaux d'exactitude distingués (§8.2) | Trois campagnes de test **séparées** : non-régression à chaque livraison, justesse numérique sur les cas analytiques, validation de modèle sur banc de mesure une fois par an avec le métier. Sans cette séparation, un écart de mesure deviendrait un ticket de bogue |
 | Paramètres réestimés 1 à 2 fois par an sans livraison | Les paramètres sont **téléchargés et versionnés**, jamais compilés ; l'application embarquée fonctionne avec la dernière version connue et l'indique. Les capacités massiques, elles, sont des entrées : elles viennent de l'utilisateur |
 | Rejouabilité 5 ans côté laboratoire | Entrées, paramètres et version de spécification archivés avec chaque tracé. Côté embarqué : aucune persistance, donc aucun coût |
@@ -585,7 +591,7 @@ la meilleure preuve que la frontière a été tracée au bon endroit.
 
 ## Annexe — Identités
 
-*Chaque objet porte un UUID attribué une fois et jamais modifié. L'identifiant lisible et le libellé sont des étiquettes : ils peuvent changer, l'identité non. Voir [CADRE.md §2.8](../CADRE.md).*
+*Chaque objet porte un UUID attribué une fois et jamais modifié. L'identifiant lisible et le libellé sont des étiquettes : ils peuvent changer, l'identité non. Voir [CADRE.md §2.8](../../../CADRE.md).*
 
 | Identifiant | UUID | Nature | Libellé |
 |---|---|---|---|
@@ -614,18 +620,18 @@ la meilleure preuve que la frontière a été tracée au bon endroit.
 | `EX-01` | `47db7e61-d39c-4d07-ab94-810c0e0032fd` | exigence | Le calcul embarqué **n'émet aucune requête réseau** : il fonctionne ho |
 | `EX-02` | `b21a02b4-bdc9-4b4b-af4e-31fdda02e7b7` | exigence | Le fichier de paramètres téléchargé est **signé**, et une signature in |
 | `EX-03` | `e8c9de71-4877-459f-8946-f1ebfd76f1d8` | exigence | Le code respecte le **standard de codage interne** `STD-DEV-2` |
-| `INV-01` | `b11ac534-4ee3-4ae5-8395-6f6b65dca68d` | invariant | Si `T(0) > T_ambiante`, alors `T(t)` est strictement décroissante |
-| `INV-02` | `7c52110c-fc9a-4bad-8b2e-30511a8b1751` | invariant | `T(t)` reste strictement comprise entre `T_ambiante` et `T(0)` |
-| `INV-03` | `53836c25-75aa-4f5c-882f-2a05f28f1882` | invariant | `T(t)` tend vers `T_ambiante` quand `t` croît, sans jamais l'atteindre |
+| `INV-01` | `b11ac534-4ee3-4ae5-8395-6f6b65dca68d` | invariant | Si `T(0) > T_ambient`, alors `T(t)` est strictement décroissante |
+| `INV-02` | `7c52110c-fc9a-4bad-8b2e-30511a8b1751` | invariant | `T(t)` reste strictement comprise entre `T_ambient` et `T(0)` |
+| `INV-03` | `53836c25-75aa-4f5c-882f-2a05f28f1882` | invariant | `T(t)` tend vers `T_ambient` quand `t` croît, sans jamais l'atteindre |
 | `INV-04` | `cdc085b1-e472-43e3-be7b-2d28930aeed1` | invariant | Invariance par changement d'origine de l'échelle** : ajouter une const |
-| `INV-05` | `6b37cd54-28a1-49d2-a574-60c454308e15` | invariant | Encadrement du mélange** : `T_melange` est comprise entre les deux tem |
+| `INV-05` | `6b37cd54-28a1-49d2-a574-60c454308e15` | invariant | Encadrement du mélange** : `T_mixed` est comprise entre les deux tempé |
 | `INV-06` | `67c240de-37c7-4d40-a6cc-330545759eb9` | invariant | Monotonie vis-à-vis de `k`** : à conditions égales, un `k` plus grand  |
 | `INV-07` | `3e382a1c-177b-47e7-bb99-0a700f03541a` | invariant | Monotonie vis-à-vis de la cible** : une cible plus basse donne un inst |
 | `INV-08` | `c3221013-33d7-482b-bb07-98fa142945ca` | invariant | Le calcul est déterministe : deux exécutions sur la même entrée donnen |
-| `E-PARAM-001` | `b19ad839-f72a-4446-a9ec-f02a8aa522a1` | cas d'erreur | `coefficient_refroidissement ≤ 0` |
+| `E-PARAM-001` | `b19ad839-f72a-4446-a9ec-f02a8aa522a1` | cas d'erreur | `cooling_coefficient ≤ 0` |
 | `E-PARAM-002` | `b757d637-570b-4594-bad2-040776993e62` | cas d'erreur | Une masse ou une capacité massique de la boisson est nulle ou négative |
-| `E-ENTREE-001` | `ef5edef2-6e13-4c75-83e6-e4d82f6dfe6a` | cas d'erreur | Ni `instant_demande` ni `temperature_cible` n'est fourni |
-| `E-HORIZON-001` | `089406dd-f578-4bef-8d4b-3acbefc50e82` | cas d'erreur | `instant_demande > P-04` |
+| `E-ENTREE-001` | `ef5edef2-6e13-4c75-83e6-e4d82f6dfe6a` | cas d'erreur | Ni `requested_instant` ni `target_temperature` n'est fourni |
+| `E-HORIZON-001` | `089406dd-f578-4bef-8d4b-3acbefc50e82` | cas d'erreur | `requested_instant > P-04` |
 | `E-CONV-001` | `1b5551ba-9d1b-44e3-beb3-89aac7d2fb26` | cas d'erreur | `P-06` itérations sans convergence à `P-05` près |
 | `Q-01` | `c048bd3f-7a20-4669-b9c7-2b29d366394c` | question | Faut-il ajouter un terme de rayonnement et d'évaporation pour les temp |
 | `Q-02` | `6819e7f2-3111-47f1-bc56-070aa8d47524` | question | L'usage laboratoire demande une température ambiante variable dans le  |

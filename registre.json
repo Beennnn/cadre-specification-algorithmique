@@ -17,8 +17,8 @@
     "uuid": "062582ac-178f-486e-ab1e-94ccce05a0ca",
     "identifiant": "INV-03",
     "nature": "invariant",
-    "libelle": "`−23,44° ≤ declination ≤ +23,44°`, quelle que soit la date. Une valeur hors de cet intervalle signale une erreur de conversion d'angle — le symptôme le plus courant d'une confusion degrés / radians.",
-    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+    "libelle": "`−23.44° ≤ declination ≤ +23.44°`, whatever the date. A value outside that interval signals an angle conversion error — the commonest symptom of a degrees / radians confusion.",
+    "document": "exemples/sunrise/spec/SPEC-AST-001.en.md"
   },
   {
     "uuid": "069a2362-2dfb-4a2b-9e2e-f25e55c33516",
@@ -45,8 +45,8 @@
     "uuid": "089406dd-f578-4bef-8d4b-3acbefc50e82",
     "identifiant": "E-HORIZON-001",
     "nature": "cas d'erreur",
-    "libelle": "`instant_demande > P-04`",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "`requested_instant > P-04`",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "09a35c99-8e7e-4d1d-b1e2-7dfe9b61926c",
@@ -101,15 +101,15 @@
     "uuid": "0fbe682c-8776-4e0b-8379-ae7aa9658f96",
     "identifiant": "CT-03",
     "nature": "cas de test",
-    "libelle": "Cible inatteignable",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "Unreachable target",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "103ce181-d9a9-43da-8828-8b39052e7b99",
     "identifiant": "P-01",
     "nature": "paramètre",
-    "libelle": "Hauteur de référence `h₀`",
-    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+    "libelle": "Reference altitude `h₀`",
+    "document": "exemples/sunrise/spec/SPEC-AST-001.en.md"
   },
   {
     "uuid": "11ce095c-f267-40b0-84cb-49c18037bc46",
@@ -150,15 +150,15 @@
     "uuid": "1645cc91-0461-4d1f-9226-2800a352d859",
     "identifiant": "CT-07",
     "nature": "cas de test",
-    "libelle": "Masse ajoutée nulle",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "Zero mass added",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "16b13a55-55df-4eb7-b868-bc369b1138c0",
     "identifiant": "RG-040",
     "nature": "règle",
-    "libelle": "Midi solaire",
-    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+    "libelle": "Solar transit",
+    "document": "exemples/sunrise/spec/SPEC-AST-001.en.md"
   },
   {
     "uuid": "18950bf4-58d6-4a2b-9426-20cec1f6edba",
@@ -185,15 +185,15 @@
     "uuid": "1b4f0d75-6953-45a5-9134-d3e656c3759c",
     "identifiant": "P-04",
     "nature": "paramètre",
-    "libelle": "Horizon de prévision",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "Forecast horizon",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "1b5551ba-9d1b-44e3-beb3-89aac7d2fb26",
     "identifiant": "E-CONV-001",
     "nature": "cas d'erreur",
-    "libelle": "`P-06` itérations sans convergence à `P-05` près",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "`P-06` iterations without converging to within `P-05`",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "1d9ad939-2231-4a94-8e2a-01b72c5d94f8",
@@ -339,36 +339,36 @@
     "uuid": "3125ec69-b46f-4d89-b533-f5b6985a4e50",
     "identifiant": "EX-03",
     "nature": "exigence",
-    "libelle": "Le calcul est **rejouable à l'identique** : aucune dépendance à l'horloge courante ni au fuseau de la machine",
-    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+    "libelle": "The calculation is **replayable identically**: no dependency on the current clock nor on the machine's time zone",
+    "document": "exemples/sunrise/spec/SPEC-AST-001.en.md"
   },
   {
     "uuid": "378cb511-d51c-4f98-8ef1-b5f414836038",
     "identifiant": "RG-030",
     "nature": "règle",
-    "libelle": "Mélange de deux liquides",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "Mixing two liquids",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "37fcab9a-65f1-40e5-920f-e411021411df",
     "identifiant": "CT-05",
     "nature": "cas de test",
-    "libelle": "Cible hors horizon",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "Target beyond the horizon",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "392ff06a-a1d6-4f50-9cb2-858811eb569b",
     "identifiant": "Q-02",
     "nature": "question",
-    "libelle": "Faut-il corriger de l'altitude de l'observateur ? L'effet atteint 4 minutes à 1 000 m",
-    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+    "libelle": "Should the observer's altitude be corrected for? The effect reaches 4 minutes at 1 000 m",
+    "document": "exemples/sunrise/spec/SPEC-AST-001.en.md"
   },
   {
     "uuid": "3b88e87e-2677-41d1-b5fc-c8c951311eca",
     "identifiant": "RG-030",
     "nature": "règle",
-    "libelle": "Déclinaison",
-    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+    "libelle": "Declination",
+    "document": "exemples/sunrise/spec/SPEC-AST-001.en.md"
   },
   {
     "uuid": "3cc439b5-c892-4f1b-9b73-404b674cf47f",
@@ -381,15 +381,15 @@
     "uuid": "3dd144ed-ae0c-4122-a8e9-6cfe601315c0",
     "identifiant": "INV-01",
     "nature": "invariant",
-    "libelle": "Si `solar_regime = NORMAL`, alors `sunrise_time < sunset_time` — le lever précède toujours le coucher du même jour solaire.",
-    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+    "libelle": "If `solar_regime = NORMAL`, then `sunrise_time < sunset_time` — sunrise always precedes sunset on the same solar day.",
+    "document": "exemples/sunrise/spec/SPEC-AST-001.en.md"
   },
   {
     "uuid": "3e382a1c-177b-47e7-bb99-0a700f03541a",
     "identifiant": "INV-07",
     "nature": "invariant",
-    "libelle": "Monotonie vis-à-vis de la cible** : une cible plus basse donne un instant d'atteinte plus tardif",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "Monotonicity in the target**: a lower target gives a later instant",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "3edc5a91-74d0-4ebc-aba7-6eb8e7e3352e",
@@ -417,7 +417,7 @@
     "identifiant": "SPEC-AST-001",
     "nature": "document",
     "libelle": "SPEC-AST-001 — Sunrise and sunset times",
-    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+    "document": "exemples/sunrise/spec/SPEC-AST-001.en.md"
   },
   {
     "uuid": "43b0691e-1348-4088-99c5-86c584a90c42",
@@ -465,22 +465,22 @@
     "uuid": "47db7e61-d39c-4d07-ab94-810c0e0032fd",
     "identifiant": "EX-01",
     "nature": "exigence",
-    "libelle": "Le calcul embarqué **n'émet aucune requête réseau** : il fonctionne hors ligne et ne transmet rien",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "The embedded calculation **makes no network request**: it works offline and transmits nothing",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "4a8d293a-238f-4600-89b0-3a587757d3e8",
     "identifiant": "EX-02",
     "nature": "exigence",
-    "libelle": "La **double précision binaire suffit**. La grandeur de sortie est arrondie à la minute, soit 4 × 10⁻⁴ jour, très au-dessus de tout bruit numérique",
-    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+    "libelle": "Binary double precision is enough.** The output quantity is rounded to the minute, that is 4 × 10⁻⁴ day, far above any numerical noise",
+    "document": "exemples/sunrise/spec/SPEC-AST-001.en.md"
   },
   {
     "uuid": "4b06688f-6465-4532-aa52-0db400bee2f4",
     "identifiant": "CT-01",
     "nature": "cas de test",
-    "libelle": "Refroidissement simple",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "Simple cooling",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "4b92babc-dd3d-423e-8feb-046b7166db4e",
@@ -500,8 +500,8 @@
     "uuid": "4d6f1ab4-7ded-4604-b857-b74f36df9407",
     "identifiant": "CT-06",
     "nature": "cas de test",
-    "libelle": "Invariance d'échelle (kelvins)",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "Scale invariance (kelvin)",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "4ea5c434-9869-4176-975d-1813cecfa836",
@@ -556,15 +556,15 @@
     "uuid": "53836c25-75aa-4f5c-882f-2a05f28f1882",
     "identifiant": "INV-03",
     "nature": "invariant",
-    "libelle": "`T(t)` tend vers `T_ambiante` quand `t` croît, sans jamais l'atteindre",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "`T(t)` tends to `T_ambient` as `t` grows, without ever reaching it",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "53eadd31-c842-4683-974c-e02c56b7aeb3",
     "identifiant": "INV-02",
     "nature": "invariant",
-    "libelle": "`sunrise_time` et `sunset_time` sont **tous deux** `ABSENT` ou tous deux présents. Jamais l'un sans l'autre.",
-    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+    "libelle": "`sunrise_time` and `sunset_time` are **both** `ABSENT` or both present. Never one without the other.",
+    "document": "exemples/sunrise/spec/SPEC-AST-001.en.md"
   },
   {
     "uuid": "55b3128b-974b-49b9-bcf2-1153ad2e878c",
@@ -598,8 +598,8 @@
     "uuid": "5b432b90-2b5c-482f-a032-922be7159f4e",
     "identifiant": "P-03",
     "nature": "paramètre",
-    "libelle": "Sens d'arrondi à la minute",
-    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+    "libelle": "Rounding direction to the minute",
+    "document": "exemples/sunrise/spec/SPEC-AST-001.en.md"
   },
   {
     "uuid": "5b9cfac9-fffd-46d7-bd52-3e018d83b220",
@@ -654,8 +654,8 @@
     "uuid": "66ca83b9-80a9-49ed-8d97-9836840ca7d7",
     "identifiant": "CT-01",
     "nature": "cas de test",
-    "libelle": "Paris, solstice d'été",
-    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+    "libelle": "Paris, summer solstice",
+    "document": "exemples/sunrise/spec/SPEC-AST-001.en.md"
   },
   {
     "uuid": "66f9866a-bd25-4d1c-9bdc-f2a97a1c63af",
@@ -668,15 +668,15 @@
     "uuid": "67c240de-37c7-4d40-a6cc-330545759eb9",
     "identifiant": "INV-06",
     "nature": "invariant",
-    "libelle": "Monotonie vis-à-vis de `k`** : à conditions égales, un `k` plus grand donne un instant d'atteinte plus court",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "Monotonicity in `k`**: all else equal, a larger `k` gives a shorter instant",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "6819e7f2-3111-47f1-bc56-070aa8d47524",
     "identifiant": "Q-02",
     "nature": "question",
-    "libelle": "L'usage laboratoire demande une température ambiante variable dans le temps. `RG-010` reste valable, mais la solution en forme fermée disparaît : seule une résolution numérique reste possible. Faut-il l'intégrer à cette spécification ou en faire une variante ?",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "The laboratory use asks for an ambient temperature varying over time. `RG-010` remains valid, but the closed form disappears: only numerical solving is left. Should it be brought into this specification or made a variant?",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "6834f3f6-4068-4ef4-9b6b-42dee8544d45",
@@ -696,8 +696,8 @@
     "uuid": "68ad3237-3c15-4f58-a8d6-ee9383bf46e2",
     "identifiant": "Q-01",
     "nature": "question",
-    "libelle": "Faut-il exposer les crépuscules civil, nautique et astronomique ? Ce sont les mêmes règles avec `h₀` valant −6°, −12° et −18° : `P-01` deviendrait une entrée",
-    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+    "libelle": "Should civil, nautical and astronomical twilight be exposed? They are the same rules with `h₀` at −6°, −12° and −18°: `P-01` would become an input",
+    "document": "exemples/sunrise/spec/SPEC-AST-001.en.md"
   },
   {
     "uuid": "694d1152-ae43-44ea-9cee-1a9226214548",
@@ -724,8 +724,8 @@
     "uuid": "6a936d8a-f897-4ada-883b-4d430c07ad49",
     "identifiant": "CT-03",
     "nature": "cas de test",
-    "libelle": "Quito, équinoxe, longitude négative",
-    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+    "libelle": "Quito, equinox, negative longitude",
+    "document": "exemples/sunrise/spec/SPEC-AST-001.en.md"
   },
   {
     "uuid": "6aa5716c-8d3a-4fc4-acba-387eba4214a1",
@@ -745,8 +745,8 @@
     "uuid": "6b37cd54-28a1-49d2-a574-60c454308e15",
     "identifiant": "INV-05",
     "nature": "invariant",
-    "libelle": "Encadrement du mélange** : `T_melange` est comprise entre les deux températures mélangées, et vaut exactement la plus chaude si la masse ajoutée est nulle",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "Mixing is bracketed**: `T_mixed` lies between the two temperatures mixed, and equals the warmer one exactly if the mass added is zero",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "6c28457c-2b40-43aa-9c83-a3ace089ccdc",
@@ -773,8 +773,8 @@
     "uuid": "6ea114e2-f73a-4512-8cd4-9656c42c8060",
     "identifiant": "P-06",
     "nature": "paramètre",
-    "libelle": "Nombre maximal d'itérations",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "Maximum number of iterations",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "6edd9e11-c50d-4a91-971c-6a73a451c191",
@@ -787,15 +787,15 @@
     "uuid": "6f2b55b1-5c6a-451a-a794-963a915f7b63",
     "identifiant": "P-07",
     "nature": "paramètre",
-    "libelle": "Écart minimal à la température ambiante pour que la cible soit réputée atteignable",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "Minimum gap to the ambient temperature for the target to be deemed reachable",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "6fa6e358-eac1-4052-9fe7-8057f5fa79d8",
     "identifiant": "P-02",
     "nature": "paramètre",
-    "libelle": "Coefficient de refroidissement — mug isotherme fermé",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "Cooling coefficient — closed insulated mug",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "72a1fdb6-1b36-4261-b27c-8f69c72d8823",
@@ -822,8 +822,8 @@
     "uuid": "75cfe6fc-7213-4967-a81f-f4e80c55c727",
     "identifiant": "P-05",
     "nature": "paramètre",
-    "libelle": "Tolérance de convergence sur l'instant",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "Convergence tolerance on the instant",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "7738b38a-880e-4e81-b601-a3ba78e78d3a",
@@ -836,15 +836,15 @@
     "uuid": "77f14f85-1c37-4cb0-b59c-3cd5e9ea5c33",
     "identifiant": "INV-05",
     "nature": "invariant",
-    "libelle": "`solar_regime ≠ NORMAL` implique `",
-    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+    "libelle": "`solar_regime ≠ NORMAL` implies `",
+    "document": "exemples/sunrise/spec/SPEC-AST-001.en.md"
   },
   {
     "uuid": "7c52110c-fc9a-4bad-8b2e-30511a8b1751",
     "identifiant": "INV-02",
     "nature": "invariant",
-    "libelle": "`T(t)` reste strictement comprise entre `T_ambiante` et `T(0)`",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "`T(t)` stays strictly between `T_ambient` and `T(0)`",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "7e952f80-9a2d-4a8d-8870-fc4e72428d70",
@@ -857,8 +857,8 @@
     "uuid": "7f647fe8-a8cc-4ad3-9d4c-5b3cf790b824",
     "identifiant": "CT-08",
     "nature": "cas de test",
-    "libelle": "Coefficient négatif",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "Negative coefficient",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "8080dc01-878b-4657-909b-b2199ecf4b60",
@@ -885,8 +885,8 @@
     "uuid": "8416d9a7-cdb6-4116-bc37-a9538d3ff520",
     "identifiant": "SPEC-THM-001",
     "nature": "document",
-    "libelle": "SPEC-THM-001 — Prévision du refroidissement d'une boisson chaude",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "SPEC-THM-001 — Cooling forecast for a hot drink",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "84e3b343-fe5d-40da-8a6c-db7b2fbdac0a",
@@ -899,8 +899,8 @@
     "uuid": "871209e3-ca46-4ea2-8f77-455f0575b2f4",
     "identifiant": "EX-04",
     "nature": "exigence",
-    "libelle": "Volumétrie : jusqu'à 5 000 appels par seconde en pointe, latence au 99ᵉ centile sous 5 ms",
-    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+    "libelle": "Volume: up to 5 000 calls per second at peak, 99th-percentile latency under 5 ms",
+    "document": "exemples/sunrise/spec/SPEC-AST-001.en.md"
   },
   {
     "uuid": "874a1ca9-d14a-43d5-9daf-865e9b8b7fc0",
@@ -920,8 +920,8 @@
     "uuid": "87cb7eb4-c0f7-44bd-90b4-9e00c395c621",
     "identifiant": "P-03",
     "nature": "paramètre",
-    "libelle": "Température cible de dégustation par défaut",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "Default drinking target temperature",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "8abfb819-5321-4a6a-a86b-acb6e3767455",
@@ -962,8 +962,8 @@
     "uuid": "8cad23b6-1739-4778-899a-8b3d7c2958fd",
     "identifiant": "INV-04",
     "nature": "invariant",
-    "libelle": "Symétrie par la longitude** : à latitude égale, décaler la longitude de `Δ` degrés vers l'est avance le lever **et** le coucher de `Δ ÷ 15` heures, à la minute d'arrondi près. C'est ce qui attrape une convention de signe inversée.",
-    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+    "libelle": "Symmetry in longitude**: at equal latitude, moving the longitude `Δ` degrees eastwards brings sunrise **and** sunset forward by `Δ ÷ 15` hours, up to the rounding minute. This is what catches an inverted sign convention.",
+    "document": "exemples/sunrise/spec/SPEC-AST-001.en.md"
   },
   {
     "uuid": "8cd75e36-1a32-4cbe-be56-1fa572e468ef",
@@ -976,8 +976,8 @@
     "uuid": "8f627688-ce42-47d8-a4b5-0e55eb8d1571",
     "identifiant": "RG-060",
     "nature": "règle",
-    "libelle": "Instants du lever et du coucher",
-    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+    "libelle": "Sunrise and sunset instants",
+    "document": "exemples/sunrise/spec/SPEC-AST-001.en.md"
   },
   {
     "uuid": "8ff07a1a-4d0c-4f42-98ce-7585e5dc0d03",
@@ -997,8 +997,8 @@
     "uuid": "944cf16e-090c-4191-a688-c1696c65cad4",
     "identifiant": "RG-010",
     "nature": "règle",
-    "libelle": "Le modèle de refroidissement",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "The cooling model",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "947eb789-a60f-4267-8b78-dbca001441a8",
@@ -1011,8 +1011,8 @@
     "uuid": "96718c6e-7ebb-45a8-becc-7dacb44b8db6",
     "identifiant": "P-01",
     "nature": "paramètre",
-    "libelle": "Coefficient de refroidissement — tasse en céramique ouverte",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "Cooling coefficient — open ceramic cup",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "97974c68-4e55-4ee8-bb92-24629bcef6c9",
@@ -1102,15 +1102,15 @@
     "uuid": "a2f67f9d-5d0f-4b38-b3a6-afd875065ea6",
     "identifiant": "RG-050",
     "nature": "règle",
-    "libelle": "Instant d'atteinte de la température cible",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "Instant the target temperature is reached",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "a3113841-3709-4029-9ccd-7ceef61af128",
     "identifiant": "CT-04",
     "nature": "cas de test",
-    "libelle": "Tromsø, jour polaire",
-    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+    "libelle": "Tromsø, polar day",
+    "document": "exemples/sunrise/spec/SPEC-AST-001.en.md"
   },
   {
     "uuid": "a3ce427d-6fe3-4285-b69e-5cba6e95d07e",
@@ -1130,8 +1130,8 @@
     "uuid": "a5b55277-3455-44c9-82d8-c7c98d8d1ff3",
     "identifiant": "RG-020",
     "nature": "règle",
-    "libelle": "Température à un instant donné",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "Temperature at a given instant",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "a6b6ce38-a651-4269-bdb2-3bea51583d09",
@@ -1151,8 +1151,8 @@
     "uuid": "a9c2da1c-b965-4ba5-90c9-d4635518a4ea",
     "identifiant": "P-04",
     "nature": "paramètre",
-    "libelle": "Obliquité de l'écliptique",
-    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+    "libelle": "Obliquity of the ecliptic",
+    "document": "exemples/sunrise/spec/SPEC-AST-001.en.md"
   },
   {
     "uuid": "aa32e541-ddbd-4bd1-b0cc-4bf61cc2d00b",
@@ -1172,8 +1172,8 @@
     "uuid": "ad06693c-79b6-44d2-a7eb-bf351321c88a",
     "identifiant": "CT-05",
     "nature": "cas de test",
-    "libelle": "Tromsø, nuit polaire",
-    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+    "libelle": "Tromsø, polar night",
+    "document": "exemples/sunrise/spec/SPEC-AST-001.en.md"
   },
   {
     "uuid": "aeb9bd4f-38b4-4a27-8c60-28fc5d8141e7",
@@ -1186,8 +1186,8 @@
     "uuid": "aec32bd5-c60a-44a3-9485-5f4187d080fd",
     "identifiant": "Q-04",
     "nature": "question",
-    "libelle": "`P-07` vaut 0,10 °C. Cette marge devrait-elle dépendre de l'écart initial à l'ambiante plutôt que d'être une constante ?",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "`P-07` is 0.10 °C. Should that margin depend on the initial gap to the ambient temperature rather than being a constant?",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "af954a1c-c6b7-44f7-b1a5-1e2577390e5a",
@@ -1200,36 +1200,36 @@
     "uuid": "af97c323-6b9f-4fd6-9713-4e06c6d4672e",
     "identifiant": "RG-010",
     "nature": "règle",
-    "libelle": "Jour à midi solaire",
-    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+    "libelle": "Day at solar noon",
+    "document": "exemples/sunrise/spec/SPEC-AST-001.en.md"
   },
   {
     "uuid": "b11ac534-4ee3-4ae5-8395-6f6b65dca68d",
     "identifiant": "INV-01",
     "nature": "invariant",
-    "libelle": "Si `T(0) > T_ambiante`, alors `T(t)` est strictement décroissante",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "If `T(0) > T_ambient`, then `T(t)` is strictly decreasing",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "b19ad839-f72a-4446-a9ec-f02a8aa522a1",
     "identifiant": "E-PARAM-001",
     "nature": "cas d'erreur",
-    "libelle": "`coefficient_refroidissement ≤ 0`",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "`cooling_coefficient ≤ 0`",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "b21a02b4-bdc9-4b4b-af4e-31fdda02e7b7",
     "identifiant": "EX-02",
     "nature": "exigence",
-    "libelle": "Le fichier de paramètres téléchargé est **signé**, et une signature invalide entraîne le maintien de la version précédente",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "The downloaded parameter file is **signed**, and an invalid signature keeps the previous version in place",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "b35f41d9-46c8-441d-a4be-11abad2464f7",
     "identifiant": "Q-03",
     "nature": "question",
-    "libelle": "Le service doit-il rendre l'heure locale plutôt qu'UTC ?",
-    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+    "libelle": "Should the service return local time rather than UTC?",
+    "document": "exemples/sunrise/spec/SPEC-AST-001.en.md"
   },
   {
     "uuid": "b3e154c8-b776-4ecb-86c7-fe1cc06173a9",
@@ -1249,8 +1249,8 @@
     "uuid": "b4ee9744-60d3-4131-86d6-bd96fe9c3416",
     "identifiant": "CT-04",
     "nature": "cas de test",
-    "libelle": "Cible déjà atteinte",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "Target already reached",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "b617192a-d5e7-477a-8168-de6041ed64af",
@@ -1277,8 +1277,8 @@
     "uuid": "b757d637-570b-4594-bad2-040776993e62",
     "identifiant": "E-PARAM-002",
     "nature": "cas d'erreur",
-    "libelle": "Une masse ou une capacité massique de la boisson est nulle ou négative",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "A mass or a specific heat capacity of the beverage is zero or negative",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "b7efbab4-d912-4803-9869-ef1c89743706",
@@ -1291,8 +1291,8 @@
     "uuid": "b7f23f9b-aa20-4597-9d4b-ca157a334135",
     "identifiant": "E-AST-002",
     "nature": "cas d'erreur",
-    "libelle": "`longitude` hors de `[−180, +180]`",
-    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+    "libelle": "`longitude` outside `[−180, +180]`",
+    "document": "exemples/sunrise/spec/SPEC-AST-001.en.md"
   },
   {
     "uuid": "bad2cdd9-e127-4b3c-9ad7-5275df9e6cd1",
@@ -1305,8 +1305,8 @@
     "uuid": "baea8eed-a39c-46c8-96e6-543b35802c95",
     "identifiant": "E-AST-001",
     "nature": "cas d'erreur",
-    "libelle": "`latitude` hors de `[−90, +90]`",
-    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+    "libelle": "`latitude` outside `[−90, +90]`",
+    "document": "exemples/sunrise/spec/SPEC-AST-001.en.md"
   },
   {
     "uuid": "bc161b8d-1cb1-4f60-b57f-905bcc8384fe",
@@ -1333,8 +1333,8 @@
     "uuid": "beef87a2-3576-4109-91f9-89d9fc288add",
     "identifiant": "RG-020",
     "nature": "règle",
-    "libelle": "Position du Soleil sur son orbite",
-    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+    "libelle": "Position of the Sun on its orbit",
+    "document": "exemples/sunrise/spec/SPEC-AST-001.en.md"
   },
   {
     "uuid": "bf599ac6-916a-4a89-b7b4-8985a6d093b6",
@@ -1347,8 +1347,8 @@
     "uuid": "c048bd3f-7a20-4669-b9c7-2b29d366394c",
     "identifiant": "Q-01",
     "nature": "question",
-    "libelle": "Faut-il ajouter un terme de rayonnement et d'évaporation pour les températures supérieures à 80 °C, où `H-3` est la plus fausse ? Cela **casserait `INV-04`** (le modèle cesserait d'être invariant par changement d'origine d'échelle) et imposerait de travailler en kelvins",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "Should a radiation and evaporation term be added for temperatures above 80 °C, where `H-3` is at its most wrong? It would **break `INV-04`** (the model would stop being invariant under a change of origin of the scale) and would force working in kelvin",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "c16913b4-c54a-41ba-861a-7c369e06a149",
@@ -1375,8 +1375,8 @@
     "uuid": "c3221013-33d7-482b-bb07-98fa142945ca",
     "identifiant": "INV-08",
     "nature": "invariant",
-    "libelle": "Le calcul est déterministe : deux exécutions sur la même entrée donnent le même résultat, indicateurs compris",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "The calculation is deterministic: two runs on the same input give the same result, indicators included",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "c471ab89-7df3-4389-9749-a08abdeadc30",
@@ -1410,8 +1410,8 @@
     "uuid": "c8a555a6-878d-4f81-afce-2434795a0886",
     "identifiant": "P-02",
     "nature": "paramètre",
-    "libelle": "Convention de signe des coordonnées",
-    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+    "libelle": "Sign convention of the coordinates",
+    "document": "exemples/sunrise/spec/SPEC-AST-001.en.md"
   },
   {
     "uuid": "c8ab49b6-bd36-4fcf-a062-0b46832ea9b4",
@@ -1445,15 +1445,15 @@
     "uuid": "caf14734-10f4-4794-92ac-b92659005d00",
     "identifiant": "CT-02",
     "nature": "cas de test",
-    "libelle": "Paris, solstice d'hiver",
-    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+    "libelle": "Paris, winter solstice",
+    "document": "exemples/sunrise/spec/SPEC-AST-001.en.md"
   },
   {
     "uuid": "cb226d98-6d59-4412-9083-0b7dfb034ca7",
     "identifiant": "Q-05",
     "nature": "question",
-    "libelle": "Tranchée le 2025-12-10 :* l'instant d'ajout doit-il avoir une valeur par défaut (0, c'est-à-dire « tout de suite ») ? → **non**. Une valeur par défaut sur `RG-040` masquerait une décision qui change le résultat ; le demandeur doit la déclarer",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "Settled on 2025-12-10:* should the instant of the addition have a default value (0, that is \"right now\")? → **no**. A default on `RG-040` would hide a decision that changes the result; the caller must declare it",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "cce939a5-46cd-4eb3-a512-5c3f3de13dc7",
@@ -1473,15 +1473,15 @@
     "uuid": "cdc085b1-e472-43e3-be7b-2d28930aeed1",
     "identifiant": "INV-04",
     "nature": "invariant",
-    "libelle": "Invariance par changement d'origine de l'échelle** : ajouter une constante à *toutes* les températures (initiale, ambiante, ajout, cible) laisse l'instant d'atteinte inchangé — un calcul en kelvins donne le même résultat qu'en degrés Celsius (`CT-06`)",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "Invariance under a change of origin of the scale**: adding a constant to *all* the temperatures (initial, ambient, addition, target) leaves the instant unchanged — a calculation in kelvin gives the same result as one in degrees Celsius (`CT-06`)",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "cf4f641d-263d-421b-84fa-4869d01a6a03",
     "identifiant": "Q-03",
     "nature": "question",
-    "libelle": "`RG-060` (non-convergence) et `E-HORIZON-001` ne sont couverts par aucun cas de test. Faut-il les conserver si aucune entrée réaliste ne les déclenche ?",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "`RG-060` (non-convergence) and `E-HORIZON-001` are covered by no test case. Should they be kept if no realistic input triggers them?",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "cf84a1fd-0456-49e1-aa02-8d3e5a0c82c8",
@@ -1501,8 +1501,8 @@
     "uuid": "cfd6fbbf-0aad-4bc7-8951-4c3a53e87223",
     "identifiant": "CT-02",
     "nature": "cas de test",
-    "libelle": "Ordre des opérations : le cas central",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "Order of operations: the central case",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "d016ba2f-3f89-4b82-92cc-e30124eb547f",
@@ -1578,15 +1578,15 @@
     "uuid": "dc39074f-2f6b-4c19-a81b-9fc68185e56d",
     "identifiant": "RG-040",
     "nature": "règle",
-    "libelle": "Ordre des opérations : quand l'ajout a lieu",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "Order of operations: when the addition happens",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "de6df248-be98-4400-8d44-f15007369dd1",
     "identifiant": "RG-050",
     "nature": "règle",
-    "libelle": "Angle horaire, et existence d'une solution",
-    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+    "libelle": "Hour angle, and existence of a solution",
+    "document": "exemples/sunrise/spec/SPEC-AST-001.en.md"
   },
   {
     "uuid": "df4d5585-6cf0-4547-8f5e-0d288572b1fa",
@@ -1634,8 +1634,8 @@
     "uuid": "e8c9de71-4877-459f-8946-f1ebfd76f1d8",
     "identifiant": "EX-03",
     "nature": "exigence",
-    "libelle": "Le code respecte le **standard de codage interne** `STD-DEV-2`",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "The code follows the **internal coding standard** `STD-DEV-2`",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "e8eccfd9-d2cf-4434-9773-91abb263881f",
@@ -1655,8 +1655,8 @@
     "uuid": "e9900cc4-7c76-48db-a91f-521b12b216d1",
     "identifiant": "EX-01",
     "nature": "exigence",
-    "libelle": "Justesse : ± 2 minutes** par rapport aux éphémérides de référence, pour toute latitude `",
-    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+    "libelle": "Accuracy: ± 2 minutes** against the reference ephemerides, for every latitude `",
+    "document": "exemples/sunrise/spec/SPEC-AST-001.en.md"
   },
   {
     "uuid": "e9dd2410-9fb4-485a-b8c6-b7966b7dc047",
@@ -1670,7 +1670,7 @@
     "identifiant": "RG-060",
     "nature": "règle",
     "libelle": "Convergence",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "ea4adb82-d849-49ff-9724-1c18491649a7",
@@ -1718,8 +1718,8 @@
     "uuid": "ef5edef2-6e13-4c75-83e6-e4d82f6dfe6a",
     "identifiant": "E-ENTREE-001",
     "nature": "cas d'erreur",
-    "libelle": "Ni `instant_demande` ni `temperature_cible` n'est fourni",
-    "document": "exemples/SPEC-THM-001-refroidissement.md"
+    "libelle": "Neither `requested_instant` nor `target_temperature` is supplied",
+    "document": "exemples/cooling/spec/SPEC-THM-001.en.md"
   },
   {
     "uuid": "efe07b5d-a903-4138-860d-bd0f6005a17d",
@@ -1753,8 +1753,8 @@
     "uuid": "f278d30e-0fd0-4d13-a1d8-fcbce08fde09",
     "identifiant": "RG-005",
     "nature": "règle",
-    "libelle": "Jour julien de la date d'observation",
-    "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+    "libelle": "Julian day of the observation date",
+    "document": "exemples/sunrise/spec/SPEC-AST-001.en.md"
   },
   {
     "uuid": "f54e3523-e7d6-420e-ba89-c7ac8028e666",

@@ -99,7 +99,7 @@ résultat doit rester reproductible, quelle erreur est acceptable, ce qu'on fait
 donnée manque : ce sont des décisions métier.
 
 > **La démonstration que ce dépôt en donne.** Le [bilan de masse](exemples/mass-balance/) et
-> le [refroidissement](exemples/SPEC-THM-001-refroidissement.md) aboutissent à des
+> le [refroidissement](exemples/cooling/spec/SPEC-THM-001.en.md) aboutissent à des
 > conclusions **opposées** sur le type numérique — décimal exact obligatoire d'un côté,
 > double précision largement suffisante de l'autre. Ce n'est pas l'habitude du développeur
 > qui décide : c'est l'exigence chiffrée. Sans elle, les deux auraient reçu le même type, et

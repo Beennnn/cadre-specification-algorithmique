@@ -15,7 +15,7 @@
 > `C-42` le vérifie mécaniquement.
 >
 > **Pourquoi cet exemple.** Il est le pendant de
-> [SPEC-THM-001](../../SPEC-THM-001-refroidissement.md). Là, des grandeurs **continues**, une
+> [SPEC-THM-001](../../cooling/spec/SPEC-THM-001.en.md). Là, des grandeurs **continues**, une
 > équation différentielle, un résultat **approché** dont on discute la justesse. Ici, des
 > grandeurs **discrètes et exactes** : une masse pesée existe au pas de la balance, pas
 > en deçà. Le résultat n'est pas approché, il est **juste ou faux** — et la conservation
