@@ -91,6 +91,13 @@
     "document": "guides/7-VERSIONNER.md"
   },
   {
+    "uuid": "0f0e6185-bb00-480a-b3f3-03efffee34a5",
+    "identifiant": "INV-01",
+    "nature": "retiré",
+    "libelle": "",
+    "document": "exemples/average-speed/spec/SPEC-SPD-001.en.md"
+  },
+  {
     "uuid": "0fbe682c-8776-4e0b-8379-ae7aa9658f96",
     "identifiant": "CT-03",
     "nature": "cas de test",
@@ -145,6 +152,13 @@
     "nature": "règle",
     "libelle": "Midi solaire",
     "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+  },
+  {
+    "uuid": "18950bf4-58d6-4a2b-9426-20cec1f6edba",
+    "identifiant": "INV-02",
+    "nature": "retiré",
+    "libelle": "",
+    "document": "exemples/average-speed/spec/SPEC-SPD-001.en.md"
   },
   {
     "uuid": "19326885-4fa0-498d-923f-d1b44998f662",
@@ -210,6 +224,13 @@
     "document": "exemples/fil-rouge/3-DONNEES.md"
   },
   {
+    "uuid": "2598ec0f-16ad-4bb3-a0df-0cfba7ea5648",
+    "identifiant": "EX-01",
+    "nature": "exigence",
+    "libelle": "Distances and speeds are exact as entered; only the published speed is rounded",
+    "document": "exemples/average-speed/spec/SPEC-SPD-001.en.md"
+  },
+  {
     "uuid": "263cbebd-9441-4b74-9c57-846a2f5a389b",
     "identifiant": "CT-01",
     "nature": "cas de test",
@@ -226,8 +247,8 @@
   {
     "uuid": "292e2c59-db4e-4dcd-b7e1-101cf6d76de0",
     "identifiant": "SPEC-MAS-001",
-    "nature": "retiré",
-    "libelle": "",
+    "nature": "document",
+    "libelle": "SPEC-MAS-001 — Batch mass balance",
     "document": "exemples/mass-balance/2-SPEC-MAS-001.en.md"
   },
   {
@@ -264,6 +285,13 @@
     "nature": "règle",
     "libelle": "Énergie disponible et facteur de température",
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+  },
+  {
+    "uuid": "30c1c2f2-56d3-49e1-bf5d-869e1dff4936",
+    "identifiant": "E-SPD-001",
+    "nature": "retiré",
+    "libelle": "",
+    "document": "exemples/average-speed/spec/SPEC-SPD-001.en.md"
   },
   {
     "uuid": "3125ec69-b46f-4d89-b533-f5b6985a4e50",
@@ -348,6 +376,13 @@
     "nature": "fonction",
     "libelle": "comportement",
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+  },
+  {
+    "uuid": "453d1761-dec3-4e0b-bdb4-23d908e52130",
+    "identifiant": "CT-04",
+    "nature": "cas de test",
+    "libelle": "Rounding",
+    "document": "exemples/average-speed/spec/SPEC-SPD-001.en.md"
   },
   {
     "uuid": "45b15e7c-d7b2-4c2e-b929-f91928f6e003",
@@ -441,6 +476,13 @@
     "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
   },
   {
+    "uuid": "55b3128b-974b-49b9-bcf2-1153ad2e878c",
+    "identifiant": "CT-03",
+    "nature": "cas de test",
+    "libelle": "A single leg",
+    "document": "exemples/average-speed/spec/SPEC-SPD-001.en.md"
+  },
+  {
     "uuid": "56568916-bbd1-44d2-86fc-12416f98676c",
     "identifiant": "FN-007",
     "nature": "fonction",
@@ -469,6 +511,13 @@
     "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
   },
   {
+    "uuid": "5b9cfac9-fffd-46d7-bd52-3e018d83b220",
+    "identifiant": "CT-01",
+    "nature": "cas de test",
+    "libelle": "Equal distances, different speeds",
+    "document": "exemples/average-speed/spec/SPEC-SPD-001.en.md"
+  },
+  {
     "uuid": "5f56cc79-2938-4faa-a6fe-10aa2b53d021",
     "identifiant": "FN-006",
     "nature": "fonction",
@@ -481,6 +530,13 @@
     "nature": "invariant",
     "libelle": "Every `dispensed_mass` is an integer multiple of `balance_step`.",
     "document": "exemples/mass-balance/2-SPEC-MAS-001.en.md"
+  },
+  {
+    "uuid": "62f12714-40af-41b4-90fa-79c93e152c6e",
+    "identifiant": "P-01",
+    "nature": "retiré",
+    "libelle": "",
+    "document": "exemples/average-speed/spec/SPEC-SPD-001.en.md"
   },
   {
     "uuid": "6573a577-9067-4cd6-861d-b257b71803d5",
@@ -553,6 +609,13 @@
     "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
   },
   {
+    "uuid": "6aa5716c-8d3a-4fc4-acba-387eba4214a1",
+    "identifiant": "RG-020",
+    "nature": "règle",
+    "libelle": "Journey totals",
+    "document": "exemples/average-speed/spec/SPEC-SPD-001.en.md"
+  },
+  {
     "uuid": "6b1bee5a-76dd-47f0-8a3a-4517eb13bd91",
     "identifiant": "FN-004",
     "nature": "fonction",
@@ -579,6 +642,13 @@
     "nature": "cas de test",
     "libelle": "La vitesse de consommation minimale",
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+  },
+  {
+    "uuid": "6e9e8cc6-857f-497c-8fa7-6e034a83fb04",
+    "identifiant": "FN-002",
+    "nature": "retiré",
+    "libelle": "",
+    "document": "exemples/average-speed/spec/SPEC-SPD-001.en.md"
   },
   {
     "uuid": "6ea114e2-f73a-4512-8cd4-9656c42c8060",
@@ -672,6 +742,13 @@
     "document": "exemples/SPEC-THM-001-refroidissement.md"
   },
   {
+    "uuid": "8ae25c37-0e16-4bdd-8baa-106e65af357e",
+    "identifiant": "CT-05",
+    "nature": "cas de test",
+    "libelle": "Null speed",
+    "document": "exemples/average-speed/spec/SPEC-SPD-001.en.md"
+  },
+  {
     "uuid": "8ba5f8ea-5633-4d47-86c9-f86b974a2b33",
     "identifiant": "D-008",
     "nature": "donnée",
@@ -749,6 +826,13 @@
     "document": "exemples/mass-balance/2-SPEC-MAS-001.en.md"
   },
   {
+    "uuid": "990e7004-55a7-42c4-83c6-ad45a25ea78b",
+    "identifiant": "EX-02",
+    "nature": "exigence",
+    "libelle": "A journey has at most 200 legs; the calculation is called at most 50 times per second",
+    "document": "exemples/average-speed/spec/SPEC-SPD-001.en.md"
+  },
+  {
     "uuid": "9e5fa8d2-ece3-4239-a3f5-6e034f7cbcfd",
     "identifiant": "Q-04",
     "nature": "question",
@@ -798,11 +882,25 @@
     "document": "exemples/SPEC-THM-001-refroidissement.md"
   },
   {
+    "uuid": "a8bf6497-965d-4777-a9f9-f3d2a35cec8c",
+    "identifiant": "RG-030",
+    "nature": "règle",
+    "libelle": "Average speed",
+    "document": "exemples/average-speed/spec/SPEC-SPD-001.en.md"
+  },
+  {
     "uuid": "a9c2da1c-b965-4ba5-90c9-d4635518a4ea",
     "identifiant": "P-04",
     "nature": "paramètre",
     "libelle": "Obliquité de l'écliptique",
     "document": "exemples/SPEC-AST-001-lever-coucher-du-soleil.md"
+  },
+  {
+    "uuid": "aa32e541-ddbd-4bd1-b0cc-4bf61cc2d00b",
+    "identifiant": "FN-001",
+    "nature": "retiré",
+    "libelle": "",
+    "document": "exemples/average-speed/spec/SPEC-SPD-001.en.md"
   },
   {
     "uuid": "ad06693c-79b6-44d2-a7eb-bf351321c88a",
@@ -824,6 +922,13 @@
     "nature": "question",
     "libelle": "`P-07` vaut 0,10 °C. Cette marge devrait-elle dépendre de l'écart initial à l'ambiante plutôt que d'être une constante ?",
     "document": "exemples/SPEC-THM-001-refroidissement.md"
+  },
+  {
+    "uuid": "af954a1c-c6b7-44f7-b1a5-1e2577390e5a",
+    "identifiant": "CT-02",
+    "nature": "cas de test",
+    "libelle": "Equal durations",
+    "document": "exemples/average-speed/spec/SPEC-SPD-001.en.md"
   },
   {
     "uuid": "af97c323-6b9f-4fd6-9713-4e06c6d4672e",
@@ -868,6 +973,13 @@
     "document": "exemples/mass-balance/2-SPEC-MAS-001.en.md"
   },
   {
+    "uuid": "b4ccd8a2-23b2-42d7-aa15-6dd5e58e3829",
+    "identifiant": "P-02",
+    "nature": "retiré",
+    "libelle": "",
+    "document": "exemples/average-speed/spec/SPEC-SPD-001.en.md"
+  },
+  {
     "uuid": "b4ee9744-60d3-4131-86d6-bd96fe9c3416",
     "identifiant": "CT-04",
     "nature": "cas de test",
@@ -894,6 +1006,13 @@
     "nature": "cas d'erreur",
     "libelle": "Une masse ou une capacité massique de la boisson est nulle ou négative",
     "document": "exemples/SPEC-THM-001-refroidissement.md"
+  },
+  {
+    "uuid": "b7efbab4-d912-4803-9869-ef1c89743706",
+    "identifiant": "Q-01",
+    "nature": "question",
+    "libelle": "Should stops be counted in the duration? Today they are out of scope, so the published speed is a *moving* average",
+    "document": "exemples/average-speed/spec/SPEC-SPD-001.en.md"
   },
   {
     "uuid": "b7f23f9b-aa20-4597-9d4b-ca157a334135",
@@ -1106,6 +1225,13 @@
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
   },
   {
+    "uuid": "d609f740-a23b-4a73-a66e-59a20ebc5702",
+    "identifiant": "RG-010",
+    "nature": "règle",
+    "libelle": "Duration of one leg",
+    "document": "exemples/average-speed/spec/SPEC-SPD-001.en.md"
+  },
+  {
     "uuid": "d6310e36-7c2f-4ec2-9173-abc13fcc309b",
     "identifiant": "EX-06",
     "nature": "exigence",
@@ -1167,6 +1293,13 @@
     "nature": "exigence",
     "libelle": "La **couverture des tests** du code embarqué atteint 100 % des branches sur les fonctions de calcul",
     "document": "exemples/fil-rouge/5-SPEC-NRG-001-autonomie.md"
+  },
+  {
+    "uuid": "e629651e-8b0d-416e-b97a-fd9cd4ceea3a",
+    "identifiant": "SPEC-SPD-001",
+    "nature": "document",
+    "libelle": "SPEC-SPD-001 — Average speed of a journey",
+    "document": "exemples/average-speed/spec/SPEC-SPD-001.en.md"
   },
   {
     "uuid": "e8c9de71-4877-459f-8946-f1ebfd76f1d8",

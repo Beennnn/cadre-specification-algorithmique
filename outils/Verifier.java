@@ -144,7 +144,7 @@ public class Verifier {
 
     static LinkedHashMap<String, String> objets(String texte) {
         LinkedHashMap<String, String> r = new LinkedHashMap<>();
-        Matcher m = Pattern.compile("\\|\\s*\\*\\*Identifiant\\*\\*\\s*\\|\\s*([A-Z]+-[A-Z]*-?\\d+)")
+        Matcher m = Pattern.compile("\\|\\s*\\*\\*(?:Identifiant|Identifier)\\*\\*\\s*\\|\\s*([A-Z]+-[A-Z]*-?\\d+)")
                 .matcher(texte);
         if (m.find()) r.put(m.group(1), "document");
         String c = corps(texte);
@@ -484,13 +484,18 @@ public class Verifier {
                     constat("ÉCHEC", "C-13", chemin,
                             titre + " : WHILE sans nombre maximal d'itérations déclaré");
             }
+            // Le superlatif se cherche dans le PSEUDO-CODE, pas dans la prose qui
+            // l'entoure : « on passe deux heures sur le premier segment » est un
+            // commentaire, pas une sélection. La règle de départage, elle, se cherche
+            // dans tout le bloc — c'est justement en prose qu'on l'explique.
+            String codeSeul = String.join("\n", blocsCode(bloc));
             boolean superlatif = Pattern.compile(
                     "le plus (petit|grand|élevé|faible)|le meilleur|\\bMINIMUM\\b|\\bMAXIMUM\\b|le premier"
                     + "|the (smallest|largest|highest|lowest|best|first)",
-                    Pattern.CASE_INSENSITIVE).matcher(bloc).find();
+                    Pattern.CASE_INSENSITIVE).matcher(codeSeul).find();
             boolean collection = Pattern.compile(
                     "\\bOVER\\b|\\bIN\\b|\\bSORT\\b|\\bFILTER\\b|lignes|segments|bornes|la ligne dont|celle dont")
-                    .matcher(bloc).find();
+                    .matcher(codeSeul).find();
             boolean departage = Pattern.compile("égalit|ex æquo|départage|alphabétiq|le plus précoce"
                     + "|tie|tie-break|alphabetical|earliest",
                     Pattern.CASE_INSENSITIVE).matcher(bloc).find();

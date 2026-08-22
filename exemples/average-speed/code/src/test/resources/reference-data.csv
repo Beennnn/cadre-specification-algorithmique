@@ -1,0 +1,17 @@
+# Reference data for SPEC-SPD-001, version 1.0.0.
+#
+# This file is section 10 of the specification, transcribed without interpretation.
+# The expected values were computed by hand, independently of any implementation.
+# It changes only through a dated, motivated business re-approval — never because a
+# test is red.
+#
+# Approved by: Fleet operations manager, 2026-08-22.
+#
+# Format: case ; expected_error ; expected_average_speed ; legs
+#         legs = distance:speed separated by |
+#
+CT-01;;40.0;60:30.0|60:60.0
+CT-02;;45.0;30:30.0|60:60.0
+CT-03;;80.0;100:80.0
+CT-04;;9.1;10:7.0|10:13.0
+CT-05;E-SPD-001;;60:30.0|40:0.0

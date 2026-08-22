@@ -47,7 +47,7 @@ public class Identites {
     static List<Objet> objets(String texte) {
         List<Objet> trouves = new ArrayList<>();
         Set<String> vus = new HashSet<>();
-        Matcher m = Pattern.compile("\\|\\s*\\*\\*Identifiant\\*\\*\\s*\\|\\s*([A-Z]+-[A-Z]*-?\\d+)")
+        Matcher m = Pattern.compile("\\|\\s*\\*\\*(?:Identifiant|Identifier)\\*\\*\\s*\\|\\s*([A-Z]+-[A-Z]*-?\\d+)")
                 .matcher(texte);
         if (m.find()) {
             Matcher t = Pattern.compile("^#\\s+(.+)$", Pattern.MULTILINE).matcher(texte);
