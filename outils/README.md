@@ -7,6 +7,7 @@
 | **[Identites.java](Identites.java)** | Attribue et maintient les identités durables (UUID), et produit `registre.json`. Même forme : `java outils/Identites.java --registre` |
 | **[jeu-d-essai/](jeu-d-essai/)** | Le corpus de défauts connus et le verdict attendu — l'oracle de non-régression du vérificateur lui-même |
 | **[PROMPT-RELECTURE-IA.md](PROMPT-RELECTURE-IA.md)** | La consigne prête à l'emploi pour une pré-relecture par un modèle |
+| **[ANALYSE-DE-L-OUTILLAGE.md](ANALYSE-DE-L-OUTILLAGE.md)** | L'audit de cet outillage : ce qui est mesuré conforme, ce qui ne l'est pas, et ce que coûterait de reprendre la main |
 
 ## Utilisation
 
