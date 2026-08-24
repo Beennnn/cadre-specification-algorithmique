@@ -8,6 +8,7 @@
 | **[jeu-d-essai/](jeu-d-essai/)** | Le corpus de défauts connus et le verdict attendu — l'oracle de non-régression du vérificateur lui-même |
 | **[PROMPT-RELECTURE-IA.md](PROMPT-RELECTURE-IA.md)** | La consigne prête à l'emploi pour une pré-relecture par un modèle |
 | **[ANALYSE-DE-L-OUTILLAGE.md](ANALYSE-DE-L-OUTILLAGE.md)** | L'audit de cet outillage : ce qui est mesuré conforme, ce qui ne l'est pas, et ce que coûterait de reprendre la main |
+| **[CHAINE-D-OUTILS.md](CHAINE-D-OUTILS.md)** | Proposition : avec quoi une organisation écrit à plusieurs puis passe au développement — ce qu'on construit, ce qu'on prend au marché, ce qu'on refuse |
 
 ## Utilisation
 
