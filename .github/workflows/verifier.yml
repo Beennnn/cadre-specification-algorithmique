@@ -1,0 +1,98 @@
+# Étage 1 de la validation, exécuté par la forge et non par la mémoire d'un
+# contributeur. Voir OUTILLAGE.md et guides/5-VALIDER.md.
+#
+# Le dépôt affirmait que le code de retour 1 du vérificateur était « utilisable
+# tel quel en intégration continue ». Personne ne s'en servait : c'est le
+# défaut 8 de outils/ANALYSE-DE-L-OUTILLAGE.md. Ce fichier le ferme.
+
+name: Étage 1 — contrôles mécaniques
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+
+  controles:
+    name: Vérificateur, oracle et artefacts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      # Le verdict du dépôt : aucun échec n'est tolérable.
+      - name: Le dépôt ne porte aucun défaut mécanique
+        run: java outils/Verifier.java
+
+      # L'oracle de non-régression du vérificateur lui-même. Le corpus est
+      # volontairement fautif, donc le code de retour vaut 1 : c'est le VERDICT
+      # qu'on compare, pas le code de retour.
+      - name: Le verdict figé du corpus de défauts est retrouvé
+        run: |
+          java outils/Verifier.java outils/jeu-d-essai/SPEC-FAUX-001-corpus-de-defauts.md \
+            > verdict.txt || true
+          cat verdict.txt
+          if ! grep -qF '28 échec(s), 3 avertissement(s)' verdict.txt; then
+            echo "::error title=Oracle::le corpus ne rend plus 28 échecs et 3 avertissements"
+            echo "Un écart s'instruit, il ne s'absorbe pas : soit un contrôle a régressé,"
+            echo "soit le corpus a changé sans que outils/jeu-d-essai/ATTENDU.md suive."
+            exit 1
+          fi
+
+      # Les artefacts engendrés sont commités : rien ne garantissait jusqu'ici
+      # qu'ils correspondent encore aux documents. C'est le défaut 3.
+      - name: Le registre des identités est à jour
+        run: |
+          java outils/Identites.java --registre
+          git diff --exit-code registre.json \
+            || { echo "::error file=registre.json,title=Registre::regénérez avec « java outils/Identites.java --registre »"; exit 1; }
+
+      - name: Les rapports de couverture sont à jour
+        run: |
+          for exemple in average-speed mass-balance weather-summary; do
+            java outils/Couverture.java "exemples/$exemple"
+          done
+          git diff --exit-code 'exemples/*/reports/COVERAGE-REPORT.md' \
+            || { echo "::error title=Couverture::regénérez avec « java outils/Couverture.java exemples/<nom> »"; exit 1; }
+
+  vocabulaire:
+    name: Vocabulaire — Vale
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Aucune formulation qui repousse la décision (C-41)
+        run: |
+          pip install --quiet vale
+          vale exemples/
+
+  site:
+    name: Site — construction
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      # --strict transforme tout avertissement en échec : un lien interne cassé
+      # ou une entrée de sommaire absente arrête la construction.
+      - name: Le site se construit sans avertissement
+        env:
+          DISABLE_MKDOCS_2_WARNING: 'true'
+        run: |
+          pip install --quiet mkdocs-material mkdocs-same-dir
+          mkdocs build --strict

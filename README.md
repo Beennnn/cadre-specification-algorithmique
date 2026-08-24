@@ -80,6 +80,24 @@ changerait un résultat ; **tout le reste s'écrit en français**.
 
 ---
 
+## Avec quoi on écrit tout ça
+
+Un pseudo-langage ne suffit pas : il faut un endroit où l'écrire à plusieurs, quelque chose
+qui relise avant les humains, et un chemin jusqu'au développement. Le substrat est tranché
+depuis le début — **Git, en markdown, dans le dépôt du produit, avec revue par demande de
+fusion** ([CADRE §6.3](CADRE.md)). Ce qui se pose par-dessus est nommé sur une page.
+
+| | |
+|---|---|
+| **La chaîne, avec les liens et les cinq fichiers de réglage** | **[OUTILLAGE.md](OUTILLAGE.md)** — ce qu'on prend au marché, ce qu'on écrit, ce qu'on refuse |
+| **Pourquoi ces choix-là** | [outils/CHAINE-D-OUTILS.md](outils/CHAINE-D-OUTILS.md) · [outils/ANALYSE-DE-L-OUTILLAGE.md](outils/ANALYSE-DE-L-OUTILLAGE.md) |
+
+> **Le métier n'a ni terminal ni Java, et il n'en a pas besoin.** La touche `.` sur le
+> dépôt ouvre un éditeur complet dans le navigateur ; l'étage 1 s'exécute sur la demande
+> de fusion et rend ses constats là où le relecteur travaille.
+
+---
+
 ## Les douze étapes
 
 | | L'étape | Où c'est décrit |
@@ -220,6 +238,7 @@ qu'un programme l'a produit, sans l'examiner**.
 | | |
 |---|---|
 | **[PSEUDO-LANGAGE.md](PSEUDO-LANGAGE.md)** | **Le pseudo-langage en une page** : les quatre principes, tous les mots-clés par famille, ce qu'il n'a délibérément pas, et l'aide-mémoire |
+| **[OUTILLAGE.md](OUTILLAGE.md)** | **La chaîne d'outils en une page** : ce qu'on prend au marché et pourquoi, ce qu'on écrit soi-même, ce qu'on refuse, et les cinq fichiers de réglage qui installent l'étage 1 |
 | **[CADRE.md](CADRE.md)** | **Le document de référence.** Le principe, la frontière, les faux amis, le pseudo-langage, le contrat, la chaîne de traitement, l'oracle, la gouvernance, les anti-patterns. À lire une fois, en entier |
 | **[guides/](guides/)** | Neuf guides opérationnels, à ouvrir pendant qu'on fait — dont [l'apport de l'IA](guides/9-L-APPORT-DE-L-IA.md), transverse |
 | **[templates/](templates/)** | Les modèles vierges : [spécification](templates/MODELE-SPECIFICATION.md), [fiche de fonction](templates/MODELE-FICHE-FONCTION.md), [fiche de donnée](templates/MODELE-FICHE-DONNEE.md), [glossaire](templates/MODELE-GLOSSAIRE.md), [liste de vérification](templates/CHECKLIST-RELECTURE.md) |

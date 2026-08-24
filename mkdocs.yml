@@ -1,0 +1,101 @@
+# Publication du dépôt en site lisible — voir OUTILLAGE.md
+#
+#   pip install mkdocs-material mkdocs-same-dir
+#   mkdocs serve          # aperçu local
+#   mkdocs build --strict # ce que fait l'intégration continue
+#
+# Deux réglages ne sont pas décoratifs :
+#
+#   - « same-dir » : MkDocs refuse un docs_dir qui soit le dossier parent du
+#     fichier de configuration. Ce greffon lève exactement cette contrainte, et
+#     c'est ce qui permet de publier le dépôt tel quel, sans dossier docs/ ni
+#     copie des fichiers.
+#   - le « slugify » de pymdownx : sans lui, MkDocs engendre des ancres qui ne
+#     sont pas celles de GitHub, et les 40 liens du type
+#     « SPEC-WTH-001.en.md#rg-030--iterative-outlier-rejection » cessent tous de
+#     résoudre — sans aucune erreur, ce qui est pire.
+
+site_name: Cadre de spécification algorithmique
+site_description: Le métier décrit les algorithmes, l'IT choisit le langage et l'architecture
+
+docs_dir: .
+site_dir: ../site
+
+theme:
+  name: material
+  language: fr
+  features:
+    - navigation.instant
+    - navigation.top
+    - content.code.copy
+    - search.highlight
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle: { icon: material/weather-night, name: Passer au thème sombre }
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle: { icon: material/weather-sunny, name: Passer au thème clair }
+
+markdown_extensions:
+  - toc:
+      slugify: !!python/object/apply:pymdownx.slugs.slugify {kwds: {case: lower}}
+      permalink: "#"
+  - admonition
+  - tables
+  - attr_list
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+plugins:
+  - same-dir
+  - search: { lang: fr }
+
+# Le corpus de défauts est volontairement fautif : il n'a rien à faire sur un
+# site de lecture, où il passerait pour un exemple.
+exclude_docs: |
+  outils/jeu-d-essai/
+  CLAUDE.md
+
+# Tout le dépôt est publié ; seule une sélection figure au sommaire.
+not_in_nav: |
+  /*.md
+  guides/*.md
+  outils/**/*.md
+  templates/*.md
+  exemples/**/*.md
+
+nav:
+  - Accueil: README.md
+  - Pseudo-langage: PSEUDO-LANGAGE.md
+  - Outillage: OUTILLAGE.md
+  - Le cadre: CADRE.md
+  - Guides:
+      - Découper: guides/1-DECOUPER.md
+      - Glossaire: guides/2-GLOSSAIRE.md
+      - Données: guides/3-DONNEES.md
+      - Écrire à plusieurs: guides/4-ECRIRE-A-PLUSIEURS.md
+      - Valider: guides/5-VALIDER.md
+      - Passer au développement: guides/6-PASSER-AU-DEVELOPPEMENT.md
+      - Versionner: guides/7-VERSIONNER.md
+      - Analyser les écarts: guides/8-ANALYSER-LES-ECARTS.md
+      - L'apport de l'IA: guides/9-L-APPORT-DE-L-IA.md
+  - Exemples:
+      - Vue d'ensemble: exemples/README.md
+      - Fil rouge: exemples/fil-rouge/README.md
+      - average-speed: exemples/average-speed/README.md
+      - mass-balance: exemples/mass-balance/README.md
+      - weather-summary: exemples/weather-summary/README.md
+      - cooling: exemples/cooling/README.md
+      - sunrise: exemples/sunrise/README.md
+  - Outils:
+      - Vue d'ensemble: outils/README.md
+      - Règles de contrôle: outils/REGLES-DE-CONTROLE.md
+      - Analyse de l'outillage: outils/ANALYSE-DE-L-OUTILLAGE.md
+      - Chaîne d'outils: outils/CHAINE-D-OUTILS.md
+  - Glossaire: GLOSSAIRE.md
+  - Références: REFERENCES.md
+  - FAQ: FAQ.md
