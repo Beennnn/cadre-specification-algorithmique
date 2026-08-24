@@ -107,6 +107,7 @@ Valeurs de référence du fil rouge (véhicule 1 800 kg, Cx·S 0,64 m², Crr 0,0
 
 ```
 README.md          point d'entrée : ce qu'est le dépôt, les trois temps
+OUTILLAGE.md       la chaîne d'outils, nommée : marché, à écrire, refusé
 CADRE.md           le document de référence, long, à lire une fois
 GLOSSAIRE.md       le vocabulaire de la méthode elle-même
 REFERENCES.md      les sources ; ce qu'on emprunte et ce qu'on écarte

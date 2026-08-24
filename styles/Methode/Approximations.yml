@@ -1,0 +1,28 @@
+# C-41 — aucune formulation qui repousse la décision.
+#
+# Chaque expression listée ici est une question que quelqu'un devra trancher plus
+# tard, sans mandat. Voir outils/REGLES-DE-CONTROLE.md.
+#
+# « nonword: true » n'est pas un détail de style. Sans lui, Vale encadre chaque
+# motif de limites de mot, et « \betc\.\b » ne s'apparie JAMAIS : la limite finale
+# exige un caractère de mot après le point, qui ne vient pas en fin de phrase. La
+# règle passait alors pour active tout en laissant filer le cas le plus fréquent.
+# Les limites sont donc écrites à la main, là où elles ont un sens.
+
+extends: existence
+message: "« %s » repousse une décision à plus tard (C-41)."
+level: error
+ignorecase: true
+nonword: true
+tokens:
+  - '\betc\.'
+  - '\ble cas échéant\b'
+  - '\ben général\b'
+  - '\bsi nécessaire\b'
+  - '\bles cas particuliers\b'
+  - '\bau besoin\b'
+  - '\bet ainsi de suite\b'
+  - '\band so on\b'
+  - '\bas appropriate\b'
+  - '\bif necessary\b'
+  - '\bwhere relevant\b'

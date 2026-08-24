@@ -1,0 +1,31 @@
+# Un fichier, un valideur métier.
+#
+# guides/4-ECRIRE-A-PLUSIEURS.md énonce « une fonction = un fichier = un valideur
+# métier » comme une propriété structurelle. Rien ne la faisait respecter : ce
+# fichier la rend mécanique. La forge convoque le bon relecteur toute seule, et
+# la protection de branche peut exiger son approbation.
+#
+# La dernière règle qui apparie l'emporte — l'ordre compte.
+#
+# Attention : sur GitLab, CODEOWNERS est une fonction payante. Vérifier votre
+# offre avant de bâtir la gouvernance dessus. Voir OUTILLAGE.md.
+
+# Par défaut, le titulaire du dépôt.
+*                                       @Beennnn
+
+# La méthode elle-même : tout changement de doctrine passe par son auteur.
+/CADRE.md                               @Beennnn
+/PSEUDO-LANGAGE.md                      @Beennnn
+/outils/REGLES-DE-CONTROLE.md           @Beennnn
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Dans le dépôt d'un PRODUIT, la partie utile ressemble à ceci — une ligne par
+# spécification, nommant le valideur métier de la fonction, pas son rédacteur :
+#
+#   /specs/SPEC-NRG-001.en.md            @responsable-energie
+#   /specs/SPEC-NRG-001.fr.md            @responsable-energie
+#   /specs/SPEC-FAC-*.md                 @responsable-facturation
+#   /specs/GLOSSAIRE.md                  @responsable-energie @responsable-facturation
+#
+# Le glossaire est le seul document à plusieurs propriétaires, et c'est
+# volontaire : un terme qui change de sens engage tous ceux qui l'emploient.

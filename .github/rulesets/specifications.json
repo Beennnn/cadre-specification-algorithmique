@@ -1,0 +1,50 @@
+{
+  "_commentaire": [
+    "Protection de la branche principale, au format d'import des « rulesets » de GitHub.",
+    "Réglages → Rules → Rulesets → New ruleset → Import a ruleset.",
+    "C'est le SEUL des cinq fichiers qui n'a pas pu être exécuté avant livraison :",
+    "un import se vérifie dans l'interface. Relire l'écran obtenu avant d'activer.",
+    "Les trois exigences correspondent au dépôt : une demande de fusion, l'approbation",
+    "du propriétaire déclaré dans CODEOWNERS, et l'étage 1 au vert.",
+    "Voir OUTILLAGE.md et CADRE.md §6.3."
+  ],
+  "name": "Spécifications — étage 1 obligatoire",
+  "target": "branch",
+  "enforcement": "active",
+  "conditions": {
+    "ref_name": {
+      "include": ["~DEFAULT_BRANCH"],
+      "exclude": []
+    }
+  },
+  "rules": [
+    {
+      "type": "deletion"
+    },
+    {
+      "type": "non_fast_forward"
+    },
+    {
+      "type": "pull_request",
+      "parameters": {
+        "required_approving_review_count": 1,
+        "require_code_owner_review": true,
+        "dismiss_stale_reviews_on_push": true,
+        "require_last_push_approval": false,
+        "required_review_thread_resolution": true,
+        "allowed_merge_methods": ["merge", "squash"]
+      }
+    },
+    {
+      "type": "required_status_checks",
+      "parameters": {
+        "strict_required_status_checks_policy": true,
+        "required_status_checks": [
+          { "context": "Vérificateur, oracle et artefacts" },
+          { "context": "Vocabulaire — Vale" },
+          { "context": "Site — construction" }
+        ]
+      }
+    }
+  ]
+}
