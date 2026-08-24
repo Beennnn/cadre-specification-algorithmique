@@ -79,6 +79,14 @@ sortie**.
 | `--format=forge` | émet les constats au format d'annotation de la forge, pour qu'un **ÉCHEC devienne un commentaire sur la ligne fautive** |
 | Un fichier de propriétaires (`CODEOWNERS`) | associe chaque fichier de spécification à **son** valideur métier, et le convoque automatiquement en revue |
 
+> **Un prérequis mesuré, et il n'est pas facultatif.** `Verifier.java` construit ses
+> constats sur `record Constat(niveau, regle, fichier, message)` : **il n'y a pas de
+> numéro de ligne**. En l'état, une annotation ne peut se poser que sur le fichier
+> entier, ce qui perd l'essentiel du bénéfice. Il faut donc d'abord ajouter la ligne au
+> constat — la plupart des contrôles la connaissent déjà, puisqu'ils travaillent sur des
+> `Matcher` dont on peut tirer la position. C'est la première tâche de la ligne 1, avant
+> tout choix d'outil.
+
 La troisième ligne mérite d'être remarquée : elle rend mécanique la règle « une
 fonction = un fichier = un valideur », que le guide 4 énonce comme une propriété
 structurelle et que rien ne fait respecter aujourd'hui. Elle est gratuite.
@@ -190,6 +198,31 @@ le guide 5 est net, la validation reste un acte humain daté.
 | Déclenchement de l'étage 1 | **l'intégration continue** de la forge | un fichier de vingt lignes |
 | Lecture confortable par un non-rédacteur | un **générateur de site statique** (MkDocs Material, Docusaurus) | il rend le markdown lisible, cherchable, avec les liens internes qui fonctionnent — sans toucher aux fichiers |
 | Édition sans installation | **l'éditeur web de la forge** | déjà la recommandation du cadre |
+
+### La même chaîne, avec des noms
+
+*Un choix par besoin, pas un panorama. Les offres et les niveaux de licence bougent :
+vérifier `CODEOWNERS` et la protection de branche contre votre propre plan avant de
+promettre quoi que ce soit.*
+
+| Besoin | Le choix | Pourquoi celui-là |
+|---|---|---|
+| Forge | **GitHub** | `CODEOWNERS`, protection de branche, Actions et Pages dans le même produit. Sur **GitLab**, tout existe aussi, mais `CODEOWNERS` est une fonction payante — à vérifier avant de bâtir la gouvernance dessus |
+| Écrire sans rien installer | **`github.dev`** — la touche `.` sur le dépôt | un VS Code complet dans le navigateur, qui écrit sur une branche et ouvre la demande de fusion. C'est la réponse concrète à « le métier n'a ni Java ni terminal ». L'éditeur au crayon reste bien pour une correction d'une ligne |
+| Lancer l'étage 1 | **GitHub Actions** + `actions/setup-java` (Temurin 21) | `java outils/Verifier.java` tourne tel quel, sans construction |
+| Rendre un échec visible sur la ligne | **les commandes d'atelier** `::error file=…,line=…,title=C-08::…` | zéro dépendance — c'est un simple format de sortie, fidèle à la doctrine « un fichier, aucune dépendance ». **reviewdog** est l'alternative si vous visez GitHub *et* GitLab avec le même outil |
+| Convoquer le valideur | **`CODEOWNERS`** + protection de branche exigeant son approbation | une ligne par spécification |
+| Publier un site lisible | **MkDocs + Material for MkDocs**, servi par **GitHub Pages** | markdown pur, recherche intégrée, ancres qui fonctionnent. **`mike`** ajoute les versions publiées, le greffon **i18n** apparie `.en.md` et `.fr.md`. **Docusaurus** si vous voulez versions et langues nativement et acceptez Node |
+| Tenir le vocabulaire | **Vale** | linter de prose à règles de terminologie : « ce terme, pas celui-là », exécutable en intégration continue. C'est la moitié marché de `C-18`/`C-25` ; le reste demande de lire le glossaire du domaine |
+| Aligner les tableaux markdown | **Prettier** — avec précaution | il réaligne les tableaux que le métier désaligne. **Mais le vérificateur lit le markdown par expressions régulières** : essayez-le sur une copie avant de l'imposer, un reformatage peut déplacer une ancre |
+| Liens externes | **lychee** | le vérificateur couvre déjà les liens relatifs ; lychee ajoute les URL sortantes |
+| Diagrammes | **Mermaid** | déjà employé dans ce dépôt, et rendu nativement par GitHub comme par MkDocs Material |
+| Passe de relecture par IA (étage 2) | **Claude**, modèle `claude-opus-5` | soit Claude Code en action sur la demande de fusion, soit un appel à l'API Messages avec le catalogue, le glossaire et la spécification. Ce qui compte n'est pas l'appel : c'est **la trace** — opérateur, date, constats retenus et écartés — sans quoi `C-27` reste faux |
+
+> **Cinq fichiers suffisent à démarrer**, et aucun ne demande d'écrire du Java :
+> `.github/workflows/verifier.yml`, `CODEOWNERS`, `mkdocs.yml`, `.vale.ini`, et une
+> règle de protection de branche. Le reste de ce document est du développement ; ceci
+> est du réglage, et c'est ce qui ferme le défaut 8.
 
 > **La publication d'un site est le seul ajout que le dépôt n'a jamais mentionné et qui
 > change quelque chose pour le métier.** Un valideur qui relit `| <a id="p-01"></a>`P-01`
