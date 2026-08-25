@@ -1,4 +1,4 @@
-# Guide 3 — Écrire à plusieurs
+# Guide 4 — Écrire à plusieurs
 
 *À utiliser une fois le découpage et le glossaire faits. Sortie attendue : des
 spécifications écrites, relues et acceptées, par lots de 5 à 8 fonctions.*

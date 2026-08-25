@@ -112,7 +112,8 @@ CADRE.md           le document de référence, long, à lire une fois
 GLOSSAIRE.md       le vocabulaire de la méthode elle-même
 REFERENCES.md      les sources ; ce qu'on emprunte et ce qu'on écarte
 FAQ.md             les objections fréquentes
-guides/            1-DECOUPER · 2-GLOSSAIRE · 4-ECRIRE-A-PLUSIEURS · 6-PASSER-AU-DEVELOPPEMENT
+guides/            0-RACONTER · 1-DECOUPER · 2-GLOSSAIRE · 4-ECRIRE-A-PLUSIEURS
+                   · 6-PASSER-AU-DEVELOPPEMENT
 templates/         MODELE-SPECIFICATION · MODELE-FICHE-FONCTION · MODELE-GLOSSAIRE · CHECKLIST-RELECTURE
 exemples/
   fil-rouge/       le scénario déroulé : 0-LE-CAS-METIER → 1-DECOUPAGE → 2-GLOSSAIRE

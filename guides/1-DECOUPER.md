@@ -151,7 +151,7 @@ autonomie** — le développeur cite où il veut, autant de fois qu'il veut ; el
 périme pas**, puisque la citation voyage avec le code qu'elle annote ; et elle **ne
 salit pas la spécification**, qui ignore jusqu'à l'existence du dépôt de code.
 
-## Le contrat typé## Le contrat typé
+## Le contrat typé
 
 Au **niveau 2**, la fiche porte les entrées et sorties, **avec la notation exacte des
 §4 et §5 du [modèle de spécification](../templates/MODELE-SPECIFICATION.md)** — pas un
@@ -208,6 +208,6 @@ frontière mal placée).
 |---|---|---|
 | **Le découpage technique** | des fonctions qui portent le nom des couches : « Valider », « Persister », « Notifier » | on cartographie l'architecture actuelle, pas le métier — la carte meurt à la première refonte |
 | **Le verbe fourre-tout** | « gérer », « traiter » | masque plusieurs fonctions sous un seul nom, donc plusieurs valideurs sous un seul |
-| **Le découpage par écran** | une fonction par page de l'interface | la spécification devient fausse au premier changement d'interface |
+| **Le découpage par écran** | une fonction par page de l'interface | la spécification devient fausse au premier changement d'interface. **À ne pas confondre avec le [guide 0](0-RACONTER.md)** : l'écran ne dicte pas la *structure* du découpage, il révèle les *décisions* à prendre |
 | **Le grain unique** | tout au niveau 4, ou tout au niveau 1 | tout au niveau 4 : le projet n'aboutit jamais. Tout au niveau 1 : la carte ne sert à rien |
 | **La carte exhaustive** | on veut cartographier tout le système avant de spécifier quoi que ce soit | l'effort est consommé avant le premier bénéfice, et la démarche est abandonnée |
