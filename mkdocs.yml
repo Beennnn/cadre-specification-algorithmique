@@ -74,6 +74,7 @@ nav:
   - Outillage: OUTILLAGE.md
   - Le cadre: CADRE.md
   - Guides:
+      - Raconter: guides/0-RACONTER.md
       - Découper: guides/1-DECOUPER.md
       - Glossaire: guides/2-GLOSSAIRE.md
       - Données: guides/3-DONNEES.md

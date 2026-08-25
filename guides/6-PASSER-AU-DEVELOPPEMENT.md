@@ -1,4 +1,4 @@
-# Guide 4 — Passer au développement
+# Guide 6 — Passer au développement
 
 *Ce que le développement reçoit, et comment il s'en sert pour choisir l'architecture et
 le langage, coder, optimiser et qualifier.*

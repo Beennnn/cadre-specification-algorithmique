@@ -185,7 +185,7 @@ directement au document par celui qui la propose.
 
 ## Faire relire par une IA
 
-*Ce que l'IA apporte à chacune des douze étapes, et ce qu'elle ne peut structurellement pas
+*Ce que l'IA apporte à chacune des treize étapes, et ce qu'elle ne peut structurellement pas
 apporter : [guide 9](9-L-APPORT-DE-L-IA.md).*
 
 Les règles de l'étage 1 étant écrites en langage naturel et non ambiguës, elles peuvent

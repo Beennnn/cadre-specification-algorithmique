@@ -98,27 +98,32 @@ fusion** ([CADRE §6.3](CADRE.md)). Ce qui se pose par-dessus est nommé sur une
 
 ---
 
-## Les douze étapes
+## Les treize étapes
 
 | | L'étape | Où c'est décrit |
 |---|---|---|
 | **1** | Définir les **conventions de rédaction** et les formats | [CADRE §2](CADRE.md) — *une fois pour l'organisation* |
-| **2** | **Découper** les traitements en fonctions | [1-DECOUPER](guides/1-DECOUPER.md) |
-| **3** | **Nommer et décrire** les fonctions et les données qu'elles véhiculent | [1-DECOUPER](guides/1-DECOUPER.md) · [2-GLOSSAIRE](guides/2-GLOSSAIRE.md) · [3-DONNEES](guides/3-DONNEES.md) |
-| **4** | Décrire l'**algorithme** en pseudo-langage | [CADRE §2](CADRE.md) · [4-ECRIRE-A-PLUSIEURS](guides/4-ECRIRE-A-PLUSIEURS.md) |
-| **5** | Identifier les **données de test et les résultats attendus** | [CADRE §5](CADRE.md) |
-| **6** | **Figer une version** pour relecture | [5-VALIDER](guides/5-VALIDER.md) — on ne relit pas un document qui bouge |
-| **7** | Vérifier la **complétude et la cohérence** des informations métier | [5-VALIDER](guides/5-VALIDER.md) — étages 1 et 2 |
-| **8** | Vérifier la **capacité à implémenter**, par la lecture d'un profil technique | [5-VALIDER](guides/5-VALIDER.md) — étage 3, verdict binaire |
-| **9** | **Collecter les retours et itérer** jusqu'à un niveau de qualité suffisant | [5-VALIDER](guides/5-VALIDER.md) |
-| **10** | Passer à l'**architecture technique, au développement et aux tests** | [6-PASSER-AU-DEVELOPPEMENT](guides/6-PASSER-AU-DEVELOPPEMENT.md) |
-| **11** | **Analyser les écarts** — par le métier, en lisant les valeurs propagées | [8-ANALYSER-LES-ECARTS](guides/8-ANALYSER-LES-ECARTS.md) |
-| **12** | Décider si ces écarts sont **significatifs au regard des tolérances** | [8-ANALYSER-LES-ECARTS](guides/8-ANALYSER-LES-ECARTS.md) |
+| **2** | **Raconter** : les personas, les récits, et ce que l'écran contraint | [0-RACONTER](guides/0-RACONTER.md) |
+| **3** | **Découper** les traitements en fonctions | [1-DECOUPER](guides/1-DECOUPER.md) |
+| **4** | **Nommer et décrire** les fonctions et les données qu'elles véhiculent | [1-DECOUPER](guides/1-DECOUPER.md) · [2-GLOSSAIRE](guides/2-GLOSSAIRE.md) · [3-DONNEES](guides/3-DONNEES.md) |
+| **5** | Décrire l'**algorithme** en pseudo-langage | [CADRE §2](CADRE.md) · [4-ECRIRE-A-PLUSIEURS](guides/4-ECRIRE-A-PLUSIEURS.md) |
+| **6** | Identifier les **données de test et les résultats attendus** | [CADRE §5](CADRE.md) |
+| **7** | **Figer une version** pour relecture | [5-VALIDER](guides/5-VALIDER.md) — on ne relit pas un document qui bouge |
+| **8** | Vérifier la **complétude et la cohérence** des informations métier | [5-VALIDER](guides/5-VALIDER.md) — étages 1 et 2 |
+| **9** | Vérifier la **capacité à implémenter**, par la lecture d'un profil technique | [5-VALIDER](guides/5-VALIDER.md) — étage 3, verdict binaire |
+| **10** | **Collecter les retours et itérer** jusqu'à un niveau de qualité suffisant | [5-VALIDER](guides/5-VALIDER.md) |
+| **11** | Passer à l'**architecture technique, au développement et aux tests** | [6-PASSER-AU-DEVELOPPEMENT](guides/6-PASSER-AU-DEVELOPPEMENT.md) |
+| **12** | **Analyser les écarts** — par le métier, en lisant les valeurs propagées | [8-ANALYSER-LES-ECARTS](guides/8-ANALYSER-LES-ECARTS.md) |
+| **13** | Décider si ces écarts sont **significatifs au regard des tolérances** | [8-ANALYSER-LES-ECARTS](guides/8-ANALYSER-LES-ECARTS.md) |
 
-L'étape 1 se fait **une seule fois**, au démarrage. Les étapes 2 à 12 se répètent à chaque
+L'étape 1 se fait **une seule fois**, au démarrage. Les étapes 2 à 13 se répètent à chaque
 lot de fonctions. Le [versionnement](guides/7-VERSIONNER.md) court en travers de toutes.
 
-> **Les étapes 11 et 12 sont ce qui distingue cette méthode d'une simple discipline de
+> **L'étape 2 est la plus récente, et elle change ce que produit l'étape 3.** On ne découpe
+> pas les mêmes fonctions selon qu'on a d'abord demandé *qui décide quoi, en regardant
+> quoi*. Trois des douze fonctions du fil rouge n'existent que parce qu'il y a un écran.
+
+> **Les étapes 12 et 13 sont ce qui distingue cette méthode d'une simple discipline de
 > rédaction.** Elle ne s'arrête pas quand le code est écrit, mais quand le métier a
 > confirmé, chiffres en main, que ce qui tourne calcule bien ce qu'il avait décrit.
 
@@ -240,7 +245,7 @@ qu'un programme l'a produit, sans l'examiner**.
 | **[PSEUDO-LANGAGE.md](PSEUDO-LANGAGE.md)** | **Le pseudo-langage en une page** : les quatre principes, tous les mots-clés par famille, ce qu'il n'a délibérément pas, et l'aide-mémoire |
 | **[OUTILLAGE.md](OUTILLAGE.md)** | **La chaîne d'outils en une page** : ce qu'on prend au marché et pourquoi, ce qu'on écrit soi-même, ce qu'on refuse, et les cinq fichiers de réglage qui installent l'étage 1 |
 | **[CADRE.md](CADRE.md)** | **Le document de référence.** Le principe, la frontière, les faux amis, le pseudo-langage, le contrat, la chaîne de traitement, l'oracle, la gouvernance, les anti-patterns. À lire une fois, en entier |
-| **[guides/](guides/)** | Neuf guides opérationnels, à ouvrir pendant qu'on fait — dont [l'apport de l'IA](guides/9-L-APPORT-DE-L-IA.md), transverse |
+| **[guides/](guides/)** | Dix guides opérationnels, à ouvrir pendant qu'on fait — dont [l'apport de l'IA](guides/9-L-APPORT-DE-L-IA.md), transverse |
 | **[templates/](templates/)** | Les modèles vierges : [spécification](templates/MODELE-SPECIFICATION.md), [fiche de fonction](templates/MODELE-FICHE-FONCTION.md), [fiche de donnée](templates/MODELE-FICHE-DONNEE.md), [glossaire](templates/MODELE-GLOSSAIRE.md), [liste de vérification](templates/CHECKLIST-RELECTURE.md) |
 | **[outils/](outils/)** | Le catalogue des règles de contrôle, le vérificateur, la gestion des identités, la consigne de relecture par une IA |
 | **[IRIS.md](IRIS.md)** | Le rattachement à [Iris](https://github.com/iris7-app) : il fait déjà tourner deux implémentations des mêmes contrats et documente 64 décisions techniques en ADR — il lui manque l'artefact symétrique pour les décisions métier |
